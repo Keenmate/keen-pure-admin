@@ -180,7 +180,7 @@ defmodule PureAdmin.Components.DataViz do
   a transparent centre. The label now sits in a sibling row below the
   gauge (`__min · __label · __max`) — the `__inner` holds only the value.
 
-  Set `:size` (CSS length) to scale the entire gauge via `--pc-gauge-size`
+  Set `:size` (CSS length) to scale the entire gauge via `--pa-gauge-size`
   (default upstream `12rem`). Text inside the donut doesn't auto-scale —
   if you go much smaller / larger, override `font-size` on `.pa-gauge__value`
   in your own stylesheet.
@@ -196,7 +196,7 @@ defmodule PureAdmin.Components.DataViz do
   attr(:label, :string, default: nil)
   attr(:variant, :string, default: nil, values: [nil, "primary", "success", "warning", "danger", "info"])
   attr(:is_zones, :boolean, default: false, doc: "Zone-coloured gauge (multi-zone fill)")
-  attr(:size, :string, default: nil, doc: "CSS length for `--pc-gauge-size` (default upstream `12rem`)")
+  attr(:size, :string, default: nil, doc: "CSS length for `--pa-gauge-size` (default upstream `12rem`)")
   attr(:min, :string, default: "0")
   attr(:max, :string, default: "100")
   attr(:class, :string, default: nil)
@@ -224,7 +224,7 @@ defmodule PureAdmin.Components.DataViz do
   end
 
   defp gauge_style(value, nil), do: "--value: #{value}"
-  defp gauge_style(value, size), do: "--value: #{value}; --pc-gauge-size: #{size};"
+  defp gauge_style(value, size), do: "--value: #{value}; --pa-gauge-size: #{size};"
 
   # -- data_bar/1 --
 

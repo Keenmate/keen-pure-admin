@@ -398,7 +398,7 @@ defmodule PureAdmin.Components.Kpi do
   a chart library should put that in the slot instead. The sparkline renders
   a `<polyline>` inside an SVG with `preserveAspectRatio="none"` so the
   line stretches to fill the container width. The framework's
-  `--pc-chart-trendline-height` and `--pc-chart-trendline-stroke` tokens
+  `--pa-chart-trendline-height` and `--pa-chart-trendline-stroke` tokens
   control height and stroke width.
 
   When `dot_at` is given, the SVG emits a `<circle>` at that point — at

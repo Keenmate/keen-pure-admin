@@ -153,7 +153,7 @@ defmodule DemoWeb.Live.KpiEditorialMinimalLive do
 
       <h4 class="mt-4">Layout CSS variables</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
-        <li><code>--pc-kpi-edit-cell-min</code> — min cell width for auto-fit (default <code>14rem</code>).</li>
+        <li><code>--pa-kpi-edit-cell-min</code> — min cell width for auto-fit (default <code>14rem</code>).</li>
       </ul>
 
       <h4 class="mt-4">Tile</h4>

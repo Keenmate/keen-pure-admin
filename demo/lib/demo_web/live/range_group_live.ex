@@ -266,7 +266,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
     <%!-- ───────── Theming tokens ───────── --%>
     <.card class="mb-4">
       <:header>
-        <.heading level="3">Theming with <.code>--pc-range-*</.code> tokens</.heading>
+        <.heading level="3">Theming with <.code>--pa-range-*</.code> tokens</.heading>
       </:header>
       <.paragraph class="mb-3">
         Every colour and key dimension is a runtime token, so a theme or a
@@ -280,9 +280,9 @@ defmodule DemoWeb.Live.RangeGroupLive do
       <.range_group
         id="themed-filters"
         panel_aria_label="Themed filters"
-        panel_style={"--pc-range-fill: #8b5cf6; --pc-range-thumb-border: #8b5cf6;" <>
-          " --pc-range-thumb-border-hover: #7c3aed; --pc-range-focus-ring: rgba(139, 92, 246, 0.35);" <>
-          " --pc-range-track-height: 0.8rem; --pc-range-thumb-size: 2rem;"}
+        panel_style={"--pa-range-fill: #8b5cf6; --pa-range-thumb-border: #8b5cf6;" <>
+          " --pa-range-thumb-border-hover: #7c3aed; --pa-range-focus-ring: rgba(139, 92, 246, 0.35);" <>
+          " --pa-range-track-height: 0.8rem; --pa-range-thumb-size: 2rem;"}
       >
         <:range
           key="budget"
@@ -355,10 +355,10 @@ defmodule DemoWeb.Live.RangeGroupLive do
   defp tokens_markup do
     ~s|<.range_group
   id="themed-filters"
-  panel_style="--pc-range-fill: #8b5cf6;
-               --pc-range-thumb-border: #8b5cf6;
-               --pc-range-track-height: 0.8rem;
-               --pc-range-thumb-size: 2rem;"
+  panel_style="--pa-range-fill: #8b5cf6;
+               --pa-range-thumb-border: #8b5cf6;
+               --pa-range-track-height: 0.8rem;
+               --pa-range-thumb-size: 2rem;"
 >
   <:range key="budget" label="Budget"
           min={0} max={5000} step={50}

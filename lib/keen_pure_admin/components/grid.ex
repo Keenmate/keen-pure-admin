@@ -107,4 +107,92 @@ defmodule PureAdmin.Components.Grid do
 
     if classes == "", do: "pc-col", else: classes
   end
+
+  # ── pc-grid — CSS-Grid layout primitive (dense, ruled forms) ─────────────────
+  #
+  # A companion to the flex `grid/1`/`column/1` (pc-row/pc-col): where those do
+  # responsive columns, `pc_grid/1` co-aligns cells in two dimensions and can draw
+  # a ruled box-matrix — for dense paper forms (e.g. a customs declaration).
+  # (Prototyped in core alongside `font-size` utilities; candidate to graduate into
+  # `@keenmate/pure-css` next to pc-row/pc-col.)
+
+  @doc """
+  CSS-Grid container (`pc-grid`).
+
+  ## Examples
+
+      <.pc_grid cols={3} is_ruled>
+        <.pc_grid_cell col_span={2}>Wide cell</.pc_grid_cell>
+        <.pc_grid_cell>Cell</.pc_grid_cell>
+        <.pc_grid_cell>Cell</.pc_grid_cell>
+        <.pc_grid_cell>Cell</.pc_grid_cell>
+      </.pc_grid>
+  """
+  attr(:cols, :integer,
+    default: nil,
+    doc: "Column count 1–12 (`pc-grid--cols-N`). Or set `--pc-grid-cols` via `class`/style for a custom track."
+  )
+
+  attr(:is_flush, :boolean, default: false, doc: "Gutterless (`pc-grid--flush`).")
+
+  attr(:is_ruled, :boolean,
+    default: false,
+    doc: "Hairlines between every cell + an outer frame (`pc-grid--ruled`); implies flush. Prints reliably (real borders)."
+  )
+
+  attr(:class, :string, default: nil)
+  attr(:rest, :global)
+  slot(:inner_block, required: true)
+
+  def pc_grid(assigns) do
+    ~H"""
+    <div class={pc_grid_classes(assigns)} {@rest}>
+      <%= render_slot(@inner_block) %>
+    </div>
+    """
+  end
+
+  defp pc_grid_classes(assigns) do
+    build_classes(
+      "pc-grid",
+      [
+        {"pc-grid--cols-#{assigns.cols}", assigns.cols != nil},
+        {"pc-grid--flush", assigns.is_flush},
+        {"pc-grid--ruled", assigns.is_ruled}
+      ],
+      assigns.class
+    )
+  end
+
+  @doc """
+  A `pc_grid/1` cell that can span multiple columns/rows
+  (`pc-col-span-N` / `pc-row-span-N`). Plain elements without a span also work as
+  single cells — this is just the convenience wrapper.
+  """
+  attr(:col_span, :integer, default: nil, doc: "Columns to span, 1–12 (`pc-col-span-N`).")
+  attr(:row_span, :integer, default: nil, doc: "Rows to span, 1–6 (`pc-row-span-N`).")
+  attr(:class, :string, default: nil)
+  attr(:rest, :global)
+  slot(:inner_block, required: true)
+
+  def pc_grid_cell(assigns) do
+    ~H"""
+    <div class={pc_grid_cell_classes(assigns)} {@rest}>
+      <%= render_slot(@inner_block) %>
+    </div>
+    """
+  end
+
+  defp pc_grid_cell_classes(assigns) do
+    classes =
+      [
+        assigns.col_span && "pc-col-span-#{assigns.col_span}",
+        assigns.row_span && "pc-row-span-#{assigns.row_span}",
+        assigns.class
+      ]
+      |> Enum.reject(&is_nil/1)
+      |> Enum.join(" ")
+
+    if classes == "", do: nil, else: classes
+  end
 end

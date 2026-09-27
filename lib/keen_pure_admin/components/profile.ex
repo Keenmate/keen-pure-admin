@@ -54,7 +54,7 @@ defmodule PureAdmin.Components.Profile do
                 <%= render_slot(avatar) %>
               <% end %>
             <% else %>
-              <span class="pa-profile-panel__avatar-icon"><i class="fa-solid fa-user"></i></span>
+              <span class="pa-profile-panel__avatar-icon"><span class="pa-icon pa-icon--user" aria-hidden="true"></span></span>
             <% end %>
           </div>
 
@@ -130,7 +130,7 @@ defmodule PureAdmin.Components.Profile do
       <.profile_nav_item href="/settings" icon="fa-solid fa-gear">Settings</.profile_nav_item>
   """
   attr(:href, :string, default: "#")
-  attr(:icon, :string, default: nil, doc: "Icon class")
+  attr(:icon, :string, default: nil, doc: "Icon: an FA/hero class, or raw inline SVG markup (rendered verbatim)")
   attr(:class, :string, default: nil)
   attr(:rest, :global, include: ~w(navigate patch))
   slot(:inner_block, required: true)
@@ -139,12 +139,17 @@ defmodule PureAdmin.Components.Profile do
     ~H"""
     <li>
       <a href={safe_url(@href)} class={build_classes("pa-profile-panel__nav-item", [], @class)} {@rest}>
-        <span :if={@icon} class="pa-profile-panel__nav-icon"><.icon name={@icon} /></span>
+        <span :if={@icon} class="pa-profile-panel__nav-icon"><%= if svg_icon?(@icon) do %><%= Phoenix.HTML.raw(@icon) %><% else %><.icon name={@icon} /><% end %></span>
         <%= render_slot(@inner_block) %>
       </a>
     </li>
     """
   end
+
+  # Raw inline SVG markup (e.g. a Lucide glyph) is detected by a leading `<` and
+  # rendered verbatim; anything else is treated as an FA/hero icon class.
+  defp svg_icon?(icon) when is_binary(icon), do: String.starts_with?(String.trim_leading(icon), "<")
+  defp svg_icon?(_), do: false
 
   @doc "JS command to toggle the profile panel open/closed."
   @spec toggle_profile_panel(String.t()) :: JS.t()

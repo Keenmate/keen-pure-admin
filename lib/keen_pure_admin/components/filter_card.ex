@@ -88,7 +88,7 @@ defmodule PureAdmin.Components.FilterCard do
               disabled={@is_disabled}
               phx-click={@on_toggle}
             >
-              <i class={if @is_expanded, do: "fa fa-chevron-up", else: "fa fa-chevron-down"} />
+              <span class={"pa-icon pa-icon--chevron-#{if @is_expanded, do: "up", else: "down"}"} aria-hidden="true"></span>
             </button>
 
             <%= render_slot(@actions) %>
@@ -112,7 +112,7 @@ defmodule PureAdmin.Components.FilterCard do
               disabled={@is_disabled || @is_loading}
               phx-click={@on_refresh}
             >
-              <i class={"fa fa-sync-alt#{if @is_loading, do: " fa-spin", else: ""}"} />
+              <span class="pa-icon pa-icon--refresh" aria-hidden="true"></span>
             </button>
           </div>
         </div>

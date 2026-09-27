@@ -6,7 +6,7 @@ defmodule PureAdmin.Components.KpiBento do
   is the 6-tile hero-left layout; `bento_layout="hero_right"` mirrors it
   (hero on the right); `bento_layout="5_tile"` is hero + 4 supporting.
   Tile placement is by source order — markup stays identical across
-  layout modifiers. Set `row_height` to override `--pc-kpi-bento-row-height`
+  layout modifiers. Set `row_height` to override `--pa-kpi-bento-row-height`
   (default `12rem`).
   """
   use Phoenix.Component
@@ -28,7 +28,7 @@ defmodule PureAdmin.Components.KpiBento do
   attr(:live_text, :string, default: "LIVE")
   attr(:footer_text, :string, default: nil)
   attr(:bento_layout, :string, default: nil, values: @bento_layouts)
-  attr(:row_height, :string, default: nil, doc: "CSS length for `--pc-kpi-bento-row-height` (default upstream `12rem`)")
+  attr(:row_height, :string, default: nil, doc: "CSS length for `--pa-kpi-bento-row-height` (default upstream `12rem`)")
   attr(:class, :string, default: nil)
   attr(:rest, :global)
 
@@ -63,7 +63,7 @@ defmodule PureAdmin.Components.KpiBento do
   end
 
   defp bento_style(nil), do: nil
-  defp bento_style(height), do: "--pc-kpi-bento-row-height: #{height};"
+  defp bento_style(height), do: "--pa-kpi-bento-row-height: #{height};"
 
   defp grid_classes(nil), do: "pa-kpi-bento__grid"
 

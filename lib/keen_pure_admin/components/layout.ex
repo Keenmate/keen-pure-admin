@@ -527,7 +527,7 @@ defmodule PureAdmin.Components.Layout do
       data-pc-fit-priority={@is_fit && "25"}
       {@rest}
     >
-      <span class="pc-navbar-search__icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
+      <span class="pc-navbar-search__icon" aria-hidden="true"></span>
       <span class="pc-navbar-search__placeholder">{@placeholder}</span>
       <span class="pc-navbar-search__shortcut">
         <kbd>Ctrl</kbd>
@@ -564,7 +564,7 @@ defmodule PureAdmin.Components.Layout do
   def navbar_search_field(assigns) do
     ~H"""
     <div id={@id} class={build_classes("pc-navbar-search pc-navbar-search--field", [], @class)} hidden={@is_hidden}>
-      <span class="pc-navbar-search__icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
+      <span class="pc-navbar-search__icon" aria-hidden="true"></span>
       <input
         type="text"
         id={"#{@id}-input"}
@@ -627,7 +627,7 @@ defmodule PureAdmin.Components.Layout do
       data-pc-fit-priority={@is_fit && "25"}
       {@rest}
     >
-      <span class="pc-navbar-search__icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
+      <span class="pc-navbar-search__icon" aria-hidden="true"></span>
       <input
         type="search"
         name={@name}
@@ -670,7 +670,7 @@ defmodule PureAdmin.Components.Layout do
           <%= render_slot(icon) %>
         <% end %>
       </span>
-      <span :if={@icon == []} class="pa-btn__icon"><i class="fa-solid fa-user"></i></span>
+      <span :if={@icon == []} class="pa-btn__icon"><span class="pa-icon pa-icon--user" aria-hidden="true"></span></span>
       <span :if={@name} class="pc-navbar__profile-name"><%= @name %></span>
     </button>
     """
@@ -704,7 +704,7 @@ defmodule PureAdmin.Components.Layout do
         phx-click={toggle_notifications(@id)}
         aria-label="Notifications"
       >
-        <span class="pa-notifications__icon"><i class="fa-solid fa-bell"></i></span>
+        <span class="pa-notifications__icon"><span class="pa-icon pa-icon--bell" aria-hidden="true"></span></span>
         <span :if={@count && @count > 0} class="pa-notifications__badge"><%= @count %></span>
       </button>
 
@@ -910,7 +910,12 @@ defmodule PureAdmin.Components.Layout do
       <.sidebar_search action={~p"/search"} placeholder="Search…" />
   """
   attr(:label, :string, default: "Search…")
-  attr(:icon, :string, default: "fa-solid fa-magnifying-glass", doc: "Icon name (FA class or emoji).")
+  # The magnifier is the canonical masked search glyph (`.pa-icon--search` in the
+  # button trigger; a CSS mask on `.pc-sidebar__search-icon` in the type-and-go
+  # form) — it traces to `--base-icon-search`, so it matches the navbar search and
+  # command palette and re-skins with the theme. This attr is retained for
+  # backward compatibility but is no longer rendered.
+  attr(:icon, :string, default: "fa-solid fa-magnifying-glass", doc: "Deprecated / unused — the search glyph is the masked `.pa-icon--search`.")
 
   attr(:action, :string,
     default: nil,
@@ -936,7 +941,7 @@ defmodule PureAdmin.Components.Layout do
         hidden={@is_hidden}
         {@rest}
       >
-        <button type="submit" class="pc-sidebar__search-icon" aria-label="Search"><.icon name={@icon} /></button>
+        <button type="submit" class="pc-sidebar__search-icon" aria-label="Search"></button>
         <input
           type="search"
           name={@name}
@@ -955,7 +960,7 @@ defmodule PureAdmin.Components.Layout do
     ~H"""
     <li class="pc-sidebar__item">
       <button type="button" class={build_classes("pc-sidebar__search", [], @class)} hidden={@is_hidden} {@rest}>
-        <span class="pc-sidebar__icon" aria-hidden="true"><.icon name={@icon} /></span>
+        <span class="pc-sidebar__icon pc-icon-hover-highlight" aria-hidden="true"><span class="pa-icon pa-icon--search"></span></span>
         <span class="pc-sidebar__label">{@label}</span>
       </button>
     </li>
@@ -1112,6 +1117,23 @@ defmodule PureAdmin.Components.Layout do
     )
   end
 
+  # Renders the `.pc-sidebar__icon` span for a link/submenu. The `pc-icon-hover-highlight`
+  # marker opts the glyph into the foundation's hover-recolour rule (pure-css ≥1.1.1).
+  # `icon` may be an inline SVG string (rendered raw, matching pure-admin's Lucide
+  # sidebar) OR a `<.icon>` name (FA / `hero-*`).
+  attr(:icon, :string, default: nil)
+
+  defp sidebar_icon_span(assigns) do
+    ~H"""
+    <span :if={@icon} class="pc-sidebar__icon pc-icon-hover-highlight"><%= if svg_icon?(@icon) do %><%= Phoenix.HTML.raw(@icon) %><% else %><.icon name={@icon} /><% end %></span>
+    """
+  end
+
+  # True when the icon value is raw SVG/HTML markup (starts with `<`) rather than
+  # an `<.icon>` name — lets the sidebar render pure-admin's inline Lucide glyphs.
+  defp svg_icon?(icon) when is_binary(icon), do: String.starts_with?(String.trim_leading(icon), "<")
+  defp svg_icon?(_), do: false
+
   @doc """
   Renders a sidebar menu item (link).
 
@@ -1134,7 +1156,7 @@ defmodule PureAdmin.Components.Layout do
         class={build_classes("pc-sidebar__link", [{"pc-sidebar__link--active", @is_active}], @class)}
         {@rest}
       >
-        <span :if={@icon} class="pc-sidebar__icon"><.icon name={@icon} /></span>
+        <.sidebar_icon_span icon={@icon} />
         <span class="pc-sidebar__label"><%= @label %></span>
       </a>
     </li>
@@ -1177,7 +1199,7 @@ defmodule PureAdmin.Components.Layout do
         phx-click={toggle_submenu(@submenu_id)}
         {@rest}
       >
-        <span :if={@icon} class="pc-sidebar__icon"><.icon name={@icon} /></span>
+        <.sidebar_icon_span icon={@icon} />
         <span class="pc-sidebar__label"><%= @label %></span>
         <span class="pc-sidebar__chevron">&#8250;</span>
       </button>

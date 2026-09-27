@@ -307,7 +307,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
       <h4 class="mt-4">Framework tokens used by this showcase</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
         <li><code>--pc-positive</code> / <code>--pc-negative</code> / etc. — sentiment palette.</li>
-        <li><code>--pc-chart-trendline-height</code> (3rem) / <code>--pc-chart-trendline-stroke</code> (2.1) — sparkline geometry.</li>
+        <li><code>--pa-chart-trendline-height</code> (3rem) / <code>--pa-chart-trendline-stroke</code> (2.1) — sparkline geometry.</li>
         <li><code>--pc-detail-*</code> — popover chrome.</li>
       </ul>
     </.card>

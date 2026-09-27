@@ -21,7 +21,7 @@ defmodule PureAdmin.Components.Callout do
       </.callout>
 
       <.callout variant="info" size="sm">
-        <:icon><i class="fa-solid fa-info-circle"></i></:icon>
+        <:icon><span class="pa-icon pa-icon--info" aria-hidden="true"></span></:icon>
         This is a compact callout with an icon.
       </.callout>
   """

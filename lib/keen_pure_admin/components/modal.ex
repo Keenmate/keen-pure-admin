@@ -62,6 +62,12 @@ defmodule PureAdmin.Components.Modal do
   attr(:is_scrollable, :boolean, default: false, doc: "Scrollable body")
   attr(:show, :boolean, default: false, doc: "Initial visibility")
   attr(:title_text, :string, default: nil, doc: "Modal title text (shorthand for :header slot)")
+
+  attr(:title_icon, :string,
+    default: nil,
+    doc:
+      "Optional leading severity glyph on the title (used with :title_text): a `.pa-icon--*` name, e.g. \"success\" / \"warning\" / \"danger\" / \"info\". Matches core's static severity modals."
+  )
   attr(:should_show_close, :boolean, default: true, doc: "Show close button in header")
   attr(:on_cancel, JS, default: %JS{}, doc: "JS command to run when modal is cancelled")
   attr(:class, :string, default: nil)
@@ -93,7 +99,7 @@ defmodule PureAdmin.Components.Modal do
           <%= if @header != [] do %>
             <h3 :for={header <- @header} class="pa-modal__title"><%= render_slot(header) %></h3>
           <% else %>
-            <h3 :if={@title_text} class="pa-modal__title"><%= @title_text %></h3>
+            <h3 :if={@title_text} class="pa-modal__title"><span :if={@title_icon} class={"pa-icon pa-icon--#{@title_icon}"} aria-hidden="true"></span><%= if @title_icon, do: " " %><%= @title_text %></h3>
           <% end %>
           <button
             :if={@should_show_close && !@is_static}

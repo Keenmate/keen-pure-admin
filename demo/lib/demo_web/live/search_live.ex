@@ -142,7 +142,7 @@ defmodule DemoWeb.Live.SearchLive do
 
     <.card title_text="Query">
       <form action="/search" method="get" role="search" class="pc-navbar-search pc-navbar-search--input">
-        <span class="pc-navbar-search__icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <span class="pc-navbar-search__icon" aria-hidden="true"></span>
         <input
           type="search"
           name="q"

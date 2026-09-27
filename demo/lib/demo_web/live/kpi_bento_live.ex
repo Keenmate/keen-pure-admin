@@ -183,10 +183,10 @@ defmodule DemoWeb.Live.KpiBentoLive do
         actual width.
       </p>
 
-      <h4 class="mt-4">--pc-kpi-bento-row-height</h4>
+      <h4 class="mt-4">--pa-kpi-bento-row-height</h4>
       <p>
         Default row height is <code>12rem</code>. Override per instance via the <code>row_height</code>
-        attr (emits inline <code>style="--pc-kpi-bento-row-height: ..."</code>). Useful in narrow page-grid
+        attr (emits inline <code>style="--pa-kpi-bento-row-height: ..."</code>). Useful in narrow page-grid
         cells where the default rows feel cramped.
       </p>
     </.card>
@@ -207,12 +207,12 @@ defmodule DemoWeb.Live.KpiBentoLive do
 
       <h4 class="mt-4">Layout CSS variables</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
-        <li><code>--pc-kpi-bento-row-height</code> — row height (default <code>12rem</code>).</li>
+        <li><code>--pa-kpi-bento-row-height</code> — row height (default <code>12rem</code>).</li>
       </ul>
 
       <h4 class="mt-4">Tile</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
-        <li><code>pa-kpi-bento-tile</code> — single cell. Carries <code>--pc-kpi-accent</code>.</li>
+        <li><code>pa-kpi-bento-tile</code> — single cell. Carries <code>--pa-kpi-accent</code>.</li>
         <li><code>pa-kpi-bento-tile--hero</code> — larger value + chart for the hero cell.</li>
         <li><code>pa-kpi-bento-tile--positive</code> / <code>--negative</code> / <code>--neutral</code> / <code>--up-strong</code> / <code>--down-strong</code> — sentiment cascade.</li>
         <li><code>pa-kpi-bento-tile__label</code> / <code>__delta</code> / <code>__value</code> / <code>__num</code> / <code>__unit</code>.</li>

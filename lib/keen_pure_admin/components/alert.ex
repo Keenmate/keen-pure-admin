@@ -47,12 +47,12 @@ defmodule PureAdmin.Components.Alert do
       <.alert variant="success">Operation completed successfully.</.alert>
 
       <.alert variant="danger" is_dismissible id="error-alert">
-        <:icon><i class="fa-solid fa-triangle-exclamation"></i></:icon>
+        <:icon><span class="pa-icon pa-icon--danger" aria-hidden="true"></span></:icon>
         Something went wrong!
       </.alert>
 
       <.alert variant="info" heading_text="System Update" heading_size="lg" is_multiline>
-        <:icon><i class="fa-solid fa-circle-info"></i></:icon>
+        <:icon><span class="pa-icon pa-icon--info" aria-hidden="true"></span></:icon>
         New features available.
         <:actions>
           <.button variant="primary" size="sm">Update Now</.button>

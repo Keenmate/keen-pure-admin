@@ -405,8 +405,7 @@ defmodule PureAdmin.Components.Button do
 
   def split_button(assigns) do
     size_class = if assigns.size, do: " pa-btn--#{assigns.size}", else: ""
-    chevron = if String.starts_with?(assigns.placement, "top"), do: "fa-chevron-up", else: "fa-chevron-down"
-    assigns = assigns |> assign(:size_class, size_class) |> assign(:chevron, chevron)
+    assigns = assign(assigns, :size_class, size_class)
 
     ~H"""
     <div
@@ -430,7 +429,7 @@ defmodule PureAdmin.Components.Button do
         type="button"
         disabled={@disabled}
       >
-        <i class={"fas #{@chevron} text-2xs pa-btn-split__chevron"}></i>
+        <span class="pa-btn-split__chevron" aria-hidden="true"></span>
       </button>
       <div class="pa-btn-split__menu">
         <div class="pa-btn-split__menu-inner">

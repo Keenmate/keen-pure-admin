@@ -36,7 +36,7 @@ defmodule PureAdmin.Components.KpiEditorial do
 
   attr(:cell_min_width, :string,
     default: nil,
-    doc: "CSS length for `--pc-kpi-edit-cell-min` (default upstream `14rem`)"
+    doc: "CSS length for `--pa-kpi-edit-cell-min` (default upstream `14rem`)"
   )
 
   attr(:class, :string, default: nil)
@@ -86,7 +86,7 @@ defmodule PureAdmin.Components.KpiEditorial do
   end
 
   defp grid_style(nil), do: nil
-  defp grid_style(width), do: "--pc-kpi-edit-cell-min: #{width};"
+  defp grid_style(width), do: "--pa-kpi-edit-cell-min: #{width};"
 
   # ----------------------------------------------------------------------
   # kpi_editorial_tile/1

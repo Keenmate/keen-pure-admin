@@ -4,7 +4,7 @@ defmodule PureAdmin.Components.KpiGaugeList do
 
   Tracks `_kpi-comparison-gauges.scss` from `@keenmate/pure-admin-core` 2.7.1+.
   Default layout is a cell-min-driven `auto-fit` grid (cells stay at least
-  `--pc-kpi-gauge-cell-min` wide, default 20rem). `grid_layout` switches to
+  `--pa-kpi-gauge-cell-min` wide, default 20rem). `grid_layout` switches to
   `2col` (deterministic 2-cols) or `max_2..max_6` (cap auto-fit at N).
   Override the cell minimum per instance via `cell_min_width`.
   """
@@ -30,7 +30,7 @@ defmodule PureAdmin.Components.KpiGaugeList do
 
   attr(:cell_min_width, :string,
     default: nil,
-    doc: "CSS length for `--pc-kpi-gauge-cell-min` (default upstream `20rem`)"
+    doc: "CSS length for `--pa-kpi-gauge-cell-min` (default upstream `20rem`)"
   )
 
   attr(:class, :string, default: nil)
@@ -77,7 +77,7 @@ defmodule PureAdmin.Components.KpiGaugeList do
   end
 
   defp grid_style(nil), do: nil
-  defp grid_style(width), do: "--pc-kpi-gauge-cell-min: #{width};"
+  defp grid_style(width), do: "--pa-kpi-gauge-cell-min: #{width};"
 
   # ----------------------------------------------------------------------
   # kpi_gauge/1
@@ -102,10 +102,10 @@ defmodule PureAdmin.Components.KpiGaugeList do
 
   attr(:tick_position, :string,
     default: nil,
-    doc: "CSS length / percent for `--pc-kpi-gauge-tick-pos` (default upstream `100%`)"
+    doc: "CSS length / percent for `--pa-kpi-gauge-tick-pos` (default upstream `100%`)"
   )
 
-  attr(:tick_color, :string, default: nil, doc: "Override for `--pc-kpi-gauge-tick-color`")
+  attr(:tick_color, :string, default: nil, doc: "Override for `--pa-kpi-gauge-tick-color`")
   attr(:scale_start_text, :string, default: "0")
   attr(:scale_end_text, :string, default: nil)
 
@@ -200,9 +200,9 @@ defmodule PureAdmin.Components.KpiGaugeList do
   end
 
   defp bar_style(nil, nil), do: nil
-  defp bar_style(pos, nil), do: "--pc-kpi-gauge-tick-pos: #{pos};"
-  defp bar_style(nil, color), do: "--pc-kpi-gauge-tick-color: #{color};"
-  defp bar_style(pos, color), do: "--pc-kpi-gauge-tick-pos: #{pos}; --pc-kpi-gauge-tick-color: #{color};"
+  defp bar_style(pos, nil), do: "--pa-kpi-gauge-tick-pos: #{pos};"
+  defp bar_style(nil, color), do: "--pa-kpi-gauge-tick-color: #{color};"
+  defp bar_style(pos, color), do: "--pa-kpi-gauge-tick-pos: #{pos}; --pa-kpi-gauge-tick-color: #{color};"
 
   defp auto_rows(assigns) do
     KpiDetail.build_auto_rows(

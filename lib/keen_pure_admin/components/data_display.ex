@@ -54,7 +54,7 @@ defmodule PureAdmin.Components.DataDisplay do
           <%= if @is_copy_btn || @is_copy_hover do %>
             <span data-copy-value={@copy_value}><%= render_slot(@inner_block) %></span>
             <button type="button" class="pa-field__copy" data-pa-copy title="Copy to clipboard">
-              <i class="fas fa-copy"></i>
+              <span class="pa-icon pa-icon--copy" aria-hidden="true"></span>
             </button>
           <% else %>
             <%= render_slot(@inner_block) %>

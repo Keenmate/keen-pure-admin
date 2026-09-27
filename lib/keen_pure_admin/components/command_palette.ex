@@ -1,6 +1,14 @@
 defmodule PureAdmin.Components.CommandPalette do
   @moduledoc """
-  Command palette component with multi-step commands and scoped search.
+  Command palette **markup** — the presentational (stateless) function
+  component. It renders the palette shell + results for a given state; it does
+  not own any state.
+
+  Most apps should use the stateful `PureAdmin.CommandPalette` LiveComponent
+  instead (mount it once in the layout, back it with a
+  `PureAdmin.CommandPalette.Source`). This module is the shared rendering layer
+  the LiveComponent builds on, and remains usable directly by a plain-LiveView
+  host that wires the `cp:*` events itself.
 
   Supports three modes:
 
@@ -17,14 +25,6 @@ defmodule PureAdmin.Components.CommandPalette do
     The editable portion is after the last prompt.
   - `"tokens"` — The input is cleared on each step. Previous selections show as
     colored token spans above the input.
-
-  ## Usage
-
-      <%!-- Inline style (default, matches Svelte) --%>
-      <.command_palette id="cmd" is_open={@cp_open} mode={@cp_mode} ... />
-
-      <%!-- Token style --%>
-      <.command_palette id="cmd" display="tokens" is_open={@cp_open} mode={@cp_mode} ... />
   """
   use Phoenix.Component
   alias Phoenix.LiveView.JS
@@ -60,9 +60,14 @@ defmodule PureAdmin.Components.CommandPalette do
   attr(:is_open, :boolean, default: false)
   attr(:query, :string, default: "")
 
+  # phx-target for the internal click handlers (`cp:home_select`, `cp:select`).
+  # Set to `@myself` when rendered inside the `PureAdmin.CommandPalette`
+  # LiveComponent; leave nil for a plain-LiveView host (events go to the view).
+  attr(:target, :any, default: nil)
+
   # Size preset (rc15): sets container width + results height together. For an
   # arbitrary size, leave this nil and override the runtime CSS variables
-  # (`--pc-command-palette-width` / `-offset-top` / `-results-max-height`) at
+  # (`--pa-command-palette-width` / `-offset-top` / `-results-max-height`) at
   # `:root`, inline, or per-instance instead — no recompile needed.
   attr(:size, :string,
     default: nil,
@@ -118,30 +123,7 @@ defmodule PureAdmin.Components.CommandPalette do
   attr(:rest, :global)
 
   def command_palette(assigns) do
-    assigns =
-      assigns
-      |> assign(:placeholder, assigns.placeholder || t("pureAdmin.commandPalette.placeholder"))
-      |> assign(:empty_text, assigns.empty_text || t("pureAdmin.commandPalette.emptyText"))
-
-    # For inline mode, use input_text as the displayed value; for tokens mode, use query
-    display_value =
-      if assigns.display == "inline" and assigns.mode == "command_step" do
-        assigns.input_text
-      else
-        assigns.query
-      end
-
-    # Calculate locked prefix length for inline mode
-    locked_length =
-      if assigns.display == "inline" and assigns.mode == "command_step" and assigns.input_text != "" do
-        # The locked portion is input_text minus whatever the user typed for the current step
-        prefix_len = String.length(assigns.input_text) - String.length(assigns.query || "")
-        max(0, prefix_len)
-      else
-        0
-      end
-
-    assigns = assigns |> assign(:display_value, display_value) |> assign(:locked_length, locked_length)
+    assigns = prepare(assigns)
 
     ~H"""
     <div
@@ -153,170 +135,275 @@ defmodule PureAdmin.Components.CommandPalette do
       data-locked-length={@locked_length}
       {@rest}
     >
-      <div class="pa-command-palette__backdrop"></div>
-      <div class="pa-command-palette__container">
-        <%!-- Search header --%>
-        <div class="pa-command-palette__search">
-          <%!-- Token display (tokens mode only) --%>
-          <div :if={@display == "tokens"} class="pa-command-palette__tokens">
-            <%= if @mode == "command_step" and @current_command do %>
-              <span class="pa-badge pa-badge--primary">
-                <%= @current_command[:name] || @current_command[:shortcut] %>
+      <.command_palette_body
+        id={@id}
+        target={@target}
+        display={@display}
+        mode={@mode}
+        display_value={@display_value}
+        commands={@commands}
+        contexts={@contexts}
+        results={@results}
+        active_index={@active_index}
+        is_loading={@is_loading}
+        current_command={@current_command}
+        current_step={@current_step}
+        current_step_index={@current_step_index}
+        total_steps={@total_steps}
+        selections={@selections}
+        current_context={@current_context}
+        page={@page}
+        total_pages={@total_pages}
+        total_results={@total_results}
+        placeholder={@placeholder}
+        empty_text={@empty_text}
+      />
+    </div>
+    """
+  end
+
+  @doc """
+  The palette's inner markup (backdrop + container). Shared by
+  `command_palette/1` and the `PureAdmin.CommandPalette` LiveComponent, whose
+  render owns the root `<div>` (a stateful component requires a literal root
+  tag, so it can't call `command_palette/1` directly).
+
+  `display_value`/`locked_length` are precomputed by the caller — see
+  `prepare/1` and `input_state/1`.
+  """
+  attr(:id, :string, required: true)
+  attr(:target, :any, default: nil)
+  attr(:display, :string, default: "inline")
+  attr(:mode, :string, default: "idle")
+  attr(:display_value, :string, default: "")
+  attr(:commands, :list, default: [])
+  attr(:contexts, :list, default: [])
+  attr(:results, :list, default: [])
+  attr(:active_index, :integer, default: -1)
+  attr(:is_loading, :boolean, default: false)
+  attr(:current_command, :map, default: nil)
+  attr(:current_step, :map, default: nil)
+  attr(:current_step_index, :integer, default: 0)
+  attr(:total_steps, :integer, default: 0)
+  attr(:selections, :list, default: [])
+  attr(:current_context, :map, default: nil)
+  attr(:page, :integer, default: 1)
+  attr(:total_pages, :integer, default: 1)
+  attr(:total_results, :integer, default: 0)
+  attr(:placeholder, :string, default: nil)
+  attr(:empty_text, :string, default: nil)
+
+  def command_palette_body(assigns) do
+    assigns =
+      assigns
+      |> assign(:placeholder, assigns[:placeholder] || t("pureAdmin.commandPalette.placeholder"))
+      |> assign(:empty_text, assigns[:empty_text] || t("pureAdmin.commandPalette.emptyText"))
+
+    ~H"""
+    <div class="pa-command-palette__backdrop"></div>
+    <div class="pa-command-palette__container">
+      <%!-- Search header --%>
+      <div class="pa-command-palette__search">
+        <%!-- Token display (tokens mode only) --%>
+        <div :if={@display == "tokens"} class="pa-command-palette__tokens">
+          <%= if @mode == "command_step" and @current_command do %>
+            <span class="pa-badge pa-badge--primary">
+              <%= @current_command[:name] || @current_command[:shortcut] %>
+            </span>
+            <%= for sel <- @selections do %>
+              <span class="pa-command-palette__token-prompt">
+                <%= sel[:prompt] || "" %>
               </span>
-              <%= for sel <- @selections do %>
-                <span class="pa-command-palette__token-prompt">
-                  <%= sel[:prompt] || "" %>
-                </span>
-                <span class="pa-badge">
-                  <%= sel[:label] %>
-                </span>
-              <% end %>
-              <span :if={@current_step && @current_step[:prompt]} class="pa-command-palette__token-prompt">
-                <%= @current_step[:prompt] %>
+              <span class="pa-badge">
+                <%= sel[:label] %>
               </span>
             <% end %>
-          </div>
-
-          <div class="pa-command-palette__input-wrapper">
-            <input
-              type="text"
-              class="pa-command-palette__input"
-              id={"#{@id}-input"}
-              value={@display_value}
-              placeholder={step_placeholder(assigns)}
-              autocomplete="off"
-              spellcheck="false"
-            />
-
-            <%!-- Command badge (inline mode, shown in step mode) --%>
-            <div
-              :if={@display == "inline" and @mode == "command_step" and @current_command}
-              class="pa-command-palette__context pa-command-palette__context--visible"
-            >
-              <%= @current_command[:name] %>
-            </div>
-
-            <%!-- Context label (in context_search mode) --%>
-            <div class={build_classes("pa-command-palette__context", [
-              {"pa-command-palette__context--visible", @mode == "context_search" and @current_context != nil}
-            ])}>
-              <%= if @current_context, do: t("pureAdmin.commandPalette.searchingIn", %{name: @current_context[:name]}) %>
-            </div>
-          </div>
-        </div>
-
-        <%!-- Step progress indicator (tokens mode only) --%>
-        <div :if={@display == "tokens" and @mode == "command_step" and @total_steps > 1} class="pa-command-palette__step-indicator">
-          <%= t("pureAdmin.commandPalette.stepOf", %{current: @current_step_index + 1, total: @total_steps}) %>
-        </div>
-
-        <%!-- Results --%>
-        <div class={build_classes("pa-command-palette__results", [
-          {"pa-command-palette__results--loading", @is_loading}
-        ])}>
-          <%= if @is_loading and @results == [] do %>
-            <div class="pa-command-palette__loader">
-              <div class="pa-spinner pa-spinner--primary"></div>
-              <span><%= t("pureAdmin.commandPalette.searching") %></span>
-            </div>
-          <% else %>
-            <%= if @mode == "idle" and @results == [] do %>
-              <%!-- Home screen: show commands + contexts --%>
-              <div class="pa-command-palette__home">
-                <div :if={@commands != []} class="pa-command-palette__home-section">
-                  <div class="pa-command-palette__home-heading"><%= t("pureAdmin.commandPalette.commands") %></div>
-                  <%= for cmd <- @commands do %>
-                    <div class="pa-command-palette__item" phx-click="cp:home_select" phx-value-type="command" phx-value-shortcut={cmd.shortcut}>
-                      <div :if={cmd[:icon]} class="pa-command-palette__item-icon"><%= cmd[:icon] %></div>
-                      <div class="pa-command-palette__item-content">
-                        <div class="pa-command-palette__item-title"><%= cmd[:name] %></div>
-                        <div class="pa-command-palette__item-meta"><%= cmd[:description] %></div>
-                      </div>
-                      <%= if cmd[:hotkey] do %>
-                        <div class="pa-command-palette__shortcut">
-                          <%= for key <- String.split(cmd[:hotkey], "+") do %>
-                            <span class="pa-command-palette__key"><%= key %></span>
-                          <% end %>
-                        </div>
-                      <% else %>
-                        <span class="pa-command-palette__key"><%= cmd[:shortcut] %></span>
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div>
-                <div :if={@contexts != []} class="pa-command-palette__home-section">
-                  <div class="pa-command-palette__home-heading"><%= t("pureAdmin.commandPalette.search") %></div>
-                  <%= for ctx <- @contexts do %>
-                    <div class="pa-command-palette__item" phx-click="cp:home_select" phx-value-type="context" phx-value-shortcut={ctx.shortcut}>
-                      <div :if={ctx[:icon]} class="pa-command-palette__item-icon"><%= ctx[:icon] %></div>
-                      <div class="pa-command-palette__item-content">
-                        <div class="pa-command-palette__item-title"><%= ctx[:name] %></div>
-                        <div :if={ctx[:description]} class="pa-command-palette__item-meta"><%= ctx[:description] %></div>
-                      </div>
-                      <span class="pa-command-palette__key"><%= ctx[:shortcut] %></span>
-                    </div>
-                  <% end %>
-                </div>
-              </div>
-            <% else %>
-              <%= if @results != [] do %>
-                <%= for {item, index} <- Enum.with_index(@results) do %>
-                  <div
-                    class={build_classes("pa-command-palette__item", [
-                      {"pa-command-palette__item--active", index == @active_index}
-                    ])}
-                    phx-click="cp:select"
-                    phx-value-index={index}
-                  >
-                    <div :if={item[:icon]} class="pa-command-palette__item-icon"><%= item[:icon] %></div>
-                    <div class="pa-command-palette__item-content">
-                      <div class="pa-command-palette__item-title"><%= item[:title] || item[:name] || item[:label] %></div>
-                      <div :if={item[:subtitle] || item[:description] || item[:meta]} class="pa-command-palette__item-meta">
-                        <%= item[:subtitle] || item[:description] || item[:meta] %>
-                      </div>
-                    </div>
-                    <span :if={item[:badge]} class="pa-badge"><%= item[:badge] %></span>
-                    <div :if={item[:shortcut]} class="pa-command-palette__shortcut">
-                      <span class="pa-command-palette__key"><%= item[:shortcut] %></span>
-                    </div>
-                  </div>
-                <% end %>
-                <div :if={@total_pages > 1} class="pa-command-palette__pagination">
-                  <%= t("pureAdmin.commandPalette.pageOf", %{page: @page, total: @total_pages, count: @total_results}) %>
-                </div>
-              <% else %>
-                <div class="pa-command-palette__empty"><%= @empty_text %></div>
-              <% end %>
-            <% end %>
+            <span :if={@current_step && @current_step[:prompt]} class="pa-command-palette__token-prompt">
+              <%= @current_step[:prompt] %>
+            </span>
           <% end %>
         </div>
 
-        <%!-- Footer with mode-aware hints --%>
-        <div class="pa-command-palette__footer">
-          <div class="pa-command-palette__hint">
-            <span class="pa-command-palette__key">↑↓</span>
-            <span><%= t("pureAdmin.commandPalette.navigate") %></span>
+        <div class="pa-command-palette__input-wrapper">
+          <input
+            type="text"
+            class="pa-command-palette__input"
+            id={"#{@id}-input"}
+            value={@display_value}
+            placeholder={step_placeholder(assigns)}
+            autocomplete="off"
+            spellcheck="false"
+          />
+
+          <%!-- Command badge (inline mode, shown in step mode) --%>
+          <div
+            :if={@display == "inline" and @mode == "command_step" and @current_command}
+            class="pa-command-palette__context pa-command-palette__context--visible"
+          >
+            <%= @current_command[:name] %>
           </div>
-          <div :if={@mode in ["context_search", "global_search"] and @total_pages > 1} class="pa-command-palette__hint">
-            <span class="pa-command-palette__key">←→</span>
-            <span><%= t("pureAdmin.commandPalette.pages") %></span>
+
+          <%!-- Context label (in context_search mode) --%>
+          <div class={build_classes("pa-command-palette__context", [
+            {"pa-command-palette__context--visible", @mode == "context_search" and @current_context != nil}
+          ])}>
+            <%= if @current_context, do: t("pureAdmin.commandPalette.searchingIn", %{name: @current_context[:name]}) %>
           </div>
-          <div class="pa-command-palette__hint">
-            <span class="pa-command-palette__key">↵</span>
-            <span><%= t("pureAdmin.commandPalette.select") %></span>
+        </div>
+      </div>
+
+      <%!-- Step progress indicator (tokens mode only) --%>
+      <div :if={@display == "tokens" and @mode == "command_step" and @total_steps > 1} class="pa-command-palette__step-indicator">
+        <%= t("pureAdmin.commandPalette.stepOf", %{current: @current_step_index + 1, total: @total_steps}) %>
+      </div>
+
+      <%!-- Results --%>
+      <div class={build_classes("pa-command-palette__results", [
+        {"pa-command-palette__results--loading", @is_loading}
+      ])}>
+        <%= if @is_loading and @results == [] do %>
+          <div class="pa-command-palette__loader">
+            <div class="pa-spinner pa-spinner--primary"></div>
+            <span><%= t("pureAdmin.commandPalette.searching") %></span>
           </div>
-          <div :if={@mode in ["command_step", "context_search"]} class="pa-command-palette__hint">
-            <span class="pa-command-palette__key">⌫</span>
-            <span><%= t("pureAdmin.commandPalette.back") %></span>
-          </div>
-          <div class="pa-command-palette__hint">
-            <span class="pa-command-palette__key">Esc</span>
-            <span><%= if @mode in ["command_step", "context_search"], do: t("pureAdmin.commandPalette.back"), else: t("pureAdmin.commandPalette.close") %></span>
-          </div>
+        <% else %>
+          <%= if @mode == "idle" and @results == [] do %>
+            <%!-- Home screen: show commands + contexts --%>
+            <div class="pa-command-palette__home">
+              <div :if={@commands != []} class="pa-command-palette__home-section">
+                <div class="pa-command-palette__home-heading"><%= t("pureAdmin.commandPalette.commands") %></div>
+                <%= for cmd <- @commands do %>
+                  <div class="pa-command-palette__item" phx-click="cp:home_select" phx-target={@target} phx-value-type="command" phx-value-shortcut={cmd.shortcut}>
+                    <div :if={cmd[:icon]} class="pa-command-palette__item-icon"><%= cmd[:icon] %></div>
+                    <div class="pa-command-palette__item-content">
+                      <div class="pa-command-palette__item-title"><%= cmd[:name] %></div>
+                      <div class="pa-command-palette__item-meta"><%= cmd[:description] %></div>
+                    </div>
+                    <%= if cmd[:hotkey] do %>
+                      <div class="pa-command-palette__shortcut">
+                        <%= for key <- String.split(cmd[:hotkey], "+") do %>
+                          <span class="pa-command-palette__key"><%= key %></span>
+                        <% end %>
+                      </div>
+                    <% else %>
+                      <span class="pa-command-palette__key"><%= cmd[:shortcut] %></span>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <div :if={@contexts != []} class="pa-command-palette__home-section">
+                <div class="pa-command-palette__home-heading"><%= t("pureAdmin.commandPalette.search") %></div>
+                <%= for ctx <- @contexts do %>
+                  <div class="pa-command-palette__item" phx-click="cp:home_select" phx-target={@target} phx-value-type="context" phx-value-shortcut={ctx.shortcut}>
+                    <div :if={ctx[:icon]} class="pa-command-palette__item-icon"><%= ctx[:icon] %></div>
+                    <div class="pa-command-palette__item-content">
+                      <div class="pa-command-palette__item-title"><%= ctx[:name] %></div>
+                      <div :if={ctx[:description]} class="pa-command-palette__item-meta"><%= ctx[:description] %></div>
+                    </div>
+                    <span class="pa-command-palette__key"><%= ctx[:shortcut] %></span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <%= if @results != [] do %>
+              <%= for {item, index} <- Enum.with_index(@results) do %>
+                <div
+                  class={build_classes("pa-command-palette__item", [
+                    {"pa-command-palette__item--active", index == @active_index}
+                  ])}
+                  phx-click="cp:select"
+                  phx-target={@target}
+                  phx-value-index={index}
+                >
+                  <div :if={item[:icon]} class="pa-command-palette__item-icon"><%= item[:icon] %></div>
+                  <div class="pa-command-palette__item-content">
+                    <div class="pa-command-palette__item-title"><%= item[:title] || item[:name] || item[:label] %></div>
+                    <div :if={item[:subtitle] || item[:description] || item[:meta]} class="pa-command-palette__item-meta">
+                      <%= item[:subtitle] || item[:description] || item[:meta] %>
+                    </div>
+                  </div>
+                  <span :if={item[:badge]} class="pa-badge"><%= item[:badge] %></span>
+                  <div :if={item[:shortcut]} class="pa-command-palette__shortcut">
+                    <span class="pa-command-palette__key"><%= item[:shortcut] %></span>
+                  </div>
+                </div>
+              <% end %>
+              <div :if={@total_pages > 1} class="pa-command-palette__pagination">
+                <%= t("pureAdmin.commandPalette.pageOf", %{page: @page, total: @total_pages, count: @total_results}) %>
+              </div>
+            <% else %>
+              <div class="pa-command-palette__empty"><%= @empty_text %></div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <%!-- Footer with mode-aware hints --%>
+      <div class="pa-command-palette__footer">
+        <div class="pa-command-palette__hint">
+          <span class="pa-command-palette__key">↑↓</span>
+          <span><%= t("pureAdmin.commandPalette.navigate") %></span>
+        </div>
+        <div :if={@mode in ["context_search", "global_search"] and @total_pages > 1} class="pa-command-palette__hint">
+          <span class="pa-command-palette__key">←→</span>
+          <span><%= t("pureAdmin.commandPalette.pages") %></span>
+        </div>
+        <div class="pa-command-palette__hint">
+          <span class="pa-command-palette__key">↵</span>
+          <span><%= t("pureAdmin.commandPalette.select") %></span>
+        </div>
+        <div :if={@mode in ["command_step", "context_search"]} class="pa-command-palette__hint">
+          <span class="pa-command-palette__key">⌫</span>
+          <span><%= t("pureAdmin.commandPalette.back") %></span>
+        </div>
+        <div class="pa-command-palette__hint">
+          <span class="pa-command-palette__key">Esc</span>
+          <span><%= if @mode in ["command_step", "context_search"], do: t("pureAdmin.commandPalette.back"), else: t("pureAdmin.commandPalette.close") %></span>
         </div>
       </div>
     </div>
     """
+  end
+
+  @doc """
+  Precompute `:display_value` and `:locked_length` onto the assigns (see
+  `input_state/1`). Used by `command_palette/1`; `command_palette_body/1` fills
+  the `:placeholder` / `:empty_text` translation defaults itself.
+  """
+  def prepare(assigns) do
+    {display_value, locked_length} =
+      input_state(%{
+        display: assigns.display,
+        mode: assigns.mode,
+        input_text: assigns.input_text,
+        query: assigns.query
+      })
+
+    assigns
+    |> assign(:display_value, display_value)
+    |> assign(:locked_length, locked_length)
+  end
+
+  @doc """
+  Compute `{display_value, locked_length}` for the input, given a map with
+  `:display`, `:mode`, `:input_text`, `:query`.
+
+  In inline command-step mode the input shows the full accumulated text and the
+  prefix (everything before the current step's typed portion) is locked.
+  """
+  def input_state(%{display: display, mode: mode, input_text: input_text, query: query}) do
+    display_value =
+      if display == "inline" and mode == "command_step", do: input_text, else: query
+
+    locked_length =
+      if display == "inline" and mode == "command_step" and input_text != "" do
+        max(0, String.length(input_text) - String.length(query || ""))
+      else
+        0
+      end
+
+    {display_value, locked_length}
   end
 
   defp step_placeholder(assigns) do
@@ -329,7 +416,7 @@ defmodule PureAdmin.Components.CommandPalette do
         assigns.current_step[:placeholder] || t("pureAdmin.commandPalette.filterPlaceholder")
 
       true ->
-        assigns.placeholder
+        assigns[:placeholder]
     end
   end
 end

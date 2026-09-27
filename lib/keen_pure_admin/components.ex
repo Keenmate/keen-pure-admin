@@ -25,6 +25,7 @@ defmodule PureAdmin.Components do
       import PureAdmin.Components.CheckboxList
       import PureAdmin.Components.Code
       import PureAdmin.Components.DataDisplay
+      import PureAdmin.Components.Document
       import PureAdmin.Components.FilterCard
       import PureAdmin.Components.Flash
       import PureAdmin.Components.DataViz
@@ -51,6 +52,7 @@ defmodule PureAdmin.Components do
       import PureAdmin.Components.Profile
       import PureAdmin.Components.RangeGroup
       import PureAdmin.Components.Responsive
+      import PureAdmin.Components.Sheet
       import PureAdmin.Components.Splitter
       import PureAdmin.Components.Stat
       import PureAdmin.Components.Table

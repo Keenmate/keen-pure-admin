@@ -216,12 +216,12 @@ defmodule DemoWeb.Live.KpiComparisonGaugesLive do
 
       <h4 class="mt-4">Layout CSS variables</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
-        <li><code>--pc-kpi-gauge-cell-min</code> — min cell width for auto-fit (default <code>20rem</code>).</li>
+        <li><code>--pa-kpi-gauge-cell-min</code> — min cell width for auto-fit (default <code>20rem</code>).</li>
       </ul>
 
       <h4 class="mt-4">Gauge tile</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
-        <li><code>pa-kpi-gauge</code> — single gauge cell. Carries <code>--pc-kpi-bar-color</code>.</li>
+        <li><code>pa-kpi-gauge</code> — single gauge cell. Carries <code>--pa-kpi-bar-color</code>.</li>
         <li><code>pa-kpi-gauge--positive</code> / <code>--warning</code> / <code>--negative</code> / <code>--neutral</code>.</li>
         <li><code>pa-kpi-gauge__head</code> / <code>__label</code> / <code>__value</code> / <code>__num</code> / <code>__unit</code> / <code>__scale</code>.</li>
         <li><code>pa-kpi-gauge__bar</code> / <code>__fill</code> — track + fill (width inline).</li>
@@ -229,8 +229,8 @@ defmodule DemoWeb.Live.KpiComparisonGaugesLive do
 
       <h4 class="mt-4">Bar tick CSS variables</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
-        <li><code>--pc-kpi-gauge-tick-pos</code> — target tick position (default <code>100%</code>).</li>
-        <li><code>--pc-kpi-gauge-tick-color</code> — tick colour (default <code>var(--pc-text-color-1)</code>).</li>
+        <li><code>--pa-kpi-gauge-tick-pos</code> — target tick position (default <code>100%</code>).</li>
+        <li><code>--pa-kpi-gauge-tick-color</code> — tick colour (default <code>var(--pc-text-color-1)</code>).</li>
       </ul>
     </.card>
     """

@@ -40,7 +40,7 @@ defmodule PureAdmin.Components.SettingsPanel do
       {@rest}
     >
       <button class="pa-settings-panel__toggle" type="button" aria-label={t("pureAdmin.a11y.settings")}>
-        ⚙
+        <span class="pa-icon pa-icon--settings" aria-hidden="true"></span>
       </button>
 
       <div class="pa-settings-panel__content">

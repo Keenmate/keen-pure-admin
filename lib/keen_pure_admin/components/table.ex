@@ -34,6 +34,13 @@ defmodule PureAdmin.Components.Table do
   # borderless (`pa-table--bordered` is the opt-in). Both attrs were no-ops and
   # were dropped.
   attr(:is_bordered, :boolean, default: false, doc: "Full cell borders on all sides")
+
+  attr(:is_plain, :boolean,
+    default: false,
+    doc:
+      "Neutral ruled table (`pa-table--plain`): strips the themed header fill and body/stripe backgrounds so the table reads as a plain ruled grid (paper forms, printouts, embedded sheet grids). Combine with `is_bordered` for cell rules."
+  )
+
   attr(:is_compact, :boolean, default: false, doc: "Compact table (reduced padding)")
   attr(:is_responsive, :boolean, default: false, doc: "Mobile row→card transform (pa-table--responsive)")
   attr(:is_responsive_grid, :boolean, default: false, doc: "CSS Grid responsive collapse on mobile")
@@ -128,12 +135,33 @@ defmodule PureAdmin.Components.Table do
       [
         {"pa-table--striped", assigns.is_striped},
         {"pa-table--bordered", assigns.is_bordered},
+        {"pa-table--plain", assigns.is_plain},
         {"pa-table--responsive", assigns.is_responsive},
         {"pa-table--responsive-grid", assigns.is_responsive_grid},
         {"pa-table--#{effective_size}", effective_size != nil}
       ],
       assigns.class
     )
+  end
+
+  @doc """
+  Two-line cell content: a primary item name with a secondary description stacked
+  in a single `<td>` (a line-item name + spec on an invoice, or a name + email in
+  an app table). Use inside a `:col` slot body.
+
+  ## Examples
+
+      <:col :let={r} label="Item">
+        <.table_item title={r.name} desc={r.spec} />
+      </:col>
+  """
+  attr(:title, :string, required: true, doc: "Primary item name (`pa-table__item-title`).")
+  attr(:desc, :string, default: nil, doc: "Secondary description (`pa-table__item-desc`), smaller/italic/muted.")
+
+  def table_item(assigns) do
+    ~H"""
+    <span class="pa-table__item-title">{@title}</span><span :if={@desc} class="pa-table__item-desc">{@desc}</span>
+    """
   end
 
   @doc """

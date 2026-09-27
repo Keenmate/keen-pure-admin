@@ -157,7 +157,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
 
       <.heading level={4} class="mt-6">Size override · v2.7.0 :size attr</.heading>
       <p class="pa-text--secondary mb-2">
-        New <code>:size</code> attr emits <code>--pc-gauge-size</code> inline (default upstream <code>12rem</code>). Width and height (always half the width) both derive from this token. Text inside the donut doesn't auto-scale — set <code>font-size</code> on <code>.pa-gauge__value</code> in your stylesheet for proportional resizing.
+        New <code>:size</code> attr emits <code>--pa-gauge-size</code> inline (default upstream <code>12rem</code>). Width and height (always half the width) both derive from this token. Text inside the donut doesn't auto-scale — set <code>font-size</code> on <code>.pa-gauge__value</code> in your stylesheet for proportional resizing.
       </p>
 
       <div class="d-flex gap-xl flex-wrap align-items-end">

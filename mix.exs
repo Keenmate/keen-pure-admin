@@ -1,7 +1,7 @@
 defmodule PureAdmin.MixProject do
   use Mix.Project
 
-  @version "1.3.0-rc.2"
+  @version "2.0.0-rc.1"
   @source_url "https://github.com/KeenMate/keen-pure-admin"
 
   def project do

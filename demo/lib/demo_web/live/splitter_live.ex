@@ -174,13 +174,13 @@ defmodule DemoWeb.Live.SplitterLive do
         Use native <.code>gap</.code> on the splitter root to add space between the panes
         and the gutter — the JS subtracts it from the available space so percent
         constraints stay accurate. A thicker gutter is opt-in via
-        <.code>--pc-splitter-gutter-size</.code>.
+        <.code>--pa-splitter-gutter-size</.code>.
       </.paragraph>
 
       <.splitter
         id="demo-spaced"
         orientation="horizontal"
-        style="height: 280px; gap: 1.6rem; --pc-splitter-gutter-size: 1rem;"
+        style="height: 280px; gap: 1.6rem; --pa-splitter-gutter-size: 1rem;"
       >
         <:pane size="40%" min="25%" max="75%" style="padding: 0;">
           <.card title_text="Left card" style="height: 100%; margin: 0;">
@@ -194,7 +194,7 @@ defmodule DemoWeb.Live.SplitterLive do
           <.card title_text="Right card" style="height: 100%; margin: 0;">
             <.paragraph class="mb-0">
               Drag the gutter — both cards reflow. The 10px gutter is set inline via
-              <.code>--pc-splitter-gutter-size</.code>; the default is 6px.
+              <.code>--pa-splitter-gutter-size</.code>; the default is 6px.
             </.paragraph>
           </.card>
         </:pane>

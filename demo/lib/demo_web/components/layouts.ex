@@ -4,5 +4,7 @@ defmodule DemoWeb.Layouts do
   """
   use DemoWeb, :html
 
+  import DemoWeb.SidebarIcons, only: [sidebar_icon: 1]
+
   embed_templates "layouts/*"
 end

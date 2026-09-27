@@ -428,6 +428,32 @@ defmodule DemoWeb.Live.GridLive do
       </.grid>
     </.card>
 
+    <%!-- pc-grid: CSS-Grid layout primitive --%>
+    <.card title_text="pc-grid — CSS-Grid layout primitive" subtitle_text="Two-dimensional cell co-alignment + a ruled box-matrix that prints (real borders). Companion to the flex grid/column.">
+      <.heading level={4}>3 columns, ruled</.heading>
+      <.pc_grid cols={3} is_ruled class="mb-4">
+        <.pc_grid_cell col_span={2}><div class="grid-demo-cell">col_span=2</div></.pc_grid_cell>
+        <.pc_grid_cell><div class="grid-demo-cell">cell</div></.pc_grid_cell>
+        <.pc_grid_cell><div class="grid-demo-cell">cell</div></.pc_grid_cell>
+        <.pc_grid_cell><div class="grid-demo-cell">cell</div></.pc_grid_cell>
+        <.pc_grid_cell><div class="grid-demo-cell">cell</div></.pc_grid_cell>
+      </.pc_grid>
+
+      <.heading level={4}>pa-table--plain (neutral ruled grid)</.heading>
+      <.paragraph class="pa-text--secondary mb-2">
+        <.code>is_plain</.code> strips the themed header/stripe fills so the table reads as a plain ruled
+        grid — for paper forms and embedded sheet grids. Pair with <.code>is_bordered</.code>.
+      </.paragraph>
+      <.table
+        rows={[%{f: "Gross weight", v: "2.4 kg"}, %{f: "Country of origin", v: "DE"}]}
+        is_plain
+        is_bordered
+      >
+        <:col :let={row} label="Field">{row.f}</:col>
+        <:col :let={row} label="Value">{row.v}</:col>
+      </.table>
+    </.card>
+
     <%!-- Quick Reference --%>
     <.card title_text="Quick Reference">
       <.grid>

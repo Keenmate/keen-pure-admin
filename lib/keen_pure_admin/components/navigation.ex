@@ -56,13 +56,13 @@ defmodule PureAdmin.Components.Navigation do
     <div id={@id} class={tabs_classes(assigns)} data-tabs-scroll={if @overflow == "scrollable", do: ""} {@rest}>
       <%= if @overflow == "scrollable" do %>
         <button type="button" class="pa-tabs__scroll-btn pa-tabs__scroll-btn--start" data-pa-tab-scroll="start" aria-label="Scroll tabs left">
-          <i class="fa-solid fa-chevron-left"></i>
+          <span class="pa-icon pa-icon--chevron-left" aria-hidden="true"></span>
         </button>
         <div class="pa-tabs__scroll-container">
           <%= render_slot(@inner_block) %>
         </div>
         <button type="button" class="pa-tabs__scroll-btn pa-tabs__scroll-btn--end" data-pa-tab-scroll="end" aria-label="Scroll tabs right">
-          <i class="fa-solid fa-chevron-right"></i>
+          <span class="pa-icon pa-icon--chevron-right" aria-hidden="true"></span>
         </button>
       <% else %>
         <%= render_slot(@inner_block) %>

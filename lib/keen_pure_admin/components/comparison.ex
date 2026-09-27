@@ -188,7 +188,7 @@ defmodule PureAdmin.Components.Comparison do
         type="button"
         phx-click={copy_to_clipboard(@value)}
       >
-        <i class="fa-solid fa-clipboard"></i>
+        <span class="pa-icon pa-icon--copy" aria-hidden="true"></span>
       </button>
     </div>
     """

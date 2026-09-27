@@ -97,7 +97,7 @@ defmodule PureAdmin.Components.Splitter do
   attr(:rail_size, :integer,
     default: nil,
     doc:
-      "Rail width in px when a pane is minimized. Defaults to the `--pc-splitter-rail-size` CSS custom property (or `40` if unset)."
+      "Rail width in px when a pane is minimized. Defaults to the `--pa-splitter-rail-size` CSS custom property (or `40` if unset)."
   )
 
   attr(:step, :integer,

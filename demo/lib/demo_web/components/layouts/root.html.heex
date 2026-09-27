@@ -7,7 +7,7 @@
     <.live_title default="Pure Admin Demo" suffix=" · PureAdmin">
       {assigns[:page_title]}
     </.live_title>
-    <link rel="stylesheet" id="pa-theme-css" href="/themes/audi/css/audi.css" />
+    <link rel="stylesheet" id="pa-theme-css" href="/themes/audi/dist/audi.css" />
     <link rel="stylesheet" href={~p"/assets/css/app.css"} />
     <link
       rel="stylesheet"
@@ -177,7 +177,7 @@
         var t = localStorage.getItem("theme");
         if (t) {
           var link = document.getElementById("pa-theme-css");
-          if (link) link.href = "/themes/" + t + "/css/" + t + ".css";
+          if (link) link.href = "/themes/" + t + "/dist/" + t + ".css";
         }
       })();
     </script>
