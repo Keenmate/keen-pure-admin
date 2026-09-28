@@ -29,6 +29,9 @@ defmodule PureAdmin.CommandPalette do
     * `id` (required) — DOM id; the same value triggers dispatch to.
     * `source` (required) — a module implementing `PureAdmin.CommandPalette.Source`.
     * `display` — `"inline"` (default) or `"tokens"`.
+    * `size` — width/height preset `"sm"` / `"lg"` / `"xl"` (nil = default). For an
+      arbitrary size, leave nil and override the `--pa-command-palette-width` /
+      `-offset-top` / `-results-max-height` CSS variables instead.
     * `page_size` — search results per page (default `8`).
 
   See `PureAdmin.CommandPalette.Source` for the injected contract, data shapes
@@ -54,6 +57,7 @@ defmodule PureAdmin.CommandPalette do
       |> assign(:id, assigns.id)
       |> assign(:source, source)
       |> assign(:cp_display, assigns[:display] || Map.get(socket.assigns, :cp_display, "inline"))
+      |> assign(:size, assigns[:size] || Map.get(socket.assigns, :size))
       |> assign(:page_size, assigns[:page_size] || Map.get(socket.assigns, :page_size, @default_page_size))
       |> assign_new(:cp_open, fn -> false end)
       |> assign_new(:cp_mode, fn -> "idle" end)
@@ -109,7 +113,7 @@ defmodule PureAdmin.CommandPalette do
     ~H"""
     <div
       id={@id}
-      class={build_classes("pa-command-palette", [{"pa-command-palette--active", @cp_open}], nil)}
+      class={build_classes("pa-command-palette", [{"pa-command-palette--active", @cp_open}, {"pa-command-palette--#{@size}", @size != nil}], nil)}
       phx-hook="PureAdminCommandPalette"
       data-mode={@cp_mode}
       data-display={@cp_display}
