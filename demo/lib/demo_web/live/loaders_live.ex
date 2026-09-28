@@ -10,7 +10,7 @@ defmodule DemoWeb.Live.LoadersLive do
     <.paragraph>Loading indicators and spinner components for async operations.</.paragraph>
 
     <%!-- Spinner Sizes --%>
-    <.card title_text="Spinner Sizes" class="mb-6">
+    <.card title_text={gettext("Spinner Sizes")} class="mb-6">
       <.callout variant="info" class="mb-4">
         Pure Admin currently only ships two spinner sizes: the default and <code>--xs</code>.
         Other size modifiers (<code>--sm/--md/--lg/--xl/--2xl</code>) are not implemented in the
@@ -29,7 +29,7 @@ defmodule DemoWeb.Live.LoadersLive do
     </.card>
 
     <%!-- Spinner Colors --%>
-    <.card title_text="Spinner Colors" class="mb-6">
+    <.card title_text={gettext("Spinner Colors")} class="mb-6">
       <.grid>
         <.column size="100" md="1-4" class="text-center mb-4">
           <.spinner variant="primary" />
@@ -59,7 +59,7 @@ defmodule DemoWeb.Live.LoadersLive do
     </.card>
 
     <%!-- Inline Spinners --%>
-    <.card title_text="Inline Spinners" class="mb-6">
+    <.card title_text={gettext("Inline Spinners")} class="mb-6">
       <.paragraph class="mb-4">
         <.spinner size="xs" variant="primary" class="d-inline-block mr-2" />
         Loading inline content...
@@ -75,7 +75,7 @@ defmodule DemoWeb.Live.LoadersLive do
     </.card>
 
     <%!-- Centered Loaders --%>
-    <.card title_text="Centered Loaders" class="mb-6">
+    <.card title_text={gettext("Centered Loaders")} class="mb-6">
       <div class="hr-20 position-relative border border-dashed rounded">
         <.loader_overlay>
           <.spinner variant="primary" />
@@ -84,7 +84,7 @@ defmodule DemoWeb.Live.LoadersLive do
     </.card>
 
     <%!-- Loaders with Text --%>
-    <.card title_text="Loaders with Text" class="mb-6">
+    <.card title_text={gettext("Loaders with Text")} class="mb-6">
       <.grid>
         <.column size="100" md="1-2" class="mb-4">
           <.loader_center class="hr-15 border border-dashed rounded">
@@ -102,11 +102,11 @@ defmodule DemoWeb.Live.LoadersLive do
     </.card>
 
     <%!-- Card Loading States --%>
-    <.card title_text="Card Loading States" class="mb-6">
+    <.card title_text={gettext("Card Loading States")} class="mb-6">
       <.grid>
         <.column size="100" md="1-3" class="mb-4">
           <.card>
-            <:header><.heading level={4}>Loading Card</.heading></:header>
+            <:header><.heading level={4}>{gettext("Loading Card")}</.heading></:header>
             <div class="hr-15 position-relative">
               <.loader_overlay>
                 <.spinner variant="primary" />
@@ -116,7 +116,7 @@ defmodule DemoWeb.Live.LoadersLive do
         </.column>
         <.column size="100" md="1-3" class="mb-4">
           <.card>
-            <:header><.heading level={4}>Loading with Text</.heading></:header>
+            <:header><.heading level={4}>{gettext("Loading with Text")}</.heading></:header>
             <.loader_center class="hr-15">
               <.spinner variant="info" />
               <.paragraph class="mt-4 text-secondary">Fetching data...</.paragraph>
@@ -125,7 +125,7 @@ defmodule DemoWeb.Live.LoadersLive do
         </.column>
         <.column size="100" md="1-3" class="mb-4">
           <.card>
-            <:header><.heading level={4}>Loaded Content</.heading></:header>
+            <:header><.heading level={4}>{gettext("Loaded Content")}</.heading></:header>
             <.paragraph>Content has loaded successfully!</.paragraph>
             <.paragraph class="mt-2">This is what appears after the loader completes.</.paragraph>
           </.card>
@@ -134,7 +134,7 @@ defmodule DemoWeb.Live.LoadersLive do
     </.card>
 
     <%!-- Loader Types --%>
-    <.card title_text="Loader Types" class="mb-6">
+    <.card title_text={gettext("Loader Types")} class="mb-6">
       <.grid>
         <.column size="100" md="1-3" class="text-center mb-6">
           <.loader type="dots" size="lg" color="primary" />
@@ -170,11 +170,11 @@ defmodule DemoWeb.Live.LoadersLive do
     </.card>
 
     <%!-- Button Loading States --%>
-    <.card title_text="Button Loading States" class="mb-6">
+    <.card title_text={gettext("Button Loading States")} class="mb-6">
       <.button_group>
-        <.button variant="primary" is_loading>Saving...</.button>
-        <.button variant="success" is_loading>Processing...</.button>
-        <.button variant="danger" is_loading>Deleting...</.button>
+        <.button variant="primary" is_loading>{gettext("Saving...")}</.button>
+        <.button variant="success" is_loading>{gettext("Processing...")}</.button>
+        <.button variant="danger" is_loading>{gettext("Deleting...")}</.button>
       </.button_group>
     </.card>
     """

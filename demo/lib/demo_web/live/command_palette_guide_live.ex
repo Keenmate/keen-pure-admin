@@ -100,10 +100,10 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
     <div class="mb-4">
       <.button variant="primary" phx-click={show_command_palette()}>
         <:icon><i class="fa-solid fa-magnifying-glass"></i></:icon>
-        Open the palette (Ctrl+K)
+        {gettext("Open the palette (Ctrl+K)")}
       </.button>
       <.button variant="secondary" href={~p"/components/command-palette"}>
-        See the interactive demo
+        {gettext("See the interactive demo")}
       </.button>
     </div>
 
@@ -115,7 +115,7 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
 
     <.grid>
       <.column size="100" lg="1-2">
-        <.card title_text="1 · Mount it in your layout" class="mb-4">
+        <.card title_text={gettext("1 · Mount it in your layout")} class="mb-4">
           <.paragraph class="mb-3">
             One instance, referenced by <code>id</code>. The <code>source</code> is a module
             (below) that supplies your app's data and actions.
@@ -123,7 +123,7 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
           <.code_block language="heex">{@mount_layout}</.code_block>
         </.card>
 
-        <.card title_text="2 · Wire triggers" class="mb-4">
+        <.card title_text={gettext("2 · Wire triggers")} class="mb-4">
           <.paragraph class="mb-3">
             <code>show_command_palette/0</code> is a <code>JS</code> command — attach it to
             anything. It dispatches to the palette by id, so no LiveView event is needed.
@@ -131,7 +131,7 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
           <.code_block language="heex">{@triggers}</.code_block>
         </.card>
 
-        <.card title_text="Drive it from a LiveView" class="mb-4">
+        <.card title_text={gettext("Drive it from a LiveView")} class="mb-4">
           <.paragraph class="mb-3">
             Open it pre-filled, or change the display style, with <code>send_update/2</code>.
           </.paragraph>
@@ -140,7 +140,7 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
       </.column>
 
       <.column size="100" lg="1-2">
-        <.card title_text="3 · Implement a Source" class="mb-4">
+        <.card title_text={gettext("3 · Implement a Source")} class="mb-4">
           <.paragraph class="mb-3">
             <code>use PureAdmin.CommandPalette.Source</code> gives overridable no-op defaults —
             define only the callbacks you need.
@@ -150,7 +150,7 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
       </.column>
     </.grid>
 
-    <.card title_text="Source callbacks" class="mb-4">
+    <.card title_text={gettext("Source callbacks")} class="mb-4">
       <.paragraph class="mb-3">
         The contract in <code>PureAdmin.CommandPalette.Source</code>. Filtering is the source's
         job — <code>search/2</code> and <code>step_options/4</code> receive the query and return
@@ -165,15 +165,15 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
         %{cb: "on_select/1", ret: "directive", desc: "What selecting a search result does"},
         %{cb: "on_complete/2", ret: "directive", desc: "What finishing a command does (command_id, selections)"}
       ]} size="sm">
-        <:col :let={r} label="Callback"><code>{r.cb}</code></:col>
-        <:col :let={r} label="Returns"><code>{r.ret}</code></:col>
-        <:col :let={r} label="Purpose">{r.desc}</:col>
+        <:col :let={r} label={gettext("Callback")}><code>{r.cb}</code></:col>
+        <:col :let={r} label={gettext("Returns")}><code>{r.ret}</code></:col>
+        <:col :let={r} label={gettext("Purpose")}>{r.desc}</:col>
       </.table>
     </.card>
 
     <.grid>
       <.column size="100" lg="1-2">
-        <.card title_text="Directives" class="mb-4">
+        <.card title_text={gettext("Directives")} class="mb-4">
           <.paragraph class="mb-3">
             <code>on_select/1</code> and <code>on_complete/2</code> return a directive the
             component executes — so the palette can live globally without any LiveView carrying
@@ -186,14 +186,14 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
             %{d: ":close", w: "just close the palette"},
             %{d: ":noop / nil", w: "do nothing"}
           ]} size="sm">
-            <:col :let={r} label="Directive"><code>{r.d}</code></:col>
-            <:col :let={r} label="Effect">{r.w}</:col>
+            <:col :let={r} label={gettext("Directive")}><code>{r.d}</code></:col>
+            <:col :let={r} label={gettext("Effect")}>{r.w}</:col>
           </.table>
         </.card>
       </.column>
 
       <.column size="100" lg="1-2">
-        <.card title_text="Data shapes" class="mb-4">
+        <.card title_text={gettext("Data shapes")} class="mb-4">
           <.table rows={[
             %{t: "command", s: "%{id, shortcut, aliases, hotkey, name, description, icon, steps}"},
             %{t: "step", s: "%{id, prompt, placeholder, free_text}"},
@@ -201,8 +201,8 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
             %{t: "option", s: "%{label, value, description, icon, code}"},
             %{t: "item", s: "%{title, subtitle, icon, badge, …your keys}"}
           ]} size="sm">
-            <:col :let={r} label="Type"><code>{r.t}</code></:col>
-            <:col :let={r} label="Shape"><code>{r.s}</code></:col>
+            <:col :let={r} label={gettext("Type")}><code>{r.t}</code></:col>
+            <:col :let={r} label={gettext("Shape")}><code>{r.s}</code></:col>
           </.table>
           <.paragraph class="mt-3">
             <code>free_text</code> on a step lets the user submit typed text when nothing matches.
@@ -213,22 +213,22 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
       </.column>
     </.grid>
 
-    <.card title_text="Modes & keyboard" class="mb-4">
+    <.card title_text={gettext("Modes & keyboard")} class="mb-4">
       <.grid>
         <.column size="100" lg="1-2">
-          <.heading level={4} class="mb-2">Modes</.heading>
+          <.heading level={4} class="mb-2">{gettext("Modes")}</.heading>
           <.table rows={[
             %{prefix: "/", mode: "Commands", description: "Multi-step action wizards"},
             %{prefix: ":", mode: "Search", description: "Scoped entity search"},
             %{prefix: "(none)", mode: "Global", description: "Search everything"}
           ]} size="sm">
-            <:col :let={row} label="Prefix"><code>{row.prefix}</code></:col>
-            <:col :let={row} label="Mode">{row.mode}</:col>
-            <:col :let={row} label="Description">{row.description}</:col>
+            <:col :let={row} label={gettext("Prefix")}><code>{row.prefix}</code></:col>
+            <:col :let={row} label={gettext("Mode")}>{row.mode}</:col>
+            <:col :let={row} label={gettext("Description")}>{row.description}</:col>
           </.table>
         </.column>
         <.column size="100" lg="1-2">
-          <.heading level={4} class="mb-2">Keyboard</.heading>
+          <.heading level={4} class="mb-2">{gettext("Keyboard")}</.heading>
           <.table rows={[
             %{key: "Ctrl+K / ⌘K", action: "Toggle palette"},
             %{key: "↑ ↓", action: "Navigate results"},
@@ -237,8 +237,8 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
             %{key: "Backspace (at start)", action: "Back to previous step"},
             %{key: "Esc", action: "Back (in step/context) or close"}
           ]} size="sm">
-            <:col :let={row} label="Key"><kbd>{row.key}</kbd></:col>
-            <:col :let={row} label="Action">{row.action}</:col>
+            <:col :let={row} label={gettext("Key")}><kbd>{row.key}</kbd></:col>
+            <:col :let={row} label={gettext("Action")}>{row.action}</:col>
           </.table>
         </.column>
       </.grid>

@@ -80,6 +80,9 @@ defmodule DemoWeb do
       # HTML escaping functionality
       import Phoenix.HTML
 
+      # Translations — gettext/1, dgettext/2, ngettext/3 in every template
+      use Gettext, backend: DemoWeb.Gettext
+
       # Pure Admin components (full CoreComponents replacement)
       use PureAdmin.Components
 

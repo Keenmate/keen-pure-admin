@@ -67,7 +67,7 @@ defmodule DemoWeb.Live.BadgesLive do
     <.paragraph>Badges, labels, and composite badges for status display and categorization.</.paragraph>
 
     <%!-- Badge Sizes Reference --%>
-    <.card title_text="Badge Sizes Reference" has_padding={false}>
+    <.card title_text={gettext("Badge Sizes Reference")} has_padding={false}>
       <.table rows={[
         %{size: "XS", class: ".pa-badge--xs", font: "1rem (10px)", padding: "0.2rem 0.4rem", example_size: "xs", example_text: "Extra Small"},
         %{size: "SM", class: ".pa-badge--sm", font: "1.2rem (12px)", padding: "0.25rem 0.5rem", example_size: "sm", example_text: "Small Badge"},
@@ -75,20 +75,20 @@ defmodule DemoWeb.Live.BadgesLive do
         %{size: "LG", class: ".pa-badge--lg", font: "1.4rem (14px)", padding: "0.5rem 1rem", example_size: "lg", example_text: "Large Badge"},
         %{size: "XL", class: ".pa-badge--xl", font: "1.6rem (16px)", padding: "0.6rem 1.2rem", example_size: "xl", example_text: "Extra Large"}
       ]} is_striped>
-        <:col :let={row} label="Size"><strong>{row.size}</strong></:col>
-        <:col :let={row} label="Class"><code>{row.class}</code></:col>
-        <:col :let={row} label="Font Size">{row.font}</:col>
-        <:col :let={row} label="Padding">{row.padding}</:col>
-        <:col :let={row} label="Example"><.badge size={row.example_size} variant="primary">{row.example_text}</.badge></:col>
+        <:col :let={row} label={gettext("Size")}><strong>{row.size}</strong></:col>
+        <:col :let={row} label={gettext("Class")}><code>{row.class}</code></:col>
+        <:col :let={row} label={gettext("Font Size")}>{row.font}</:col>
+        <:col :let={row} label={gettext("Padding")}>{row.padding}</:col>
+        <:col :let={row} label={gettext("Example")}><.badge size={row.example_size} variant="primary">{row.example_text}</.badge></:col>
       </.table>
     </.card>
 
     <%!-- Basic Badges --%>
-    <.card title_text="Basic Badges">
+    <.card title_text={gettext("Basic Badges")}>
       <:description>Simple badges for status indication and categorization</:description>
       <.grid>
         <.column size="100" md="1-2">
-          <.heading level={4}>Default Badges</.heading>
+          <.heading level={4}>{gettext("Default Badges")}</.heading>
           <div class="component-showcase">
             <.badge>Default</.badge>
             <.badge variant="primary">Primary</.badge>
@@ -102,7 +102,7 @@ defmodule DemoWeb.Live.BadgesLive do
           </div>
         </.column>
         <.column size="100" md="1-2">
-          <.heading level={4}>Small Badges</.heading>
+          <.heading level={4}>{gettext("Small Badges")}</.heading>
           <div class="component-showcase">
             <.badge size="sm">Default</.badge>
             <.badge size="sm" variant="primary">Primary</.badge>
@@ -119,11 +119,11 @@ defmodule DemoWeb.Live.BadgesLive do
     </.card>
 
     <%!-- Pill Badges --%>
-    <.card title_text="Pill Badges">
+    <.card title_text={gettext("Pill Badges")}>
       <:description>Rounded badges for a softer, modern appearance</:description>
       <.grid>
         <.column size="100" md="1-2">
-          <.heading level={4}>Regular Pills</.heading>
+          <.heading level={4}>{gettext("Regular Pills")}</.heading>
           <div class="component-showcase">
             <.badge is_pill>Default</.badge>
             <.badge is_pill variant="primary">Primary</.badge>
@@ -135,7 +135,7 @@ defmodule DemoWeb.Live.BadgesLive do
           </div>
         </.column>
         <.column size="100" md="1-2">
-          <.heading level={4}>Small Pills</.heading>
+          <.heading level={4}>{gettext("Small Pills")}</.heading>
           <div class="component-showcase">
             <.badge is_pill size="sm">Default</.badge>
             <.badge is_pill size="sm" variant="primary">Primary</.badge>
@@ -150,85 +150,85 @@ defmodule DemoWeb.Live.BadgesLive do
     </.card>
 
     <%!-- Badges with Icons --%>
-    <.card title_text="Badges with Icons">
+    <.card title_text={gettext("Badges with Icons")}>
       <:description>Enhanced badges with icon indicators</:description>
       <div class="component-showcase">
         <.badge variant="primary">
           <:icon>✓</:icon>
-          Completed
+          {gettext("Completed")}
         </.badge>
         <.badge variant="warning">
           <:icon>!</:icon>
-          Warning
+          {gettext("Warning")}
         </.badge>
         <.badge variant="danger">
           <:icon>✕</:icon>
-          Error
+          {gettext("Error")}
         </.badge>
         <.badge variant="info">
           <:icon>ℹ</:icon>
-          Info
+          {gettext("Info")}
         </.badge>
         <.badge variant="success">
           <:icon>★</:icon>
-          Featured
+          {gettext("Featured")}
         </.badge>
         <.badge variant="secondary">
           <:icon>⏱</:icon>
-          Pending
+          {gettext("Pending")}
         </.badge>
       </div>
     </.card>
 
     <%!-- Label Sizes Reference --%>
-    <.card title_text="Label Sizes Reference" has_padding={false}>
+    <.card title_text={gettext("Label Sizes Reference")} has_padding={false}>
       <.table rows={[
         %{size: "XS", class: ".pa-label--xs", font: "1rem (10px)", padding: "0.2rem 0.4rem", example_size: "sm", example_text: "Extra Small"},
         %{size: "SM", class: ".pa-label--sm", font: "1.2rem (12px)", padding: "0.25rem 0.5rem", example_size: "sm", example_text: "Small Label"},
         %{size: "Default", class: ".pa-label", font: "1.2rem (12px)", padding: "0.4rem 0.8rem", example_size: nil, example_text: "Default Label"},
         %{size: "LG", class: ".pa-label--lg", font: "1.4rem (14px)", padding: "0.5rem 1rem", example_size: "lg", example_text: "Large Label"}
       ]} is_striped>
-        <:col :let={row} label="Size"><strong>{row.size}</strong></:col>
-        <:col :let={row} label="Class"><code>{row.class}</code></:col>
-        <:col :let={row} label="Font Size">{row.font}</:col>
-        <:col :let={row} label="Padding">{row.padding}</:col>
-        <:col :let={row} label="Example"><.label size={row.example_size} variant="primary">{row.example_text}</.label></:col>
+        <:col :let={row} label={gettext("Size")}><strong>{row.size}</strong></:col>
+        <:col :let={row} label={gettext("Class")}><code>{row.class}</code></:col>
+        <:col :let={row} label={gettext("Font Size")}>{row.font}</:col>
+        <:col :let={row} label={gettext("Padding")}>{row.padding}</:col>
+        <:col :let={row} label={gettext("Example")}><.label size={row.example_size} variant="primary">{row.example_text}</.label></:col>
       </.table>
     </.card>
 
     <%!-- Labels --%>
-    <.card title_text="Labels">
+    <.card title_text={gettext("Labels")}>
       <:description>Text labels for categorization and tagging</:description>
       <.grid>
         <.column size="100" md="1-2">
-          <.heading level={4}>Basic Labels</.heading>
+          <.heading level={4}>{gettext("Basic Labels")}</.heading>
           <div class="component-showcase">
-            <.label>Frontend</.label>
+            <.label>{gettext("Frontend")}</.label>
             <.label variant="primary">React</.label>
             <.label variant="secondary">TypeScript</.label>
-            <.label variant="success">Bug Fix</.label>
-            <.label variant="warning">Enhancement</.label>
-            <.label variant="danger">Breaking Change</.label>
-            <.label variant="info">Documentation</.label>
+            <.label variant="success">{gettext("Bug Fix")}</.label>
+            <.label variant="warning">{gettext("Enhancement")}</.label>
+            <.label variant="danger">{gettext("Breaking Change")}</.label>
+            <.label variant="info">{gettext("Documentation")}</.label>
           </div>
         </.column>
         <.column size="100" md="1-2">
-          <.heading level={4}>Outlined Labels</.heading>
+          <.heading level={4}>{gettext("Outlined Labels")}</.heading>
           <div class="component-showcase">
-            <.label is_outline>Frontend</.label>
+            <.label is_outline>{gettext("Frontend")}</.label>
             <.label is_outline variant="primary">React</.label>
             <.label is_outline variant="secondary">TypeScript</.label>
-            <.label is_outline variant="success">Bug Fix</.label>
-            <.label is_outline variant="warning">Enhancement</.label>
-            <.label is_outline variant="danger">Breaking Change</.label>
-            <.label is_outline variant="info">Documentation</.label>
+            <.label is_outline variant="success">{gettext("Bug Fix")}</.label>
+            <.label is_outline variant="warning">{gettext("Enhancement")}</.label>
+            <.label is_outline variant="danger">{gettext("Breaking Change")}</.label>
+            <.label is_outline variant="info">{gettext("Documentation")}</.label>
           </div>
         </.column>
       </.grid>
     </.card>
 
     <%!-- Badge Groups with Limits --%>
-    <.card title_text="Badge Groups with Limits">
+    <.card title_text={gettext("Badge Groups with Limits")}>
       <:description>Display many badges with automatic overflow handling - shows 5 badges and "... N more" indicator</:description>
       <.grid>
         <.column size="100">
@@ -256,13 +256,13 @@ defmodule DemoWeb.Live.BadgesLive do
 
       <.grid class="mt-4">
         <.column size="100" md="1-3">
-          <.heading level={4}>Narrow Container</.heading>
+          <.heading level={4}>{gettext("Narrow Container")}</.heading>
           <.badge_group limit={5} total={length(@project_tags)}>
             <.badge :for={tag <- @project_tags} variant={tag.variant}><%= tag.label %></.badge>
           </.badge_group>
         </.column>
         <.column size="100" md="2-3">
-          <.heading level={4}>Full Width Comparison</.heading>
+          <.heading level={4}>{gettext("Full Width Comparison")}</.heading>
           <.badge_group limit={5} total={length(@project_tags)}>
             <.badge :for={tag <- @project_tags} variant={tag.variant}><%= tag.label %></.badge>
           </.badge_group>
@@ -271,7 +271,7 @@ defmodule DemoWeb.Live.BadgesLive do
 
       <.grid class="mt-4">
         <.column size="100" md="1-6">
-          <.heading level={4}>Wrapping Demo (Static)</.heading>
+          <.heading level={4}>{gettext("Wrapping Demo (Static)")}</.heading>
           <.badge_group is_show_all>
             <.badge size="sm" variant="primary">React</.badge>
             <.badge size="sm" variant="info">Vue</.badge>
@@ -289,7 +289,7 @@ defmodule DemoWeb.Live.BadgesLive do
           </.badge_group>
         </.column>
         <.column size="100" md="5-6">
-          <.heading level={4}>Full Width Comparison</.heading>
+          <.heading level={4}>{gettext("Full Width Comparison")}</.heading>
           <.badge_group is_show_all>
             <.badge size="sm" variant="primary">React</.badge>
             <.badge size="sm" variant="info">Vue</.badge>
@@ -310,11 +310,11 @@ defmodule DemoWeb.Live.BadgesLive do
     </.card>
 
     <%!-- Fixed-Width Badges with Ellipsis --%>
-    <.card title_text="Fixed-Width Badges with Ellipsis">
+    <.card title_text={gettext("Fixed-Width Badges with Ellipsis")}>
       <:description>Badges with constrained width show ellipsis for overflow text. Hover for tooltip with full text.</:description>
       <.grid>
         <.column size="100" md="1-2">
-          <.heading level={4}>Various Fixed Widths</.heading>
+          <.heading level={4}>{gettext("Various Fixed Widths")}</.heading>
           <div class="component-showcase">
             <.tooltip text="Short" position="bottom">
               <.badge variant="primary" max_width="5">Short</.badge>
@@ -334,7 +334,7 @@ defmodule DemoWeb.Live.BadgesLive do
           </div>
         </.column>
         <.column size="100" md="1-2">
-          <.heading level={4}>Small Fixed-Width Badges</.heading>
+          <.heading level={4}>{gettext("Small Fixed-Width Badges")}</.heading>
           <div class="component-showcase">
             <.tooltip text="OK" position="bottom">
               <.badge size="sm" variant="primary" max_width="4">OK</.badge>
@@ -408,11 +408,11 @@ defmodule DemoWeb.Live.BadgesLive do
     </.card>
 
     <%!-- Composite Badges --%>
-    <.card title_text="Composite Badges">
+    <.card title_text={gettext("Composite Badges")}>
       <:description>Three-part badges with separate icon, label, and button sections</:description>
       <.grid>
         <.column size="100" md="1-2">
-          <.heading level={4}>Standard Color Variations</.heading>
+          <.heading level={4}>{gettext("Standard Color Variations")}</.heading>
           <div class="component-showcase">
             <.composite_badge variant="primary" icon="✓" label="Primary" button_text="×" is_interactive />
             <.composite_badge variant="secondary" icon="⚙" label="Secondary" button_text="×" is_interactive />
@@ -425,7 +425,7 @@ defmodule DemoWeb.Live.BadgesLive do
           </div>
         </.column>
         <.column size="100" md="1-2">
-          <.heading level={4}>More Examples</.heading>
+          <.heading level={4}>{gettext("More Examples")}</.heading>
           <div class="component-showcase">
             <.composite_badge variant="danger" icon="🔥" label="Critical" button_text="×" is_interactive />
             <.composite_badge variant="light" icon="◇" label="Draft" button_text="↗" is_interactive />
@@ -436,7 +436,7 @@ defmodule DemoWeb.Live.BadgesLive do
 
       <.grid class="mt-4">
         <.column size="100">
-          <.heading level={4}>Advanced: Mixed Section Colors</.heading>
+          <.heading level={4}>{gettext("Advanced: Mixed Section Colors")}</.heading>
           <.paragraph class="text-sm text-secondary mb-3">
             For advanced customization, you can mix individual section colors using separate classes.
           </.paragraph>
@@ -451,7 +451,7 @@ defmodule DemoWeb.Live.BadgesLive do
     </.card>
 
     <%!-- Interactive Composite Badges --%>
-    <.card title_text="Interactive Composite Badges">
+    <.card title_text={gettext("Interactive Composite Badges")}>
       <:description>Examples with click handlers and dynamic behavior</:description>
       <div class="component-showcase">
         <.composite_badge variant="info" icon="📋" label="Task #1234" button_text="×" is_interactive on_label_click="badge_label_click" on_button_click="badge_button_click" />
@@ -465,43 +465,43 @@ defmodule DemoWeb.Live.BadgesLive do
     </.card>
 
     <%!-- Usage Examples --%>
-    <.card title_text="Usage Examples">
+    <.card title_text={gettext("Usage Examples")}>
       <:description>Real-world examples of badges and labels in context</:description>
       <.grid>
         <.column size="100" md="1-2">
-          <.heading level={4}>User Status</.heading>
+          <.heading level={4}>{gettext("User Status")}</.heading>
           <div class="usage-example">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
               <span>John Doe</span>
-              <.badge size="sm" variant="success">Online</.badge>
+              <.badge size="sm" variant="success">{gettext("Online")}</.badge>
             </div>
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
               <span>Jane Smith</span>
-              <.badge size="sm" variant="warning">Away</.badge>
+              <.badge size="sm" variant="warning">{gettext("Away")}</.badge>
             </div>
             <div style="display: flex; align-items: center; gap: 8px;">
               <span>Mike Johnson</span>
-              <.badge size="sm" variant="secondary">Offline</.badge>
+              <.badge size="sm" variant="secondary">{gettext("Offline")}</.badge>
             </div>
           </div>
         </.column>
         <.column size="100" md="1-2">
-          <.heading level={4}>Project Tags</.heading>
+          <.heading level={4}>{gettext("Project Tags")}</.heading>
           <div class="usage-example">
             <div style="margin-bottom: 12px;">
-              <.heading level={5}>Website Redesign</.heading>
+              <.heading level={5}>{gettext("Website Redesign")}</.heading>
               <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px;">
-                <.label size="sm" variant="primary">Frontend</.label>
-                <.label size="sm" variant="info">Design</.label>
-                <.label size="sm" variant="warning">High Priority</.label>
+                <.label size="sm" variant="primary">{gettext("Frontend")}</.label>
+                <.label size="sm" variant="info">{gettext("Design")}</.label>
+                <.label size="sm" variant="warning">{gettext("High Priority")}</.label>
               </div>
             </div>
             <div>
-              <.heading level={5}>API Integration</.heading>
+              <.heading level={5}>{gettext("API Integration")}</.heading>
               <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px;">
-                <.label size="sm" variant="secondary">Backend</.label>
+                <.label size="sm" variant="secondary">{gettext("Backend")}</.label>
                 <.label size="sm" variant="success">REST API</.label>
-                <.label size="sm" variant="danger">Critical</.label>
+                <.label size="sm" variant="danger">{gettext("Critical")}</.label>
               </div>
             </div>
           </div>

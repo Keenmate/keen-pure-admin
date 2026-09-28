@@ -118,7 +118,7 @@ defmodule DemoWeb.Live.ModalDialogsLive do
     <.paragraph>Promise-based programmatic dialogs. No HTML boilerplate — created on-demand via JavaScript.</.paragraph>
 
     <%!-- Basic Usage --%>
-    <.card title_text="Basic Usage">
+    <.card title_text={gettext("Basic Usage")}>
       <.paragraph class="mb-3">
         All dialog functions return Promises, so you can use <code>async/await</code> for clean, synchronous-looking code:
       </.paragraph>
@@ -126,26 +126,26 @@ defmodule DemoWeb.Live.ModalDialogsLive do
     </.card>
 
     <%!-- Confirm Dialogs --%>
-    <.card title_text="Confirm Dialogs">
+    <.card title_text={gettext("Confirm Dialogs")}>
       <.paragraph class="mb-3">Two-button dialogs that return <code>true</code> (confirmed) or <code>false</code> (cancelled).</.paragraph>
       <.grid>
         <.column size="100" md="1-3">
-          <.button variant="primary" class="wr-100" onclick="confirmPrimary()">Primary Confirm</.button>
+          <.button variant="primary" class="wr-100" onclick="confirmPrimary()">{gettext("Primary Confirm")}</.button>
         </.column>
         <.column size="100" md="1-3">
-          <.button variant="success" class="wr-100" onclick="confirmSuccess()">Success Confirm</.button>
+          <.button variant="success" class="wr-100" onclick="confirmSuccess()">{gettext("Success Confirm")}</.button>
         </.column>
         <.column size="100" md="1-3">
-          <.button variant="warning" class="wr-100" onclick="confirmWarning()">Warning Confirm</.button>
+          <.button variant="warning" class="wr-100" onclick="confirmWarning()">{gettext("Warning Confirm")}</.button>
         </.column>
         <.column size="100" md="1-3">
-          <.button variant="danger" class="wr-100" onclick="confirmDanger()">Danger Confirm</.button>
+          <.button variant="danger" class="wr-100" onclick="confirmDanger()">{gettext("Danger Confirm")}</.button>
         </.column>
         <.column size="100" md="1-3">
-          <.button variant="secondary" class="wr-100" onclick="confirmCustomText()">Custom Button Text</.button>
+          <.button variant="secondary" class="wr-100" onclick="confirmCustomText()">{gettext("Custom Button Text")}</.button>
         </.column>
         <.column size="100" md="1-3">
-          <.button variant="secondary" class="wr-100" onclick="confirmLarge()">Large Size</.button>
+          <.button variant="secondary" class="wr-100" onclick="confirmLarge()">{gettext("Large Size")}</.button>
         </.column>
       </.grid>
       <div id="confirm-result" class="pa-alert pa-alert--primary mt-4" style="display: none;">
@@ -154,56 +154,56 @@ defmodule DemoWeb.Live.ModalDialogsLive do
     </.card>
 
     <%!-- Position Options --%>
-    <.card title_text="Position Options">
+    <.card title_text={gettext("Position Options")}>
       <.paragraph class="mb-3">Dialogs can be positioned in the <strong>center</strong> (default) or at the <strong>top</strong> of the viewport.</.paragraph>
       <.grid>
         <.column size="100" md="25">
-          <.button variant="primary" class="wr-100" onclick="positionCenter()">Center (Default)</.button>
+          <.button variant="primary" class="wr-100" onclick="positionCenter()">{gettext("Center (Default)")}</.button>
         </.column>
         <.column size="100" md="25">
-          <.button variant="primary" class="wr-100" onclick="positionTop()">Top Position</.button>
+          <.button variant="primary" class="wr-100" onclick="positionTop()">{gettext("Top Position")}</.button>
         </.column>
         <.column size="100" md="25">
-          <.button variant="success" class="wr-100" onclick="promptTop()">Prompt (Top)</.button>
+          <.button variant="success" class="wr-100" onclick="promptTop()">{gettext("Prompt (Top)")}</.button>
         </.column>
         <.column size="100" md="25">
-          <.button variant="danger" class="wr-100" onclick="confirmTop()">Confirm (Top)</.button>
+          <.button variant="danger" class="wr-100" onclick="confirmTop()">{gettext("Confirm (Top)")}</.button>
         </.column>
       </.grid>
       <.code_block language="javascript" class="mt-4">{@position_code}</.code_block>
     </.card>
 
     <%!-- Alert Dialogs --%>
-    <.card title_text="Alert Dialogs">
+    <.card title_text={gettext("Alert Dialogs")}>
       <.paragraph class="mb-3">Single-button dialogs for notifications. Just wait for the user to acknowledge.</.paragraph>
       <.grid>
         <.column size="100" md="25">
-          <.button variant="primary" class="wr-100" onclick="alertPrimary()">Primary Alert</.button>
+          <.button variant="primary" class="wr-100" onclick="alertPrimary()">{gettext("Primary Alert")}</.button>
         </.column>
         <.column size="100" md="25">
-          <.button variant="success" class="wr-100" onclick="alertSuccess()">Success Alert</.button>
+          <.button variant="success" class="wr-100" onclick="alertSuccess()">{gettext("Success Alert")}</.button>
         </.column>
         <.column size="100" md="25">
-          <.button variant="warning" class="wr-100" onclick="alertWarning()">Warning Alert</.button>
+          <.button variant="warning" class="wr-100" onclick="alertWarning()">{gettext("Warning Alert")}</.button>
         </.column>
         <.column size="100" md="25">
-          <.button variant="danger" class="wr-100" onclick="alertDanger()">Danger Alert</.button>
+          <.button variant="danger" class="wr-100" onclick="alertDanger()">{gettext("Danger Alert")}</.button>
         </.column>
       </.grid>
     </.card>
 
     <%!-- Prompt Dialogs --%>
-    <.card title_text="Prompt Dialogs">
+    <.card title_text={gettext("Prompt Dialogs")}>
       <.paragraph class="mb-3">Text input dialogs that return the entered value (or <code>null</code> if cancelled).</.paragraph>
       <.grid>
         <.column size="100" md="1-3">
-          <.button variant="primary" class="wr-100" onclick="promptBasic()">Basic Prompt</.button>
+          <.button variant="primary" class="wr-100" onclick="promptBasic()">{gettext("Basic Prompt")}</.button>
         </.column>
         <.column size="100" md="1-3">
-          <.button variant="primary" class="wr-100" onclick="promptWithDefault()">With Default Value</.button>
+          <.button variant="primary" class="wr-100" onclick="promptWithDefault()">{gettext("With Default Value")}</.button>
         </.column>
         <.column size="100" md="1-3">
-          <.button variant="primary" class="wr-100" onclick="promptWithValidation()">With Validation</.button>
+          <.button variant="primary" class="wr-100" onclick="promptWithValidation()">{gettext("With Validation")}</.button>
         </.column>
       </.grid>
       <div id="prompt-result" class="pa-alert pa-alert--success mt-4" style="display: none;">
@@ -212,26 +212,26 @@ defmodule DemoWeb.Live.ModalDialogsLive do
     </.card>
 
     <%!-- Sequential Dialogs --%>
-    <.card title_text="Sequential Dialogs">
+    <.card title_text={gettext("Sequential Dialogs")}>
       <.paragraph class="mb-3">Chain multiple dialogs together using async/await:</.paragraph>
-      <.button variant="primary" onclick="sequentialDialogs()">Run Sequential Flow</.button>
+      <.button variant="primary" onclick="sequentialDialogs()">{gettext("Run Sequential Flow")}</.button>
       <.code_block language="javascript" class="mt-4">{@sequential_code}</.code_block>
     </.card>
 
     <%!-- LiveView Integration --%>
-    <.card title_text="LiveView Integration">
+    <.card title_text={gettext("LiveView Integration")}>
       <.paragraph class="mb-3">
         Use <code>onclick</code> with <code>liveSocket</code> to push results back to the server:
       </.paragraph>
       <.grid>
         <.column size="100" md="1-3">
-          <.button variant="danger" class="wr-100" onclick="confirmAndPush('delete')">Confirm Delete (Server)</.button>
+          <.button variant="danger" class="wr-100" onclick="confirmAndPush('delete')">{gettext("Confirm Delete (Server)")}</.button>
         </.column>
         <.column size="100" md="1-3">
-          <.button variant="primary" class="wr-100" onclick="promptAndPush('rename')">Prompt Rename (Server)</.button>
+          <.button variant="primary" class="wr-100" onclick="promptAndPush('rename')">{gettext("Prompt Rename (Server)")}</.button>
         </.column>
         <.column size="100" md="1-3">
-          <.button variant="success" class="wr-100" onclick="alertAndPush('notify')">Alert + Notify (Server)</.button>
+          <.button variant="success" class="wr-100" onclick="alertAndPush('notify')">{gettext("Alert + Notify (Server)")}</.button>
         </.column>
       </.grid>
       <.alert :if={@last_result} variant="info" class="mt-3">
@@ -241,7 +241,7 @@ defmodule DemoWeb.Live.ModalDialogsLive do
     </.card>
 
     <%!-- API Reference --%>
-    <.card title_text="API Reference">
+    <.card title_text={gettext("API Reference")}>
       <.heading level={3} style="margin-top: 0;">PureAdmin.confirm(options)</.heading>
       <.paragraph class="mb-2">Returns <code>Promise&lt;boolean&gt;</code></.paragraph>
       <.table rows={[
@@ -255,10 +255,10 @@ defmodule DemoWeb.Live.ModalDialogsLive do
         %{option: "position", type: "string", default: "'center'", desc: "Vertical position: center, top"},
         %{option: "closeOnBackdrop", type: "boolean", default: "true", desc: "Close when clicking outside"}
       ]} size="sm">
-        <:col :let={row} label="Option"><code>{row.option}</code></:col>
-        <:col :let={row} label="Type">{row.type}</:col>
-        <:col :let={row} label="Default">{row.default}</:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Option")}><code>{row.option}</code></:col>
+        <:col :let={row} label={gettext("Type")}>{row.type}</:col>
+        <:col :let={row} label={gettext("Default")}>{row.default}</:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
 
       <.heading level={3} class="mt-4">PureAdmin.alert(options)</.heading>
@@ -271,10 +271,10 @@ defmodule DemoWeb.Live.ModalDialogsLive do
         %{option: "size", type: "string", default: "'sm'", desc: "Modal size"},
         %{option: "position", type: "string", default: "'center'", desc: "Vertical position: center, top"}
       ]} size="sm">
-        <:col :let={row} label="Option"><code>{row.option}</code></:col>
-        <:col :let={row} label="Type">{row.type}</:col>
-        <:col :let={row} label="Default">{row.default}</:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Option")}><code>{row.option}</code></:col>
+        <:col :let={row} label={gettext("Type")}>{row.type}</:col>
+        <:col :let={row} label={gettext("Default")}>{row.default}</:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
 
       <.heading level={3} class="mt-4">PureAdmin.prompt(options)</.heading>
@@ -291,10 +291,10 @@ defmodule DemoWeb.Live.ModalDialogsLive do
         %{option: "size", type: "string", default: "'sm'", desc: "Modal size"},
         %{option: "position", type: "string", default: "'center'", desc: "Vertical position: center, top"}
       ]} size="sm">
-        <:col :let={row} label="Option"><code>{row.option}</code></:col>
-        <:col :let={row} label="Type">{row.type}</:col>
-        <:col :let={row} label="Default">{row.default}</:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Option")}><code>{row.option}</code></:col>
+        <:col :let={row} label={gettext("Type")}>{row.type}</:col>
+        <:col :let={row} label={gettext("Default")}>{row.default}</:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
     </.card>
 

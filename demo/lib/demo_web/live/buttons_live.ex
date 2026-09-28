@@ -63,7 +63,7 @@ defmodule DemoWeb.Live.ButtonsLive do
     <%!-- Button Variants and Sizes --%>
     <.grid>
       <.column size="100" lg="1-2">
-        <.card title_text="Button Variants">
+        <.card title_text={gettext("Button Variants")}>
           <.button_group>
             <.button variant="primary">Primary</.button>
             <.button variant="secondary">Secondary</.button>
@@ -78,7 +78,7 @@ defmodule DemoWeb.Live.ButtonsLive do
       </.column>
 
       <.column size="100" lg="1-2">
-        <.card title_text="Button Sizes">
+        <.card title_text={gettext("Button Sizes")}>
           <.button_group>
             <.button variant="primary" size="xs">Extra Small</.button>
             <.button variant="primary" size="sm">Small</.button>
@@ -93,14 +93,14 @@ defmodule DemoWeb.Live.ButtonsLive do
     <%!-- Theme Color Buttons --%>
     <.grid>
       <.column size="100" lg="1-2">
-        <.card title_text="Theme Color Buttons">
+        <.card title_text={gettext("Theme Color Buttons")}>
           <.button_group>
             <.button :for={n <- 1..9} theme_color={to_string(n)}>Color {n}</.button>
           </.button_group>
         </.card>
       </.column>
       <.column size="100" lg="1-2">
-        <.card title_text="Theme Color Outline Buttons">
+        <.card title_text={gettext("Theme Color Outline Buttons")}>
           <.button_group>
             <.button :for={n <- 1..9} theme_color={to_string(n)} is_outline>Color {n}</.button>
           </.button_group>
@@ -111,7 +111,7 @@ defmodule DemoWeb.Live.ButtonsLive do
     <%!-- Outline and States --%>
     <.grid>
       <.column size="100" lg="1-2">
-        <.card title_text="Outline Buttons">
+        <.card title_text={gettext("Outline Buttons")}>
           <.button_group>
             <.button variant="primary" is_outline>Primary</.button>
             <.button variant="secondary" is_outline>Secondary</.button>
@@ -124,7 +124,7 @@ defmodule DemoWeb.Live.ButtonsLive do
       </.column>
 
       <.column size="100" lg="1-2">
-        <.card title_text="Button States">
+        <.card title_text={gettext("Button States")}>
           <.button_group>
             <.button variant="primary">Normal</.button>
             <.button variant="primary" disabled>Disabled</.button>
@@ -135,7 +135,7 @@ defmodule DemoWeb.Live.ButtonsLive do
     </.grid>
 
     <%!-- Block Buttons --%>
-    <.card title_text="Block Buttons">
+    <.card title_text={gettext("Block Buttons")}>
       <.button_group is_vertical>
         <.button variant="primary" is_block>Block Level Button</.button>
         <.button variant="secondary" is_block>Another Block Button</.button>
@@ -145,22 +145,22 @@ defmodule DemoWeb.Live.ButtonsLive do
     <%!-- Button Groups --%>
     <.grid>
       <.column size="100" lg="1-2">
-        <.card title_text="Button Groups - Basic">
-          <.heading level={4}>Horizontal (default)</.heading>
+        <.card title_text={gettext("Button Groups - Basic")}>
+          <.heading level={4}>{gettext("Horizontal (default)")}</.heading>
           <.button_group>
             <.button variant="secondary">Start</.button>
             <.button variant="secondary">Middle</.button>
             <.button variant="secondary">End</.button>
           </.button_group>
 
-          <.heading level={4} class="mt-2">Vertical</.heading>
+          <.heading level={4} class="mt-2">{gettext("Vertical")}</.heading>
           <.button_group is_vertical>
             <.button variant="secondary">Top</.button>
             <.button variant="secondary">Middle</.button>
             <.button variant="secondary">Bottom</.button>
           </.button_group>
 
-          <.heading level={4} class="mt-2">No-Wrap (prevents line breaks)</.heading>
+          <.heading level={4} class="mt-2">{gettext("No-Wrap (prevents line breaks)")}</.heading>
           <.button_group is_nowrap>
             <.button variant="primary">One</.button>
             <.button variant="primary">Two</.button>
@@ -172,8 +172,8 @@ defmodule DemoWeb.Live.ButtonsLive do
       </.column>
 
       <.column size="100" lg="1-2">
-        <.card title_text="Button Groups - Gap Sizes">
-          <.heading level={4}>Semantic Gap Classes</.heading>
+        <.card title_text={gettext("Button Groups - Gap Sizes")}>
+          <.heading level={4}>{gettext("Semantic Gap Classes")}</.heading>
           <.paragraph class="pa-text--secondary mb-1"><code>gap-xs</code> (4px)</.paragraph>
           <.button_group class="gap-xs mb-1">
             <.button variant="primary">A</.button>
@@ -223,7 +223,7 @@ defmodule DemoWeb.Live.ButtonsLive do
     <%!-- Vertical Alignment & Responsive --%>
     <.grid>
       <.column size="100" lg="1-2">
-        <.card title_text="Vertical Alignment">
+        <.card title_text={gettext("Vertical Alignment")}>
           <.paragraph class="pa-text--secondary mb-md">
             Use semantic gap classes (<code>gap-sm</code>, <code>gap-md</code>, <code>gap-lg</code>, <code>gap-xl</code>) to control vertical spacing between buttons.
           </.paragraph>
@@ -265,7 +265,7 @@ defmodule DemoWeb.Live.ButtonsLive do
       </.column>
 
       <.column size="100" lg="1-2">
-        <.card title_text="Responsive Direction">
+        <.card title_text={gettext("Responsive Direction")}>
           <.heading level={4}>Horizontal → Vertical at md (768px)</.heading>
           <.paragraph class="pa-text--secondary mb-1">Resize window to see change</.paragraph>
           <.button_group responsive="md-vertical">
@@ -284,7 +284,7 @@ defmodule DemoWeb.Live.ButtonsLive do
             <.button variant="danger">Reject</.button>
           </.button_group>
 
-          <.heading level={4} class="mt-2">Class Reference</.heading>
+          <.heading level={4} class="mt-2">{gettext("Class Reference")}</.heading>
           <ul class="text-sm">
             <li><code>--sm-vertical</code> / <code>--sm-horizontal</code> at 576px</li>
             <li><code>--md-vertical</code> / <code>--md-horizontal</code> at 768px</li>
@@ -297,42 +297,42 @@ defmodule DemoWeb.Live.ButtonsLive do
 
     <%!-- Split Buttons --%>
     <.card
-      title_text="Split Buttons"
-      subtitle_text="Primary action + dropdown toggle combined into a single control"
+      title_text={gettext("Split Buttons")}
+      subtitle_text={gettext("Primary action + dropdown toggle combined into a single control")}
     >
       <.button_group class="gap-lg">
-        <.split_button label="Save" variant="primary" on_click="split_action">
-          <:item icon="fas fa-file" on_click="split_action" action="save-draft">Save as Draft</:item>
+        <.split_button label={gettext("Save")} variant="primary" on_click="split_action">
+          <:item icon="fas fa-file" on_click="split_action" action="save-draft">{gettext("Save as Draft")}</:item>
           <:item icon="fas fa-door-closed" on_click="split_action" action="save-close">
-            Save &amp; Close
+            {gettext("Save & Close")}
           </:item>
-          <:item icon="fas fa-plus" on_click="split_action" action="save-new">Save &amp; New</:item>
+          <:item icon="fas fa-plus" on_click="split_action" action="save-new">{gettext("Save & New")}</:item>
         </.split_button>
 
-        <.split_button label="Delete" variant="danger" on_click="split_action">
-          <:item is_danger on_click="split_action" action="delete-all">Delete All</:item>
-          <:item on_click="split_action" action="archive">Archive Instead</:item>
+        <.split_button label={gettext("Delete")} variant="danger" on_click="split_action">
+          <:item is_danger on_click="split_action" action="delete-all">{gettext("Delete All")}</:item>
+          <:item on_click="split_action" action="archive">{gettext("Archive Instead")}</:item>
         </.split_button>
 
         <.split_button
-          label="Export"
+          label={gettext("Export")}
           icon="fas fa-download"
           variant="secondary"
           on_click="split_action"
         >
           <:item icon="fas fa-file-csv" on_click="split_action" action="export-csv">
-            Export as CSV
+            {gettext("Export as CSV")}
           </:item>
           <:item icon="fas fa-file-excel" on_click="split_action" action="export-excel">
-            Export as Excel
+            {gettext("Export as Excel")}
           </:item>
           <:item icon="fas fa-file-pdf" on_click="split_action" action="export-pdf">
-            Export as PDF
+            {gettext("Export as PDF")}
           </:item>
         </.split_button>
       </.button_group>
 
-      <.heading level="4" class="mt-4">Sizes</.heading>
+      <.heading level="4" class="mt-4">{gettext("Sizes")}</.heading>
       <.button_group class="gap-lg align-items-start">
         <.split_button label="XS Action" variant="primary" size="xs">
           <:item>Option A</:item>
@@ -355,56 +355,56 @@ defmodule DemoWeb.Live.ButtonsLive do
         </.split_button>
       </.button_group>
 
-      <.heading level="4" class="mt-4">Upward Placement</.heading>
+      <.heading level="4" class="mt-4">{gettext("Upward Placement")}</.heading>
       <.paragraph class="mb-1">
         Use <code>data-placement="top-end"</code>
         to open the menu upward. Floating UI will auto-flip if there's not enough space.
       </.paragraph>
       <.button_group class="gap-lg">
-        <.split_button label="Upload" variant="primary" placement="top-end">
-          <:item>Upload File</:item>
-          <:item>Upload Folder</:item>
-          <:item>Import from URL</:item>
+        <.split_button label={gettext("Upload")} variant="primary" placement="top-end">
+          <:item>{gettext("Upload File")}</:item>
+          <:item>{gettext("Upload Folder")}</:item>
+          <:item>{gettext("Import from URL")}</:item>
         </.split_button>
 
-        <.split_button label="New" icon="fas fa-plus" variant="secondary" placement="top-end">
-          <:item>New Document</:item>
-          <:item>New Spreadsheet</:item>
-          <:item>New Presentation</:item>
+        <.split_button label={gettext("New")} icon="fas fa-plus" variant="secondary" placement="top-end">
+          <:item>{gettext("New Document")}</:item>
+          <:item>{gettext("New Spreadsheet")}</:item>
+          <:item>{gettext("New Presentation")}</:item>
         </.split_button>
       </.button_group>
 
-      <.heading level="4" class="mt-4">Custom Icons (no rotation)</.heading>
+      <.heading level="4" class="mt-4">{gettext("Custom Icons (no rotation)")}</.heading>
       <.paragraph class="mb-1">
         Omit <code>pa-btn-split__chevron</code>
         from the icon for static icons that don't rotate on open.
       </.paragraph>
       <.button_group class="gap-lg">
-        <.split_button label="Share" icon="fas fa-share" variant="primary" on_click="split_action">
-          <:item>Share via Email</:item>
-          <:item>Share via Link</:item>
-          <:item>Copy to Clipboard</:item>
+        <.split_button label={gettext("Share")} icon="fas fa-share" variant="primary" on_click="split_action">
+          <:item>{gettext("Share via Email")}</:item>
+          <:item>{gettext("Share via Link")}</:item>
+          <:item>{gettext("Copy to Clipboard")}</:item>
         </.split_button>
 
-        <.split_button label="Settings" icon="fas fa-cog" variant="secondary" on_click="split_action">
-          <:item>General</:item>
-          <:item>Advanced</:item>
-          <:item is_danger>Reset All</:item>
+        <.split_button label={gettext("Settings")} icon="fas fa-cog" variant="secondary" on_click="split_action">
+          <:item>{gettext("General")}</:item>
+          <:item>{gettext("Advanced")}</:item>
+          <:item is_danger>{gettext("Reset All")}</:item>
         </.split_button>
 
-        <.split_button label="Delete" icon="fas fa-trash" variant="danger" on_click="split_action">
-          <:item is_danger>Delete Permanently</:item>
-          <:item>Move to Trash</:item>
+        <.split_button label={gettext("Delete")} icon="fas fa-trash" variant="danger" on_click="split_action">
+          <:item is_danger>{gettext("Delete Permanently")}</:item>
+          <:item>{gettext("Move to Trash")}</:item>
         </.split_button>
       </.button_group>
 
-      <.heading level="4" class="mt-4">Items with Actions</.heading>
+      <.heading level="4" class="mt-4">{gettext("Items with Actions")}</.heading>
       <.paragraph class="mb-1">
         Menu items can include inline action buttons for quick operations like delete.
       </.paragraph>
       <.button_group class="gap-lg">
         <.split_button
-          label="Bookmarks"
+          label={gettext("Bookmarks")}
           icon="fas fa-bookmark"
           variant="primary"
           on_click="split_action"
@@ -442,7 +442,7 @@ defmodule DemoWeb.Live.ButtonsLive do
         </.split_button>
 
         <.split_button
-          label="Recent"
+          label={gettext("Recent")}
           icon="fas fa-clock-rotate-left"
           variant="secondary"
           on_click="split_action"
@@ -472,7 +472,7 @@ defmodule DemoWeb.Live.ButtonsLive do
         </.split_button>
 
         <.split_button
-          label="Members"
+          label={gettext("Members")}
           icon="fas fa-user-plus"
           variant="danger"
           on_click="split_action"
@@ -513,8 +513,8 @@ defmodule DemoWeb.Live.ButtonsLive do
 
     <%!-- Overflow Toolbar --%>
     <.card
-      title_text="Overflow Toolbar"
-      subtitle_text="Buttons collapse into a dedicated [⋮] more menu when the row runs out of horizontal space, and pop back out as room returns"
+      title_text={gettext("Overflow Toolbar")}
+      subtitle_text={gettext("Buttons collapse into a dedicated [⋮] more menu when the row runs out of horizontal space, and pop back out as room returns")}
     >
       <.paragraph class="pa-text--secondary mb-1">
         Drag the resize handle in the bottom-right of the box below to shrink the bar. Lowest
@@ -532,15 +532,15 @@ defmodule DemoWeb.Live.ButtonsLive do
         <.overflow id="overflow-demo-end">
           <.button variant="secondary" phx-click="split_action" phx-value-action="save">
             <:icon><i class="fas fa-floppy-disk"></i></:icon>
-            Save
+            {gettext("Save")}
           </.button>
           <.button variant="secondary" phx-click="split_action" phx-value-action="format">
             <:icon><i class="fas fa-wand-magic-sparkles"></i></:icon>
-            Format
+            {gettext("Format")}
           </.button>
           <.button variant="secondary" phx-click="split_action" phx-value-action="refresh">
             <:icon><i class="fas fa-rotate"></i></:icon>
-            Refresh
+            {gettext("Refresh")}
           </.button>
           <.button
             variant="success"
@@ -549,24 +549,24 @@ defmodule DemoWeb.Live.ButtonsLive do
             phx-value-action="publish"
           >
             <:icon><i class="fas fa-cloud-arrow-up"></i></:icon>
-            Publish
+            {gettext("Publish")}
           </.button>
           <.split_button
-            label="Run"
+            label={gettext("Run")}
             icon="fas fa-play"
             variant="primary"
             on_click="split_action"
             data-pa-actions-priority="20"
           >
             <:item icon="fas fa-gear" on_click="split_action" action="run-options">
-              Run with options…
+              {gettext("Run with options…")}
             </:item>
             <:item is_danger icon="fas fa-stop" on_click="split_action" action="stop-all">
-              Stop all jobs
+              {gettext("Stop all jobs")}
             </:item>
           </.split_button>
           <.split_button
-            label="Members"
+            label={gettext("Members")}
             icon="fas fa-user-plus"
             variant="danger"
             on_click="split_action"
@@ -606,7 +606,7 @@ defmodule DemoWeb.Live.ButtonsLive do
         </.overflow>
       </div>
 
-      <.heading level="4" class="mt-4">Drop direction &amp; ghost trigger</.heading>
+      <.heading level="4" class="mt-4">{gettext("Drop direction & ghost trigger")}</.heading>
       <.paragraph class="pa-text--secondary mb-1">
         Default drops the child nearest the end first. Set <code>overflow_from="start"</code> to drop
         the leftmost child first instead. This bar also uses <code>trigger="ghost"</code> for the
@@ -616,40 +616,40 @@ defmodule DemoWeb.Live.ButtonsLive do
         <.overflow id="overflow-demo-start" overflow_from="start" trigger="ghost">
           <.button variant="info" is_outline>
             <:icon><i class="fas fa-filter"></i></:icon>
-            Filter
+            {gettext("Filter")}
           </.button>
           <.button variant="secondary" is_outline>
             <:icon><i class="fas fa-arrow-down-wide-short"></i></:icon>
-            Sort
+            {gettext("Sort")}
           </.button>
           <.button variant="warning" is_outline>
             <:icon><i class="fas fa-layer-group"></i></:icon>
-            Group
+            {gettext("Group")}
           </.button>
           <.button variant="primary" is_outline>
             <:icon><i class="fas fa-table-cells"></i></:icon>
-            Pivot
+            {gettext("Pivot")}
           </.button>
           <.split_button
-            label="Export"
+            label={gettext("Export")}
             icon="fas fa-download"
             variant="primary"
             on_click="split_action"
           >
             <:item icon="fas fa-file-csv" on_click="split_action" action="export-csv">
-              Export as CSV
+              {gettext("Export as CSV")}
             </:item>
             <:item icon="fas fa-file-code" on_click="split_action" action="export-json">
-              Export as JSON
+              {gettext("Export as JSON")}
             </:item>
             <:item icon="fas fa-file-pdf" on_click="split_action" action="export-pdf">
-              Export as PDF
+              {gettext("Export as PDF")}
             </:item>
           </.split_button>
         </.overflow>
       </div>
 
-      <.heading level="4" class="mt-4">In card headers</.heading>
+      <.heading level="4" class="mt-4">{gettext("In card headers")}</.heading>
       <.paragraph class="pa-text--secondary mb-1">
         In a card header, set <code>actions_variant="overflow"</code>
         on the <code>&lt;.card&gt;</code>
@@ -678,7 +678,7 @@ defmodule DemoWeb.Live.ButtonsLive do
                 phx-value-action="refresh"
               >
                 <:icon><i class="fas fa-rotate"></i></:icon>
-                Refresh
+                {gettext("Refresh")}
               </.button>
               <.button
                 variant="info"
@@ -688,7 +688,7 @@ defmodule DemoWeb.Live.ButtonsLive do
                 phx-value-action="filter"
               >
                 <:icon><i class="fas fa-filter"></i></:icon>
-                Filter
+                {gettext("Filter")}
               </.button>
               <.button
                 variant="secondary"
@@ -698,7 +698,7 @@ defmodule DemoWeb.Live.ButtonsLive do
                 phx-value-action="configure"
               >
                 <:icon><i class="fas fa-gear"></i></:icon>
-                Configure
+                {gettext("Configure")}
               </.button>
               <.button
                 variant="success"
@@ -708,10 +708,10 @@ defmodule DemoWeb.Live.ButtonsLive do
                 phx-value-action="export"
               >
                 <:icon><i class="fas fa-download"></i></:icon>
-                Export
+                {gettext("Export")}
               </.button>
               <.split_button
-                label="Add widget"
+                label={gettext("Add widget")}
                 icon="fas fa-plus"
                 variant="primary"
                 size="xs"
@@ -719,10 +719,10 @@ defmodule DemoWeb.Live.ButtonsLive do
                 data-pa-actions-priority="20"
               >
                 <:item icon="fas fa-chart-line" on_click="split_action" action="add-chart">
-                  Add chart
+                  {gettext("Add chart")}
                 </:item>
                 <:item icon="fas fa-table" on_click="split_action" action="add-table">
-                  Add table
+                  {gettext("Add table")}
                 </:item>
               </.split_button>
             </:tools>
@@ -742,11 +742,11 @@ defmodule DemoWeb.Live.ButtonsLive do
             <:tools>
               <.button variant="info" size="xs" phx-click="split_action" phx-value-action="validate">
                 <:icon><i class="fas fa-circle-check"></i></:icon>
-                Validate
+                {gettext("Validate")}
               </.button>
               <.button variant="warning" size="xs" phx-click="split_action" phx-value-action="backup">
                 <:icon><i class="fas fa-database"></i></:icon>
-                Backup
+                {gettext("Backup")}
               </.button>
               <.button
                 variant="danger"
@@ -756,10 +756,10 @@ defmodule DemoWeb.Live.ButtonsLive do
                 phx-value-action="rollback"
               >
                 <:icon><i class="fas fa-rotate-left"></i></:icon>
-                Rollback
+                {gettext("Rollback")}
               </.button>
               <.split_button
-                label="Deploy"
+                label={gettext("Deploy")}
                 icon="fas fa-rocket"
                 variant="success"
                 size="xs"
@@ -767,13 +767,13 @@ defmodule DemoWeb.Live.ButtonsLive do
                 data-pa-actions-priority="20"
               >
                 <:item icon="fas fa-flask" on_click="split_action" action="dry-run">
-                  Dry-run only
+                  {gettext("Dry-run only")}
                 </:item>
                 <:item icon="fas fa-vial" on_click="split_action" action="deploy-staging">
-                  Deploy to staging
+                  {gettext("Deploy to staging")}
                 </:item>
                 <:item is_danger icon="fas fa-fire" on_click="split_action" action="force-deploy">
-                  Force deploy (skip checks)
+                  {gettext("Force deploy (skip checks)")}
                 </:item>
               </.split_button>
             </:tools>
@@ -794,7 +794,7 @@ defmodule DemoWeb.Live.ButtonsLive do
             <:tools>
               <.button variant="ghost" size="xs" phx-click="split_action" phx-value-action="search">
                 <:icon><i class="fas fa-magnifying-glass"></i></:icon>
-                Search
+                {gettext("Search")}
               </.button>
               <.button
                 variant="secondary"
@@ -804,7 +804,7 @@ defmodule DemoWeb.Live.ButtonsLive do
                 phx-value-action="sort"
               >
                 <:icon><i class="fas fa-arrow-down-wide-short"></i></:icon>
-                Sort
+                {gettext("Sort")}
               </.button>
               <.button
                 variant="info"
@@ -814,7 +814,7 @@ defmodule DemoWeb.Live.ButtonsLive do
                 phx-value-action="filter"
               >
                 <:icon><i class="fas fa-filter"></i></:icon>
-                Filter
+                {gettext("Filter")}
               </.button>
               <.button
                 variant="secondary"
@@ -823,7 +823,7 @@ defmodule DemoWeb.Live.ButtonsLive do
                 phx-value-action="import"
               >
                 <:icon><i class="fas fa-file-import"></i></:icon>
-                Import CSV
+                {gettext("Import CSV")}
               </.button>
               <.button
                 variant="info"
@@ -833,10 +833,10 @@ defmodule DemoWeb.Live.ButtonsLive do
                 phx-value-action="invite"
               >
                 <:icon><i class="fas fa-envelope"></i></:icon>
-                Invite
+                {gettext("Invite")}
               </.button>
               <.split_button
-                label="Add user"
+                label={gettext("Add user")}
                 icon="fas fa-user-plus"
                 variant="primary"
                 size="xs"
@@ -844,10 +844,10 @@ defmodule DemoWeb.Live.ButtonsLive do
                 data-pa-actions-priority="20"
               >
                 <:item icon="fas fa-user-tag" on_click="split_action" action="add-role">
-                  Add user with role…
+                  {gettext("Add user with role…")}
                 </:item>
                 <:item icon="fas fa-users" on_click="split_action" action="bulk-add">
-                  Bulk add from team
+                  {gettext("Bulk add from team")}
                 </:item>
               </.split_button>
             </:tools>
@@ -864,7 +864,7 @@ defmodule DemoWeb.Live.ButtonsLive do
     </.card>
 
     <%!-- Text Truncation --%>
-    <.card title_text="Text Truncation">
+    <.card title_text={gettext("Text Truncation")}>
       <.paragraph class="pa-text--secondary mb-1">
         Use <code>.text-truncate</code>
         with a fixed width (<code>.wr-*</code>) to truncate long text with ellipsis
@@ -885,7 +885,7 @@ defmodule DemoWeb.Live.ButtonsLive do
     <%!-- Icon Buttons --%>
     <.grid>
       <.column size="100" lg="1-2">
-        <.card title_text="Buttons with Text Icons">
+        <.card title_text={gettext("Buttons with Text Icons")}>
           <.paragraph class="mb-1">
             Buttons with icons are automatically left-aligned with fixed-width icon container:
           </.paragraph>
@@ -911,7 +911,7 @@ defmodule DemoWeb.Live.ButtonsLive do
       </.column>
 
       <.column size="100" lg="1-2">
-        <.card title_text="Icon Only Buttons">
+        <.card title_text={gettext("Icon Only Buttons")}>
           <.paragraph class="mb-2">Icon-only button sizes (XS → XL):</.paragraph>
           <.button_group class="mb-2">
             <.button variant="primary" is_icon_only size="xs" title="XS - 28px">
@@ -1018,7 +1018,7 @@ defmodule DemoWeb.Live.ButtonsLive do
     </.grid>
 
     <%!-- Fixed Width Buttons --%>
-    <.card title_text="Fixed Width Buttons">
+    <.card title_text={gettext("Fixed Width Buttons")}>
       <.paragraph class="mb-1">
         Use <code>minwr-*</code>
         + <code>maxwr-*</code>
@@ -1054,12 +1054,12 @@ defmodule DemoWeb.Live.ButtonsLive do
     <%!-- Button Text Alignment --%>
     <.grid>
       <.column size="100" lg="1-2">
-        <.card title_text="Button Text Alignment">
+        <.card title_text={gettext("Button Text Alignment")}>
           <.paragraph class="mb-1">
             Control text alignment within fixed-width buttons. Note the varied text lengths to show the effect:
           </.paragraph>
 
-          <.heading level={4}>Inline Start Aligned</.heading>
+          <.heading level={4}>{gettext("Inline Start Aligned")}</.heading>
           <.button_group is_vertical>
             <.button variant="primary" class="wr-20" align="start">
               <:icon>✓</:icon>
@@ -1075,7 +1075,7 @@ defmodule DemoWeb.Live.ButtonsLive do
             </.button>
           </.button_group>
 
-          <.heading level={4} class="mt-6">Inline End Aligned</.heading>
+          <.heading level={4} class="mt-6">{gettext("Inline End Aligned")}</.heading>
           <.button_group is_vertical>
             <.button variant="primary" class="wr-20" align="end" icon_position="end">
               <:icon>✓</:icon>
@@ -1091,7 +1091,7 @@ defmodule DemoWeb.Live.ButtonsLive do
             </.button>
           </.button_group>
 
-          <.heading level={4} class="mt-6">Center Aligned</.heading>
+          <.heading level={4} class="mt-6">{gettext("Center Aligned")}</.heading>
           <.button_group is_vertical>
             <.button variant="primary" class="wr-20" align="center">
               <:icon>✓</:icon>
@@ -1101,7 +1101,7 @@ defmodule DemoWeb.Live.ButtonsLive do
             <.button variant="secondary" class="wr-20" align="center">Discard All Changes</.button>
           </.button_group>
 
-          <.heading level={4} class="mt-6">Justified</.heading>
+          <.heading level={4} class="mt-6">{gettext("Justified")}</.heading>
           <.button_group is_vertical>
             <.button variant="primary" class="wr-20" align="justify">
               <:icon>✓</:icon>
@@ -1120,16 +1120,16 @@ defmodule DemoWeb.Live.ButtonsLive do
       </.column>
 
       <.column size="100" lg="1-2">
-        <.card title_text="Font Awesome Icons">
+        <.card title_text={gettext("Font Awesome Icons")}>
           <.paragraph class="mb-1">
             Font Awesome icons with varied text lengths to show alignment:
           </.paragraph>
 
-          <.heading level={4}>Inline Start Aligned</.heading>
+          <.heading level={4}>{gettext("Inline Start Aligned")}</.heading>
           <.button_group is_vertical>
             <.button variant="primary" class="wr-20" align="start">
               <:icon><i class="fa-solid fa-floppy-disk"></i></:icon>
-              Save
+              {gettext("Save")}
             </.button>
             <.button variant="success" class="wr-20" align="start">
               <:icon><i class="fa-solid fa-check"></i></:icon>
@@ -1141,11 +1141,11 @@ defmodule DemoWeb.Live.ButtonsLive do
             </.button>
           </.button_group>
 
-          <.heading level={4} class="mt-6">Inline End Aligned</.heading>
+          <.heading level={4} class="mt-6">{gettext("Inline End Aligned")}</.heading>
           <.button_group is_vertical>
             <.button variant="primary" class="wr-20" align="end" icon_position="end">
               <:icon><i class="fa-solid fa-floppy-disk"></i></:icon>
-              Save
+              {gettext("Save")}
             </.button>
             <.button variant="success" class="wr-20" align="end" icon_position="end">
               <:icon><i class="fa-solid fa-arrow-right"></i></:icon>
@@ -1157,11 +1157,11 @@ defmodule DemoWeb.Live.ButtonsLive do
             </.button>
           </.button_group>
 
-          <.heading level={4} class="mt-6">Center Aligned</.heading>
+          <.heading level={4} class="mt-6">{gettext("Center Aligned")}</.heading>
           <.button_group is_vertical>
             <.button variant="primary" class="wr-20" align="center">
               <:icon><i class="fa-solid fa-upload"></i></:icon>
-              Upload
+              {gettext("Upload")}
             </.button>
             <.button variant="success" class="wr-20" align="center">
               <:icon><i class="fa-solid fa-plus"></i></:icon>
@@ -1173,19 +1173,19 @@ defmodule DemoWeb.Live.ButtonsLive do
             </.button>
           </.button_group>
 
-          <.heading level={4} class="mt-6">Justified</.heading>
+          <.heading level={4} class="mt-6">{gettext("Justified")}</.heading>
           <.button_group is_vertical>
             <.button variant="primary" class="wr-20" align="justify">
               <:icon><i class="fa-solid fa-user"></i></:icon>
-              Profile
+              {gettext("Profile")}
             </.button>
             <.button variant="success" class="wr-20" align="justify">
               <:icon><i class="fa-solid fa-envelope"></i></:icon>
-              Messages
+              {gettext("Messages")}
             </.button>
             <.button variant="danger" class="wr-20" align="justify">
               <:icon><i class="fa-solid fa-right-from-bracket"></i></:icon>
-              Logout
+              {gettext("Logout")}
             </.button>
           </.button_group>
         </.card>
@@ -1195,7 +1195,7 @@ defmodule DemoWeb.Live.ButtonsLive do
     <%!-- Interactive Effects --%>
     <.grid>
       <.column size="100" lg="1-2">
-        <.card title_text="Ripple Effect Buttons">
+        <.card title_text={gettext("Ripple Effect Buttons")}>
           <.paragraph class="mb-1">Click buttons to see ripple animation effect:</.paragraph>
           <.button_group>
             <.button variant="primary" is_ripple>Primary Ripple</.button>
@@ -1208,7 +1208,7 @@ defmodule DemoWeb.Live.ButtonsLive do
       </.column>
 
       <.column size="100" lg="1-2">
-        <.card title_text="Loading State Buttons">
+        <.card title_text={gettext("Loading State Buttons")}>
           <.paragraph class="mb-1">Click buttons to simulate loading states (1-3s):</.paragraph>
           <.button_group>
             <.button
@@ -1257,21 +1257,21 @@ defmodule DemoWeb.Live.ButtonsLive do
     </.grid>
 
     <%!-- Usage Guide --%>
-    <.card title_text="Usage Guide">
-      <.heading level={4}>Ripple Effect</.heading>
+    <.card title_text={gettext("Usage Guide")}>
+      <.heading level={4}>{gettext("Ripple Effect")}</.heading>
       <.paragraph>
         Add <code>pa-btn--ripple</code>
         class and <code>data-ripple</code>
         attribute to any button for click animation feedback.
       </.paragraph>
 
-      <.heading level={4}>Loading States</.heading>
+      <.heading level={4}>{gettext("Loading States")}</.heading>
       <.paragraph>
         Use <code>pa-btn--loading</code>
         class to show spinner. JavaScript can toggle this class during async operations.
       </.paragraph>
 
-      <.heading level={4}>Best Practices</.heading>
+      <.heading level={4}>{gettext("Best Practices")}</.heading>
       <.basic_list>
         <li>
           <strong>Fast Sites:</strong>
@@ -1289,7 +1289,7 @@ defmodule DemoWeb.Live.ButtonsLive do
     </.card>
 
     <%!-- CSS Classes Reference --%>
-    <.card title_text="CSS Classes Reference">
+    <.card title_text={gettext("CSS Classes Reference")}>
       <.heading level={4}>Button Base</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-btn</code> - Base button styling</li>

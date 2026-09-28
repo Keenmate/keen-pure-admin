@@ -11,13 +11,13 @@ defmodule DemoWeb.Live.KpiEditorialMinimalLive do
 
   defp tiles do
     [
-      %{id: "revenue", label_text: "REVENUE", prefix_text: "$", value_text: "847", unit_text: "K", delta_text: "+13.3%", delta_variant: "positive", target_text: "$900K",
+      %{id: "revenue", label_text: gettext("REVENUE"), prefix_text: "$", value_text: "847", unit_text: "K", delta_text: "+13.3%", delta_variant: "positive", target_text: "$900K",
         detail_title_text: "Revenue · WTD", previous_value_text: "$748K"},
-      %{id: "arpu", label_text: "ARPU", prefix_text: "$", value_text: "34.20", delta_text: "+7.5%", delta_variant: "positive", target_text: "$36"},
-      %{id: "active-users", label_text: "ACTIVE USERS", value_text: "12.3", unit_text: "K", delta_text: "+4.1%", delta_variant: "positive", target_text: "11K"},
-      %{id: "conversion", label_text: "CONVERSION", value_text: "3.92", unit_text: "%", delta_text: "+12.6%", delta_variant: "up_strong", target_text: "3.5%"},
-      %{id: "error", label_text: "ERROR RATE", value_text: "0.18", unit_text: "%", delta_text: "−56%", delta_variant: "up_strong", target_text: "≤ 0.5%"},
-      %{id: "churn", label_text: "CHURN", value_text: "2.4", unit_text: "%", delta_text: "+14%", delta_variant: "negative", target_text: "≤ 2%"}
+      %{id: "arpu", label_text: gettext("ARPU"), prefix_text: "$", value_text: "34.20", delta_text: "+7.5%", delta_variant: "positive", target_text: "$36"},
+      %{id: "active-users", label_text: gettext("ACTIVE USERS"), value_text: "12.3", unit_text: "K", delta_text: "+4.1%", delta_variant: "positive", target_text: "11K"},
+      %{id: "conversion", label_text: gettext("CONVERSION"), value_text: "3.92", unit_text: "%", delta_text: "+12.6%", delta_variant: "up_strong", target_text: "3.5%"},
+      %{id: "error", label_text: gettext("ERROR RATE"), value_text: "0.18", unit_text: "%", delta_text: "−56%", delta_variant: "up_strong", target_text: "≤ 0.5%"},
+      %{id: "churn", label_text: gettext("CHURN"), value_text: "2.4", unit_text: "%", delta_text: "+14%", delta_variant: "negative", target_text: "≤ 2%"}
     ]
   end
 
@@ -32,7 +32,7 @@ defmodule DemoWeb.Live.KpiEditorialMinimalLive do
 
     <%!-- 1. Canonical · auto-fit --%>
 
-    <.kpi_editorial title_text="Executive snapshot · auto-fit (default)" is_live footer_text="Cell-min driven · cells stay at least 14rem wide">
+    <.kpi_editorial title_text={gettext("Executive snapshot · auto-fit (default)")} is_live footer_text="Cell-min driven · cells stay at least 14rem wide">
       <.tile :for={t <- tiles()} {tile_assigns(t, "ed-")} />
     </.kpi_editorial>
 
@@ -42,7 +42,7 @@ defmodule DemoWeb.Live.KpiEditorialMinimalLive do
 
     <h3><code>is_2_columns</code> — force exactly 2 columns</h3>
 
-    <.kpi_editorial title_text="Two-up" is_2_columns>
+    <.kpi_editorial title_text={gettext("Two-up")} is_2_columns>
       <.tile :for={t <- Enum.take(tiles(), 4)} {tile_assigns(t, "2c-")} />
     </.kpi_editorial>
 
@@ -53,7 +53,7 @@ defmodule DemoWeb.Live.KpiEditorialMinimalLive do
     <h3><code>grid_layout="max_3"</code> — cap at 3 columns</h3>
     <p>Tiles never exceed 3 columns even on a wide container, but still collapse below the cell-min × 3 threshold.</p>
 
-    <.kpi_editorial title_text="Three-up" grid_layout="max_3">
+    <.kpi_editorial title_text={gettext("Three-up")} grid_layout="max_3">
       <.tile :for={t <- Enum.take(tiles(), 6)} {tile_assigns(t, "m3-")} />
     </.kpi_editorial>
 
@@ -63,7 +63,7 @@ defmodule DemoWeb.Live.KpiEditorialMinimalLive do
 
     <h3><code>cell_min_width="18rem"</code> — wider cells, fewer columns</h3>
 
-    <.kpi_editorial title_text="Wide cells" cell_min_width="18rem">
+    <.kpi_editorial title_text={gettext("Wide cells")} cell_min_width="18rem">
       <.tile :for={t <- Enum.take(tiles(), 6)} {tile_assigns(t, "wc-")} />
     </.kpi_editorial>
 
@@ -86,7 +86,7 @@ defmodule DemoWeb.Live.KpiEditorialMinimalLive do
 
     <%!-- Usage Guide --%>
 
-    <.card title_text="Usage Guide">
+    <.card title_text={gettext("Usage Guide")}>
       <h4>When to use</h4>
       <p>
         Executive / weekly-review pages where the operator wants "how are we doing" at a glance and
@@ -137,7 +137,7 @@ defmodule DemoWeb.Live.KpiEditorialMinimalLive do
 
     <%!-- CSS Classes Reference --%>
 
-    <.card title_text="CSS Classes Reference">
+    <.card title_text={gettext("CSS Classes Reference")}>
       <h4>Card structure</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
         <li><code>pa-kpi-edit</code> — page-namespace class on <code>.pa-card</code>.</li>

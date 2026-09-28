@@ -25,18 +25,18 @@ defmodule DemoWeb.Live.KpiBentoLive do
 
   defp tiles_default(prefix) do
     [
-      %{id: prefix <> "hero", is_hero: true, variant: "positive", label_text: "Revenue", prefix_text: "$", value_text: "849", unit_text: "K", delta_text: "▲ 13.4%",
+      %{id: prefix <> "hero", is_hero: true, variant: "positive", label_text: gettext("Revenue"), prefix_text: "$", value_text: "849", unit_text: "K", delta_text: "▲ 13.4%",
         detail_title_text: "Revenue · QTD", previous_value_text: "$749K", target_text: "$900K",
         points: "0,20 12,18 24,17 36,15 48,14 60,12 72,10 84,8 96,6", area: "0,24 0,20 12,18 24,17 36,15 48,14 60,12 72,10 84,8 96,6 96,24", dot: {96, 6}},
-      %{id: prefix <> "a", variant: "negative", label_text: "Cloud Spend", prefix_text: "$", value_text: "128", unit_text: "K", delta_text: "▲ 18%",
+      %{id: prefix <> "a", variant: "negative", label_text: gettext("Cloud Spend"), prefix_text: "$", value_text: "128", unit_text: "K", delta_text: "▲ 18%",
         points: "0,18 12,17 24,15 36,13 48,11 60,9 72,8 84,7 96,6", area: "0,24 0,18 12,17 24,15 36,13 48,11 60,9 72,8 84,7 96,6 96,24", dot: {96, 6}},
-      %{id: prefix <> "b", variant: "up_strong", label_text: "Conversion", value_text: "3.92", unit_text: "%", delta_text: "▲ 12.6%",
+      %{id: prefix <> "b", variant: "up_strong", label_text: gettext("Conversion"), value_text: "3.92", unit_text: "%", delta_text: "▲ 12.6%",
         points: "0,18 12,17 24,14 36,13 48,11 60,9 72,7 84,6 96,5", area: "0,24 0,18 12,17 24,14 36,13 48,11 60,9 72,7 84,6 96,5 96,24", dot: {96, 5}},
-      %{id: prefix <> "c", variant: "positive", label_text: "Sessions", value_text: "12.3K", delta_text: "▲ 4.1%",
+      %{id: prefix <> "c", variant: "positive", label_text: gettext("Sessions"), value_text: "12.3K", delta_text: "▲ 4.1%",
         points: "0,17 12,16 24,15 36,13 48,14 60,12 72,11 84,10 96,9", area: "0,24 0,17 12,16 24,15 36,13 48,14 60,12 72,11 84,10 96,9 96,24", dot: {96, 9}},
-      %{id: prefix <> "d", variant: "negative", label_text: "Churn", value_text: "2.4%", delta_text: "▲ 0.3pp",
+      %{id: prefix <> "d", variant: "negative", label_text: gettext("Churn"), value_text: "2.4%", delta_text: "▲ 0.3pp",
         points: "0,11 12,12 24,13 36,12 48,14 60,13 72,15 84,14 96,16", area: "0,24 0,11 12,12 24,13 36,12 48,14 60,13 72,15 84,14 96,16 96,24", dot: {96, 16}},
-      %{id: prefix <> "e", variant: "neutral", label_text: "NPS", value_text: "64", delta_text: "— 0",
+      %{id: prefix <> "e", variant: "neutral", label_text: gettext("NPS"), value_text: "64", delta_text: "— 0",
         points: "0,13 12,14 24,13 36,12 48,13 60,14 72,13 84,12 96,13", area: "0,24 0,13 12,14 24,13 36,12 48,13 60,14 72,13 84,12 96,13 96,24", dot: {96, 13}}
     ]
   end
@@ -52,7 +52,7 @@ defmodule DemoWeb.Live.KpiBentoLive do
 
     <%!-- 1. Default 6-tile layout · hero-left --%>
 
-    <.kpi_bento title_text="Quarterly snapshot · default (hero-left)" is_live>
+    <.kpi_bento title_text={gettext("Quarterly snapshot · default (hero-left)")} is_live>
       <.bento_tile :for={t <- tiles_default("def-")} {t} />
     </.kpi_bento>
 
@@ -62,7 +62,7 @@ defmodule DemoWeb.Live.KpiBentoLive do
 
     <h3><code>bento_layout="hero_right"</code> — mirror of default</h3>
 
-    <.kpi_bento title_text="Quarterly snapshot · hero-right" bento_layout="hero_right">
+    <.kpi_bento title_text={gettext("Quarterly snapshot · hero-right")} bento_layout="hero_right">
       <.bento_tile :for={t <- tiles_default("hr-")} {t} />
     </.kpi_bento>
 
@@ -73,7 +73,7 @@ defmodule DemoWeb.Live.KpiBentoLive do
     <h3><code>bento_layout="5_tile"</code> — hero + 4 supporting</h3>
     <p>Five tiles in source order: hero, 2 stacked right (rows 1-2), 2 equal halves bottom.</p>
 
-    <.kpi_bento title_text="5-tile dashboard" bento_layout="5_tile">
+    <.kpi_bento title_text={gettext("5-tile dashboard")} bento_layout="5_tile">
       <.bento_tile :for={t <- Enum.take(tiles_default("5t-"), 5)} {t} />
     </.kpi_bento>
 
@@ -103,43 +103,43 @@ defmodule DemoWeb.Live.KpiBentoLive do
       handled by the hook), inheriting the tile's sentiment <code>currentColor</code>.
     </p>
 
-    <.kpi_bento title_text="Quarterly snapshot · Chart.js" is_live>
-      <.kpi_bento_tile is_hero variant="positive" label_text="Revenue" prefix_text="$" value_text="849" unit_text="K" delta_text="▲ 13.4%">
+    <.kpi_bento title_text={gettext("Quarterly snapshot · Chart.js")} is_live>
+      <.kpi_bento_tile is_hero variant="positive" label_text={gettext("Revenue")} prefix_text="$" value_text="849" unit_text="K" delta_text="▲ 13.4%">
         <:chart>
           <canvas id="bento-cjs-hero" phx-hook="PureAdminKpiChart" data-kpi-chart data-kpi-type="line" data-kpi-fill="area" data-kpi-aspect="3.5"
             data-kpi-points="[612, 638, 660, 685, 705, 728, 750, 772, 798, 818, 832, 849]" />
         </:chart>
       </.kpi_bento_tile>
 
-      <.kpi_bento_tile variant="negative" label_text="Cloud Spend" prefix_text="$" value_text="128" unit_text="K" delta_text="▲ 18%">
+      <.kpi_bento_tile variant="negative" label_text={gettext("Cloud Spend")} prefix_text="$" value_text="128" unit_text="K" delta_text="▲ 18%">
         <:chart>
           <canvas id="bento-cjs-a" phx-hook="PureAdminKpiChart" data-kpi-chart data-kpi-type="line" data-kpi-fill="area" data-kpi-aspect="6"
             data-kpi-points="[88, 92, 98, 102, 108, 112, 116, 120, 122, 124, 126, 128]" />
         </:chart>
       </.kpi_bento_tile>
 
-      <.kpi_bento_tile variant="up_strong" label_text="Conversion" value_text="3.92" unit_text="%" delta_text="▲ 12.6%">
+      <.kpi_bento_tile variant="up_strong" label_text={gettext("Conversion")} value_text="3.92" unit_text="%" delta_text="▲ 12.6%">
         <:chart>
           <canvas id="bento-cjs-b" phx-hook="PureAdminKpiChart" data-kpi-chart data-kpi-type="line" data-kpi-fill="area" data-kpi-aspect="6"
             data-kpi-points="[3.32, 3.38, 3.45, 3.51, 3.58, 3.64, 3.72, 3.78, 3.82, 3.86, 3.89, 3.92]" />
         </:chart>
       </.kpi_bento_tile>
 
-      <.kpi_bento_tile variant="positive" label_text="Sessions" value_text="12.3K" delta_text="▲ 4.1%">
+      <.kpi_bento_tile variant="positive" label_text={gettext("Sessions")} value_text="12.3K" delta_text="▲ 4.1%">
         <:chart>
           <canvas id="bento-cjs-c" phx-hook="PureAdminKpiChart" data-kpi-chart data-kpi-type="line" data-kpi-fill="area" data-kpi-aspect="8"
             data-kpi-points="[10.8, 11.0, 11.2, 11.4, 11.6, 11.8, 12.0, 12.1, 12.2, 12.3]" />
         </:chart>
       </.kpi_bento_tile>
 
-      <.kpi_bento_tile variant="negative" label_text="Churn" value_text="2.4%" delta_text="▲ 0.3pp">
+      <.kpi_bento_tile variant="negative" label_text={gettext("Churn")} value_text="2.4%" delta_text="▲ 0.3pp">
         <:chart>
           <canvas id="bento-cjs-d" phx-hook="PureAdminKpiChart" data-kpi-chart data-kpi-type="line" data-kpi-fill="area" data-kpi-aspect="8"
             data-kpi-points="[2.0, 2.05, 2.1, 2.12, 2.18, 2.22, 2.28, 2.32, 2.36, 2.4]" />
         </:chart>
       </.kpi_bento_tile>
 
-      <.kpi_bento_tile variant="neutral" label_text="NPS" value_text="64" delta_text="— 0">
+      <.kpi_bento_tile variant="neutral" label_text={gettext("NPS")} value_text="64" delta_text="— 0">
         <:chart>
           <canvas id="bento-cjs-e" phx-hook="PureAdminKpiChart" data-kpi-chart data-kpi-type="line" data-kpi-fill="area" data-kpi-aspect="8"
             data-kpi-points="[63, 64, 63, 65, 64, 63, 64, 64, 63, 64]" />
@@ -151,7 +151,7 @@ defmodule DemoWeb.Live.KpiBentoLive do
 
     <%!-- Usage Guide --%>
 
-    <.card title_text="Usage Guide">
+    <.card title_text={gettext("Usage Guide")}>
       <h4>When to use</h4>
       <p>
         Magazine-style asymmetric dashboards where one metric should dominate visually and a few
@@ -195,7 +195,7 @@ defmodule DemoWeb.Live.KpiBentoLive do
 
     <%!-- CSS Classes Reference --%>
 
-    <.card title_text="CSS Classes Reference">
+    <.card title_text={gettext("CSS Classes Reference")}>
       <h4>Card structure</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
         <li><code>pa-kpi-bento</code> — page-namespace class on <code>.pa-card</code>. Container query host.</li>

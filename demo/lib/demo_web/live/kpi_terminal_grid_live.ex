@@ -17,7 +17,7 @@ defmodule DemoWeb.Live.KpiTerminalGridLive do
         id_text: "KPI.01 · 30d",
         status_text: "WARN",
         status_variant: "warn",
-        label_text: "Completion Rate",
+        label_text: gettext("Completion Rate"),
         value_text: "88.6",
         unit_text: "%",
         variant: "up",
@@ -36,7 +36,7 @@ defmodule DemoWeb.Live.KpiTerminalGridLive do
         id_text: "KPI.02 · 12mo",
         status_text: "GOOD",
         status_variant: "good",
-        label_text: "Monthly Revenue",
+        label_text: gettext("Monthly Revenue"),
         prefix_text: "$",
         value_text: "835",
         unit_text: "K",
@@ -56,7 +56,7 @@ defmodule DemoWeb.Live.KpiTerminalGridLive do
         id_text: "KPI.03 · 24h",
         status_text: "GOOD",
         status_variant: "good",
-        label_text: "Server Temp",
+        label_text: gettext("Server Temp"),
         value_text: "22.9",
         unit_text: "°C",
         variant: "down",
@@ -75,7 +75,7 @@ defmodule DemoWeb.Live.KpiTerminalGridLive do
         id_text: "KPI.04 · 7d",
         status_text: "WARN",
         status_variant: "warn",
-        label_text: "Server Capacity",
+        label_text: gettext("Server Capacity"),
         value_text: "81.6",
         unit_text: "%",
         variant: "up",
@@ -94,7 +94,7 @@ defmodule DemoWeb.Live.KpiTerminalGridLive do
         id_text: "KPI.05 · 24h",
         status_text: "GOOD",
         status_variant: "good",
-        label_text: "Error Rate",
+        label_text: gettext("Error Rate"),
         value_text: "0.24",
         unit_text: "%",
         variant: "up_strong",
@@ -113,7 +113,7 @@ defmodule DemoWeb.Live.KpiTerminalGridLive do
         id_text: "KPI.06 · 12mo",
         status_text: "NEUTRAL",
         status_variant: "neutral",
-        label_text: "Tokyo Office",
+        label_text: gettext("Tokyo Office"),
         prefix_text: "¥",
         value_text: "11.6",
         unit_text: "M",
@@ -148,14 +148,14 @@ defmodule DemoWeb.Live.KpiTerminalGridLive do
 
     <%!-- 1. Terminal grid · canonical card with three tabs --%>
 
-    <.kpi_terminal id="exec-kpis" title_text="Key Performance Indicators" is_live footer_text="Bloomberg-y dense — Hover any KPI for detail · Click a tab to swap the pane">
-      <:pane id="overview" label_text="OVERVIEW" is_active>
+    <.kpi_terminal id="exec-kpis" title_text={gettext("Key Performance Indicators")} is_live footer_text="Bloomberg-y dense — Hover any KPI for detail · Click a tab to swap the pane">
+      <:pane id="overview" label_text={gettext("OVERVIEW")} is_active>
         <.tile :for={t <- tiles_overview()} {tile_assigns(t)} />
       </:pane>
-      <:pane id="finance" label_text="FINANCE">
+      <:pane id="finance" label_text={gettext("FINANCE")}>
         <.tile :for={t <- tiles_finance()} {tile_assigns(t, "fin-")} />
       </:pane>
-      <:pane id="ops" label_text="OPERATIONS">
+      <:pane id="ops" label_text={gettext("OPERATIONS")}>
         <.tile :for={t <- tiles_ops()} {tile_assigns(t, "ops-")} />
       </:pane>
     </.kpi_terminal>
@@ -213,13 +213,13 @@ defmodule DemoWeb.Live.KpiTerminalGridLive do
       <code>color</code>, so the bars read <code>currentColor</code> and track the sentiment scale + theme.
     </p>
 
-    <.kpi_terminal title_text="Key Performance Indicators" is_live footer_text="Chart.js bar charts library-rendered into the pa-kpi-tile__spark slot · Switch theme to see the bars re-colour">
+    <.kpi_terminal title_text={gettext("Key Performance Indicators")} is_live footer_text="Chart.js bar charts library-rendered into the pa-kpi-tile__spark slot · Switch theme to see the bars re-colour">
       <.kpi_tile
         id="cjs-completion"
         id_text="KPI.01 · 30d"
         status_text="WARN"
         status_variant="warn"
-        label_text="Completion Rate"
+        label_text={gettext("Completion Rate")}
         value_text="88.6"
         unit_text="%"
         variant="up"
@@ -247,7 +247,7 @@ defmodule DemoWeb.Live.KpiTerminalGridLive do
         id_text="KPI.02 · 24h"
         status_text="GOOD"
         status_variant="good"
-        label_text="Error Rate"
+        label_text={gettext("Error Rate")}
         value_text="0.28"
         unit_text="%"
         variant="up_strong"
@@ -275,7 +275,7 @@ defmodule DemoWeb.Live.KpiTerminalGridLive do
 
     <%!-- Usage Guide --%>
 
-    <.card title_text="Usage Guide">
+    <.card title_text={gettext("Usage Guide")}>
       <h4>When to use</h4>
       <p>
         Bloomberg-style dense KPI panels: per-tile depth (id, status pill, label, focal value, prev row,
@@ -342,7 +342,7 @@ defmodule DemoWeb.Live.KpiTerminalGridLive do
 
     <%!-- CSS Classes Reference --%>
 
-    <.card title_text="CSS Classes Reference">
+    <.card title_text={gettext("CSS Classes Reference")}>
       <h4>Card structure</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
         <li><code>pa-kpi-terminal</code> — page-namespace class on <code>.pa-card</code>. Scopes the tab/pane DOM contract.</li>

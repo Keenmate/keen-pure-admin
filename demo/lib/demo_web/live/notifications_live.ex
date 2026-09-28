@@ -57,28 +57,28 @@ defmodule DemoWeb.Live.NotificationsLive do
         <.paragraph>View and manage all your notifications</.paragraph>
       </.column>
       <.column class="col-auto">
-        <.button variant="secondary" size="sm" phx-click="mark_all_read">Mark all as read</.button>
+        <.button variant="secondary" size="sm" phx-click="mark_all_read">{gettext("Mark all as read")}</.button>
       </.column>
     </.grid>
 
     <%!-- Filters --%>
     <.card class="mb-2">
       <.button_group>
-        <.button size="sm" variant={if @filter == "all", do: "primary", else: "secondary"} phx-click="filter" phx-value-filter="all">All</.button>
-        <.button size="sm" variant={if @filter == "unread", do: "primary", else: "secondary"} phx-click="filter" phx-value-filter="unread">Unread</.button>
-        <.button size="sm" variant={if @filter == "read", do: "primary", else: "secondary"} phx-click="filter" phx-value-filter="read">Read</.button>
+        <.button size="sm" variant={if @filter == "all", do: "primary", else: "secondary"} phx-click="filter" phx-value-filter="all">{gettext("All")}</.button>
+        <.button size="sm" variant={if @filter == "unread", do: "primary", else: "secondary"} phx-click="filter" phx-value-filter="unread">{gettext("Unread")}</.button>
+        <.button size="sm" variant={if @filter == "read", do: "primary", else: "secondary"} phx-click="filter" phx-value-filter="read">{gettext("Read")}</.button>
       </.button_group>
       <.button_group class="ml-4">
-        <.button size="sm" variant={if @filter == "primary", do: "primary", else: "secondary"} phx-click="filter" phx-value-filter="primary">Info</.button>
-        <.button size="sm" variant={if @filter == "warning", do: "warning", else: "secondary"} phx-click="filter" phx-value-filter="warning">Warning</.button>
-        <.button size="sm" variant={if @filter == "success", do: "success", else: "secondary"} phx-click="filter" phx-value-filter="success">Success</.button>
-        <.button size="sm" variant={if @filter == "danger", do: "danger", else: "secondary"} phx-click="filter" phx-value-filter="danger">Error</.button>
+        <.button size="sm" variant={if @filter == "primary", do: "primary", else: "secondary"} phx-click="filter" phx-value-filter="primary">{gettext("Info")}</.button>
+        <.button size="sm" variant={if @filter == "warning", do: "warning", else: "secondary"} phx-click="filter" phx-value-filter="warning">{gettext("Warning")}</.button>
+        <.button size="sm" variant={if @filter == "success", do: "success", else: "secondary"} phx-click="filter" phx-value-filter="success">{gettext("Success")}</.button>
+        <.button size="sm" variant={if @filter == "danger", do: "danger", else: "secondary"} phx-click="filter" phx-value-filter="danger">{gettext("Error")}</.button>
       </.button_group>
     </.card>
 
     <%!-- Notifications List --%>
-    <.card title_text="All Notifications" has_padding={false}>
-      <:tools><.badge variant="primary">{@unread_count} unread</.badge></:tools>
+    <.card title_text={gettext("All Notifications")} has_padding={false}>
+      <:tools><.badge variant="primary">{gettext("%{count} unread", count: @unread_count)}</.badge></:tools>
       <.list>
         <.list_item
           :for={n <- @filtered}
@@ -97,7 +97,7 @@ defmodule DemoWeb.Live.NotificationsLive do
               size="xs"
               phx-click="mark_read"
               phx-value-id={n.id}
-              title="Mark as read"
+              title={gettext("Mark as read")}
             >
               <i class="fa-solid fa-check"></i>
             </.button>
@@ -107,11 +107,11 @@ defmodule DemoWeb.Live.NotificationsLive do
     </.card>
 
     <%!-- Notification Components Reference --%>
-    <.card title_text="Notification Components">
+    <.card title_text={gettext("Notification Components")}>
       <:description>Components used in the navbar notification dropdown</:description>
       <.grid>
         <.column size="50">
-          <.heading level={4}>Navbar Notifications</.heading>
+          <.heading level={4}>{gettext("Navbar Notifications")}</.heading>
           <.code_block language="heex">
             &lt;.notifications count={3}&gt;
               &lt;.notification_item variant="primary" icon="fa-solid fa-bell" is_unread&gt;
@@ -123,15 +123,15 @@ defmodule DemoWeb.Live.NotificationsLive do
           </.code_block>
         </.column>
         <.column size="50">
-          <.heading level={4}>Available Props</.heading>
+          <.heading level={4}>{gettext("Available Props")}</.heading>
           <.table rows={[
             %{prop: "count", desc: "Badge count on bell icon"},
             %{prop: "variant", desc: "Color variant (primary, success, warning, danger, info)"},
             %{prop: "icon", desc: "Font Awesome icon class"},
             %{prop: "is_unread", desc: "Highlight as unread"}
           ]} is_striped>
-            <:col :let={row} label="Prop"><code>{row.prop}</code></:col>
-            <:col :let={row} label="Description">{row.desc}</:col>
+            <:col :let={row} label={gettext("Prop")}><code>{row.prop}</code></:col>
+            <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
           </.table>
         </.column>
       </.grid>

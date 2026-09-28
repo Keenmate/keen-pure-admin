@@ -9,7 +9,7 @@ defmodule DemoWeb.Live.SizingLive do
     ~H"""
     <.paragraph class="mb-6">Utility classes for controlling width, height, spacing, and layout dimensions</.paragraph>
 
-    <.card title_text="Width Utilities">
+    <.card title_text={gettext("Width Utilities")}>
       <:description>Fixed and responsive width classes using rem-based scale</:description>
       <.table rows={[
         %{class: "wr-1", value: "1rem", desc: "Tiny elements"},
@@ -29,13 +29,13 @@ defmodule DemoWeb.Live.SizingLive do
         %{class: "wr-45", value: "45rem", desc: "Wide content"},
         %{class: "wr-50", value: "50rem", desc: "Extra wide"}
       ]} is_striped>
-        <:col :let={row} label="Class"><code>.{row.class}</code></:col>
-        <:col :let={row} label="Width">{row.value}</:col>
-        <:col :let={row} label="Use Case">{row.desc}</:col>
+        <:col :let={row} label={gettext("Class")}><code>.{row.class}</code></:col>
+        <:col :let={row} label={gettext("Width")}>{row.value}</:col>
+        <:col :let={row} label={gettext("Use Case")}>{row.desc}</:col>
       </.table>
     </.card>
 
-    <.card title_text="Max-Width Utilities">
+    <.card title_text={gettext("Max-Width Utilities")}>
       <:description>Constrain maximum width with truncation support</:description>
       <.table rows={[
         %{class: "maxwr-5", value: "5rem"},
@@ -46,19 +46,19 @@ defmodule DemoWeb.Live.SizingLive do
         %{class: "maxwr-25", value: "25rem"},
         %{class: "maxwr-30", value: "30rem"}
       ]} is_striped>
-        <:col :let={row} label="Class"><code>.{row.class}</code></:col>
-        <:col :let={row} label="Max Width">{row.value}</:col>
-        <:col :let={row} label="Demo">
+        <:col :let={row} label={gettext("Class")}><code>.{row.class}</code></:col>
+        <:col :let={row} label={gettext("Max Width")}>{row.value}</:col>
+        <:col :let={row} label={gettext("Demo")}>
           <span class={"#{row.class} text-truncate d-inline-block"}>This text will be truncated when it exceeds the max width</span>
         </:col>
       </.table>
     </.card>
 
-    <.card title_text="Spacing Utilities">
+    <.card title_text={gettext("Spacing Utilities")}>
       <:description>Margin and padding classes based on spacing scale</:description>
       <.grid>
         <.column size="50">
-          <.heading level={4}>Spacing Scale</.heading>
+          <.heading level={4}>{gettext("Spacing Scale")}</.heading>
           <.table rows={[
             %{name: "xs", value: "0.4rem (4px)"},
             %{name: "sm", value: "0.8rem (8px)"},
@@ -68,12 +68,12 @@ defmodule DemoWeb.Live.SizingLive do
             %{name: "xl", value: "3.2rem (32px)"},
             %{name: "2xl", value: "4.8rem (48px)"}
           ]} is_striped>
-            <:col :let={row} label="Name"><code>{row.name}</code></:col>
-            <:col :let={row} label="Value">{row.value}</:col>
+            <:col :let={row} label={gettext("Name")}><code>{row.name}</code></:col>
+            <:col :let={row} label={gettext("Value")}>{row.value}</:col>
           </.table>
         </.column>
         <.column size="50">
-          <.heading level={4}>Class Pattern</.heading>
+          <.heading level={4}>{gettext("Class Pattern")}</.heading>
           <.basic_list spacing="compact">
             <li><code>m-&#123;size&#125;</code> - Margin all sides</li>
             <li><code>mt-&#123;size&#125;</code> - Margin top</li>
@@ -91,7 +91,7 @@ defmodule DemoWeb.Live.SizingLive do
       </.grid>
     </.card>
 
-    <.card title_text="Gap Utilities">
+    <.card title_text={gettext("Gap Utilities")}>
       <:description>Control spacing between flex/grid children</:description>
       <.table rows={[
         %{class: "gap-xs", value: "0.4rem"},
@@ -100,16 +100,16 @@ defmodule DemoWeb.Live.SizingLive do
         %{class: "gap-lg", value: "2.4rem"},
         %{class: "gap-xl", value: "3.2rem"}
       ]} is_striped>
-        <:col :let={row} label="Class"><code>.{row.class}</code></:col>
-        <:col :let={row} label="Gap Size">{row.value}</:col>
+        <:col :let={row} label={gettext("Class")}><code>.{row.class}</code></:col>
+        <:col :let={row} label={gettext("Gap Size")}>{row.value}</:col>
       </.table>
     </.card>
 
-    <.card title_text="Display Utilities">
+    <.card title_text={gettext("Display Utilities")}>
       <:description>Common display and flex utilities</:description>
       <.grid>
         <.column size="50">
-          <.heading level={4}>Display</.heading>
+          <.heading level={4}>{gettext("Display")}</.heading>
           <.basic_list spacing="compact">
             <li><code>d-none</code> - Hidden</li>
             <li><code>d-block</code> - Block</li>
@@ -121,7 +121,7 @@ defmodule DemoWeb.Live.SizingLive do
           </.basic_list>
         </.column>
         <.column size="50">
-          <.heading level={4}>Flex</.heading>
+          <.heading level={4}>{gettext("Flex")}</.heading>
           <.basic_list spacing="compact">
             <li><code>flex-row</code> / <code>flex-column</code></li>
             <li><code>flex-wrap</code> / <code>flex-nowrap</code></li>
@@ -134,17 +134,17 @@ defmodule DemoWeb.Live.SizingLive do
       </.grid>
     </.card>
 
-    <.card title_text="Text Utilities">
+    <.card title_text={gettext("Text Utilities")}>
       <:description>Typography and text alignment helpers</:description>
       <.grid>
         <.column size="50">
-          <.heading level={4}>Alignment</.heading>
+          <.heading level={4}>{gettext("Alignment")}</.heading>
           <.basic_list spacing="compact">
             <li><code>text-start</code> - Start-aligned (RTL-aware)</li>
             <li><code>text-center</code> - Centered</li>
             <li><code>text-end</code> - End-aligned (RTL-aware)</li>
           </.basic_list>
-          <.heading level={4} class="mt-4">Wrapping</.heading>
+          <.heading level={4} class="mt-4">{gettext("Wrapping")}</.heading>
           <.basic_list spacing="compact">
             <li><code>text-truncate</code> - Ellipsis overflow</li>
             <li><code>text-nowrap</code> - No wrapping</li>
@@ -152,7 +152,7 @@ defmodule DemoWeb.Live.SizingLive do
           </.basic_list>
         </.column>
         <.column size="50">
-          <.heading level={4}>Font Size</.heading>
+          <.heading level={4}>{gettext("Font Size")}</.heading>
           <.basic_list spacing="compact">
             <li><code>font-xs</code> - 1rem</li>
             <li><code>font-sm</code> - 1.2rem</li>
@@ -161,7 +161,7 @@ defmodule DemoWeb.Live.SizingLive do
             <li><code>font-xl</code> - 2.4rem</li>
             <li><code>font-2xl</code> - 3.2rem</li>
           </.basic_list>
-          <.heading level={4} class="mt-4">Font Weight</.heading>
+          <.heading level={4} class="mt-4">{gettext("Font Weight")}</.heading>
           <.basic_list spacing="compact">
             <li><code>font-light</code> - 300</li>
             <li><code>font-normal</code> - 400</li>

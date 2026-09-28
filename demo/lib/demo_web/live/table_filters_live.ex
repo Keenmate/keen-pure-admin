@@ -45,12 +45,12 @@ defmodule DemoWeb.Live.TableFiltersLive do
     <%!-- Basic Search Filter --%>
     <.card>
       <:header>
-        <h3>Basic Search Filter</h3>
+        <h3>{gettext("Basic Search Filter")}</h3>
       </:header>
       <.grid>
         <.column size="100">
           <.input_wrapper>
-            <.input type="text" placeholder="Search users..." />
+            <.input type="text" placeholder={gettext("Search users...")} />
           </.input_wrapper>
         </.column>
       </.grid>
@@ -64,9 +64,9 @@ defmodule DemoWeb.Live.TableFiltersLive do
             <.button size="xs" variant="secondary" is_icon_only title="Edit">✏️</.button>
           </.button_group>
         </:action>
-        <:col :let={u} label="Name">{u.name}</:col>
-        <:col :let={u} label="Email">{u.email}</:col>
-        <:col :let={u} label="Status">
+        <:col :let={u} label={gettext("Name")}>{u.name}</:col>
+        <:col :let={u} label={gettext("Email")}>{u.email}</:col>
+        <:col :let={u} label={gettext("Status")}>
           <.badge variant={status_variant(u.status)} size="sm">{u.status}</.badge>
         </:col>
       </.table>
@@ -77,17 +77,17 @@ defmodule DemoWeb.Live.TableFiltersLive do
       <:filters>
         <.input_group>
           <:prepend>🔍</:prepend>
-          <.input type="text" placeholder="Search by rule" />
+          <.input type="text" placeholder={gettext("Search by rule")} />
         </.input_group>
 
         <.input_group>
           <:prepend>🌐</:prepend>
-          <.input type="text" placeholder="Filter by data source" />
+          <.input type="text" placeholder={gettext("Filter by data source")} />
         </.input_group>
 
         <.input_group>
           <:prepend>🌐</:prepend>
-          <.input type="text" placeholder="Filter by Organization tree" />
+          <.input type="text" placeholder={gettext("Filter by Organization tree")} />
         </.input_group>
       </:filters>
 
@@ -95,7 +95,7 @@ defmodule DemoWeb.Live.TableFiltersLive do
         <.grid>
           <.column size="100" md="1-3">
             <.form_group>
-              <.form_label>Category</.form_label>
+              <.form_label>{gettext("Category")}</.form_label>
               <.input_wrapper>
                 <.select prompt="All Categories" options={["Electronics", "Clothing", "Books"]} />
               </.input_wrapper>
@@ -103,7 +103,7 @@ defmodule DemoWeb.Live.TableFiltersLive do
           </.column>
           <.column size="100" md="1-3">
             <.form_group>
-              <.form_label>Price Range</.form_label>
+              <.form_label>{gettext("Price Range")}</.form_label>
               <.input_wrapper>
                 <.select prompt="Any Price" options={["Under $50", "$50 - $100", "$100 - $500", "Over $500"]} />
               </.input_wrapper>
@@ -111,7 +111,7 @@ defmodule DemoWeb.Live.TableFiltersLive do
           </.column>
           <.column size="100" md="1-3">
             <.form_group>
-              <.form_label>Status</.form_label>
+              <.form_label>{gettext("Status")}</.form_label>
               <.input_wrapper>
                 <.select prompt="All Statuses" options={["In Stock", "Out of Stock", "Pre-order"]} />
               </.input_wrapper>
@@ -122,7 +122,7 @@ defmodule DemoWeb.Live.TableFiltersLive do
         <.grid>
           <.column size="100" md="50">
             <.form_group>
-              <.form_label>Date Range</.form_label>
+              <.form_label>{gettext("Date Range")}</.form_label>
               <.grid>
                 <.column size="100" md="50">
                   <.input_wrapper>
@@ -139,7 +139,7 @@ defmodule DemoWeb.Live.TableFiltersLive do
           </.column>
           <.column size="100" md="50">
             <.form_group>
-              <.form_label>Supplier</.form_label>
+              <.form_label>{gettext("Supplier")}</.form_label>
               <.input_wrapper>
                 <.select prompt="All Suppliers" options={["Supplier A", "Supplier B", "Supplier C"]} />
               </.input_wrapper>
@@ -157,10 +157,10 @@ defmodule DemoWeb.Live.TableFiltersLive do
             <.button size="xs" variant="secondary" is_icon_only title="Edit">✏️</.button>
           </.button_group>
         </:action>
-        <:col :let={p} label="Product">{p.name}</:col>
-        <:col :let={p} label="Category">{p.category}</:col>
-        <:col :let={p} label="Price">{p.price}</:col>
-        <:col :let={p} label="Stock">
+        <:col :let={p} label={gettext("Product")}>{p.name}</:col>
+        <:col :let={p} label={gettext("Category")}>{p.category}</:col>
+        <:col :let={p} label={gettext("Price")}>{p.price}</:col>
+        <:col :let={p} label={gettext("Stock")}>
           <.badge variant={stock_variant(p.stock)} size="sm">{p.stock}</.badge>
         </:col>
       </.table>
@@ -168,21 +168,21 @@ defmodule DemoWeb.Live.TableFiltersLive do
 
     <%!-- Inline Horizontal Filters --%>
     <.card>
-      <h3>Inline Horizontal Filters</h3>
+      <h3>{gettext("Inline Horizontal Filters")}</h3>
       <.paragraph class="text-secondary mb-4">All filters visible in a single row</.paragraph>
 
       <.grid>
         <.column size="100" md="20">
           <.form_group>
-            <.form_label>Search</.form_label>
+            <.form_label>{gettext("Search")}</.form_label>
             <.input_wrapper>
-              <.input type="text" placeholder="Search..." />
+              <.input type="text" placeholder={gettext("Search...")} />
             </.input_wrapper>
           </.form_group>
         </.column>
         <.column size="100" md="20">
           <.form_group>
-            <.form_label>Status</.form_label>
+            <.form_label>{gettext("Status")}</.form_label>
             <.input_wrapper>
               <.select prompt="All" options={["Active", "Inactive"]} />
             </.input_wrapper>
@@ -190,7 +190,7 @@ defmodule DemoWeb.Live.TableFiltersLive do
         </.column>
         <.column size="100" md="20">
           <.form_group>
-            <.form_label>Type</.form_label>
+            <.form_label>{gettext("Type")}</.form_label>
             <.input_wrapper>
               <.select prompt="All Types" options={["Type A", "Type B"]} />
             </.input_wrapper>
@@ -198,7 +198,7 @@ defmodule DemoWeb.Live.TableFiltersLive do
         </.column>
         <.column size="100" md="20">
           <.form_group>
-            <.form_label>Date</.form_label>
+            <.form_label>{gettext("Date")}</.form_label>
             <.input_wrapper>
               <.input type="date" />
             </.input_wrapper>
@@ -207,7 +207,7 @@ defmodule DemoWeb.Live.TableFiltersLive do
         <.column size="100" md="20">
           <.form_group>
             <.form_label>&nbsp;</.form_label>
-            <.button variant="primary" is_block>Filter</.button>
+            <.button variant="primary" is_block>{gettext("Filter")}</.button>
           </.form_group>
         </.column>
       </.grid>
@@ -215,11 +215,11 @@ defmodule DemoWeb.Live.TableFiltersLive do
 
     <.card has_padding={false}>
       <.table rows={@orders} is_striped>
-        <:col :let={o} label="Order ID">{o.id}</:col>
-        <:col :let={o} label="Customer">{o.customer}</:col>
-        <:col :let={o} label="Date">{o.date}</:col>
-        <:col :let={o} label="Total">{o.total}</:col>
-        <:col :let={o} label="Status">
+        <:col :let={o} label={gettext("Order ID")}>{o.id}</:col>
+        <:col :let={o} label={gettext("Customer")}>{o.customer}</:col>
+        <:col :let={o} label={gettext("Date")}>{o.date}</:col>
+        <:col :let={o} label={gettext("Total")}>{o.total}</:col>
+        <:col :let={o} label={gettext("Status")}>
           <.badge variant={order_variant(o.status)} size="sm">{o.status}</.badge>
         </:col>
       </.table>
@@ -228,7 +228,7 @@ defmodule DemoWeb.Live.TableFiltersLive do
     <%!-- Filter Tags/Pills --%>
     <.card>
       <:header>
-        <h3>Active Filter Tags</h3>
+        <h3>{gettext("Active Filter Tags")}</h3>
         <.button_group>
           <.button size="sm" variant="secondary" is_icon_only title="Refresh"><i class="fas fa-sync-alt" /></.button>
           <.button size="sm" variant="secondary" is_icon_only title="Download"><i class="fas fa-download" /></.button>
@@ -238,7 +238,7 @@ defmodule DemoWeb.Live.TableFiltersLive do
       <.callout variant="info" class="mb-4">Visual representation of applied filters with remove buttons</.callout>
 
       <.input_wrapper>
-        <.input type="text" placeholder="Search..." />
+        <.input type="text" placeholder={gettext("Search...")} />
       </.input_wrapper>
 
       <div class="mt-3">
@@ -253,17 +253,17 @@ defmodule DemoWeb.Live.TableFiltersLive do
           <.composite_badge variant="warning" label="Price: $50-$100" button_text="×" is_interactive>
             <:icon_content>💰</:icon_content>
           </.composite_badge>
-          <.button size="xs" variant="secondary">Clear All</.button>
+          <.button size="xs" variant="secondary">{gettext("Clear All")}</.button>
         </div>
       </div>
     </.card>
 
     <.card has_padding={false}>
       <.table rows={@filtered_products} is_striped>
-        <:col :let={p} label="Product">{p.name}</:col>
-        <:col :let={p} label="Category">{p.category}</:col>
-        <:col :let={p} label="Price">{p.price}</:col>
-        <:col :let={p} label="Status">
+        <:col :let={p} label={gettext("Product")}>{p.name}</:col>
+        <:col :let={p} label={gettext("Category")}>{p.category}</:col>
+        <:col :let={p} label={gettext("Price")}>{p.price}</:col>
+        <:col :let={p} label={gettext("Status")}>
           <.badge variant={status_variant(p.status)} size="sm">{p.status}</.badge>
         </:col>
       </.table>

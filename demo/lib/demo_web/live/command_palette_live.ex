@@ -32,44 +32,44 @@ defmodule DemoWeb.Live.CommandPaletteLive do
 
     <.grid>
       <.column size="100" lg="1-2">
-        <.card title_text="Quick Start" class="mb-4">
+        <.card title_text={gettext("Quick Start")} class="mb-4">
           <.paragraph class="mb-3">
             Open the command palette and try the different modes:
           </.paragraph>
           <div class="mb-4">
             <.button variant="primary" size="lg" is_block phx-click={show_command_palette()}>
               <:icon><i class="fa-solid fa-magnifying-glass"></i></:icon>
-              Open Command Palette (Ctrl+K)
+              {gettext("Open Command Palette (Ctrl+K)")}
             </.button>
           </div>
 
           <div class="mb-3" style="display: flex; gap: 8px; align-items: center;">
-            <span>Display style:</span>
-            <.button size="sm" variant={if @cp_display == "inline", do: "primary", else: "secondary"} phx-click="set_display" phx-value-display="inline">Inline</.button>
-            <.button size="sm" variant={if @cp_display == "tokens", do: "primary", else: "secondary"} phx-click="set_display" phx-value-display="tokens">Tokens</.button>
+            <span>{gettext("Display style:")}</span>
+            <.button size="sm" variant={if @cp_display == "inline", do: "primary", else: "secondary"} phx-click="set_display" phx-value-display="inline">{gettext("Inline")}</.button>
+            <.button size="sm" variant={if @cp_display == "tokens", do: "primary", else: "secondary"} phx-click="set_display" phx-value-display="tokens">{gettext("Tokens")}</.button>
           </div>
 
-          <.heading level={4} class="mb-2">Modes</.heading>
+          <.heading level={4} class="mb-2">{gettext("Modes")}</.heading>
           <.table rows={[
             %{prefix: "/", mode: "Commands", description: "Multi-step action wizards"},
             %{prefix: ":", mode: "Search", description: "Scoped entity search"},
             %{prefix: "(none)", mode: "Global", description: "Search everything"}
           ]} size="sm">
-            <:col :let={row} label="Prefix"><code>{row.prefix}</code></:col>
-            <:col :let={row} label="Mode">{row.mode}</:col>
-            <:col :let={row} label="Description">{row.description}</:col>
+            <:col :let={row} label={gettext("Prefix")}><code>{row.prefix}</code></:col>
+            <:col :let={row} label={gettext("Mode")}>{row.mode}</:col>
+            <:col :let={row} label={gettext("Description")}>{row.description}</:col>
           </.table>
         </.card>
 
-        <.card title_text="Commands (/)" class="mb-4">
+        <.card title_text={gettext("Commands (/)")} class="mb-4">
           <.paragraph class="mb-3">Type <code>/</code> to see available commands:</.paragraph>
           <.table rows={@cp_commands} size="sm">
-            <:col :let={cmd} label="Shortcut"><code>{cmd.shortcut}</code></:col>
-            <:col :let={cmd} label="Name">{cmd.name}</:col>
-            <:col :let={cmd} label="Steps">{length(cmd.steps)} steps</:col>
+            <:col :let={cmd} label={gettext("Shortcut")}><code>{cmd.shortcut}</code></:col>
+            <:col :let={cmd} label={gettext("Name")}>{cmd.name}</:col>
+            <:col :let={cmd} label={gettext("Steps")}>{length(cmd.steps)} steps</:col>
           </.table>
 
-          <.heading level={4} class="mt-3 mb-2">Try it</.heading>
+          <.heading level={4} class="mt-3 mb-2">{gettext("Try it")}</.heading>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <.button variant="secondary" size="sm" phx-click="open_with_query" phx-value-query="/">/  (list all)</.button>
             <.button variant="secondary" size="sm" phx-click="open_with_query" phx-value-query="/deploy">/deploy</.button>
@@ -79,14 +79,14 @@ defmodule DemoWeb.Live.CommandPaletteLive do
       </.column>
 
       <.column size="100" lg="1-2">
-        <.card title_text="Search Contexts (:)" class="mb-4">
+        <.card title_text={gettext("Search Contexts (:)")} class="mb-4">
           <.paragraph class="mb-3">Type <code>:</code> to see search contexts:</.paragraph>
           <.table rows={@cp_contexts} size="sm">
-            <:col :let={ctx} label="Shortcut"><code>{ctx.shortcut}</code></:col>
-            <:col :let={ctx} label="Context">{ctx.name}</:col>
+            <:col :let={ctx} label={gettext("Shortcut")}><code>{ctx.shortcut}</code></:col>
+            <:col :let={ctx} label={gettext("Context")}>{ctx.name}</:col>
           </.table>
 
-          <.heading level={4} class="mt-3 mb-2">Try it</.heading>
+          <.heading level={4} class="mt-3 mb-2">{gettext("Try it")}</.heading>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <.button variant="secondary" size="sm" phx-click="open_with_query" phx-value-query=":">:  (list all)</.button>
             <.button variant="secondary" size="sm" phx-click="open_with_query" phx-value-query=":p macbook">:p macbook</.button>
@@ -95,7 +95,7 @@ defmodule DemoWeb.Live.CommandPaletteLive do
           </div>
         </.card>
 
-        <.card title_text="Global Search" class="mb-4">
+        <.card title_text={gettext("Global Search")} class="mb-4">
           <.paragraph class="mb-3">Just type without a prefix to search everything:</.paragraph>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <.button variant="secondary" size="sm" phx-click="open_with_query" phx-value-query="john">john</.button>
@@ -104,7 +104,7 @@ defmodule DemoWeb.Live.CommandPaletteLive do
           </div>
         </.card>
 
-        <.card title_text="Extending it" class="mb-4">
+        <.card title_text={gettext("Extending it")} class="mb-4">
           <.paragraph class="mb-3">
             The palette ships as a reusable LiveComponent. Mount it once in your layout and
             point it at a <code>PureAdmin.CommandPalette.Source</code> module that supplies
@@ -113,7 +113,7 @@ defmodule DemoWeb.Live.CommandPaletteLive do
           <.code_block language="elixir">{code_example()}</.code_block>
         </.card>
 
-        <.card title_text="Keyboard Shortcuts" class="mb-4">
+        <.card title_text={gettext("Keyboard Shortcuts")} class="mb-4">
           <.table rows={[
             %{key: "Ctrl+K / ⌘K", action: "Toggle command palette"},
             %{key: "↑ ↓", action: "Navigate results"},
@@ -122,8 +122,8 @@ defmodule DemoWeb.Live.CommandPaletteLive do
             %{key: "Backspace (at start)", action: "Go back to previous step"},
             %{key: "Esc", action: "Back (in step/context) or close"}
           ]} size="sm">
-            <:col :let={row} label="Key"><kbd>{row.key}</kbd></:col>
-            <:col :let={row} label="Action">{row.action}</:col>
+            <:col :let={row} label={gettext("Key")}><kbd>{row.key}</kbd></:col>
+            <:col :let={row} label={gettext("Action")}>{row.action}</:col>
           </.table>
         </.card>
       </.column>

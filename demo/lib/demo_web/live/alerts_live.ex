@@ -10,7 +10,7 @@ defmodule DemoWeb.Live.AlertsLive do
     <.paragraph>Contextual feedback messages for typical user actions with flexible alert messages.</.paragraph>
 
     <%!-- Basic Alerts --%>
-    <.card title_text="Basic Alerts">
+    <.card title_text={gettext("Basic Alerts")}>
       <.alert variant="primary">
         <strong>Primary!</strong> This is a primary alert — check it out!
       </.alert>
@@ -38,7 +38,7 @@ defmodule DemoWeb.Live.AlertsLive do
     </.card>
 
     <%!-- Alerts with Icons --%>
-    <.card title_text="Alerts with Icons">
+    <.card title_text={gettext("Alerts with Icons")}>
       <.alert variant="success">
         <:icon>✓</:icon>
         <strong>Success!</strong> Your changes have been saved successfully.
@@ -58,7 +58,7 @@ defmodule DemoWeb.Live.AlertsLive do
     </.card>
 
     <%!-- Dismissible Alerts --%>
-    <.card title_text="Dismissible Alerts">
+    <.card title_text={gettext("Dismissible Alerts")}>
       <.alert id="dismiss-success" variant="success" is_dismissible>
         <strong>Well done!</strong> You successfully read this important alert message.
       </.alert>
@@ -74,7 +74,7 @@ defmodule DemoWeb.Live.AlertsLive do
     </.card>
 
     <%!-- Alerts with Additional Content --%>
-    <.card title_text="Alerts with Additional Content">
+    <.card title_text={gettext("Alerts with Additional Content")}>
       <.grid>
         <.column size="100" md="1-2">
           <.alert variant="success" heading_size="lg">
@@ -101,8 +101,8 @@ defmodule DemoWeb.Live.AlertsLive do
               <li>New dashboard features</li>
             </.basic_list>
             <:actions>
-              <.button variant="primary" size="sm">Update Now</.button>
-              <.button variant="secondary" size="sm">Remind Me Later</.button>
+              <.button variant="primary" size="sm">{gettext("Update Now")}</.button>
+              <.button variant="secondary" size="sm">{gettext("Remind Me Later")}</.button>
             </:actions>
           </.alert>
         </.column>
@@ -110,7 +110,7 @@ defmodule DemoWeb.Live.AlertsLive do
     </.card>
 
     <%!-- Header style: compact vs punchy --%>
-    <.card title_text="Header style: compact vs. punchy">
+    <.card title_text={gettext("Header style: compact vs. punchy")}>
       <.paragraph>
         <code>pa-alert__heading</code> defaults to the body font-size and semibold weight (compact look — good for status banners). Pass <code>heading_size="lg"</code> to bump it to the louder, deliberate-read presentation for blocking errors and system updates.
       </.paragraph>
@@ -139,7 +139,7 @@ defmodule DemoWeb.Live.AlertsLive do
     </.card>
 
     <%!-- Sizes --%>
-    <.card title_text="Sizes">
+    <.card title_text={gettext("Sizes")}>
       <.paragraph>
         Three sizes — <code>size="sm"</code>, default, and <code>size="lg"</code> — with clean 0.25rem padding increments and font-size steps from <code>1.2rem</code> to <code>1.6rem</code>.
       </.paragraph>
@@ -160,11 +160,11 @@ defmodule DemoWeb.Live.AlertsLive do
     </.card>
 
     <%!-- Multiline icon + content --%>
-    <.card title_text="Icon with multi-line content (is_multiline)">
+    <.card title_text={gettext("Icon with multi-line content (is_multiline)")}>
       <.paragraph>
         Default alignment centres the icon against single-line content. Add <code>is_multiline</code> when an icon sits next to multi-line content (heading + body + actions inside <code>pa-alert__content</code>) so the icon stays at the top with the heading instead of centring against the whole stack.
       </.paragraph>
-      <.alert variant="info" heading_text="Heads up" heading_size="lg" is_multiline>
+      <.alert variant="info" heading_text={gettext("Heads up")} heading_size="lg" is_multiline>
         <:icon>ⓘ</:icon>
         <.paragraph class="mb-0">
           Long body text spans multiple lines. Without <code>is_multiline</code> the icon would float in the vertical middle of the content stack instead of top-aligning with the heading.
@@ -173,7 +173,7 @@ defmodule DemoWeb.Live.AlertsLive do
     </.card>
 
     <%!-- Outline Alerts --%>
-    <.card title_text="Outline Alerts">
+    <.card title_text={gettext("Outline Alerts")}>
       <.alert is_outline variant="primary">
         <strong>Primary Outline!</strong> This is a primary outline alert.
       </.alert>
@@ -192,21 +192,21 @@ defmodule DemoWeb.Live.AlertsLive do
     </.card>
 
     <%!-- Theme Color Alerts --%>
-    <.card title_text="Theme Color Alerts">
+    <.card title_text={gettext("Theme Color Alerts")}>
       <.alert :for={n <- 1..9} theme_color={to_string(n)}>
         <strong>Color {n}!</strong> Theme color slot {n} alert.
       </.alert>
     </.card>
 
     <%!-- Theme Color Outline Alerts --%>
-    <.card title_text="Theme Color Outline Alerts">
+    <.card title_text={gettext("Theme Color Outline Alerts")}>
       <.alert :for={n <- 1..9} theme_color={to_string(n)} is_outline>
         <strong>Color {n} Outline!</strong> Theme color slot {n} outline alert.
       </.alert>
     </.card>
 
     <%!-- Status strip layout --%>
-    <.card title_text="Status strip layout">
+    <.card title_text={gettext("Status strip layout")}>
       <.grid>
         <.column size="100" md="1-3">
           <.alert size="sm" variant="success">

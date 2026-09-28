@@ -9,7 +9,7 @@ defmodule DemoWeb.Live.ThemeVariablesLive do
     ~H"""
     <.paragraph class="mb-6">CSS custom properties that control the entire Pure Admin appearance. Override these in your theme to customize everything.</.paragraph>
 
-    <.card title_text="Core Colors">
+    <.card title_text={gettext("Core Colors")}>
       <.table rows={[
         %{var: "--accent-color", desc: "Primary accent color used for interactive elements, links, active states"},
         %{var: "--accent-color-hover", desc: "Accent hover state"},
@@ -20,12 +20,12 @@ defmodule DemoWeb.Live.ThemeVariablesLive do
         %{var: "--base-bg-color-2", desc: "Alternate background (cards, panels)"},
         %{var: "--base-border-color", desc: "Default border color"}
       ]} is_striped>
-        <:col :let={row} label="Variable"><code>{row.var}</code></:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Variable")}><code>{row.var}</code></:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
     </.card>
 
-    <.card title_text="Semantic State Colors">
+    <.card title_text={gettext("Semantic State Colors")}>
       <.table rows={[
         %{var: "--base-success-color", desc: "Success/positive actions and states"},
         %{var: "--base-warning-color", desc: "Warning/caution states"},
@@ -34,13 +34,13 @@ defmodule DemoWeb.Live.ThemeVariablesLive do
         %{var: "--base-primary-color", desc: "Primary brand color"},
         %{var: "--base-secondary-color", desc: "Secondary/neutral color"}
       ]} is_striped>
-        <:col :let={row} label="Variable"><code>{row.var}</code></:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Variable")}><code>{row.var}</code></:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
     </.card>
 
-    <.card title_text="Theme Color Slots (1-9)">
-      <:description>Nine customizable color slots for branding. Each slot auto-generates contrasting text.</:description>
+    <.card title_text={gettext("Theme Color Slots (1-9)")}>
+      <:description>{gettext("Nine customizable color slots for branding. Each slot auto-generates contrasting text.")}</:description>
       <.table rows={[
         %{var: "--base-color-1", desc: "Theme color 1 (used by pa-card--color-1, etc.)"},
         %{var: "--base-color-2", desc: "Theme color 2"},
@@ -52,12 +52,12 @@ defmodule DemoWeb.Live.ThemeVariablesLive do
         %{var: "--base-color-8", desc: "Theme color 8"},
         %{var: "--base-color-9", desc: "Theme color 9"}
       ]} is_striped>
-        <:col :let={row} label="Variable"><code>{row.var}</code></:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Variable")}><code>{row.var}</code></:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
     </.card>
 
-    <.card title_text="Layout & Structure">
+    <.card title_text={gettext("Layout & Structure")}>
       <.table rows={[
         %{var: "--pc-header-bg", desc: "Navbar background"},
         %{var: "--pc-header-text", desc: "Navbar text color"},
@@ -69,24 +69,24 @@ defmodule DemoWeb.Live.ThemeVariablesLive do
         %{var: "--pc-footer-text", desc: "Footer text color"},
         %{var: "--pc-bg-light", desc: "Subtle tinted background for panels"}
       ]} is_striped>
-        <:col :let={row} label="Variable"><code>{row.var}</code></:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Variable")}><code>{row.var}</code></:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
     </.card>
 
-    <.card title_text="Typography">
+    <.card title_text={gettext("Typography")}>
       <.table rows={[
         %{var: "--base-font-family", desc: "Default font stack"},
         %{var: "--base-font-size", desc: "Root font size (default: 10px for rem scaling)"},
         %{var: "--base-line-height", desc: "Default line height"},
         %{var: "--heading-font-family", desc: "Heading font (falls back to base)"}
       ]} is_striped>
-        <:col :let={row} label="Variable"><code>{row.var}</code></:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Variable")}><code>{row.var}</code></:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
     </.card>
 
-    <.card title_text="Spacing Scale">
+    <.card title_text={gettext("Spacing Scale")}>
       <.table rows={[
         %{var: "--spacing-xs", value: "0.4rem", desc: "Extra small"},
         %{var: "--spacing-sm", value: "0.8rem", desc: "Small"},
@@ -95,13 +95,13 @@ defmodule DemoWeb.Live.ThemeVariablesLive do
         %{var: "--spacing-xl", value: "3.2rem", desc: "Extra large"},
         %{var: "--spacing-2xl", value: "4.8rem", desc: "2X large"}
       ]} is_striped>
-        <:col :let={row} label="Variable"><code>{row.var}</code></:col>
-        <:col :let={row} label="Default">{row.value}</:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Variable")}><code>{row.var}</code></:col>
+        <:col :let={row} label={gettext("Default")}>{row.value}</:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
     </.card>
 
-    <.card title_text="Component Variables">
+    <.card title_text={gettext("Component Variables")}>
       <.table rows={[
         %{var: "--pc-card-bg", desc: "Card background"},
         %{var: "--pc-card-border", desc: "Card border color"},
@@ -117,13 +117,13 @@ defmodule DemoWeb.Live.ThemeVariablesLive do
         %{var: "--pc-tooltip-bg", desc: "Tooltip background"},
         %{var: "--pc-tooltip-text", desc: "Tooltip text color"}
       ]} is_striped>
-        <:col :let={row} label="Variable"><code>{row.var}</code></:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Variable")}><code>{row.var}</code></:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
     </.card>
 
     <.callout variant="info">
-      <:title>Overriding Variables</:title>
+      <:title>{gettext("Overriding Variables")}</:title>
       Create a custom theme by overriding these variables in your CSS. Use <code>:root</code> for global overrides or scope to <code>.pc-mode-light</code> / <code>.pc-mode-dark</code> for mode-specific values.
     </.callout>
     """

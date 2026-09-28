@@ -12,8 +12,8 @@ defmodule DemoWeb.Live.TimelineBlockLive do
     <%!-- Two examples side by side --%>
     <.grid>
       <.column size="50">
-        <.card title_text="Timeline Block">
-          <:description>Centered alternating layout</:description>
+        <.card title_text={gettext("Timeline Block")}>
+          <:description>{gettext("Centered alternating layout")}</:description>
           <.timeline variant="alternating">
             <.timeline_item time_text="15 Dec" icon_text="🏠">
               <:title>Project Started</:title>
@@ -43,8 +43,8 @@ defmodule DemoWeb.Live.TimelineBlockLive do
         </.card>
       </.column>
       <.column size="50">
-        <.card title_text="Timeline Block">
-          <:description>Another example with different content</:description>
+        <.card title_text={gettext("Timeline Block")}>
+          <:description>{gettext("Another example with different content")}</:description>
           <.timeline variant="alternating">
             <.timeline_item time_text="Q1 2024" icon_text="📋">
               <:title>Planning Phase</:title>
@@ -68,11 +68,11 @@ defmodule DemoWeb.Live.TimelineBlockLive do
     </.grid>
 
     <%!-- Layout Modifiers --%>
-    <.section title_text="Layout Modifiers">
+    <.section title_text={gettext("Layout Modifiers")}>
       <.grid>
         <.column size="1-3">
-          <.card title_text="Start Aligned">
-            <:description>All items on start side</:description>
+          <.card title_text={gettext("Start Aligned")}>
+            <:description>{gettext("All items on start side")}</:description>
             <.timeline variant="alternating" align="start">
               <.timeline_item time_text="Jan" icon_text="💡">
                 <:title>Idea</:title>
@@ -90,8 +90,8 @@ defmodule DemoWeb.Live.TimelineBlockLive do
           </.card>
         </.column>
         <.column size="1-3">
-          <.card title_text="End Aligned">
-            <:description>All items on end side</:description>
+          <.card title_text={gettext("End Aligned")}>
+            <:description>{gettext("All items on end side")}</:description>
             <.timeline variant="alternating" align="end">
               <.timeline_item time_text="Jan" icon_text="💡">
                 <:title>Idea</:title>
@@ -109,8 +109,8 @@ defmodule DemoWeb.Live.TimelineBlockLive do
           </.card>
         </.column>
         <.column size="1-3">
-          <.card title_text="Keep Layout">
-            <:description>No mobile collapse</:description>
+          <.card title_text={gettext("Keep Layout")}>
+            <:description>{gettext("No mobile collapse")}</:description>
             <.timeline variant="alternating" is_keep_layout>
               <.timeline_item time_text="Jan" icon_text="💡">
                 <:title>Idea</:title>
@@ -131,8 +131,8 @@ defmodule DemoWeb.Live.TimelineBlockLive do
 
       <.grid>
         <.column size="50">
-          <.card title_text="Start + Keep Layout">
-            <:description>Start-aligned, stays start on mobile</:description>
+          <.card title_text={gettext("Start + Keep Layout")}>
+            <:description>{gettext("Start-aligned, stays start on mobile")}</:description>
             <.timeline variant="alternating" align="start" is_keep_layout>
               <.timeline_item time_text="Step 1" icon_text="📋">
                 <:title>Plan</:title>
@@ -150,8 +150,8 @@ defmodule DemoWeb.Live.TimelineBlockLive do
           </.card>
         </.column>
         <.column size="50">
-          <.card title_text="End + Keep Layout">
-            <:description>End-aligned, stays end on mobile</:description>
+          <.card title_text={gettext("End + Keep Layout")}>
+            <:description>{gettext("End-aligned, stays end on mobile")}</:description>
             <.timeline variant="alternating" align="end" is_keep_layout>
               <.timeline_item time_text="Step 1" icon_text="📋">
                 <:title>Plan</:title>

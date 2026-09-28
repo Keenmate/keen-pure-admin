@@ -45,7 +45,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
 
     <%!-- ───────── In a filter bar ───────── --%>
     <.card class="mb-4">
-      <:header><.heading level="3">In a filter bar</.heading></:header>
+      <:header><.heading level="3">{gettext("In a filter bar")}</.heading></:header>
       <.paragraph class="mb-3">
         The range group drops into a <.code>.pa-filter-card__filters</.code> row
         as a single control standing in for three sliders. Open it, drag, and Apply.
@@ -55,16 +55,16 @@ defmodule DemoWeb.Live.RangeGroupLive do
         <:filters>
           <.input_group style="flex: 1; min-width: 200px;">
             <:prepend><i class="fas fa-search"></i></:prepend>
-            <.input type="text" placeholder="Search people by name" />
+            <.input type="text" placeholder={gettext("Search people by name")} />
           </.input_group>
 
-          <.select prompt="Any department" options={["Engineering", "Sales", "Support"]} />
+          <.select prompt={gettext("Any department")} options={["Engineering", "Sales", "Support"]} />
 
           <.range_group id="people-filters" panel_aria_label="Numeric filters">
-            <:range key="age" label="Age" min={18} max={80} step={1} value_min={25} value_max={60} />
+            <:range key="age" label={gettext("Age")} min={18} max={80} step={1} value_min={25} value_max={60} />
             <:range
               key="salary"
-              label="Salary"
+              label={gettext("Salary")}
               min={0}
               max={200_000}
               step={5000}
@@ -75,7 +75,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
             />
             <:range
               key="children"
-              label="Children"
+              label={gettext("Children")}
               min={0}
               max={8}
               step={1}
@@ -86,13 +86,13 @@ defmodule DemoWeb.Live.RangeGroupLive do
           </.range_group>
         </:filters>
         <:actions>
-          <.button variant="primary" class="pa-btn--icon-only" title="Search">
+          <.button variant="primary" class="pa-btn--icon-only" title={gettext("Search")}>
             <i class="fas fa-search"></i>
           </.button>
         </:actions>
       </.filter_card>
 
-      <.heading level="4" class="mt-4">Emitted values</.heading>
+      <.heading level="4" class="mt-4">{gettext("Emitted values")}</.heading>
       <.paragraph class="text-secondary mb-2">
         The group dispatches <.code>pa-range-group:change</.code> live and
         <.code>pa-range-group:apply</.code> / <.code>:reset</.code> on the buttons.
@@ -104,7 +104,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
 
     <%!-- ───────── Single-thumb thresholds ───────── --%>
     <.card class="mb-4">
-      <:header><.heading level="3">Single-thumb thresholds</.heading></:header>
+      <:header><.heading level="3">{gettext("Single-thumb thresholds")}</.heading></:header>
       <.paragraph class="mb-3">
         Set <.code>mode="single"</.code> for a one-handle threshold.
         <.code>bound="gte"</.code> reads as "<.code>value+</.code>",
@@ -114,8 +114,8 @@ defmodule DemoWeb.Live.RangeGroupLive do
       <.range_group id="threshold-filters" panel_aria_label="Threshold filters">
         <:range
           key="rating"
-          label="Rating"
-          row_label="Min rating"
+          label={gettext("Rating")}
+          row_label={gettext("Min rating")}
           min={0}
           max={5}
           step={0.5}
@@ -126,8 +126,8 @@ defmodule DemoWeb.Live.RangeGroupLive do
         />
         <:range
           key="distance"
-          label="Distance"
-          row_label="Max distance"
+          label={gettext("Distance")}
+          row_label={gettext("Max distance")}
           min={1}
           max={50}
           step={1}
@@ -141,7 +141,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
 
     <%!-- ───────── Handle shapes ───────── --%>
     <.card class="mb-4">
-      <:header><.heading level="3">Handle shapes</.heading></:header>
+      <:header><.heading level="3">{gettext("Handle shapes")}</.heading></:header>
       <.paragraph class="mb-3">
         Add a <.code>handle</.code> attr to any row to restyle its handles.
         Purely cosmetic (no JS), so you can mix shapes per row —
@@ -150,10 +150,10 @@ defmodule DemoWeb.Live.RangeGroupLive do
       </.paragraph>
 
       <.range_group id="handle-shapes" panel_aria_label="Handle shapes">
-        <:range key="circle" label="Circle" min={0} max={100} value_min={20} value_max={70} />
+        <:range key="circle" label={gettext("Circle")} min={0} max={100} value_min={20} value_max={70} />
         <:range
           key="rect"
-          label="Rectangle"
+          label={gettext("Rectangle")}
           row_label="Rectangle handle-rect"
           min={0}
           max={100}
@@ -163,7 +163,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
         />
         <:range
           key="bar"
-          label="Bar"
+          label={gettext("Bar")}
           row_label="Bar handle-bar"
           min={0}
           max={100}
@@ -173,7 +173,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
         />
         <:range
           key="arrow"
-          label="Chevron"
+          label={gettext("Chevron")}
           row_label="Chevron handle-arrow"
           min={0}
           max={100}
@@ -183,7 +183,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
         />
         <:range
           key="needle"
-          label="Needle"
+          label={gettext("Needle")}
           row_label="Needle handle-needle"
           min={0}
           max={100}
@@ -196,7 +196,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
 
     <%!-- ───────── Ticks & click-to-seek ───────── --%>
     <.card class="mb-4">
-      <:header><.heading level="3">Ticks &amp; click-to-seek</.heading></:header>
+      <:header><.heading level="3">{gettext("Ticks & click-to-seek")}</.heading></:header>
       <.paragraph class="mb-3">
         Add <.code>ticks</.code> (major interval) and optionally
         <.code>ticks_minor</.code> to draw tick marks; add <.code>is_tick_labels</.code>
@@ -209,7 +209,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
       <.range_group id="ticked-filters" panel_aria_label="Ticked filters">
         <:range
           key="age"
-          label="Age"
+          label={gettext("Age")}
           row_label="Age ticks=20 minor=10 labels"
           min={0}
           max={80}
@@ -222,7 +222,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
         />
         <:range
           key="score"
-          label="Score"
+          label={gettext("Score")}
           row_label="Score ticks=25"
           min={0}
           max={100}
@@ -233,7 +233,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
         />
         <:range
           key="level"
-          label="Level"
+          label={gettext("Level")}
           row_label="Level ticks=10 snap-ticks"
           min={0}
           max={100}
@@ -246,7 +246,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
         />
         <:range
           key="rating"
-          label="Rating"
+          label={gettext("Rating")}
           row_label="Min rating single + labels"
           min={0}
           max={5}
@@ -286,7 +286,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
       >
         <:range
           key="budget"
-          label="Budget"
+          label={gettext("Budget")}
           min={0}
           max={5000}
           step={50}
@@ -297,7 +297,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
         />
         <:range
           key="guests"
-          label="Guests"
+          label={gettext("Guests")}
           min={1}
           max={12}
           step={1}
@@ -313,7 +313,7 @@ defmodule DemoWeb.Live.RangeGroupLive do
 
     <%!-- ───────── Markup reference ───────── --%>
     <.card class="mb-4">
-      <:header><.heading level="3">Markup</.heading></:header>
+      <:header><.heading level="3">{gettext("Markup")}</.heading></:header>
       <.paragraph class="mb-3">
         One <.code>:range</.code> slot per dimension. Positioning is driven in
         0–100% via CSS custom properties on logical inset properties, so RTL

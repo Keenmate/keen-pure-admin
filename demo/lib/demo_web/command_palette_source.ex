@@ -10,6 +10,11 @@ defmodule DemoWeb.CommandPaletteSource do
   """
   use PureAdmin.CommandPalette.Source
 
+  # Translations resolve per-request: commands/0 and contexts/0 are functions
+  # (NOT module attributes) so gettext/1 runs at call time under the active
+  # locale — a module attribute would freeze the strings at compile time.
+  use Gettext, backend: DemoWeb.Gettext
+
   @page_size 8
 
   # -- Demo data --
@@ -66,73 +71,73 @@ defmodule DemoWeb.CommandPaletteSource do
     %{id: "i10", title: "INV-2024-010", subtitle: "Ivy Johnson · $1,836.00", icon: "🧾", badge: "Pending"}
   ]
 
-  @commands [
-    %{
-      id: "deploy",
-      shortcut: "/deploy",
-      aliases: ["/d"],
-      hotkey: "Alt+D",
-      name: "Deploy to Environment",
-      description: "Deploy a branch to an environment",
-      icon: "🚀",
-      steps: [
-        %{id: "environment", prompt: " in ", placeholder: "Select environment..."},
-        %{id: "branch", prompt: " branch ", placeholder: "Select or type branch...", free_text: true}
-      ]
-    },
-    %{
-      id: "assign",
-      shortcut: "/assign",
-      aliases: ["/a"],
-      hotkey: "Alt+A",
-      name: "Assign to User",
-      description: "Assign an item to a team member",
-      icon: "👤",
-      steps: [
-        %{id: "item", prompt: " ", placeholder: "Select item..."},
-        %{id: "user", prompt: " to ", placeholder: "Select user..."}
-      ]
-    },
-    %{
-      id: "go",
-      shortcut: "/go",
-      aliases: ["/g", "/nav"],
-      hotkey: "Alt+G",
-      name: "Go to Page",
-      description: "Navigate to a page",
-      icon: "🧭",
-      steps: [
-        %{id: "page", prompt: " ", placeholder: "Type page name...", free_text: true}
-      ]
-    },
-    %{
-      id: "theme",
-      shortcut: "/theme",
-      aliases: ["/t"],
-      hotkey: "Alt+T",
-      name: "Switch Theme",
-      description: "Change the visual theme",
-      icon: "🎨",
-      steps: [
-        %{id: "theme", prompt: " ", placeholder: "Select theme..."}
-      ]
-    }
-  ]
-
-  @contexts [
-    %{id: "products", shortcut: ":products", aliases: [":p"], name: "Products", description: "Search products", icon: "📦"},
-    %{id: "orders", shortcut: ":orders", aliases: [":o"], name: "Orders", description: "Search orders", icon: "📋"},
-    %{id: "users", shortcut: ":users", aliases: [":u"], name: "Users", description: "Search users", icon: "👥"},
-    %{id: "invoices", shortcut: ":invoices", aliases: [":i"], name: "Invoices", description: "Search invoices", icon: "🧾"}
-  ]
-
   # -- Source behaviour --
 
   @impl true
-  def commands, do: @commands
+  def commands do
+    [
+      %{
+        id: "deploy",
+        shortcut: "/deploy",
+        aliases: ["/d"],
+        hotkey: "Alt+D",
+        name: gettext("Deploy to Environment"),
+        description: gettext("Deploy a branch to an environment"),
+        icon: "🚀",
+        steps: [
+          %{id: "environment", prompt: gettext(" in "), placeholder: gettext("Select environment...")},
+          %{id: "branch", prompt: gettext(" branch "), placeholder: gettext("Select or type branch..."), free_text: true}
+        ]
+      },
+      %{
+        id: "assign",
+        shortcut: "/assign",
+        aliases: ["/a"],
+        hotkey: "Alt+A",
+        name: gettext("Assign to User"),
+        description: gettext("Assign an item to a team member"),
+        icon: "👤",
+        steps: [
+          %{id: "item", prompt: " ", placeholder: gettext("Select item...")},
+          %{id: "user", prompt: gettext(" to "), placeholder: gettext("Select user...")}
+        ]
+      },
+      %{
+        id: "go",
+        shortcut: "/go",
+        aliases: ["/g", "/nav"],
+        hotkey: "Alt+G",
+        name: gettext("Go to Page"),
+        description: gettext("Navigate to a page"),
+        icon: "🧭",
+        steps: [
+          %{id: "page", prompt: " ", placeholder: gettext("Type page name..."), free_text: true}
+        ]
+      },
+      %{
+        id: "theme",
+        shortcut: "/theme",
+        aliases: ["/t"],
+        hotkey: "Alt+T",
+        name: gettext("Switch Theme"),
+        description: gettext("Change the visual theme"),
+        icon: "🎨",
+        steps: [
+          %{id: "theme", prompt: " ", placeholder: gettext("Select theme...")}
+        ]
+      }
+    ]
+  end
 
   @impl true
-  def contexts, do: @contexts
+  def contexts do
+    [
+      %{id: "products", shortcut: ":products", aliases: [":p"], name: gettext("Products"), description: gettext("Search products"), icon: "📦"},
+      %{id: "orders", shortcut: ":orders", aliases: [":o"], name: gettext("Orders"), description: gettext("Search orders"), icon: "📋"},
+      %{id: "users", shortcut: ":users", aliases: [":u"], name: gettext("Users"), description: gettext("Search users"), icon: "👥"},
+      %{id: "invoices", shortcut: ":invoices", aliases: [":i"], name: gettext("Invoices"), description: gettext("Search invoices"), icon: "🧾"}
+    ]
+  end
 
   @impl true
   def search(:global, query) do
@@ -146,18 +151,18 @@ defmodule DemoWeb.CommandPaletteSource do
   @impl true
   def step_options("deploy", "environment", query, _selections) do
     [
-      %{id: "prod", label: "Production", description: "Live servers", icon: "🔴", value: "production"},
-      %{id: "staging", label: "Staging", description: "Pre-production", icon: "🟡", value: "staging"},
-      %{id: "dev", label: "Development", description: "Dev servers", icon: "🟢", value: "development"}
+      %{id: "prod", label: gettext("Production"), description: gettext("Live servers"), icon: "🔴", value: "production"},
+      %{id: "staging", label: gettext("Staging"), description: gettext("Pre-production"), icon: "🟡", value: "staging"},
+      %{id: "dev", label: gettext("Development"), description: gettext("Dev servers"), icon: "🟢", value: "development"}
     ]
     |> filter_options(query)
   end
 
   def step_options("deploy", "branch", query, _selections) do
     [
-      %{id: "main", label: "main", description: "Default branch", icon: "🌿", value: "main"},
-      %{id: "develop", label: "develop", description: "Development branch", icon: "🌱", value: "develop"},
-      %{id: "feature", label: "feature/new-ui", description: "Feature branch", icon: "🔧", value: "feature/new-ui"}
+      %{id: "main", label: "main", description: gettext("Default branch"), icon: "🌿", value: "main"},
+      %{id: "develop", label: "develop", description: gettext("Development branch"), icon: "🌱", value: "develop"},
+      %{id: "feature", label: "feature/new-ui", description: gettext("Feature branch"), icon: "🔧", value: "feature/new-ui"}
     ]
     |> filter_options(query)
   end
@@ -176,30 +181,30 @@ defmodule DemoWeb.CommandPaletteSource do
 
   def step_options("go", "page", query, _selections) do
     [
-      %{id: "dashboard", label: "Dashboard", code: "01", icon: "📊", value: "/"},
-      %{id: "forms", label: "Forms", code: "10", icon: "📝", value: "/forms"},
-      %{id: "buttons", label: "Buttons", code: "20", icon: "🔘", value: "/components/buttons"},
-      %{id: "inputs", label: "Inputs", code: "21", icon: "✏️", value: "/components/inputs"},
-      %{id: "cards", label: "Cards", code: "22", icon: "🃏", value: "/components/cards"},
-      %{id: "tables", label: "Tables", code: "23", icon: "📊", value: "/tables/standard"},
-      %{id: "alerts", label: "Alerts", code: "24", icon: "⚠️", value: "/components/alerts"},
-      %{id: "toasts", label: "Toasts", code: "25", icon: "🔔", value: "/components/toasts"},
-      %{id: "modals", label: "Modals", code: "26", icon: "🔳", value: "/components/modals"},
-      %{id: "tabs", label: "Tabs", code: "27", icon: "📑", value: "/components/tabs"},
-      %{id: "badges", label: "Badges", code: "28", icon: "🏷️", value: "/components/badges"},
-      %{id: "tooltips", label: "Tooltips", code: "29", icon: "💬", value: "/components/tooltips"},
-      %{id: "command-palette", label: "Command Palette", code: "30", icon: "🔍", value: "/components/command-palette"}
+      %{id: "dashboard", label: gettext("Dashboard"), code: "01", icon: "📊", value: "/"},
+      %{id: "forms", label: gettext("Forms"), code: "10", icon: "📝", value: "/forms"},
+      %{id: "buttons", label: gettext("Buttons"), code: "20", icon: "🔘", value: "/components/buttons"},
+      %{id: "inputs", label: gettext("Inputs"), code: "21", icon: "✏️", value: "/components/inputs"},
+      %{id: "cards", label: gettext("Cards"), code: "22", icon: "🃏", value: "/components/cards"},
+      %{id: "tables", label: gettext("Tables"), code: "23", icon: "📊", value: "/tables/standard"},
+      %{id: "alerts", label: gettext("Alerts"), code: "24", icon: "⚠️", value: "/components/alerts"},
+      %{id: "toasts", label: gettext("Toasts"), code: "25", icon: "🔔", value: "/components/toasts"},
+      %{id: "modals", label: gettext("Modals"), code: "26", icon: "🔳", value: "/components/modals"},
+      %{id: "tabs", label: gettext("Tabs"), code: "27", icon: "📑", value: "/components/tabs"},
+      %{id: "badges", label: gettext("Badges"), code: "28", icon: "🏷️", value: "/components/badges"},
+      %{id: "tooltips", label: gettext("Tooltips"), code: "29", icon: "💬", value: "/components/tooltips"},
+      %{id: "command-palette", label: gettext("Command Palette"), code: "30", icon: "🔍", value: "/components/command-palette"}
     ]
     |> filter_options(query)
   end
 
   def step_options("theme", "theme", query, _selections) do
     [
-      %{id: "audi", label: "Audi", description: "Premium dark theme", icon: "🔴", value: "audi"},
-      %{id: "dark", label: "Dark", description: "Clean dark theme", icon: "🌑", value: "dark"},
-      %{id: "express", label: "Express", description: "Blue professional theme", icon: "🔵", value: "express"},
-      %{id: "corporate", label: "Corporate", description: "Business theme", icon: "🏢", value: "corporate"},
-      %{id: "minimal", label: "Minimal", description: "Clean minimal theme", icon: "⚪", value: "minimal"}
+      %{id: "audi", label: "Audi", description: gettext("Premium dark theme"), icon: "🔴", value: "audi"},
+      %{id: "dark", label: "Dark", description: gettext("Clean dark theme"), icon: "🌑", value: "dark"},
+      %{id: "express", label: "Express", description: gettext("Blue professional theme"), icon: "🔵", value: "express"},
+      %{id: "corporate", label: "Corporate", description: gettext("Business theme"), icon: "🏢", value: "corporate"},
+      %{id: "minimal", label: "Minimal", description: gettext("Clean minimal theme"), icon: "⚪", value: "minimal"}
     ]
     |> filter_options(query)
   end
@@ -208,20 +213,20 @@ defmodule DemoWeb.CommandPaletteSource do
 
   # Selecting a data result just acknowledges it (a real app would navigate/act).
   @impl true
-  def on_select(item), do: {:toast, :info, "Selected", "#{item[:title]}"}
+  def on_select(item), do: {:toast, :info, gettext("Selected"), "#{item[:title]}"}
 
   # Finishing "Go to Page" navigates; other commands acknowledge with a toast.
   @impl true
   def on_complete("go", selections) do
     case List.last(selections) do
       %{value: path} when is_binary(path) -> {:navigate, path}
-      _ -> {:toast, :success, "Command Executed", "go"}
+      _ -> {:toast, :success, gettext("Command Executed"), "go"}
     end
   end
 
   def on_complete(command_id, selections) do
     sel_str = selections |> Enum.map(fn s -> "#{s.step_id}=#{s.label}" end) |> Enum.join(", ")
-    {:toast, :success, "Command Executed", "#{command_id}: #{sel_str}"}
+    {:toast, :success, gettext("Command Executed"), "#{command_id}: #{sel_str}"}
   end
 
   # -- Helpers --

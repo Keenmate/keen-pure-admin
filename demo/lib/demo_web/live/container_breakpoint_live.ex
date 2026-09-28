@@ -29,7 +29,7 @@ defmodule DemoWeb.Live.ContainerBreakpointLive do
 
     ~H"""
     <div class="pa-page-content">
-      <.heading level={1}>Container Breakpoint</.heading>
+      <.heading level={1}>{gettext("Container Breakpoint")}</.heading>
       <.paragraph>
         The JS counterpart to a CSS <code>@container</code> query. The card below
         carries <code>phx-hook="PureAdminContainerBreakpoint"</code> and

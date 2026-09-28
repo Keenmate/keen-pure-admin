@@ -10,6 +10,10 @@ import Config
 config :demo,
   generators: [timestamp_type: :utc_datetime]
 
+# Gettext — demo i18n. `default` domain holds the demo's own content;
+# `pure_admin` domain bridges library chrome (see DemoWeb.PaTranslate).
+config :demo, DemoWeb.Gettext, default_locale: "en", locales: ~w(en es)
+
 # Configure the endpoint
 config :demo, DemoWeb.Endpoint,
   url: [host: "localhost"],
@@ -43,9 +47,11 @@ config :phoenix, :json_library, Jason
 config :keen_pure_admin,
   app_name: "Pure Admin",
   app_version: "1.0.0",
-  copyright: "© 2026 KeenMate",
+  copyright: "© 2026 Keenmate s.r.o.",
   font_class: "pa-font-responsive",
   icon_callback: {DemoWeb.Icons, :render},
+  # Bridge library chrome (PureAdmin.Translations.t/2) into the demo's Gettext.
+  translate: &DemoWeb.PaTranslate.translate/2,
   page_context_providers: [
     &DemoWeb.PageContext.theme_manifests/1
   ]

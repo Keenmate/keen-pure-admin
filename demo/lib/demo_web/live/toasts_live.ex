@@ -145,64 +145,64 @@ defmodule DemoWeb.Live.ToastsLive do
     <.toast_container id="toasts-bottom-start" position="bottom-start" is_hook />
 
     <%!-- Toast Positions --%>
-    <.card title_text="Toast Positions">
+    <.card title_text={gettext("Toast Positions")}>
       <.grid>
         <.column size="100" md="1-3">
           <.button variant="primary" is_block phx-click="show_toast" phx-value-position="top-end" phx-value-variant="success">
-            Top End
+            {gettext("Top End")}
           </.button>
         </.column>
         <.column size="100" md="1-3">
           <.button variant="primary" is_block phx-click="show_toast" phx-value-position="top-center" phx-value-variant="info">
-            Top Center
+            {gettext("Top Center")}
           </.button>
         </.column>
         <.column size="100" md="1-3">
           <.button variant="primary" is_block phx-click="show_toast" phx-value-position="top-start" phx-value-variant="warning">
-            Top Start
+            {gettext("Top Start")}
           </.button>
         </.column>
       </.grid>
       <.grid class="mt-4">
         <.column size="100" md="1-3">
           <.button variant="secondary" is_block phx-click="show_toast" phx-value-position="bottom-end" phx-value-variant="danger">
-            Bottom End
+            {gettext("Bottom End")}
           </.button>
         </.column>
         <.column size="100" md="1-3">
           <.button variant="secondary" is_block phx-click="show_toast" phx-value-position="bottom-center" phx-value-variant="primary">
-            Bottom Center
+            {gettext("Bottom Center")}
           </.button>
         </.column>
         <.column size="100" md="1-3">
           <.button variant="secondary" is_block phx-click="show_toast" phx-value-position="bottom-start" phx-value-variant="success">
-            Bottom Start
+            {gettext("Bottom Start")}
           </.button>
         </.column>
       </.grid>
     </.card>
 
     <%!-- Toast Variants --%>
-    <.card title_text="Toast Variants">
+    <.card title_text={gettext("Toast Variants")}>
       <.button_group>
-        <.button variant="primary" phx-click="show_toast" phx-value-variant="primary">Primary</.button>
-        <.button variant="success" phx-click="show_toast" phx-value-variant="success">Success</.button>
-        <.button variant="danger" phx-click="show_toast" phx-value-variant="danger">Danger</.button>
-        <.button variant="warning" phx-click="show_toast" phx-value-variant="warning">Warning</.button>
-        <.button variant="info" phx-click="show_toast" phx-value-variant="info">Info</.button>
+        <.button variant="primary" phx-click="show_toast" phx-value-variant="primary">{gettext("Primary")}</.button>
+        <.button variant="success" phx-click="show_toast" phx-value-variant="success">{gettext("Success")}</.button>
+        <.button variant="danger" phx-click="show_toast" phx-value-variant="danger">{gettext("Danger")}</.button>
+        <.button variant="warning" phx-click="show_toast" phx-value-variant="warning">{gettext("Warning")}</.button>
+        <.button variant="info" phx-click="show_toast" phx-value-variant="info">{gettext("Info")}</.button>
       </.button_group>
     </.card>
 
     <%!-- Toast with Progress Bar --%>
-    <.card title_text="Toast with Progress Bar">
-      <.heading level="5">Standard</.heading>
+    <.card title_text={gettext("Toast with Progress Bar")}>
+      <.heading level="5">{gettext("Standard")}</.heading>
       <.button_group>
         <.button :for={v <- ~w(primary success danger warning info)} variant={v} phx-click="show_toast" phx-value-variant={v} phx-value-progress="true" phx-value-title={String.capitalize(v)} phx-value-message={"#{String.capitalize(v)} toast with progress bar."}>
           {String.capitalize(v)}
         </.button>
       </.button_group>
 
-      <.heading level="5">Filled</.heading>
+      <.heading level="5">{gettext("Filled")}</.heading>
       <.button_group>
         <.button :for={v <- ~w(primary success danger warning info)} variant={v} phx-click="show_toast" phx-value-variant={v} phx-value-progress="true" phx-value-filled="true" phx-value-title={String.capitalize(v)} phx-value-message={"Filled #{v} toast with progress bar."}>
           {String.capitalize(v)}
@@ -211,21 +211,21 @@ defmodule DemoWeb.Live.ToastsLive do
     </.card>
 
     <%!-- Persistent Toasts --%>
-    <.card title_text="Persistent Toasts (Manual Dismiss Only)">
+    <.card title_text={gettext("Persistent Toasts (Manual Dismiss Only)")}>
       <.grid>
         <.column size="100" md="1-3">
           <.button variant="warning" is_block phx-click="show_toast" phx-value-variant="warning" phx-value-duration="0" phx-value-title="Important Warning" phx-value-message="This requires your attention. Click close to dismiss.">
-            Important Warning
+            {gettext("Important Warning")}
           </.button>
         </.column>
         <.column size="100" md="1-3">
           <.button variant="danger" is_block phx-click="show_toast" phx-value-variant="danger" phx-value-duration="0" phx-value-title="Critical Error" phx-value-message="Critical error detected! Will remain until acknowledged.">
-            Critical Error
+            {gettext("Critical Error")}
           </.button>
         </.column>
         <.column size="100" md="1-3">
           <.button variant="info" is_block phx-click="show_toast" phx-value-variant="info" phx-value-duration="0" phx-value-title="Important Info" phx-value-message="Read carefully before dismissing.">
-            Important Info
+            {gettext("Important Info")}
           </.button>
         </.column>
       </.grid>
@@ -235,36 +235,36 @@ defmodule DemoWeb.Live.ToastsLive do
     </.card>
 
     <%!-- Action Toasts --%>
-    <.card title_text="Action Toasts">
+    <.card title_text={gettext("Action Toasts")}>
       <.paragraph>Toasts with action buttons push events back to the server. Toasts with actions are not click-to-dismiss.</.paragraph>
       <.grid>
         <.column size="100" md="50">
           <.button variant="warning" phx-click="show_action_toast" phx-value-type="undo">
-            Undo Action
+            {gettext("Undo Action")}
           </.button>
         </.column>
         <.column size="100" md="50">
           <.button variant="danger" phx-click="show_action_toast" phx-value-type="retry">
-            Retry Action
+            {gettext("Retry Action")}
           </.button>
         </.column>
         <.column size="100" md="50">
           <.button variant="info" phx-click="show_action_toast" phx-value-type="update">
-            Update Available
+            {gettext("Update Available")}
           </.button>
         </.column>
         <.column size="100" md="50">
           <.button variant="success" phx-click="show_action_toast" phx-value-type="filled">
-            Filled + Actions
+            {gettext("Filled + Actions")}
           </.button>
         </.column>
       </.grid>
     </.card>
 
     <%!-- Multiple Toasts --%>
-    <.card title_text="Multiple Toasts (Stacking)">
+    <.card title_text={gettext("Multiple Toasts (Stacking)")}>
       <.button variant="primary" phx-click="show_multiple">
-        Show 3 Toasts
+        {gettext("Show 3 Toasts")}
       </.button>
       <.paragraph class="pa-text--secondary mt-4">
         Toasts automatically stack vertically in the container
@@ -273,8 +273,8 @@ defmodule DemoWeb.Live.ToastsLive do
 
     <%!-- How it works --%>
     <%!-- Long Running Task --%>
-    <.card title_text="Long Running Task (Server Push)">
-      <.callout variant="info" heading_text="Real-World Pattern">
+    <.card title_text={gettext("Long Running Task (Server Push)")}>
+      <.callout variant="info" heading_text={gettext("Real-World Pattern")}>
         <.paragraph>Click the button to start a background task (3-8 seconds random). You'll get an info toast immediately, then a success toast when it completes — even if you navigate to another page and come back.</.paragraph>
       </.callout>
       <.button
@@ -284,12 +284,12 @@ defmodule DemoWeb.Live.ToastsLive do
         is_loading={@task_running}
         class="mt-4"
       >
-        <%= if @task_running, do: "Task Running...", else: "Start Background Task" %>
+        <%= if @task_running, do: gettext("Task Running..."), else: gettext("Start Background Task") %>
       </.button>
     </.card>
 
     <%!-- Filled Toast Variants --%>
-    <.card title_text="Filled Toast Variants">
+    <.card title_text={gettext("Filled Toast Variants")}>
       <.button_group>
         <.button :for={v <- ~w(primary success danger warning info)} variant={v} phx-click="show_toast" phx-value-variant={v} phx-value-title={String.capitalize(v)} phx-value-message={"Filled #{v} toast with full-color background."} phx-value-filled="true">
           {String.capitalize(v)}
@@ -298,14 +298,14 @@ defmodule DemoWeb.Live.ToastsLive do
     </.card>
 
     <%!-- Theme Color Toasts --%>
-    <.card title_text="Theme Color Toasts">
+    <.card title_text={gettext("Theme Color Toasts")}>
       <.button_group>
         <.button :for={n <- 1..9} theme_color={to_string(n)} phx-click="show_toast" phx-value-variant={"color-#{n}"} phx-value-title={"Color #{n}"} phx-value-message={"Toast with theme color slot #{n}."}>
           Color {n}
         </.button>
       </.button_group>
 
-      <.heading level="5">Filled</.heading>
+      <.heading level="5">{gettext("Filled")}</.heading>
       <.button_group>
         <.button :for={n <- 1..9} theme_color={to_string(n)} phx-click="show_toast" phx-value-variant={"color-#{n}"} phx-value-title={"Color #{n}"} phx-value-message={"Filled toast with theme color slot #{n}."} phx-value-filled="true">
           Color {n}
@@ -313,15 +313,15 @@ defmodule DemoWeb.Live.ToastsLive do
       </.button_group>
     </.card>
 
-    <.card title_text="How It Works">
-      <.callout variant="info" heading_text="Architecture">
+    <.card title_text={gettext("How It Works")}>
+      <.callout variant="info" heading_text={gettext("Architecture")}>
         <.paragraph>Toasts use a <strong>push_event</strong> pattern — the server decides <em>when</em> to show a toast, the client JS hook handles <em>rendering</em> and <em>auto-dismiss</em>. No server round-trips for display or dismissal.</.paragraph>
       </.callout>
 
-      <.heading level={4} class="mt-4">Server (LiveView)</.heading>
+      <.heading level={4} class="mt-4">{gettext("Server (LiveView)")}</.heading>
       <.code_block language="elixir"><%= @code_server %></.code_block>
 
-      <.heading level={4} class="mt-4">Template</.heading>
+      <.heading level={4} class="mt-4">{gettext("Template")}</.heading>
       <.code_block language="heex"><%= @code_template %></.code_block>
     </.card>
     """

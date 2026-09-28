@@ -99,8 +99,8 @@ defmodule DemoWeb.Live.TimelineFeedLive do
     <.paragraph class="mb-6">Feed-style timeline with avatars and actions - perfect for activity logs</.paragraph>
 
     <%!-- Activity Feed Timeline (static) --%>
-    <.card title_text="Activity Feed Timeline">
-      <:description>Feed-style timeline with avatars and actions</:description>
+    <.card title_text={gettext("Activity Feed Timeline")}>
+      <:description>{gettext("Feed-style timeline with avatars and actions")}</:description>
       <.timeline variant="feed">
         <.timeline_item avatar_url={avatar("Luna Bonifacio")} avatar_alt="Luna Bonifacio">
           <a href="#">Luna Bonifacio</a> has changed <a href="#">2 attributes</a> on <time datetime="2021-01-21">Jan 21, 2021</time>
@@ -126,8 +126,8 @@ defmodule DemoWeb.Live.TimelineFeedLive do
     <.grid>
       <%!-- Load More (button) --%>
       <.column size="50">
-        <.card title_text="Timeline Feed - Load More">
-          <:description>Click button to load more entries</:description>
+        <.card title_text={gettext("Timeline Feed - Load More")}>
+          <:description>{gettext("Click button to load more entries")}</:description>
           <.timeline variant="feed">
             <%= for group <- @lm_entries do %>
               <.timeline_item is_date_header icon_text="📅">
@@ -146,19 +146,19 @@ defmodule DemoWeb.Live.TimelineFeedLive do
           <div :if={@lm_has_more} class="pa-timeline__load-more-wrapper">
             <.button variant="primary" phx-click="load_more" is_loading={@lm_loading}>
               <:icon><i class="fa-solid fa-arrow-down"></i></:icon>
-              Load More
+              {gettext("Load More")}
             </.button>
           </div>
           <.callout :if={not @lm_has_more} variant="info" class="mt-4">
-            All entries loaded.
+            {gettext("All entries loaded.")}
           </.callout>
         </.card>
       </.column>
 
       <%!-- Infinite Scroll (automatic) --%>
       <.column size="50">
-        <.card title_text="Timeline Feed - Infinite Scroll">
-          <:description>Automatically loads more entries as you scroll down</:description>
+        <.card title_text={gettext("Timeline Feed - Infinite Scroll")}>
+          <:description>{gettext("Automatically loads more entries as you scroll down")}</:description>
           <div class="pa-timeline__scroll-container">
             <.timeline variant="feed">
               <%= for group <- @is_entries do %>
@@ -186,7 +186,7 @@ defmodule DemoWeb.Live.TimelineFeedLive do
                 <.loader />
               </.loader_center>
               <p :if={not @is_has_more} class="text-center pa-text--secondary pa-py-4">
-                All entries loaded.
+                {gettext("All entries loaded.")}
               </p>
             </div>
           </div>

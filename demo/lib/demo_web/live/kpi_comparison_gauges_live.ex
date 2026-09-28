@@ -14,7 +14,7 @@ defmodule DemoWeb.Live.KpiComparisonGaugesLive do
       %{
         id: "completion",
         variant: "positive",
-        label_text: "Completion Rate",
+        label_text: gettext("Completion Rate"),
         value_text: "88.6",
         unit_text: "%",
         bar_percent: 98,
@@ -27,7 +27,7 @@ defmodule DemoWeb.Live.KpiComparisonGaugesLive do
       %{
         id: "monthly-revenue",
         variant: "positive",
-        label_text: "Monthly Revenue",
+        label_text: gettext("Monthly Revenue"),
         prefix_text: "$",
         value_text: "835",
         unit_text: "K",
@@ -41,7 +41,7 @@ defmodule DemoWeb.Live.KpiComparisonGaugesLive do
       %{
         id: "server-temp",
         variant: "positive",
-        label_text: "Server Temp",
+        label_text: gettext("Server Temp"),
         value_text: "23.8",
         unit_text: "°C",
         bar_percent: 95,
@@ -52,7 +52,7 @@ defmodule DemoWeb.Live.KpiComparisonGaugesLive do
       %{
         id: "server-capacity",
         variant: "warning",
-        label_text: "Server Capacity",
+        label_text: gettext("Server Capacity"),
         value_text: "84.5",
         unit_text: "%",
         bar_percent: 100,
@@ -64,7 +64,7 @@ defmodule DemoWeb.Live.KpiComparisonGaugesLive do
       %{
         id: "error-rate",
         variant: "positive",
-        label_text: "Error Rate",
+        label_text: gettext("Error Rate"),
         value_text: "0.27",
         unit_text: "%",
         bar_percent: 54,
@@ -75,7 +75,7 @@ defmodule DemoWeb.Live.KpiComparisonGaugesLive do
       %{
         id: "tokyo",
         variant: "neutral",
-        label_text: "Tokyo Office",
+        label_text: gettext("Tokyo Office"),
         prefix_text: "¥",
         value_text: "11.7",
         unit_text: "M",
@@ -98,7 +98,7 @@ defmodule DemoWeb.Live.KpiComparisonGaugesLive do
 
     <%!-- 1. Canonical card with --max-3 cap --%>
 
-    <.kpi_gauge_list title_text="Quarterly targets" is_live grid_layout="max_3" footer_text="3-column cap · cell-min driven · hover any bar for detail">
+    <.kpi_gauge_list title_text={gettext("Quarterly targets")} is_live grid_layout="max_3" footer_text="3-column cap · cell-min driven · hover any bar for detail">
       <.gauge_tile :for={g <- gauges()} {gauge_assigns(g)} />
     </.kpi_gauge_list>
 
@@ -152,7 +152,7 @@ defmodule DemoWeb.Live.KpiComparisonGaugesLive do
 
     <%!-- Usage Guide --%>
 
-    <.card title_text="Usage Guide">
+    <.card title_text={gettext("Usage Guide")}>
       <h4>When to use</h4>
       <p>
         Goal-oriented dashboards — each KPI is shown as a progress bar against a target. Best when the
@@ -200,7 +200,7 @@ defmodule DemoWeb.Live.KpiComparisonGaugesLive do
 
     <%!-- CSS Classes Reference --%>
 
-    <.card title_text="CSS Classes Reference">
+    <.card title_text={gettext("CSS Classes Reference")}>
       <h4>Card structure</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
         <li><code>pa-kpi-gauge-list</code> — page-namespace class on <code>.pa-card</code>.</li>

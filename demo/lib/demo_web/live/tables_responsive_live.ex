@@ -154,10 +154,10 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
   def render(assigns) do
     ~H"""
     <%!-- How It Works --%>
-    <.card title_text="How It Works">
+    <.card title_text={gettext("How It Works")}>
       <.grid>
         <.column size="100" md="1-3">
-          <.heading level={4} class="mb-2">Desktop (&gt;1024px)</.heading>
+          <.heading level={4} class="mb-2">{gettext("Desktop (>1024px)")}</.heading>
           <.basic_list>
             <li>Standard table layout with columns</li>
             <li>Headers visible at top</li>
@@ -166,7 +166,7 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
           </.basic_list>
         </.column>
         <.column size="100" md="1-3">
-          <.heading level={4} class="mb-2">Tablet (769px - 1024px)</.heading>
+          <.heading level={4} class="mb-2">{gettext("Tablet (769px - 1024px)")}</.heading>
           <.basic_list>
             <li>Table becomes horizontally scrollable</li>
             <li>Maintains desktop structure</li>
@@ -175,7 +175,7 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
           </.basic_list>
         </.column>
         <.column size="100" md="1-3">
-          <.heading level={4} class="mb-2">Mobile (≤768px)</.heading>
+          <.heading level={4} class="mb-2">{gettext("Mobile (≤768px)")}</.heading>
           <.basic_list>
             <li>Each row becomes a card</li>
             <li>Headers hidden</li>
@@ -196,21 +196,21 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
     </.card>
 
     <%!-- Basic Responsive Table --%>
-    <.table_card title_text="Basic Responsive Table">
+    <.table_card title_text={gettext("Basic Responsive Table")}>
       <:subtitle>Simple user data table with automatic mobile transformation</:subtitle>
       <.table rows={@users} is_responsive>
-        <:col :let={row} label="ID">{row.id}</:col>
-        <:col :let={row} label="Name">{row.name}</:col>
-        <:col :let={row} label="Email">{row.email}</:col>
-        <:col :let={row} label="Role">{row.role}</:col>
-        <:col :let={row} label="Status">
+        <:col :let={row} label={gettext("ID")}>{row.id}</:col>
+        <:col :let={row} label={gettext("Name")}>{row.name}</:col>
+        <:col :let={row} label={gettext("Email")}>{row.email}</:col>
+        <:col :let={row} label={gettext("Role")}>{row.role}</:col>
+        <:col :let={row} label={gettext("Status")}>
           <.badge variant={user_status_variant(row.status)} size="sm">{row.status}</.badge>
         </:col>
       </.table>
     </.table_card>
 
     <%!-- Product Catalog --%>
-    <.table_card title_text="Product Catalog">
+    <.table_card title_text={gettext("Product Catalog")}>
       <:subtitle>E-commerce product table with prices and stock status</:subtitle>
       <.table rows={@products} is_responsive is_striped>
         <:action :let={_p}>
@@ -219,47 +219,47 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
             <.button size="xs" variant="secondary" title="Edit">✏️</.button>
           </.button_group>
         </:action>
-        <:col :let={p} label="Product"><strong>{p.name}</strong></:col>
-        <:col :let={p} label="Category">{p.category}</:col>
-        <:col :let={p} label="Price">{p.price}</:col>
-        <:col :let={p} label="Stock">
+        <:col :let={p} label={gettext("Product")}><strong>{p.name}</strong></:col>
+        <:col :let={p} label={gettext("Category")}>{p.category}</:col>
+        <:col :let={p} label={gettext("Price")}>{p.price}</:col>
+        <:col :let={p} label={gettext("Stock")}>
           <.badge variant={stock_variant(p.stock)} size="sm">{p.stock}</.badge>
         </:col>
-        <:col :let={p} label="Rating">{"⭐⭐⭐⭐⭐ (#{p.rating})"}</:col>
+        <:col :let={p} label={gettext("Rating")}>{"⭐⭐⭐⭐⭐ (#{p.rating})"}</:col>
       </.table>
     </.table_card>
 
     <%!-- Recent Orders --%>
-    <.table_card title_text="Recent Orders">
+    <.table_card title_text={gettext("Recent Orders")}>
       <:subtitle>Order management table with dates, customers, and amounts</:subtitle>
       <.table rows={@orders} is_responsive>
         <:action :let={_o}>
-          <.button size="xs" variant="secondary">View</.button>
+          <.button size="xs" variant="secondary">{gettext("View")}</.button>
         </:action>
-        <:col :let={o} label="Order #">{o.id}</:col>
-        <:col :let={o} label="Date">{o.date}</:col>
-        <:col :let={o} label="Customer">{o.customer}</:col>
-        <:col :let={o} label="Items">{o.items}</:col>
-        <:col :let={o} label="Total">{o.total}</:col>
-        <:col :let={o} label="Status">
+        <:col :let={o} label={gettext("Order #")}>{o.id}</:col>
+        <:col :let={o} label={gettext("Date")}>{o.date}</:col>
+        <:col :let={o} label={gettext("Customer")}>{o.customer}</:col>
+        <:col :let={o} label={gettext("Items")}>{o.items}</:col>
+        <:col :let={o} label={gettext("Total")}>{o.total}</:col>
+        <:col :let={o} label={gettext("Status")}>
           <.badge variant={order_status_variant(o.status)} size="sm">{o.status}</.badge>
         </:col>
       </.table>
     </.table_card>
 
     <%!-- CSS Grid Custom Layouts --%>
-    <.table_card title_text="CSS Grid Custom Layouts">
+    <.table_card title_text={gettext("CSS Grid Custom Layouts")}>
       <:subtitle>Use <.code>.pa-table--responsive-grid</.code> for custom multi-column mobile layouts</:subtitle>
       <table class="pa-table pa-table--responsive-grid pa-table--striped">
         <thead>
           <tr>
-            <th class="col-auto">Actions</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Department</th>
-            <th>Status</th>
+            <th class="col-auto">{gettext("Actions")}</th>
+            <th>{gettext("First Name")}</th>
+            <th>{gettext("Last Name")}</th>
+            <th>{gettext("Email")}</th>
+            <th>{gettext("Phone")}</th>
+            <th>{gettext("Department")}</th>
+            <th>{gettext("Status")}</th>
           </tr>
         </thead>
         <tbody>
@@ -290,17 +290,17 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
     </.table_card>
 
     <%!-- HTML Implementation --%>
-    <.card title_text="HTML Implementation">
+    <.card title_text={gettext("HTML Implementation")}>
       <:subtitle>How to make your tables responsive</:subtitle>
-      <.heading level={4} class="mb-2">1. Add the class modifier</.heading>
+      <.heading level={4} class="mb-2">{gettext("1. Add the class modifier")}</.heading>
       <.paragraph class="mb-3">Add <.code>.pa-table--responsive</.code> to your table element:</.paragraph>
       <.code_block language="html" class="mb-4">{@code_add_class}</.code_block>
 
-      <.heading level={4} class="mb-2">2. Add data-label attributes</.heading>
+      <.heading level={4} class="mb-2">{gettext("2. Add data-label attributes")}</.heading>
       <.paragraph class="mb-3">Each <.code>&lt;td&gt;</.code> needs a <.code>data-label</.code> attribute matching its column header:</.paragraph>
       <.code_block language="html" class="mb-4">{@code_data_label}</.code_block>
 
-      <.heading level={4} class="mb-2">3. That's it!</.heading>
+      <.heading level={4} class="mb-2">{gettext("3. That's it!")}</.heading>
       <.paragraph>The table will automatically transform on screens smaller than 768px. No JavaScript required!</.paragraph>
 
       <.alert variant="success" class="mt-4">
@@ -310,15 +310,15 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
 
       <hr class="mt-4 mb-4" />
 
-      <.heading level={3} class="mb-3">CSS Grid Layout (Advanced)</.heading>
+      <.heading level={3} class="mb-3">{gettext("CSS Grid Layout (Advanced)")}</.heading>
       <.paragraph class="mb-3">For more control over mobile layouts, use <.code>.pa-table--responsive-grid</.code> instead:</.paragraph>
       <.code_block language="html" class="mb-4">{@code_grid}</.code_block>
 
-      <.heading level={4} class="mb-2">Grid Attributes:</.heading>
+      <.heading level={4} class="mb-2">{gettext("Grid Attributes:")}</.heading>
       <.table rows={@grid_attrs}>
-        <:col :let={a} label="Attribute"><.code>{a.attribute}</.code></:col>
-        <:col :let={a} label="Description">{a.description}</:col>
-        <:col :let={a} label="Example">{a.example}</:col>
+        <:col :let={a} label={gettext("Attribute")}><.code>{a.attribute}</.code></:col>
+        <:col :let={a} label={gettext("Description")}>{a.description}</:col>
+        <:col :let={a} label={gettext("Example")}>{a.example}</:col>
       </.table>
 
       <.alert variant="warning" class="mt-4">
@@ -328,12 +328,12 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
     </.card>
 
     <%!-- SCSS Variables Reference --%>
-    <.card title_text="Customization Variables">
+    <.card title_text={gettext("Customization Variables")}>
       <:subtitle>SCSS variables for responsive table styling</:subtitle>
       <.table rows={@scss_vars}>
-        <:col :let={v} label="Variable"><.code>{v.variable}</.code></:col>
-        <:col :let={v} label="Default Value"><.code>{v.default}</.code></:col>
-        <:col :let={v} label="Description">{v.description}</:col>
+        <:col :let={v} label={gettext("Variable")}><.code>{v.variable}</.code></:col>
+        <:col :let={v} label={gettext("Default Value")}><.code>{v.default}</.code></:col>
+        <:col :let={v} label={gettext("Description")}>{v.description}</:col>
       </.table>
 
       <.alert variant="info" class="mt-4">
@@ -343,10 +343,10 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
     </.card>
 
     <%!-- Testing Tips --%>
-    <.card title_text="Testing Tips">
+    <.card title_text={gettext("Testing Tips")}>
       <.grid>
         <.column size="100" md="1-3">
-          <.heading level={4}>Desktop Browser</.heading>
+          <.heading level={4}>{gettext("Desktop Browser")}</.heading>
           <.basic_list>
             <li>Resize browser window</li>
             <li>Use DevTools device toolbar</li>
@@ -354,7 +354,7 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
           </.basic_list>
         </.column>
         <.column size="100" md="1-3">
-          <.heading level={4}>Real Device</.heading>
+          <.heading level={4}>{gettext("Real Device")}</.heading>
           <.basic_list>
             <li>Test on actual phones/tablets</li>
             <li>Check both orientations</li>
@@ -362,7 +362,7 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
           </.basic_list>
         </.column>
         <.column size="100" md="1-3">
-          <.heading level={4}>Common Breakpoints</.heading>
+          <.heading level={4}>{gettext("Common Breakpoints")}</.heading>
           <.basic_list>
             <li>Mobile: 320px - 767px</li>
             <li>Tablet: 768px - 1023px</li>
@@ -373,19 +373,19 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
     </.card>
 
     <%!-- LiveView Component Code Examples --%>
-    <.card title_text="LiveView Component Code Examples">
+    <.card title_text={gettext("LiveView Component Code Examples")}>
       <.grid>
         <.column size="100" md="50">
-          <.heading level={4} class="mb-2">Using Table Component</.heading>
+          <.heading level={4} class="mb-2">{gettext("Using Table Component")}</.heading>
           <.code_block language="heex">{@code_component}</.code_block>
         </.column>
         <.column size="100" md="50">
-          <.heading level={4} class="mb-2">Inside a Card</.heading>
+          <.heading level={4} class="mb-2">{gettext("Inside a Card")}</.heading>
           <.code_block language="heex">{@code_in_card}</.code_block>
         </.column>
       </.grid>
 
-      <.heading level={4} class="mb-2 mt-4">Key Points</.heading>
+      <.heading level={4} class="mb-2 mt-4">{gettext("Key Points")}</.heading>
       <.code_block language="heex">{@code_key_points}</.code_block>
     </.card>
     """

@@ -85,8 +85,8 @@ defmodule DemoWeb.Live.SplitterLive do
     <.card class="mb-4">
       <:header>
         <.heading level="3">
-          Horizontal split
-          <small class="text-secondary">— side-by-side, vertical gutter</small>
+          {gettext("Horizontal split")}
+          <small class="text-secondary">{gettext("— side-by-side, vertical gutter")}</small>
         </.heading>
       </:header>
       <.paragraph class="mb-3">
@@ -106,7 +106,7 @@ defmodule DemoWeb.Live.SplitterLive do
           max="60%"
           style="background: var(--pc-subtle-bg); padding: 1.6rem;"
         >
-          <.heading level="4" class="mb-3" style="margin-top: 0;">Files</.heading>
+          <.heading level="4" class="mb-3" style="margin-top: 0;">{gettext("Files")}</.heading>
           <.basic_list>
             <li>📁 components/</li>
             <li>📁 utils/</li>
@@ -131,8 +131,8 @@ defmodule DemoWeb.Live.SplitterLive do
     <.card class="mb-4">
       <:header>
         <.heading level="3">
-          Vertical split
-          <small class="text-secondary">— stacked, horizontal gutter</small>
+          {gettext("Vertical split")}
+          <small class="text-secondary">{gettext("— stacked, horizontal gutter")}</small>
         </.heading>
       </:header>
       <.paragraph class="mb-3">
@@ -146,7 +146,7 @@ defmodule DemoWeb.Live.SplitterLive do
         style="height: 420px; border: 1px solid var(--pc-border-color); border-radius: var(--pc-border-radius);"
       >
         <:pane size="60%" min="80px" max="80%" style="padding: 1.6rem;">
-          <.heading level="4" class="mb-3" style="margin-top: 0;">Editor</.heading>
+          <.heading level="4" class="mb-3" style="margin-top: 0;">{gettext("Editor")}</.heading>
           <.code_block language="javascript">{@vertical_code}</.code_block>
         </:pane>
         <:pane style="background: var(--pc-subtle-bg); padding: 1.6rem; font-family: var(--pc-font-mono, monospace); font-size: 1.3rem;">
@@ -166,8 +166,8 @@ defmodule DemoWeb.Live.SplitterLive do
     <.card class="mb-4">
       <:header>
         <.heading level="3">
-          Spaced cards
-          <small class="text-secondary">— gutter with breathing room</small>
+          {gettext("Spaced cards")}
+          <small class="text-secondary">{gettext("— gutter with breathing room")}</small>
         </.heading>
       </:header>
       <.paragraph class="mb-3">
@@ -183,7 +183,7 @@ defmodule DemoWeb.Live.SplitterLive do
         style="height: 280px; gap: 1.6rem; --pa-splitter-gutter-size: 1rem;"
       >
         <:pane size="40%" min="25%" max="75%" style="padding: 0;">
-          <.card title_text="Left card" style="height: 100%; margin: 0;">
+          <.card title_text={gettext("Left card")} style="height: 100%; margin: 0;">
             <.paragraph class="mb-0">
               This pane holds a card. The flex <.code>gap</.code> on the splitter keeps
               the card from touching the gutter — no per-pane padding hack needed.
@@ -191,7 +191,7 @@ defmodule DemoWeb.Live.SplitterLive do
           </.card>
         </:pane>
         <:pane style="padding: 0;">
-          <.card title_text="Right card" style="height: 100%; margin: 0;">
+          <.card title_text={gettext("Right card")} style="height: 100%; margin: 0;">
             <.paragraph class="mb-0">
               Drag the gutter — both cards reflow. The 10px gutter is set inline via
               <.code>--pa-splitter-gutter-size</.code>; the default is 6px.
@@ -205,8 +205,8 @@ defmodule DemoWeb.Live.SplitterLive do
     <.card class="mb-4">
       <:header>
         <.heading level="3">
-          Minimize to rail
-          <small class="text-secondary">— vertical header instead of collapse</small>
+          {gettext("Minimize to rail")}
+          <small class="text-secondary">{gettext("— vertical header instead of collapse")}</small>
         </.heading>
       </:header>
       <.paragraph class="mb-3">
@@ -245,7 +245,7 @@ defmodule DemoWeb.Live.SplitterLive do
       >
         <:pane size="320px" min="220px" max="80%" is_minimizable style="padding: 0;">
           <.card
-            title_text="File explorer"
+            title_text={gettext("File explorer")}
             actions_variant="overflow"
             actions_id="demoFileExplorerActions"
             style="height: 100%; margin: 0;"
@@ -287,7 +287,7 @@ defmodule DemoWeb.Live.SplitterLive do
         </:pane>
         <:pane style="padding: 0;">
           <.card
-            title_text="Editor"
+            title_text={gettext("Editor")}
             actions_variant="responsive"
             style="height: 100%; margin: 0;"
           >
@@ -323,10 +323,10 @@ defmodule DemoWeb.Live.SplitterLive do
                   <div class="pa-btn-split__menu">
                     <div class="pa-btn-split__menu-inner">
                       <button class="pa-btn-split__item" type="button">
-                        <.faicon name="floppy-disk" /> Save
+                        <.faicon name="floppy-disk" /> {gettext("Save")}
                       </button>
                       <button class="pa-btn-split__item" type="button">
-                        <.faicon name="wand-magic-sparkles" /> Format
+                        <.faicon name="wand-magic-sparkles" /> {gettext("Format")}
                       </button>
                     </div>
                   </div>
@@ -347,7 +347,7 @@ defmodule DemoWeb.Live.SplitterLive do
     <.card class="mb-4">
       <:header>
         <.heading level="3">
-          Progressive overflow
+          {gettext("Progressive overflow")}
           <small class="text-secondary">
             — buttons drop into a "More" menu one at a time
           </small>
@@ -385,7 +385,7 @@ defmodule DemoWeb.Live.SplitterLive do
       >
         <:pane size="40%" min="160px" max="80%" is_minimizable style="padding: 0;">
           <.card
-            title_text="Editor"
+            title_text={gettext("Editor")}
             actions_variant="overflow"
             actions_id="demoOverflowActions"
             style="height: 100%; margin: 0;"
@@ -394,23 +394,23 @@ defmodule DemoWeb.Live.SplitterLive do
             <:tools>
               <.button variant="secondary" size="xs">
                 <:icon><.faicon name="floppy-disk" /></:icon>
-                Save
+                {gettext("Save")}
               </.button>
               <.button variant="secondary" size="xs">
                 <:icon><.faicon name="wand-magic-sparkles" /></:icon>
-                Format
+                {gettext("Format")}
               </.button>
               <.button variant="secondary" size="xs">
                 <:icon><.faicon name="arrows-rotate" /></:icon>
-                Refresh
+                {gettext("Refresh")}
               </.button>
               <.button variant="secondary" size="xs">
                 <:icon><.faicon name="file-export" /></:icon>
-                Export
+                {gettext("Export")}
               </.button>
               <.button variant="primary" size="xs" data-pa-actions-priority="10">
                 <:icon><.faicon name="play" /></:icon>
-                Run
+                {gettext("Run")}
               </.button>
             </:tools>
             <.paragraph class="text-sm text-secondary mb-0">
@@ -434,8 +434,8 @@ defmodule DemoWeb.Live.SplitterLive do
     <.card class="mb-4">
       <:header>
         <.heading level="3">
-          Minimize <em>end</em> pane to rail
-          <small class="text-secondary">— right-edge inspector pattern</small>
+          {gettext("Minimize")} <em>{gettext("end")}</em> {gettext("pane to rail")}
+          <small class="text-secondary">{gettext("— right-edge inspector pattern")}</small>
         </.heading>
       </:header>
       <.paragraph class="mb-3">
@@ -453,7 +453,7 @@ defmodule DemoWeb.Live.SplitterLive do
         style="height: 320px; gap: 1.2rem;"
       >
         <:pane size="65%" min="40%" max="80%" style="padding: 0;">
-          <.card title_text="Editor" style="height: 100%; margin: 0;">
+          <.card title_text={gettext("Editor")} style="height: 100%; margin: 0;">
             <:title_icon><.faicon name="code" /></:title_icon>
             <.paragraph class="mb-3">
               Drag the gutter to the right (shrinking the inspector) — once the
@@ -464,7 +464,7 @@ defmodule DemoWeb.Live.SplitterLive do
           </.card>
         </:pane>
         <:pane is_minimizable style="padding: 0;">
-          <.card title_text="Inspector" style="height: 100%; margin: 0;">
+          <.card title_text={gettext("Inspector")} style="height: 100%; margin: 0;">
             <:title_icon><.faicon name="circle-info" /></:title_icon>
             <:tools>
               <.button
@@ -490,8 +490,8 @@ defmodule DemoWeb.Live.SplitterLive do
     <.card class="mb-4">
       <:header>
         <.heading level="3">
-          N panes
-          <small class="text-secondary">— pick a count, both edges minimizable</small>
+          {gettext("N panes")}
+          <small class="text-secondary">{gettext("— pick a count, both edges minimizable")}</small>
         </.heading>
         <div class="pa-card__actions" style="display: flex; gap: 0.6rem; align-items: center;">
           <label for="multiPaneCount" class="text-sm">Panes:</label>
@@ -549,7 +549,7 @@ defmodule DemoWeb.Live.SplitterLive do
 
     <%!-- ───────── Demo 7 — Persistence reset ───────── --%>
     <.card class="mb-4">
-      <:header><.heading level="3">localStorage persistence</.heading></:header>
+      <:header><.heading level="3">{gettext("localStorage persistence")}</.heading></:header>
       <.paragraph class="mb-3">
         Both demos above persist their size under <.code>pa-splitter:&lt;id&gt;</.code>.
         Reload the page — your drag positions stick. Clear them with the button below.
@@ -559,7 +559,7 @@ defmodule DemoWeb.Live.SplitterLive do
         id="splitter-storage-clear"
         phx-hook="SplitterStorageClear"
       >
-        Clear saved splitter sizes
+        {gettext("Clear saved splitter sizes")}
       </.button>
       <.paragraph :if={@storage_status} class="mt-3 text-sm text-secondary">
         {@storage_status}
@@ -570,7 +570,7 @@ defmodule DemoWeb.Live.SplitterLive do
     <.grid>
       <.column size="100" lg="50">
         <.card class="mb-4">
-          <:header><.heading level="3">Markup — two panes (legacy shorthand)</.heading></:header>
+          <:header><.heading level="3">{gettext("Markup — two panes (legacy shorthand)")}</.heading></:header>
           <.code_block language="html">{@two_pane_markup}</.code_block>
           <.paragraph class="text-sm mt-3 mb-0">
             Triggered by the <.code>--start</.code> / <.code>--end</.code> modifiers. The
@@ -581,7 +581,7 @@ defmodule DemoWeb.Live.SplitterLive do
         </.card>
 
         <.card class="mb-4">
-          <:header><.heading level="3">Markup — N panes</.heading></:header>
+          <:header><.heading level="3">{gettext("Markup — N panes")}</.heading></:header>
           <.code_block language="html">{@n_pane_markup}</.code_block>
           <.paragraph class="text-sm mt-3 mb-0">
             Any N ≥ 2. Panes and gutters must alternate. Per-pane
@@ -594,7 +594,7 @@ defmodule DemoWeb.Live.SplitterLive do
         </.card>
 
         <.card class="mb-4">
-          <:header><.heading level="3">Phoenix wrapper</.heading></:header>
+          <:header><.heading level="3">{gettext("Phoenix wrapper")}</.heading></:header>
           <.code_block language="heex">{@phoenix_markup}</.code_block>
           <.paragraph class="text-sm mt-3 mb-0">
             <.code>&lt;.splitter&gt;</.code> emits the N-pane HTML above and wires the
@@ -606,41 +606,41 @@ defmodule DemoWeb.Live.SplitterLive do
 
       <.column size="100" lg="50">
         <.card class="mb-4">
-          <:header><.heading level="3">Data attributes</.heading></:header>
+          <:header><.heading level="3">{gettext("Data attributes")}</.heading></:header>
 
           <.paragraph class="text-sm mb-2">
             <strong>On root</strong> (both modes):
           </.paragraph>
           <.table rows={@root_attr_rows} is_compact>
-            <:col :let={r} label="Attribute"><.code>{r.attr}</.code></:col>
-            <:col :let={r} label="Default"><.code>{r.default}</.code></:col>
-            <:col :let={r} label="Description">{r.desc}</:col>
+            <:col :let={r} label={gettext("Attribute")}><.code>{r.attr}</.code></:col>
+            <:col :let={r} label={gettext("Default")}><.code>{r.default}</.code></:col>
+            <:col :let={r} label={gettext("Description")}>{r.desc}</:col>
           </.table>
 
           <.paragraph class="text-sm mt-3 mb-2">
             <strong>On root</strong> (legacy 2-pane only):
           </.paragraph>
           <.table rows={@legacy_attr_rows} is_compact>
-            <:col :let={r} label="Attribute"><.code>{r.attr}</.code></:col>
-            <:col :let={r} label="Default"><.code>{r.default}</.code></:col>
-            <:col :let={r} label="Description">{r.desc}</:col>
+            <:col :let={r} label={gettext("Attribute")}><.code>{r.attr}</.code></:col>
+            <:col :let={r} label={gettext("Default")}><.code>{r.default}</.code></:col>
+            <:col :let={r} label={gettext("Description")}>{r.desc}</:col>
           </.table>
 
           <.paragraph class="text-sm mt-3 mb-2">
             <strong>On each pane</strong> (N-pane only):
           </.paragraph>
           <.table rows={@pane_attr_rows} is_compact>
-            <:col :let={r} label="Attribute"><.code>{r.attr}</.code></:col>
-            <:col :let={r} label="Default"><.code>{r.default}</.code></:col>
-            <:col :let={r} label="Description">{r.desc}</:col>
+            <:col :let={r} label={gettext("Attribute")}><.code>{r.attr}</.code></:col>
+            <:col :let={r} label={gettext("Default")}><.code>{r.default}</.code></:col>
+            <:col :let={r} label={gettext("Description")}>{r.desc}</:col>
           </.table>
         </.card>
 
         <.card class="mb-4">
-          <:header><.heading level="3">Keyboard</.heading></:header>
+          <:header><.heading level="3">{gettext("Keyboard")}</.heading></:header>
           <.table rows={@keyboard_rows} is_compact>
-            <:col :let={r} label="Key">{Phoenix.HTML.raw(r.key)}</:col>
-            <:col :let={r} label="Action">{r.action}</:col>
+            <:col :let={r} label={gettext("Key")}>{Phoenix.HTML.raw(r.key)}</:col>
+            <:col :let={r} label={gettext("Action")}>{r.action}</:col>
           </.table>
           <.paragraph class="text-sm mt-3 mb-0">
             Each gutter handles its own keyboard input. <kbd>Tab</kbd> focuses the next
@@ -649,7 +649,7 @@ defmodule DemoWeb.Live.SplitterLive do
         </.card>
 
         <.card class="mb-4">
-          <:header><.heading level="3">JavaScript API</.heading></:header>
+          <:header><.heading level="3">{gettext("JavaScript API")}</.heading></:header>
           <.paragraph class="mb-2">
             Auto-initializes on <.code>[data-pa-splitter]</.code> at
             <.code>DOMContentLoaded</.code>. The Phoenix wrapper's

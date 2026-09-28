@@ -30,18 +30,18 @@ defmodule DemoWeb.Live.TablesSizingLive do
     <%!-- XS Size --%>
     <.card>
       <:header>
-        <h3>XS Size <.code>pa-table--xs</.code></h3>
+        <h3>{gettext("XS Size")} <.code>pa-table--xs</.code></h3>
       </:header>
       <p>Compact rows - fits button/input XS. Best for dense data grids.</p>
       <.table_container>
         <.table rows={@employees} size="xs">
-          <:col :let={e} label="Name">{e.name}</:col>
-          <:col :let={e} label="Position">{e.position}</:col>
-          <:col :let={e} label="Office">{e.office}</:col>
-          <:col :let={e} label="Age">{e.age}</:col>
+          <:col :let={e} label={gettext("Name")}>{e.name}</:col>
+          <:col :let={e} label={gettext("Position")}>{e.position}</:col>
+          <:col :let={e} label={gettext("Office")}>{e.office}</:col>
+          <:col :let={e} label={gettext("Age")}>{e.age}</:col>
           <:action :let={_e}>
-            <.button variant="secondary" size="xs">Edit</.button>
-            <.button variant="danger" size="xs">Delete</.button>
+            <.button variant="secondary" size="xs">{gettext("Edit")}</.button>
+            <.button variant="danger" size="xs">{gettext("Delete")}</.button>
           </:action>
         </.table>
       </.table_container>
@@ -50,18 +50,18 @@ defmodule DemoWeb.Live.TablesSizingLive do
     <%!-- Default Size --%>
     <.card>
       <:header>
-        <h3>Default Size <.code>pa-table</.code></h3>
+        <h3>{gettext("Default Size")} <.code>pa-table</.code></h3>
       </:header>
       <p>Standard rows - fits button/input SM and default sizes.</p>
       <.table_container>
         <.table rows={@employees}>
-          <:col :let={e} label="Name">{e.name}</:col>
-          <:col :let={e} label="Position">{e.position}</:col>
-          <:col :let={e} label="Office">{e.office}</:col>
-          <:col :let={e} label="Age">{e.age}</:col>
+          <:col :let={e} label={gettext("Name")}>{e.name}</:col>
+          <:col :let={e} label={gettext("Position")}>{e.position}</:col>
+          <:col :let={e} label={gettext("Office")}>{e.office}</:col>
+          <:col :let={e} label={gettext("Age")}>{e.age}</:col>
           <:action :let={_e}>
-            <.button variant="secondary" size="sm">Edit</.button>
-            <.button variant="danger" size="sm">Delete</.button>
+            <.button variant="secondary" size="sm">{gettext("Edit")}</.button>
+            <.button variant="danger" size="sm">{gettext("Delete")}</.button>
           </:action>
         </.table>
       </.table_container>
@@ -70,18 +70,18 @@ defmodule DemoWeb.Live.TablesSizingLive do
     <%!-- SM Size --%>
     <.card>
       <:header>
-        <h3>SM Size <.code>pa-table--sm</.code></h3>
+        <h3>{gettext("SM Size")} <.code>pa-table--sm</.code></h3>
       </:header>
       <p>Slightly wider horizontal padding than default.</p>
       <.table_container>
         <.table rows={@employees} size="sm">
-          <:col :let={e} label="Name">{e.name}</:col>
-          <:col :let={e} label="Position">{e.position}</:col>
-          <:col :let={e} label="Office">{e.office}</:col>
-          <:col :let={e} label="Age">{e.age}</:col>
+          <:col :let={e} label={gettext("Name")}>{e.name}</:col>
+          <:col :let={e} label={gettext("Position")}>{e.position}</:col>
+          <:col :let={e} label={gettext("Office")}>{e.office}</:col>
+          <:col :let={e} label={gettext("Age")}>{e.age}</:col>
           <:action :let={_e}>
-            <.button variant="secondary" size="sm">Edit</.button>
-            <.button variant="danger" size="sm">Delete</.button>
+            <.button variant="secondary" size="sm">{gettext("Edit")}</.button>
+            <.button variant="danger" size="sm">{gettext("Delete")}</.button>
           </:action>
         </.table>
       </.table_container>
@@ -90,18 +90,18 @@ defmodule DemoWeb.Live.TablesSizingLive do
     <%!-- LG Size --%>
     <.card>
       <:header>
-        <h3>LG Size <.code>pa-table--lg</.code></h3>
+        <h3>{gettext("LG Size")} <.code>pa-table--lg</.code></h3>
       </:header>
       <p>Spacious rows - fits button/input LG. Good for forms in tables.</p>
       <.table_container>
         <.table rows={@employees} size="lg">
-          <:col :let={e} label="Name">{e.name}</:col>
-          <:col :let={e} label="Position">{e.position}</:col>
-          <:col :let={e} label="Office">{e.office}</:col>
-          <:col :let={e} label="Age">{e.age}</:col>
+          <:col :let={e} label={gettext("Name")}>{e.name}</:col>
+          <:col :let={e} label={gettext("Position")}>{e.position}</:col>
+          <:col :let={e} label={gettext("Office")}>{e.office}</:col>
+          <:col :let={e} label={gettext("Age")}>{e.age}</:col>
           <:action :let={_e}>
-            <.button variant="secondary" size="lg">Edit</.button>
-            <.button variant="danger" size="lg">Delete</.button>
+            <.button variant="secondary" size="lg">{gettext("Edit")}</.button>
+            <.button variant="danger" size="lg">{gettext("Delete")}</.button>
           </:action>
         </.table>
       </.table_container>
@@ -110,30 +110,30 @@ defmodule DemoWeb.Live.TablesSizingLive do
     <%!-- XL Size --%>
     <.card>
       <:header>
-        <h3>XL Size <.code>pa-table--xl</.code></h3>
+        <h3>{gettext("XL Size")} <.code>pa-table--xl</.code></h3>
       </:header>
       <p>Extra spacious rows - fits button/input XL. Best for presentation tables.</p>
       <.table_container>
         <.table rows={@employees} size="xl">
-          <:col :let={e} label="Name">{e.name}</:col>
-          <:col :let={e} label="Position">{e.position}</:col>
-          <:col :let={e} label="Office">{e.office}</:col>
-          <:col :let={e} label="Age">{e.age}</:col>
+          <:col :let={e} label={gettext("Name")}>{e.name}</:col>
+          <:col :let={e} label={gettext("Position")}>{e.position}</:col>
+          <:col :let={e} label={gettext("Office")}>{e.office}</:col>
+          <:col :let={e} label={gettext("Age")}>{e.age}</:col>
           <:action :let={_e}>
-            <.button variant="secondary" size="xl">Edit</.button>
-            <.button variant="danger" size="xl">Delete</.button>
+            <.button variant="secondary" size="xl">{gettext("Edit")}</.button>
+            <.button variant="danger" size="xl">{gettext("Delete")}</.button>
           </:action>
         </.table>
       </.table_container>
     </.card>
 
     <%!-- Size Reference --%>
-    <.card title_text="Size Reference">
+    <.card title_text={gettext("Size Reference")}>
       <.table rows={@sizes}>
-        <:col :let={s} label="Size">{s.size}</:col>
-        <:col :let={s} label="Class"><.code>{s.class}</.code></:col>
-        <:col :let={s} label="Padding">{s.padding}</:col>
-        <:col :let={s} label="Best for">{s.best_for}</:col>
+        <:col :let={s} label={gettext("Size")}>{s.size}</:col>
+        <:col :let={s} label={gettext("Class")}><.code>{s.class}</.code></:col>
+        <:col :let={s} label={gettext("Padding")}>{s.padding}</:col>
+        <:col :let={s} label={gettext("Best for")}>{s.best_for}</:col>
       </.table>
     </.card>
     """

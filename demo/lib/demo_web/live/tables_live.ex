@@ -210,7 +210,7 @@ defmodule DemoWeb.Live.TablesLive do
     <%!-- ═══════════════════════════════════════════════════════════ --%>
     <%!-- Basic Table with Pagination                               --%>
     <%!-- ═══════════════════════════════════════════════════════════ --%>
-    <.card title_text="Basic Table with Pagination">
+    <.card title_text={gettext("Basic Table with Pagination")}>
       <%!-- Pager Above Table (Center) --%>
       <.pager page={@page} total_pages={@total_pages} align="center"
         on_first="first-page" on_last="last-page" on_previous="prev-page" on_next="next-page" />
@@ -228,11 +228,11 @@ defmodule DemoWeb.Live.TablesLive do
               <i class="fa-solid fa-trash"></i>
             </.button>
           </:action>
-          <:col :let={user} label="ID">{user.id}</:col>
-          <:col :let={user} label="Name">{user.name}</:col>
-          <:col :let={user} label="Email">{user.email}</:col>
-          <:col :let={user} label="Role">{user.role}</:col>
-          <:col :let={user} label="Status">
+          <:col :let={user} label={gettext("ID")}>{user.id}</:col>
+          <:col :let={user} label={gettext("Name")}>{user.name}</:col>
+          <:col :let={user} label={gettext("Email")}>{user.email}</:col>
+          <:col :let={user} label={gettext("Role")}>{user.role}</:col>
+          <:col :let={user} label={gettext("Status")}>
             <.badge variant={status_variant(user.status)} size="sm">{user.status}</.badge>
           </:col>
         </.table>
@@ -246,14 +246,14 @@ defmodule DemoWeb.Live.TablesLive do
     <%!-- ═══════════════════════════════════════════════════════════ --%>
     <%!-- Striped Table                                             --%>
     <%!-- ═══════════════════════════════════════════════════════════ --%>
-    <.card title_text="Striped Table">
+    <.card title_text={gettext("Striped Table")}>
       <.table_container>
         <.table rows={@products} is_striped>
-          <:col :let={p} label="Product">{p.name}</:col>
-          <:col :let={p} label="Category">{p.category}</:col>
-          <:col :let={p} label="Price">{p.price}</:col>
-          <:col :let={p} label="Stock">{p.stock}</:col>
-          <:col :let={p} label="Status">
+          <:col :let={p} label={gettext("Product")}>{p.name}</:col>
+          <:col :let={p} label={gettext("Category")}>{p.category}</:col>
+          <:col :let={p} label={gettext("Price")}>{p.price}</:col>
+          <:col :let={p} label={gettext("Stock")}>{p.stock}</:col>
+          <:col :let={p} label={gettext("Status")}>
             <.badge variant={stock_variant(p.status)} size="sm">{p.status}</.badge>
           </:col>
         </.table>
@@ -263,7 +263,7 @@ defmodule DemoWeb.Live.TablesLive do
     <%!-- ═══════════════════════════════════════════════════════════ --%>
     <%!-- 2x Spacing Table                                          --%>
     <%!-- ═══════════════════════════════════════════════════════════ --%>
-    <.card title_text="2x Spacing Table">
+    <.card title_text={gettext("2x Spacing Table")}>
       <%!-- Start-aligned pager --%>
       <.pager page={2} total_pages={5} align="start"
         on_first="first-page" on_last="last-page" on_previous="prev-page" on_next="next-page" />
@@ -281,10 +281,10 @@ defmodule DemoWeb.Live.TablesLive do
               <i class="fa-solid fa-trash"></i>
             </.button>
           </:action>
-          <:col :let={t} label="Date">{t.date}</:col>
-          <:col :let={t} label="Transaction">{t.transaction}</:col>
-          <:col :let={t} label="Amount"><span class={t.amount_class}>{t.amount}</span></:col>
-          <:col :let={t} label="Balance">{t.balance}</:col>
+          <:col :let={t} label={gettext("Date")}>{t.date}</:col>
+          <:col :let={t} label={gettext("Transaction")}>{t.transaction}</:col>
+          <:col :let={t} label={gettext("Amount")}><span class={t.amount_class}>{t.amount}</span></:col>
+          <:col :let={t} label={gettext("Balance")}>{t.balance}</:col>
         </.table>
       </.table_container>
     </.card>
@@ -292,58 +292,58 @@ defmodule DemoWeb.Live.TablesLive do
     <%!-- ═══════════════════════════════════════════════════════════ --%>
     <%!-- Load More Positioning                                     --%>
     <%!-- ═══════════════════════════════════════════════════════════ --%>
-    <.card title_text="Load More Positioning">
-      <.heading level={4}>Table with Start-aligned Load More</.heading>
+    <.card title_text={gettext("Load More Positioning")}>
+      <.heading level={4}>{gettext("Table with Start-aligned Load More")}</.heading>
       <.table_container>
         <.table rows={@lm_products}>
-          <:col :let={p} label="Product">{p.name}</:col>
-          <:col :let={p} label="Price">{p.price}</:col>
-          <:col :let={p} label="Stock">{p.stock}</:col>
-          <:col :let={p} label="Status">
+          <:col :let={p} label={gettext("Product")}>{p.name}</:col>
+          <:col :let={p} label={gettext("Price")}>{p.price}</:col>
+          <:col :let={p} label={gettext("Stock")}>{p.stock}</:col>
+          <:col :let={p} label={gettext("Status")}>
             <.badge variant={stock_variant(p.status)} size="sm">{p.status}</.badge>
           </:col>
         </.table>
       </.table_container>
-      <.load_more align="start" phx-click="load_more" count="showing 3 of 150">Load more products</.load_more>
+      <.load_more align="start" phx-click="load_more" count="showing 3 of 150">{gettext("Load more products")}</.load_more>
 
-      <.heading level={4} class="mt-4">Table with Center Load More</.heading>
+      <.heading level={4} class="mt-4">{gettext("Table with Center Load More")}</.heading>
       <.table_container>
         <.table rows={@lm_customers}>
-          <:col :let={c} label="Customer">{c.name}</:col>
-          <:col :let={c} label="Email">{c.email}</:col>
-          <:col :let={c} label="Orders">{c.orders}</:col>
-          <:col :let={c} label="Total">{c.total}</:col>
+          <:col :let={c} label={gettext("Customer")}>{c.name}</:col>
+          <:col :let={c} label={gettext("Email")}>{c.email}</:col>
+          <:col :let={c} label={gettext("Orders")}>{c.orders}</:col>
+          <:col :let={c} label={gettext("Total")}>{c.total}</:col>
         </.table>
       </.table_container>
-      <.load_more align="center" phx-click="load_more" count="3 of 1,247">Load more customers</.load_more>
+      <.load_more align="center" phx-click="load_more" count="3 of 1,247">{gettext("Load more customers")}</.load_more>
 
-      <.heading level={4} class="mt-4">Table with Right Load More (Loading State)</.heading>
+      <.heading level={4} class="mt-4">{gettext("Table with Right Load More (Loading State)")}</.heading>
       <.table_container>
         <.table rows={@lm_invoices}>
-          <:col :let={i} label="Invoice">{i.id}</:col>
-          <:col :let={i} label="Date">{i.date}</:col>
-          <:col :let={i} label="Amount">{i.amount}</:col>
-          <:col :let={i} label="Status">
+          <:col :let={i} label={gettext("Invoice")}>{i.id}</:col>
+          <:col :let={i} label={gettext("Date")}>{i.date}</:col>
+          <:col :let={i} label={gettext("Amount")}>{i.amount}</:col>
+          <:col :let={i} label={gettext("Status")}>
             <.badge variant={order_variant(i.status)} size="sm">{i.status}</.badge>
           </:col>
         </.table>
       </.table_container>
-      <.load_more align="end" is_loading phx-click="load_more">Loading...</.load_more>
+      <.load_more align="end" is_loading phx-click="load_more">{gettext("Loading...")}</.load_more>
     </.card>
 
     <%!-- ═══════════════════════════════════════════════════════════ --%>
     <%!-- Pager Positioning Examples                                --%>
     <%!-- ═══════════════════════════════════════════════════════════ --%>
-    <.card title_text="Pager Positioning Examples">
-      <.heading level={4}>Start-aligned Pager</.heading>
+    <.card title_text={gettext("Pager Positioning Examples")}>
+      <.heading level={4}>{gettext("Start-aligned Pager")}</.heading>
       <.pager page={1} total_pages={10} align="start"
         on_first="first-page" on_last="last-page" on_previous="prev-page" on_next="next-page" />
 
-      <.heading level={4}>Center-aligned Pager (Default)</.heading>
+      <.heading level={4}>{gettext("Center-aligned Pager (Default)")}</.heading>
       <.pager page={5} total_pages={10} align="center"
         on_first="first-page" on_last="last-page" on_previous="prev-page" on_next="next-page" />
 
-      <.heading level={4}>End-aligned Pager</.heading>
+      <.heading level={4}>{gettext("End-aligned Pager")}</.heading>
       <.pager page={10} total_pages={10} align="end"
         on_first="first-page" on_last="last-page" on_previous="prev-page" on_next="next-page" />
     </.card>
@@ -351,22 +351,22 @@ defmodule DemoWeb.Live.TablesLive do
     <%!-- ═══════════════════════════════════════════════════════════ --%>
     <%!-- Alternative Pager Icon Sets                               --%>
     <%!-- ═══════════════════════════════════════════════════════════ --%>
-    <.card title_text="Alternative Pager Icon Sets">
-      <.heading level={4}>Double/Single Angles (Current)</.heading>
+    <.card title_text={gettext("Alternative Pager Icon Sets")}>
+      <.heading level={4}>{gettext("Double/Single Angles (Current)")}</.heading>
       <.pager page={1} total_pages={10} align="center"
         on_first="first-page" on_last="last-page" on_previous="prev-page" on_next="next-page" />
 
-      <.heading level={4}>Triangular Arrows</.heading>
+      <.heading level={4}>{gettext("Triangular Arrows")}</.heading>
       <.pager page={1} total_pages={10} align="center"
         on_first="first-page" on_last="last-page" on_previous="prev-page" on_next="next-page"
         icon_first="&#x23EE;" icon_previous="&#x25C0;" icon_next="&#x25B6;" icon_last="&#x23ED;" />
 
-      <.heading level={4}>Simple Arrows</.heading>
+      <.heading level={4}>{gettext("Simple Arrows")}</.heading>
       <.pager page={1} total_pages={10} align="center"
         on_first="first-page" on_last="last-page" on_previous="prev-page" on_next="next-page"
         icon_first="&#x21E4;" icon_previous="&#x2190;" icon_next="&#x2192;" icon_last="&#x21E5;" />
 
-      <.heading level={4}>Mathematical Double Arrows</.heading>
+      <.heading level={4}>{gettext("Mathematical Double Arrows")}</.heading>
       <.pager page={1} total_pages={10} align="center"
         on_first="first-page" on_last="last-page" on_previous="prev-page" on_next="next-page"
         icon_first="&#x21C7;" icon_previous="&#x21E6;" icon_next="&#x21E8;" icon_last="&#x21C9;" />
@@ -375,7 +375,7 @@ defmodule DemoWeb.Live.TablesLive do
     <%!-- ═══════════════════════════════════════════════════════════ --%>
     <%!-- Panel Tables                                              --%>
     <%!-- ═══════════════════════════════════════════════════════════ --%>
-    <.card title_text="Panel Tables">
+    <.card title_text={gettext("Panel Tables")}>
       <.callout variant="warning" class="mb-4">
         The <.code>--panel</.code> shape (<.code>&lt;.table_container is_panel&gt;</.code>) was
         deprecated in pure-admin-core 2.9.0-rc10 as a near-duplicate of the table card. Use
@@ -383,52 +383,52 @@ defmodule DemoWeb.Live.TablesLive do
         the examples below now use it.
       </.callout>
 
-      <.heading level={4}>Basic Table Card (no header)</.heading>
+      <.heading level={4}>{gettext("Basic Table Card (no header)")}</.heading>
       <.table_card>
         <.table rows={@panel_products}>
-          <:col :let={p} label="Product">{p.name}</:col>
-          <:col :let={p} label="SKU">{p.sku}</:col>
-          <:col :let={p} label="Price">{p.price}</:col>
-          <:col :let={p} label="Stock">{p.stock}</:col>
+          <:col :let={p} label={gettext("Product")}>{p.name}</:col>
+          <:col :let={p} label={gettext("SKU")}>{p.sku}</:col>
+          <:col :let={p} label={gettext("Price")}>{p.price}</:col>
+          <:col :let={p} label={gettext("Stock")}>{p.stock}</:col>
         </.table>
       </.table_card>
 
-      <.heading level={4}>Table Card with Header</.heading>
-      <.table_card title_text="Recent Orders">
+      <.heading level={4}>{gettext("Table Card with Header")}</.heading>
+      <.table_card title_text={gettext("Recent Orders")}>
         <:actions>
-          <.button variant="secondary" size="sm">Export</.button>
-          <.button variant="primary" size="sm">Add Order</.button>
+          <.button variant="secondary" size="sm">{gettext("Export")}</.button>
+          <.button variant="primary" size="sm">{gettext("Add Order")}</.button>
         </:actions>
         <.table rows={@panel_orders} is_striped>
-          <:col :let={o} label="Order ID">{o.id}</:col>
-          <:col :let={o} label="Customer">{o.customer}</:col>
-          <:col :let={o} label="Date">{o.date}</:col>
-          <:col :let={o} label="Total">{o.total}</:col>
-          <:col :let={o} label="Status">
+          <:col :let={o} label={gettext("Order ID")}>{o.id}</:col>
+          <:col :let={o} label={gettext("Customer")}>{o.customer}</:col>
+          <:col :let={o} label={gettext("Date")}>{o.date}</:col>
+          <:col :let={o} label={gettext("Total")}>{o.total}</:col>
+          <:col :let={o} label={gettext("Status")}>
             <.badge variant={order_variant(o.status)} size="sm">{o.status}</.badge>
           </:col>
         </.table>
       </.table_card>
 
-      <.heading level={4}>Table Cards in Grid (75/25 split)</.heading>
+      <.heading level={4}>{gettext("Table Cards in Grid (75/25 split)")}</.heading>
       <.paragraph class="mb-4">Table cards work inside grid just like cards.</.paragraph>
     </.card>
 
     <.grid>
       <.column size="75">
-        <.table_card title_text="Activity Log (75%)">
+        <.table_card title_text={gettext("Activity Log (75%)")}>
           <.table rows={@activity_log} size="sm">
-            <:col :let={row} label="Time">{row.time}</:col>
-            <:col :let={row} label="User">{row.user}</:col>
-            <:col :let={row} label="Action">{row.action}</:col>
+            <:col :let={row} label={gettext("Time")}>{row.time}</:col>
+            <:col :let={row} label={gettext("User")}>{row.user}</:col>
+            <:col :let={row} label={gettext("Action")}>{row.action}</:col>
           </.table>
         </.table_card>
       </.column>
       <.column size="25">
-        <.table_card title_text="Stats (25%)">
+        <.table_card title_text={gettext("Stats (25%)")}>
           <.table rows={@stats_data} size="sm">
-            <:col :let={row} label="Metric">{row.metric}</:col>
-            <:col :let={row} label="Value">{row.value}</:col>
+            <:col :let={row} label={gettext("Metric")}>{row.metric}</:col>
+            <:col :let={row} label={gettext("Value")}>{row.value}</:col>
           </.table>
         </.table_card>
       </.column>
@@ -437,53 +437,53 @@ defmodule DemoWeb.Live.TablesLive do
     <%!-- ═══════════════════════════════════════════════════════════ --%>
     <%!-- Table Cards                                               --%>
     <%!-- ═══════════════════════════════════════════════════════════ --%>
-    <.card title_text="Table Cards">
+    <.card title_text={gettext("Table Cards")}>
       <.paragraph class="mb-4">The <.code>pa-table-card</.code> component is a card specifically designed for tables. It includes header, body (for the table), footer, and color variants like regular cards.</.paragraph>
-      <.heading level={4}>Basic Table Card with Actions</.heading>
+      <.heading level={4}>{gettext("Basic Table Card with Actions")}</.heading>
     </.card>
 
-    <.table_card title_text="Recent Orders">
+    <.table_card title_text={gettext("Recent Orders")}>
       <:actions>
-        <.button variant="secondary" size="sm">Export</.button>
-        <.button variant="primary" size="sm">Add Order</.button>
+        <.button variant="secondary" size="sm">{gettext("Export")}</.button>
+        <.button variant="primary" size="sm">{gettext("Add Order")}</.button>
       </:actions>
       <.table rows={@card_orders} is_striped>
-        <:col :let={o} label="Order ID">{o.id}</:col>
-        <:col :let={o} label="Customer">{o.customer}</:col>
-        <:col :let={o} label="Date">{o.date}</:col>
-        <:col :let={o} label="Amount">{o.amount}</:col>
-        <:col :let={o} label="Status">
+        <:col :let={o} label={gettext("Order ID")}>{o.id}</:col>
+        <:col :let={o} label={gettext("Customer")}>{o.customer}</:col>
+        <:col :let={o} label={gettext("Date")}>{o.date}</:col>
+        <:col :let={o} label={gettext("Amount")}>{o.amount}</:col>
+        <:col :let={o} label={gettext("Status")}>
           <.badge variant={order_variant(o.status)} size="sm">{o.status}</.badge>
         </:col>
       </.table>
       <:footer>
         <span>Showing 3 of 156 orders</span>
-        <.button variant="secondary" size="sm">View All</.button>
+        <.button variant="secondary" size="sm">{gettext("View All")}</.button>
       </:footer>
     </.table_card>
 
     <.card>
-      <.heading level={4}>Color Variants</.heading>
+      <.heading level={4}>{gettext("Color Variants")}</.heading>
       <.paragraph class="mb-4">Table cards support the same color variants as regular cards: <.code>--primary</.code>, <.code>--success</.code>, <.code>--warning</.code>, <.code>--danger</.code>, and theme colors <.code>--color-1</.code> through <.code>--color-9</.code>.</.paragraph>
     </.card>
 
     <.grid>
       <.column size="50">
-        <.table_card title_text="Primary Table Card" variant="primary">
-          <:actions><.button variant="light" size="sm">Refresh</.button></:actions>
+        <.table_card title_text={gettext("Primary Table Card")} variant="primary">
+          <:actions><.button variant="light" size="sm">{gettext("Refresh")}</.button></:actions>
           <.table rows={@card_primary} size="sm">
-            <:col :let={row} label="User">{row.user}</:col>
-            <:col :let={row} label="Role">{row.role}</:col>
-            <:col :let={row} label="Status">{row.status}</:col>
+            <:col :let={row} label={gettext("User")}>{row.user}</:col>
+            <:col :let={row} label={gettext("Role")}>{row.role}</:col>
+            <:col :let={row} label={gettext("Status")}>{row.status}</:col>
           </.table>
         </.table_card>
       </.column>
       <.column size="50">
-        <.table_card title_text="Success Table Card" variant="success">
-          <:actions><.button variant="light" size="sm">Export</.button></:actions>
+        <.table_card title_text={gettext("Success Table Card")} variant="success">
+          <:actions><.button variant="light" size="sm">{gettext("Export")}</.button></:actions>
           <.table rows={@card_success} size="sm">
-            <:col :let={row} label="Task">{row.task}</:col>
-            <:col :let={row} label="Completed">{row.completed}</:col>
+            <:col :let={row} label={gettext("Task")}>{row.task}</:col>
+            <:col :let={row} label={gettext("Completed")}>{row.completed}</:col>
           </.table>
         </.table_card>
       </.column>
@@ -491,18 +491,18 @@ defmodule DemoWeb.Live.TablesLive do
 
     <.grid>
       <.column size="50">
-        <.table_card title_text="Warning Table Card" variant="warning">
+        <.table_card title_text={gettext("Warning Table Card")} variant="warning">
           <.table rows={@card_warning} size="sm">
-            <:col :let={row} label="Alert">{row.alert}</:col>
-            <:col :let={row} label="Time">{row.time}</:col>
+            <:col :let={row} label={gettext("Alert")}>{row.alert}</:col>
+            <:col :let={row} label={gettext("Time")}>{row.time}</:col>
           </.table>
         </.table_card>
       </.column>
       <.column size="50">
-        <.table_card title_text="Danger Table Card" variant="danger">
+        <.table_card title_text={gettext("Danger Table Card")} variant="danger">
           <.table rows={@card_danger} size="sm">
-            <:col :let={row} label="Error">{row.error}</:col>
-            <:col :let={row} label="Count">{row.count}</:col>
+            <:col :let={row} label={gettext("Error")}>{row.error}</:col>
+            <:col :let={row} label={gettext("Count")}>{row.count}</:col>
           </.table>
         </.table_card>
       </.column>
@@ -510,27 +510,27 @@ defmodule DemoWeb.Live.TablesLive do
 
     <%!-- Plain Table Cards --%>
     <.card>
-      <.heading level={4}>Plain Table Cards</.heading>
+      <.heading level={4}>{gettext("Plain Table Cards")}</.heading>
       <.paragraph class="mb-4">Use <.code>pa-table-card--plain</.code> to remove the card visual styling (border, shadow, background) while keeping grid behavior. Tables work side by side with proper gaps.</.paragraph>
     </.card>
 
     <.grid>
       <.column size="50">
-        <.table_card title_text="Sales by Region" is_plain>
+        <.table_card title_text={gettext("Sales by Region")} is_plain>
           <.table rows={@sales_by_region} is_striped>
-            <:col :let={row} label="Region">{row.region}</:col>
-            <:col :let={row} label="Q1">{row.q1}</:col>
-            <:col :let={row} label="Q2">{row.q2}</:col>
-            <:col :let={row} label="Q3">{row.q3}</:col>
+            <:col :let={row} label={gettext("Region")}>{row.region}</:col>
+            <:col :let={row} label={gettext("Q1")}>{row.q1}</:col>
+            <:col :let={row} label={gettext("Q2")}>{row.q2}</:col>
+            <:col :let={row} label={gettext("Q3")}>{row.q3}</:col>
           </.table>
         </.table_card>
       </.column>
       <.column size="50">
-        <.table_card title_text="Top Products" is_plain>
+        <.table_card title_text={gettext("Top Products")} is_plain>
           <.table rows={@top_products} is_striped>
-            <:col :let={row} label="Product">{row.product}</:col>
-            <:col :let={row} label="Units">{row.units}</:col>
-            <:col :let={row} label="Revenue">{row.revenue}</:col>
+            <:col :let={row} label={gettext("Product")}>{row.product}</:col>
+            <:col :let={row} label={gettext("Units")}>{row.units}</:col>
+            <:col :let={row} label={gettext("Revenue")}>{row.revenue}</:col>
           </.table>
         </.table_card>
       </.column>
@@ -538,40 +538,40 @@ defmodule DemoWeb.Live.TablesLive do
 
     <.grid>
       <.column size="50">
-        <.table_card title_text="Bordered Table" is_plain>
+        <.table_card title_text={gettext("Bordered Table")} is_plain>
           <.table rows={@bordered_items} is_bordered>
-            <:col :let={row} label="Item">{row.item}</:col>
-            <:col :let={row} label="Quantity">{row.qty}</:col>
-            <:col :let={row} label="Price">{row.price}</:col>
-            <:col :let={row} label="Total">{row.total}</:col>
+            <:col :let={row} label={gettext("Item")}>{row.item}</:col>
+            <:col :let={row} label={gettext("Quantity")}>{row.qty}</:col>
+            <:col :let={row} label={gettext("Price")}>{row.price}</:col>
+            <:col :let={row} label={gettext("Total")}>{row.total}</:col>
           </.table>
         </.table_card>
       </.column>
       <.column size="50">
-        <.table_card title_text="Bordered + Striped" is_plain>
+        <.table_card title_text={gettext("Bordered + Striped")} is_plain>
           <.table rows={@dept_data} is_bordered is_striped>
-            <:col :let={row} label="Department">{row.department}</:col>
-            <:col :let={row} label="Employees">{row.employees}</:col>
-            <:col :let={row} label="Budget">{row.budget}</:col>
+            <:col :let={row} label={gettext("Department")}>{row.department}</:col>
+            <:col :let={row} label={gettext("Employees")}>{row.employees}</:col>
+            <:col :let={row} label={gettext("Budget")}>{row.budget}</:col>
           </.table>
         </.table_card>
       </.column>
     </.grid>
 
     <%!-- Plain Table with Pagers --%>
-    <.table_card title_text="Plain Table with Pagers" is_plain>
+    <.table_card title_text={gettext("Plain Table with Pagers")} is_plain>
       <:actions>
         <.pager page={1} total_pages={16} align="end" show_page_input={false}
           info_text="Showing 1-10 of 156" on_previous="prev-page" on_next="next-page" />
       </:actions>
       <.table rows={@plain_pager_orders} is_bordered is_striped>
-        <:col :let={o} label="ID">{o.id}</:col>
-        <:col :let={o} label="Customer">{o.customer}</:col>
-        <:col :let={o} label="Order Date">{o.date}</:col>
-        <:col :let={o} label="Status">
+        <:col :let={o} label={gettext("ID")}>{o.id}</:col>
+        <:col :let={o} label={gettext("Customer")}>{o.customer}</:col>
+        <:col :let={o} label={gettext("Order Date")}>{o.date}</:col>
+        <:col :let={o} label={gettext("Status")}>
           <.badge variant={order_variant(o.status)} size="sm">{o.status}</.badge>
         </:col>
-        <:col :let={o} label="Total">{o.total}</:col>
+        <:col :let={o} label={gettext("Total")}>{o.total}</:col>
       </.table>
       <:footer>
         <.pager page={1} total_pages={16} on_previous="prev-page" on_next="next-page" />
@@ -581,55 +581,55 @@ defmodule DemoWeb.Live.TablesLive do
     <%!-- ═══════════════════════════════════════════════════════════ --%>
     <%!-- Real-World Example: Order Detail Layout                   --%>
     <%!-- ═══════════════════════════════════════════════════════════ --%>
-    <.card title_text="Real-World Example: Order Detail Layout">
+    <.card title_text={gettext("Real-World Example: Order Detail Layout")}>
       <.paragraph class="mb-4">Cards and panel tables side by side — all with consistent visual treatment.</.paragraph>
     </.card>
 
     <.grid>
       <.column size="50">
-        <.card title_text="Customer Information">
+        <.card title_text={gettext("Customer Information")}>
           <.fields is_horizontal>
-            <.field label="Name">John Smith</.field>
-            <.field label="Email">john.smith@example.com</.field>
-            <.field label="Phone">+1 (555) 123-4567</.field>
-            <.field label="Customer Since">March 2021</.field>
+            <.field label={gettext("Name")}>John Smith</.field>
+            <.field label={gettext("Email")}>john.smith@example.com</.field>
+            <.field label={gettext("Phone")}>+1 (555) 123-4567</.field>
+            <.field label={gettext("Customer Since")}>March 2021</.field>
           </.fields>
         </.card>
       </.column>
       <.column size="50">
-        <.card title_text="Delivery Details">
+        <.card title_text={gettext("Delivery Details")}>
           <.fields is_horizontal>
-            <.field label="Address">123 Main Street, Apt 4B</.field>
-            <.field label="City">New York, NY 10001</.field>
-            <.field label="Delivery Method">Express Shipping</.field>
-            <.field label="Est. Delivery">Jan 30, 2024</.field>
+            <.field label={gettext("Address")}>123 Main Street, Apt 4B</.field>
+            <.field label={gettext("City")}>New York, NY 10001</.field>
+            <.field label={gettext("Delivery Method")}>Express Shipping</.field>
+            <.field label={gettext("Est. Delivery")}>Jan 30, 2024</.field>
           </.fields>
         </.card>
       </.column>
     </.grid>
 
-    <.table_card title_text="Order Items">
+    <.table_card title_text={gettext("Order Items")}>
       <.table rows={@order_items}>
-        <:col :let={item} label="Product">{item.product}</:col>
-        <:col :let={item} label="SKU">{item.sku}</:col>
-        <:col :let={item} label="Qty" align="end">{item.qty}</:col>
-        <:col :let={item} label="Unit Price" align="end">{item.unit_price}</:col>
-        <:col :let={item} label="Total" align="end">{item.total}</:col>
+        <:col :let={item} label={gettext("Product")}>{item.product}</:col>
+        <:col :let={item} label={gettext("SKU")}>{item.sku}</:col>
+        <:col :let={item} label={gettext("Qty")} align="end">{item.qty}</:col>
+        <:col :let={item} label={gettext("Unit Price")} align="end">{item.unit_price}</:col>
+        <:col :let={item} label={gettext("Total")} align="end">{item.total}</:col>
         <:foot>
           <tr>
-            <td colspan="4" class="text-end"><strong>Subtotal</strong></td>
+            <td colspan="4" class="text-end"><strong>{gettext("Subtotal")}</strong></td>
             <td class="text-end">$219.96</td>
           </tr>
           <tr>
-            <td colspan="4" class="text-end"><strong>Shipping</strong></td>
+            <td colspan="4" class="text-end"><strong>{gettext("Shipping")}</strong></td>
             <td class="text-end">$12.99</td>
           </tr>
           <tr>
-            <td colspan="4" class="text-end"><strong>Tax</strong></td>
+            <td colspan="4" class="text-end"><strong>{gettext("Tax")}</strong></td>
             <td class="text-end">$18.70</td>
           </tr>
           <tr>
-            <td colspan="4" class="text-end"><strong>Total</strong></td>
+            <td colspan="4" class="text-end"><strong>{gettext("Total")}</strong></td>
             <td class="text-end"><strong>$251.65</strong></td>
           </tr>
         </:foot>
@@ -639,8 +639,8 @@ defmodule DemoWeb.Live.TablesLive do
     <%!-- ═══════════════════════════════════════════════════════════ --%>
     <%!-- CSS Classes Reference                                     --%>
     <%!-- ═══════════════════════════════════════════════════════════ --%>
-    <.card title_text="CSS Classes Reference">
-      <.heading level={4}>Tables</.heading>
+    <.card title_text={gettext("CSS Classes Reference")}>
+      <.heading level={4}>{gettext("Tables")}</.heading>
       <.basic_list spacing="compact">
         <li><.code>pa-table-container</.code> — Bare framed + scrollable wrapper (no header)</li>
         <li><.code>pa-table-card</.code> — Full card with header/body/footer/actions (blessed shape for tables with chrome)</li>
@@ -658,7 +658,7 @@ defmodule DemoWeb.Live.TablesLive do
         <li><.code>.col-auto</.code> — Auto-width column (shrinks to content)</li>
       </.basic_list>
 
-      <.heading level={4} class="mt-4">Table Cards</.heading>
+      <.heading level={4} class="mt-4">{gettext("Table Cards")}</.heading>
       <.basic_list spacing="compact">
         <li><.code>pa-table-card</.code> — Card wrapper for tables</li>
         <li><.code>pa-table-card--primary / success / warning / danger</.code> — Color variants</li>
@@ -672,7 +672,7 @@ defmodule DemoWeb.Live.TablesLive do
         <li><.code>pa-table-card__footer</.code> — Footer for pagination</li>
       </.basic_list>
 
-      <.heading level={4} class="mt-4">Pager</.heading>
+      <.heading level={4} class="mt-4">{gettext("Pager")}</.heading>
       <.basic_list spacing="compact">
         <li><.code>pa-pager</.code> — Pagination container (default: centered)</li>
         <li><.code>pa-pager--start</.code> — Start-aligned</li>
@@ -685,7 +685,7 @@ defmodule DemoWeb.Live.TablesLive do
         <li><.code>pa-pager__text</.code> — "/ X pages" text</li>
       </.basic_list>
 
-      <.heading level={4} class="mt-4">Load More</.heading>
+      <.heading level={4} class="mt-4">{gettext("Load More")}</.heading>
       <.basic_list spacing="compact">
         <li><.code>pa-load-more</.code> — Load more container (default: centered)</li>
         <li><.code>pa-load-more--start</.code> — Start-aligned</li>

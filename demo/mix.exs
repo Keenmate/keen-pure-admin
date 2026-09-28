@@ -42,6 +42,7 @@ defmodule Demo.MixProject do
     [
       {:keen_pure_admin, path: ".."},
       {:phoenix, "~> 1.8.5"},
+      {:gettext, "~> 0.26"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 1.1.0"},

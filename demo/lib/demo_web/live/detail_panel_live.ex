@@ -38,34 +38,34 @@ defmodule DemoWeb.Live.DetailPanelLive do
     </.paragraph>
 
     <%!-- Mode Selector --%>
-    <.card title_text="Panel Mode">
+    <.card title_text={gettext("Panel Mode")}>
       <.button_group>
         <.button
           variant={if @panel_mode == "inline", do: "primary", else: "secondary"}
           phx-click="set_mode"
           phx-value-mode="inline"
         >
-          <i class="fa-solid fa-columns me-1"></i> Inline Split-View
+          <i class="fa-solid fa-columns me-1"></i> {gettext("Inline Split-View")}
         </.button>
         <.button
           variant={if @panel_mode == "card-overlay", do: "primary", else: "secondary"}
           phx-click="set_mode"
           phx-value-mode="card-overlay"
         >
-          <i class="fa-solid fa-clone me-1"></i> Card Overlay
+          <i class="fa-solid fa-clone me-1"></i> {gettext("Card Overlay")}
         </.button>
         <.button
           variant={if @panel_mode == "overlay", do: "primary", else: "secondary"}
           phx-click="set_mode"
           phx-value-mode="overlay"
         >
-          <i class="fa-solid fa-layer-group me-1"></i> Overlay
+          <i class="fa-solid fa-layer-group me-1"></i> {gettext("Overlay")}
         </.button>
       </.button_group>
     </.card>
 
     <%!-- Inline Split-View --%>
-    <.card :if={@panel_mode == "inline"} title_text="Inline Split-View" subtitle_text="Click a row to open the detail panel alongside the table. The table shrinks to make room." has_padding={false}>
+    <.card :if={@panel_mode == "inline"} title_text={gettext("Inline Split-View")} subtitle_text="Click a row to open the detail panel alongside the table. The table shrinks to make room." has_padding={false}>
       <div class="pa-detail-view">
         <div class="pa-detail-view__main">
           <.users_table users={@users} selected_user={@selected_user} />
@@ -77,7 +77,7 @@ defmodule DemoWeb.Live.DetailPanelLive do
     </.card>
 
     <%!-- Card Overlay Mode --%>
-    <.card :if={@panel_mode == "card-overlay"} title_text="Card Overlay" subtitle_text="Panel overlays the table within the card with a backdrop." has_padding={false}>
+    <.card :if={@panel_mode == "card-overlay"} title_text={gettext("Card Overlay")} subtitle_text="Panel overlays the table within the card with a backdrop." has_padding={false}>
       <div class="pa-detail-view pa-detail-view--overlay">
         <div
           class={"pa-detail-view__overlay #{if @selected_user, do: "pa-detail-view__overlay--visible"}"}
@@ -94,7 +94,7 @@ defmodule DemoWeb.Live.DetailPanelLive do
 
     <%!-- Overlay Mode --%>
     <%= if @panel_mode == "overlay" do %>
-      <.card title_text="Overlay Mode" subtitle_text="Click a row to open an overlay panel that slides in from the right.">
+      <.card title_text={gettext("Overlay Mode")} subtitle_text="Click a row to open an overlay panel that slides in from the right.">
         <.users_table users={@users} selected_user={@selected_user} />
       </.card>
 
@@ -111,11 +111,11 @@ defmodule DemoWeb.Live.DetailPanelLive do
     <table class="pa-table pa-table--hover pa-table--striped">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Department</th>
-          <th>Status</th>
+          <th>{gettext("Name")}</th>
+          <th>{gettext("Email")}</th>
+          <th>{gettext("Role")}</th>
+          <th>{gettext("Department")}</th>
+          <th>{gettext("Status")}</th>
         </tr>
       </thead>
       <tbody>
@@ -151,21 +151,21 @@ defmodule DemoWeb.Live.DetailPanelLive do
         </button>
       </div>
       <div class="pa-detail-panel__body">
-        <.field_group title="Personal">
+        <.field_group title={gettext("Personal")}>
           <.fields cols="2">
-            <.field label="Name">{@user.name}</.field>
-            <.field label="Email">{@user.email}</.field>
-            <.field label="Phone">{@user.phone}</.field>
-            <.field label="Location">{@user.location}</.field>
+            <.field label={gettext("Name")}>{@user.name}</.field>
+            <.field label={gettext("Email")}>{@user.email}</.field>
+            <.field label={gettext("Phone")}>{@user.phone}</.field>
+            <.field label={gettext("Location")}>{@user.location}</.field>
           </.fields>
         </.field_group>
 
-        <.field_group title="Employment">
+        <.field_group title={gettext("Employment")}>
           <.fields cols="2">
-            <.field label="Role">{@user.role}</.field>
-            <.field label="Department">{@user.department}</.field>
-            <.field label="Start Date">{@user.start_date}</.field>
-            <.field label="Status">
+            <.field label={gettext("Role")}>{@user.role}</.field>
+            <.field label={gettext("Department")}>{@user.department}</.field>
+            <.field label={gettext("Start Date")}>{@user.start_date}</.field>
+            <.field label={gettext("Status")}>
               <.badge variant={status_variant(@user.status)} size="sm">
                 {@user.status}
               </.badge>
@@ -175,13 +175,13 @@ defmodule DemoWeb.Live.DetailPanelLive do
       </div>
       <div class="pa-detail-panel__footer">
         <.button variant="primary" size="sm">
-          <i class="fa-solid fa-pen-to-square"></i> Edit
+          <i class="fa-solid fa-pen-to-square"></i> {gettext("Edit")}
         </.button>
         <.button variant="danger" is_outline size="sm">
-          <i class="fa-solid fa-trash"></i> Delete
+          <i class="fa-solid fa-trash"></i> {gettext("Delete")}
         </.button>
         <.button variant="secondary" size="sm" style="margin-left: auto;" phx-click="close_panel">
-          Close
+          {gettext("Close")}
         </.button>
       </div>
     </div>

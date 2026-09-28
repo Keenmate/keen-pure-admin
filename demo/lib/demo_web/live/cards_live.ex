@@ -14,18 +14,18 @@ defmodule DemoWeb.Live.CardsLive do
     <.paragraph>Flexible content containers for organizing and displaying information.</.paragraph>
 
     <%!-- Same Height Cards --%>
-    <.section title_text="Same Height Cards">
+    <.section title_text={gettext("Same Height Cards")}>
       <.paragraph class="mb-2">
         Use <code>sameHeight</code> on Grid to make all cards in a row match the height of the tallest card.
       </.paragraph>
       <.grid is_same_height>
         <.column size="100" md="1-3">
-          <.card title_text="Short Card">
+          <.card title_text={gettext("Short Card")}>
             <.paragraph>This card has minimal content.</.paragraph>
           </.card>
         </.column>
         <.column size="100" md="1-3">
-          <.card title_text="Tall Card">
+          <.card title_text={gettext("Tall Card")}>
             <.paragraph>This card has much more content than the others, making it naturally taller.</.paragraph>
             <.paragraph>
               All sibling cards will stretch to match this height thanks to the <code>sameHeight</code> prop on Grid.
@@ -34,7 +34,7 @@ defmodule DemoWeb.Live.CardsLive do
           </.card>
         </.column>
         <.column size="100" md="1-3">
-          <.card title_text="Medium Card">
+          <.card title_text={gettext("Medium Card")}>
             <.paragraph>This card also stretches to match the tallest card in the row.</.paragraph>
           </.card>
         </.column>
@@ -42,12 +42,12 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- Basic Cards --%>
-    <.section title_text="Basic Cards">
+    <.section title_text={gettext("Basic Cards")}>
       <.grid>
         <%!-- Simple Card --%>
         <.column size="100" md="1-2">
           <.card>
-            <.heading level={4}>Simple Card</.heading>
+            <.heading level={4}>{gettext("Simple Card")}</.heading>
             <.paragraph>This is a basic card with just a body. Perfect for simple content display.</.paragraph>
           </.card>
         </.column>
@@ -56,7 +56,7 @@ defmodule DemoWeb.Live.CardsLive do
         <.column size="100" md="1-2">
           <.card>
             <:header>
-              <.heading level={4}>Card with Header</.heading>
+              <.heading level={4}>{gettext("Card with Header")}</.heading>
             </:header>
             <.paragraph>This card includes a header section for titles and actions.</.paragraph>
           </.card>
@@ -65,17 +65,17 @@ defmodule DemoWeb.Live.CardsLive do
         <%!-- Card with Footer --%>
         <.column size="100" md="1-2">
           <.card>
-            <.heading level={4}>Card with Footer</.heading>
+            <.heading level={4}>{gettext("Card with Footer")}</.heading>
             <.paragraph>This card includes a footer section for actions or meta information.</.paragraph>
             <:footer>
-              <.button variant="primary" size="sm">Action</.button>
+              <.button variant="primary" size="sm">{gettext("Action")}</.button>
             </:footer>
           </.card>
         </.column>
 
         <%!-- Complete Card --%>
         <.column size="100" md="1-2">
-          <.card title_text="Complete Card">
+          <.card title_text={gettext("Complete Card")}>
             <:tools>
               <.button variant="secondary" size="xs">⚙</.button>
             </:tools>
@@ -83,8 +83,8 @@ defmodule DemoWeb.Live.CardsLive do
             <:footer>
               <span class="pa-card__meta">Updated 2 hours ago</span>
               <div class="pa-card__actions">
-                <.button variant="secondary" size="sm">Cancel</.button>
-                <.button variant="primary" size="sm">Save</.button>
+                <.button variant="secondary" size="sm">{gettext("Cancel")}</.button>
+                <.button variant="primary" size="sm">{gettext("Save")}</.button>
               </div>
             </:footer>
           </.card>
@@ -93,7 +93,7 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- Card Header Three-Part Layout --%>
-    <.section title_text="Card Header Three-Part Layout">
+    <.section title_text={gettext("Card Header Three-Part Layout")}>
       <.paragraph class="mb-2">
         Card headers support a flexible three-part layout: <strong>Title</strong> (fixed), <strong>Description</strong>
         (flexible, truncates), and <strong>Actions</strong> (fixed). Elements are separated by automatic gaps.
@@ -103,11 +103,11 @@ defmodule DemoWeb.Live.CardsLive do
         <%!-- Full three-part layout --%>
         <.column size="100" lg="1-2">
           <.card
-            title_text="User Management"
+            title_text={gettext("User Management")}
             description_text="Manage user accounts, permissions, and access controls for your organization"
           >
             <:tools>
-              <.button variant="primary" size="sm">Add User</.button>
+              <.button variant="primary" size="sm">{gettext("Add User")}</.button>
             </:tools>
             <.paragraph>
               Full three-part layout: title stays fixed, description fills available space and truncates with ellipsis, action button stays fixed on the right.
@@ -118,13 +118,13 @@ defmodule DemoWeb.Live.CardsLive do
         <%!-- Multiple action buttons --%>
         <.column size="100" lg="1-2">
           <.card
-            title_text="Reports"
+            title_text={gettext("Reports")}
             description_text="Generate and download analytics reports for your dashboard metrics"
           >
             <:tools>
               <.button_group>
-                <.button variant="secondary" size="sm">Export</.button>
-                <.button variant="primary" size="sm">Generate</.button>
+                <.button variant="secondary" size="sm">{gettext("Export")}</.button>
+                <.button variant="primary" size="sm">{gettext("Generate")}</.button>
               </.button_group>
             </:tools>
             <.paragraph>
@@ -136,7 +136,7 @@ defmodule DemoWeb.Live.CardsLive do
         <%!-- Title + Description only --%>
         <.column size="100" lg="1-2">
           <.card
-            title_text="Settings"
+            title_text={gettext("Settings")}
             description_text="Configure application preferences and system settings"
           >
             <.paragraph>Title + description without actions. The description expands to fill the remaining space.</.paragraph>
@@ -145,11 +145,11 @@ defmodule DemoWeb.Live.CardsLive do
 
         <%!-- Title + Actions only --%>
         <.column size="100" lg="1-2">
-          <.card title_text="Notifications">
+          <.card title_text={gettext("Notifications")}>
             <:tools>
               <.button_group>
-                <.button variant="secondary" size="sm">Mark All Read</.button>
-                <.button variant="danger" size="sm" is_outline>Clear</.button>
+                <.button variant="secondary" size="sm">{gettext("Mark All Read")}</.button>
+                <.button variant="danger" size="sm" is_outline>{gettext("Clear")}</.button>
               </.button_group>
             </:tools>
             <.paragraph>
@@ -159,7 +159,7 @@ defmodule DemoWeb.Live.CardsLive do
         </.column>
       </.grid>
 
-      <.heading level={4} class="mt-4">Long Description Truncation</.heading>
+      <.heading level={4} class="mt-4">{gettext("Long Description Truncation")}</.heading>
       <.paragraph class="mb-2">
         When descriptions are too long, they automatically truncate with ellipsis (...) to maintain a single-line header.
       </.paragraph>
@@ -167,11 +167,11 @@ defmodule DemoWeb.Live.CardsLive do
       <.grid>
         <.column size="100" lg="1-2">
           <.card
-            title_text="Analytics"
+            title_text={gettext("Analytics")}
             description_text="This is a very long description that explains the analytics dashboard features including real-time metrics, historical data analysis, custom reports, and export functionality for enterprise users"
           >
             <:tools>
-              <.button variant="primary" size="sm">View</.button>
+              <.button variant="primary" size="sm">{gettext("View")}</.button>
             </:tools>
             <.paragraph>
               The description truncates with ellipsis when it exceeds the available space. Hover or resize to see the effect.
@@ -181,14 +181,14 @@ defmodule DemoWeb.Live.CardsLive do
 
         <.column size="100" lg="1-2">
           <.card
-            title_text="Inventory"
+            title_text={gettext("Inventory")}
             description_text="Track stock levels, manage suppliers, process purchase orders, and monitor warehouse capacity across multiple locations"
           >
             <:tools>
               <.button_group>
-                <.button variant="secondary" size="sm">Import</.button>
-                <.button variant="secondary" size="sm">Export</.button>
-                <.button variant="primary" size="sm">Add Item</.button>
+                <.button variant="secondary" size="sm">{gettext("Import")}</.button>
+                <.button variant="secondary" size="sm">{gettext("Export")}</.button>
+                <.button variant="primary" size="sm">{gettext("Add Item")}</.button>
               </.button_group>
             </:tools>
             <.paragraph>
@@ -198,7 +198,7 @@ defmodule DemoWeb.Live.CardsLive do
         </.column>
       </.grid>
 
-      <.heading level={4} class="mt-4">With Tooltip for Full Description</.heading>
+      <.heading level={4} class="mt-4">{gettext("With Tooltip for Full Description")}</.heading>
       <.paragraph class="mb-2">
         Add <code>pa-tooltip pa-tooltip--multiline</code> to the description paragraph to show the full text on hover.
       </.paragraph>
@@ -207,11 +207,11 @@ defmodule DemoWeb.Live.CardsLive do
         <.column size="100" lg="1-2">
           <.card>
             <:header>
-              <.heading level={4}>Dashboard</.heading>
+              <.heading level={4}>{gettext("Dashboard")}</.heading>
               <.tooltip text="View real-time metrics, KPIs, and performance indicators for your organization. Includes customizable widgets, drill-down reports, and automated alerts." position="bottom" multiline>
                 <p>View real-time metrics, KPIs, and performance indicators for your organization. Includes customizable widgets, drill-down reports, and automated alerts.</p>
               </.tooltip>
-              <.button variant="primary" size="sm">Open</.button>
+              <.button variant="primary" size="sm">{gettext("Open")}</.button>
             </:header>
             <.paragraph>Hover over the truncated description to see the full text in a multiline tooltip.</.paragraph>
           </.card>
@@ -220,13 +220,13 @@ defmodule DemoWeb.Live.CardsLive do
         <.column size="100" lg="1-2">
           <.card>
             <:header>
-              <.heading level={4}>Audit Log</.heading>
+              <.heading level={4}>{gettext("Audit Log")}</.heading>
               <.tooltip text="Complete history of system changes, user actions, and security events. Filter by date, user, action type, or resource. Export to CSV for compliance reporting." position="bottom" multiline>
                 <p>Complete history of system changes, user actions, and security events. Filter by date, user, action type, or resource. Export to CSV for compliance reporting.</p>
               </.tooltip>
               <.button_group>
-                <.button variant="secondary" size="sm">Export</.button>
-                <.button variant="primary" size="sm">View</.button>
+                <.button variant="secondary" size="sm">{gettext("Export")}</.button>
+                <.button variant="primary" size="sm">{gettext("View")}</.button>
               </.button_group>
             </:header>
             <.paragraph>The tooltip provides full context while keeping the header compact and consistent.</.paragraph>
@@ -234,7 +234,7 @@ defmodule DemoWeb.Live.CardsLive do
         </.column>
       </.grid>
 
-      <.heading level={4} class="mt-4">Wrap Modifier</.heading>
+      <.heading level={4} class="mt-4">{gettext("Wrap Modifier")}</.heading>
       <.paragraph class="mb-2">
         Use <code>headerWrap</code> when you need the description to wrap onto its own line (useful for mobile or when full description visibility is important).
       </.paragraph>
@@ -243,13 +243,13 @@ defmodule DemoWeb.Live.CardsLive do
         <.column size="100" lg="1-2">
           <.card
             header_wrap
-            title_text="Project Overview"
+            title_text={gettext("Project Overview")}
             description_text="This card uses the wrap modifier so the description appears on its own line below the title and actions. This is useful when the full description text needs to be visible."
           >
             <:tools>
               <.button_group>
-                <.button variant="secondary" size="sm">Edit</.button>
-                <.button variant="primary" size="sm">View</.button>
+                <.button variant="secondary" size="sm">{gettext("Edit")}</.button>
+                <.button variant="primary" size="sm">{gettext("View")}</.button>
               </.button_group>
             </:tools>
             <.paragraph>
@@ -261,11 +261,11 @@ defmodule DemoWeb.Live.CardsLive do
         <.column size="100" lg="1-2">
           <.card
             header_wrap
-            title_text="Documentation"
+            title_text={gettext("Documentation")}
             description_text="Complete API reference and integration guides for developers. Includes code samples, authentication flows, and best practices for building with our platform."
           >
             <:tools>
-              <.button variant="primary" size="sm">Open Docs</.button>
+              <.button variant="primary" size="sm">{gettext("Open Docs")}</.button>
             </:tools>
             <.paragraph>
               The wrap modifier is ideal for mobile layouts or when description content is essential to display in full.
@@ -276,29 +276,29 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- Colored Cards --%>
-    <.section title_text="Colored Cards">
+    <.section title_text={gettext("Colored Cards")}>
       <.grid>
         <.column size="100" md="1-2">
           <.card variant="primary">
-            <:header><.heading level={4}>Primary Card</.heading></:header>
+            <:header><.heading level={4}>{gettext("Primary Card")}</.heading></:header>
             <.paragraph>Card with primary color theme.</.paragraph>
           </.card>
         </.column>
         <.column size="100" md="1-2">
           <.card variant="success">
-            <:header><.heading level={4}>Success Card</.heading></:header>
+            <:header><.heading level={4}>{gettext("Success Card")}</.heading></:header>
             <.paragraph>Card with success color theme.</.paragraph>
           </.card>
         </.column>
         <.column size="100" md="1-2">
           <.card variant="warning">
-            <:header><.heading level={4}>Warning Card</.heading></:header>
+            <:header><.heading level={4}>{gettext("Warning Card")}</.heading></:header>
             <.paragraph>Card with warning color theme.</.paragraph>
           </.card>
         </.column>
         <.column size="100" md="1-2">
           <.card variant="danger">
-            <:header><.heading level={4}>Danger Card</.heading></:header>
+            <:header><.heading level={4}>{gettext("Danger Card")}</.heading></:header>
             <.paragraph>Card with danger color theme.</.paragraph>
           </.card>
         </.column>
@@ -309,7 +309,7 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- Theme Color Cards --%>
-    <.section title_text="Theme Color Cards">
+    <.section title_text={gettext("Theme Color Cards")}>
       <.paragraph class="mb-2">
         Cards can use theme color slots (color-1 through color-9) for custom color schemes defined by your theme.
       </.paragraph>
@@ -325,28 +325,28 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- Bordered Cards --%>
-    <.section title_text="Bordered Cards">
+    <.section title_text={gettext("Bordered Cards")}>
       <.paragraph class="mb-2">
         Cards can have visible borders using the <code>pa-card--bordered</code> class.
       </.paragraph>
       <.grid>
         <.column size="100" md="1-2">
-          <.card is_bordered title_text="Bordered Card">
+          <.card is_bordered title_text={gettext("Bordered Card")}>
             <.paragraph>Card with visible border styling.</.paragraph>
           </.card>
         </.column>
         <.column size="100" md="1-2">
-          <.card is_bordered variant="primary" title_text="Bordered Primary">
+          <.card is_bordered variant="primary" title_text={gettext("Bordered Primary")}>
             <.paragraph>Bordered card with color variant.</.paragraph>
           </.card>
         </.column>
         <.column size="100" md="1-2">
-          <.card is_bordered variant="success" title_text="Bordered Success">
+          <.card is_bordered variant="success" title_text={gettext("Bordered Success")}>
             <.paragraph>Bordered card with success variant.</.paragraph>
           </.card>
         </.column>
         <.column size="100" md="1-2">
-          <.card is_bordered variant="danger" title_text="Bordered Danger">
+          <.card is_bordered variant="danger" title_text={gettext("Bordered Danger")}>
             <.paragraph>Bordered card with danger variant.</.paragraph>
           </.card>
         </.column>
@@ -354,13 +354,13 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- Ghost Card --%>
-    <.section title_text="Ghost Card">
+    <.section title_text={gettext("Ghost Card")}>
       <.paragraph class="mb-4">
         Invisible container with no background, border, or shadow. Useful as a layout wrapper that maintains card spacing without visual chrome.
       </.paragraph>
       <.grid>
         <.column size="1-3">
-          <.card is_ghost title_text="Ghost Card">
+          <.card is_ghost title_text={gettext("Ghost Card")}>
             <.paragraph>No background, no border, no shadow. Just layout structure.</.paragraph>
             <:footer>
               <span class="pa-card__meta">Footer is also transparent</span>
@@ -368,7 +368,7 @@ defmodule DemoWeb.Live.CardsLive do
           </.card>
         </.column>
         <.column size="1-3">
-          <.card title_text="Normal Card">
+          <.card title_text={gettext("Normal Card")}>
             <.paragraph>Standard card for comparison.</.paragraph>
           </.card>
         </.column>
@@ -381,51 +381,51 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- Underlined Headers --%>
-    <.section title_text="Underlined Headers">
+    <.section title_text={gettext("Underlined Headers")}>
       <.paragraph class="mb-4">
         Add <code>isHeaderUnderlined</code> for an accent border under the heading. Combine with <code>headerUnderlineColor</code>
         for semantic colors or <code>headerUnderlineThemeColor</code> for theme color slots.
       </.paragraph>
       <.grid>
         <.column size="100" sm="50" lg="1-4">
-          <.card is_header_underlined title_text="Default Accent">
+          <.card is_header_underlined title_text={gettext("Default Accent")}>
             <.paragraph>Uses the theme's accent color.</.paragraph>
           </.card>
         </.column>
         <.column size="100" sm="50" lg="1-4">
-          <.card is_header_underlined header_underline_color="success" title_text="Success">
+          <.card is_header_underlined header_underline_color="success" title_text={gettext("Success")}>
             <.paragraph>Green underline for positive context.</.paragraph>
           </.card>
         </.column>
         <.column size="100" sm="50" lg="1-4">
-          <.card is_header_underlined header_underline_color="warning" title_text="Warning">
+          <.card is_header_underlined header_underline_color="warning" title_text={gettext("Warning")}>
             <.paragraph>Yellow underline for caution.</.paragraph>
           </.card>
         </.column>
         <.column size="100" sm="50" lg="1-4">
-          <.card is_header_underlined header_underline_color="danger" title_text="Danger">
+          <.card is_header_underlined header_underline_color="danger" title_text={gettext("Danger")}>
             <.paragraph>Red underline for critical items.</.paragraph>
           </.card>
         </.column>
       </.grid>
       <.grid>
         <.column size="100" sm="50" lg="1-4">
-          <.card is_header_underlined header_underline_color="info" title_text="Info">
+          <.card is_header_underlined header_underline_color="info" title_text={gettext("Info")}>
             <.paragraph>Blue underline for informational.</.paragraph>
           </.card>
         </.column>
         <.column size="100" sm="50" lg="1-4">
-          <.card is_header_underlined header_class="pa-card__header--underline-color-1" title_text="Color 1">
+          <.card is_header_underlined header_class="pa-card__header--underline-color-1" title_text={gettext("Color 1")}>
             <.paragraph>Theme color slot 1.</.paragraph>
           </.card>
         </.column>
         <.column size="100" sm="50" lg="1-4">
-          <.card is_header_underlined header_class="pa-card__header--underline-color-3" title_text="Color 3">
+          <.card is_header_underlined header_class="pa-card__header--underline-color-3" title_text={gettext("Color 3")}>
             <.paragraph>Theme color slot 3.</.paragraph>
           </.card>
         </.column>
         <.column size="100" sm="50" lg="1-4">
-          <.card is_ghost is_header_underlined title_text="Ghost + Underlined">
+          <.card is_ghost is_header_underlined title_text={gettext("Ghost + Underlined")}>
             <.paragraph>Works with ghost cards too.</.paragraph>
           </.card>
         </.column>
@@ -433,32 +433,32 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- Statistics Cards --%>
-    <.section title_text="Statistics Cards">
+    <.section title_text={gettext("Statistics Cards")}>
       <.grid>
         <.column size="100" sm="1-2" lg="1-4">
           <.card variant="stat">
-            <.stat number="1,234" label_text="Total Users" icon_variant="primary">
+            <.stat number="1,234" label_text={gettext("Total Users")} icon_variant="primary">
               <:icon>👥</:icon>
             </.stat>
           </.card>
         </.column>
         <.column size="100" sm="1-2" lg="1-4">
           <.card variant="stat">
-            <.stat number="$45,678" label_text="Revenue" icon_variant="success">
+            <.stat number="$45,678" label_text={gettext("Revenue")} icon_variant="success">
               <:icon>📊</:icon>
             </.stat>
           </.card>
         </.column>
         <.column size="100" sm="1-2" lg="1-4">
           <.card variant="stat">
-            <.stat number="567" label_text="Orders" icon_variant="warning">
+            <.stat number="567" label_text={gettext("Orders")} icon_variant="warning">
               <:icon>📦</:icon>
             </.stat>
           </.card>
         </.column>
         <.column size="100" sm="1-2" lg="1-4">
           <.card variant="stat">
-            <.stat number="+12%" label_text="Growth" icon_variant="info">
+            <.stat number="+12%" label_text={gettext("Growth")} icon_variant="info">
               <:icon>📈</:icon>
             </.stat>
           </.card>
@@ -467,35 +467,35 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- Statistics with Trends --%>
-    <.section title_text="Statistics with Trends">
+    <.section title_text={gettext("Statistics with Trends")}>
       <.paragraph class="mb-2">
         Stats can display change indicators showing positive, negative, or neutral trends. Note: Change indicators only display when NOT using the icon layout.
       </.paragraph>
       <.grid>
         <.column size="100" sm="1-2" lg="1-3">
           <.card variant="stat">
-            <.stat number="1,234" label_text="Total Users" change_text="+12.5%" change_direction="positive" />
+            <.stat number="1,234" label_text={gettext("Total Users")} change_text="+12.5%" change_direction="positive" />
           </.card>
         </.column>
         <.column size="100" sm="1-2" lg="1-3">
           <.card variant="stat">
-            <.stat number="567" label_text="Orders" change_text="-5.2%" change_direction="negative" />
+            <.stat number="567" label_text={gettext("Orders")} change_text="-5.2%" change_direction="negative" />
           </.card>
         </.column>
         <.column size="100" sm="1-2" lg="1-3">
           <.card variant="stat">
-            <.stat number="$89.50" label_text="Avg Order" change_text="0%" change_direction="neutral" />
+            <.stat number="$89.50" label_text={gettext("Avg Order")} change_text="0%" change_direction="neutral" />
           </.card>
         </.column>
       </.grid>
     </.section>
 
     <%!-- Interactive Cards --%>
-    <.section title_text="Interactive Cards">
+    <.section title_text={gettext("Interactive Cards")}>
       <.grid>
         <%!-- Collapsible Card --%>
         <.column size="100" md="1-2">
-          <.card title_text="Collapsible Card">
+          <.card title_text={gettext("Collapsible Card")}>
             <:tools>
               <.button variant="secondary" size="xs">−</.button>
             </:tools>
@@ -510,17 +510,17 @@ defmodule DemoWeb.Live.CardsLive do
         <.column size="100" md="1-2">
           <.card>
             <:header>
-              <.heading level={4}>Card with Tabs</.heading>
+              <.heading level={4}>{gettext("Card with Tabs")}</.heading>
             </:header>
             <:tabs>
               <.card_tab is_active={@active_tab == "tab1"} phx-click="switch_tab" phx-value-tab="tab1">
-                Overview
+                {gettext("Overview")}
               </.card_tab>
               <.card_tab is_active={@active_tab == "tab2"} phx-click="switch_tab" phx-value-tab="tab2">
-                Details
+                {gettext("Details")}
               </.card_tab>
               <.card_tab is_active={@active_tab == "tab3"} phx-click="switch_tab" phx-value-tab="tab3">
-                Settings
+                {gettext("Settings")}
               </.card_tab>
             </:tabs>
             <.paragraph :if={@active_tab == "tab1"}>Overview content goes here. This is the default active tab.</.paragraph>
@@ -532,11 +532,11 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- Advanced Card Features --%>
-    <.section title_text="Advanced Card Features">
+    <.section title_text={gettext("Advanced Card Features")}>
       <.grid>
         <%!-- Card with Icon and Tools --%>
         <.column size="100" md="1-2">
-          <.card title_text="Analytics Dashboard Overview">
+          <.card title_text={gettext("Analytics Dashboard Overview")}>
             <:title_icon>📊</:title_icon>
             <:tools>
               <.button variant="secondary" size="xs" title="Refresh">↻</.button>
@@ -567,10 +567,10 @@ defmodule DemoWeb.Live.CardsLive do
 
         <%!-- Card with Different Icon Styles --%>
         <.column size="100" md="1-2">
-          <.card title_text="Project Management">
+          <.card title_text={gettext("Project Management")}>
             <:title_icon>💼</:title_icon>
             <:tools>
-              <.button variant="primary" size="xs">+ Add</.button>
+              <.button variant="primary" size="xs">{gettext("+ Add")}</.button>
               <.button variant="secondary" size="xs" title="Filter">🔍</.button>
             </:tools>
             <.paragraph>Different combinations of icons and tool button styles work well together.</.paragraph>
@@ -591,47 +591,47 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- Data Display Cards --%>
-    <.section title_text="Data Display Cards">
+    <.section title_text={gettext("Data Display Cards")}>
       <.grid>
         <%!-- Table Card --%>
         <.column size="100" lg="1-2">
-          <.card title_text="Recent Orders" has_padding={false}>
+          <.card title_text={gettext("Recent Orders")} has_padding={false}>
             <:tools>
-              <.button variant="secondary" size="sm">View All</.button>
+              <.button variant="secondary" size="sm">{gettext("View All")}</.button>
             </:tools>
             <.table rows={[
               %{id: "#1234", customer: "John Doe", amount: "$299.99", status: "Completed", status_variant: "success"},
               %{id: "#1235", customer: "Jane Smith", amount: "$149.50", status: "Pending", status_variant: "warning"},
               %{id: "#1236", customer: "Bob Johnson", amount: "$89.99", status: "Processing", status_variant: "info"}
             ]}>
-              <:col :let={row} label="Order ID">{row.id}</:col>
-              <:col :let={row} label="Customer">{row.customer}</:col>
-              <:col :let={row} label="Amount">{row.amount}</:col>
-              <:col :let={row} label="Status"><.badge variant={row.status_variant}>{row.status}</.badge></:col>
+              <:col :let={row} label={gettext("Order ID")}>{row.id}</:col>
+              <:col :let={row} label={gettext("Customer")}>{row.customer}</:col>
+              <:col :let={row} label={gettext("Amount")}>{row.amount}</:col>
+              <:col :let={row} label={gettext("Status")}><.badge variant={row.status_variant}>{row.status}</.badge></:col>
             </.table>
           </.card>
         </.column>
 
         <%!-- List Card --%>
         <.column size="100" lg="1-2">
-          <.card title_text="Activity Feed" has_padding={false}>
+          <.card title_text={gettext("Activity Feed")} has_padding={false}>
             <.list>
               <.list_item
-                title_text="User Registration"
+                title_text={gettext("User Registration")}
                 subtitle_text="New user John Doe registered"
                 meta_text="2 minutes ago"
               >
                 <:avatar>👤</:avatar>
               </.list_item>
               <.list_item
-                title_text="Payment Received"
+                title_text={gettext("Payment Received")}
                 subtitle_text="$299.99 from Order #1234"
                 meta_text="5 minutes ago"
               >
                 <:avatar>💰</:avatar>
               </.list_item>
               <.list_item
-                title_text="Order Shipped"
+                title_text={gettext("Order Shipped")}
                 subtitle_text="Order #1233 has been shipped"
                 meta_text="10 minutes ago"
               >
@@ -644,7 +644,7 @@ defmodule DemoWeb.Live.CardsLive do
     </.section>
 
     <%!-- CSS Classes Reference --%>
-    <.card title_text="CSS Classes Reference">
+    <.card title_text={gettext("CSS Classes Reference")}>
       <.heading level={4}>Card Base & Sections</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-card</code> - Base card container</li>
@@ -708,17 +708,17 @@ defmodule DemoWeb.Live.CardsLive do
       <.grid>
         <.column size="1-3">
           <.card live_state="up">
-            <.stat variant="hero-compact" number="$847K" label_text="MRR" change_text="▲ 12.5%" change_direction="positive" />
+            <.stat variant="hero-compact" number="$847K" label_text={gettext("MRR")} change_text="▲ 12.5%" change_direction="positive" />
           </.card>
         </.column>
         <.column size="1-3">
           <.card live_state="neutral">
-            <.stat variant="hero-compact" number="148 ms" label_text="Latency p95" change_text="±0.7%" change_direction="neutral" />
+            <.stat variant="hero-compact" number="148 ms" label_text={gettext("Latency p95")} change_text="±0.7%" change_direction="neutral" />
           </.card>
         </.column>
         <.column size="1-3">
           <.card live_state="down">
-            <.stat variant="hero-compact" number="2.4%" label_text="Churn" change_text="▲ 14%" change_direction="negative" />
+            <.stat variant="hero-compact" number="2.4%" label_text={gettext("Churn")} change_text="▲ 14%" change_direction="negative" />
           </.card>
         </.column>
       </.grid>

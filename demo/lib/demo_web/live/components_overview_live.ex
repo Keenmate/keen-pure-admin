@@ -53,10 +53,10 @@ defmodule DemoWeb.Live.ComponentsOverviewLive do
       </.column>
     </.grid>
 
-    <.section title_text="Other Sections">
+    <.section title_text={gettext("Other Sections")}>
       <.grid>
         <.column size="1-3">
-          <.card title_text="Tables">
+          <.card title_text={gettext("Tables")}>
             <.basic_list spacing="compact">
               <li><a href="/tables/standard">Standard Tables</a></li>
               <li><a href="/tables/sizing">Table Sizing</a></li>
@@ -68,7 +68,7 @@ defmodule DemoWeb.Live.ComponentsOverviewLive do
           </.card>
         </.column>
         <.column size="1-3">
-          <.card title_text="Timeline">
+          <.card title_text={gettext("Timeline")}>
             <.basic_list spacing="compact">
               <li><a href="/timeline/simple">Simple</a></li>
               <li><a href="/timeline/block">Block / Alternating</a></li>
@@ -78,7 +78,7 @@ defmodule DemoWeb.Live.ComponentsOverviewLive do
           </.card>
         </.column>
         <.column size="1-3">
-          <.card title_text="Design">
+          <.card title_text={gettext("Design")}>
             <.basic_list spacing="compact">
               <li><a href="/design/colors">Colors</a></li>
               <li><a href="/design/theme-variables">Theme Variables</a></li>

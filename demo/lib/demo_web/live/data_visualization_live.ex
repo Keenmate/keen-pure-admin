@@ -13,21 +13,21 @@ defmodule DemoWeb.Live.DataVisualizationLive do
          1. PROGRESS BARS
          ============================================================ --%>
 
-    <.card title_text="1. Progress Bars" subtitle_text="Horizontal progress indicators with size, color, striped, and animated variants.">
+    <.card title_text={gettext("1. Progress Bars")} subtitle_text="Horizontal progress indicators with size, color, striped, and animated variants.">
 
       <%!-- Basic progress bars --%>
-      <.heading level={4} class="mb-sm">Default (with labels)</.heading>
+      <.heading level={4} class="mb-sm">{gettext("Default (with labels)")}</.heading>
       <.grid>
         <.column size="50">
-          <.progress_group label="Storage Used" value={65} />
+          <.progress_group label={gettext("Storage Used")} value={65} />
         </.column>
         <.column size="50">
-          <.progress_group label="Upload Progress" value={89} variant="success" />
+          <.progress_group label={gettext("Upload Progress")} value={89} variant="success" />
         </.column>
       </.grid>
 
       <%!-- Color variants --%>
-      <.heading level={4} class="mt-lg mb-sm">Color Variants</.heading>
+      <.heading level={4} class="mt-lg mb-sm">{gettext("Color Variants")}</.heading>
       <div class="d-flex flex-column gap-sm">
         <.progress value={70} />
         <.progress value={55} variant="success" />
@@ -37,7 +37,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
       </div>
 
       <%!-- Sizes --%>
-      <.heading level={4} class="mt-lg mb-sm">Sizes</.heading>
+      <.heading level={4} class="mt-lg mb-sm">{gettext("Sizes")}</.heading>
       <div class="d-flex flex-column gap-sm">
         <div>
           <span class="pa-text--secondary font-xs">XS</span>
@@ -58,7 +58,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
       </div>
 
       <%!-- Striped & Animated --%>
-      <.heading level={4} class="mt-lg mb-sm">Striped &amp; Animated</.heading>
+      <.heading level={4} class="mt-lg mb-sm">{gettext("Striped & Animated")}</.heading>
       <div class="d-flex flex-column gap-sm">
         <.progress value={72} size="lg" is_striped />
         <.progress value={58} size="lg" variant="success" is_striped is_animated />
@@ -66,7 +66,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
       </div>
 
       <%!-- Rounded --%>
-      <.heading level={4} class="mt-lg mb-sm">Rounded (Pill)</.heading>
+      <.heading level={4} class="mt-lg mb-sm">{gettext("Rounded (Pill)")}</.heading>
       <div class="d-flex flex-column gap-sm">
         <.progress value={75} size="lg" is_rounded />
         <.progress value={50} size="lg" variant="info" is_rounded is_striped is_animated />
@@ -77,10 +77,10 @@ defmodule DemoWeb.Live.DataVisualizationLive do
          2. STACKED BARS
          ============================================================ --%>
 
-    <.card title_text="2. Stacked Bars" subtitle_text="Multiple colored segments in one bar showing breakdowns and distributions.">
+    <.card title_text={gettext("2. Stacked Bars")} subtitle_text="Multiple colored segments in one bar showing breakdowns and distributions.">
 
       <%!-- Disk usage --%>
-      <.heading level={4} class="mb-sm">Disk Usage (256 GB)</.heading>
+      <.heading level={4} class="mb-sm">{gettext("Disk Usage (256 GB)")}</.heading>
       <.stacked_bar>
         <.stacked_segment value={35} />
         <.stacked_segment value={25} variant="success" />
@@ -95,7 +95,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
       </.stacked_bar_legend>
 
       <%!-- Browser share --%>
-      <.heading level={4} class="mt-xl mb-sm">Browser Market Share</.heading>
+      <.heading level={4} class="mt-xl mb-sm">{gettext("Browser Market Share")}</.heading>
       <.stacked_bar is_rounded size="lg">
         <.stacked_segment value={65} variant="info" />
         <.stacked_segment value={18} variant="danger" />
@@ -114,24 +114,24 @@ defmodule DemoWeb.Live.DataVisualizationLive do
          3. PROGRESS RINGS
          ============================================================ --%>
 
-    <.card title_text="3. Progress Rings" subtitle_text={"Circular progress indicators using CSS conic-gradient. Set value via style=\"--value: 72\" (0-100)."}>
+    <.card title_text={gettext("3. Progress Rings")} subtitle_text={"Circular progress indicators using CSS conic-gradient. Set value via style=\"--value: 72\" (0-100)."}>
 
       <%!-- Default rings --%>
       <.heading level={4} class="mb-sm">Color Variants</.heading>
       <div class="d-flex gap-xl flex-wrap align-items-center">
-        <.progress_ring value={72} label="CPU" />
-        <.progress_ring value={94} label="Uptime" variant="success" />
-        <.progress_ring value={58} label="Memory" variant="warning" />
-        <.progress_ring value={87} label="Disk" variant="danger" />
-        <.progress_ring value={43} label="Network" variant="info" />
+        <.progress_ring value={72} label={gettext("CPU")} />
+        <.progress_ring value={94} label={gettext("Uptime")} variant="success" />
+        <.progress_ring value={58} label={gettext("Memory")} variant="warning" />
+        <.progress_ring value={87} label={gettext("Disk")} variant="danger" />
+        <.progress_ring value={43} label={gettext("Network")} variant="info" />
       </div>
 
       <%!-- Sizes --%>
-      <.heading level={4} class="mt-xl mb-sm">Sizes</.heading>
+      <.heading level={4} class="mt-xl mb-sm">{gettext("Sizes")}</.heading>
       <div class="d-flex gap-xl flex-wrap align-items-center">
         <.progress_ring value={65} size="sm" />
-        <.progress_ring value={65} label="Default" />
-        <.progress_ring value={65} label="Large" variant="success" size="lg" />
+        <.progress_ring value={65} label={gettext("Default")} />
+        <.progress_ring value={65} label={gettext("Large")} variant="success" size="lg" />
       </div>
     </.card>
 
@@ -139,23 +139,23 @@ defmodule DemoWeb.Live.DataVisualizationLive do
          4. DASHBOARD GAUGES
          ============================================================ --%>
 
-    <.card title_text="4. Dashboard Gauges" subtitle_text={"Semi-circle gauge indicators. Set value via style=\"--value: 72\" (0-100). v2.7.0 rebuilt the gauge as a true transparent ring — label moved out of the donut, sits below alongside __min and __max."}>
+    <.card title_text={gettext("4. Dashboard Gauges")} subtitle_text={"Semi-circle gauge indicators. Set value via style=\"--value: 72\" (0-100). v2.7.0 rebuilt the gauge as a true transparent ring — label moved out of the donut, sits below alongside __min and __max."}>
 
       <div class="d-flex gap-xl flex-wrap align-items-end">
         <%!-- CPU gauge --%>
-        <.gauge value={72} label="CPU" />
+        <.gauge value={72} label={gettext("CPU")} />
 
         <%!-- Memory gauge (success) --%>
-        <.gauge value={45} label="Memory" variant="success" min="0" max="32 GB" />
+        <.gauge value={45} label={gettext("Memory")} variant="success" min="0" max="32 GB" />
 
         <%!-- Temperature gauge (danger) --%>
-        <.gauge value={85} label="Temp" variant="danger" value_text="85°" min="0°C" max="100°C" />
+        <.gauge value={85} label={gettext("Temp")} variant="danger" value_text="85°" min="0°C" max="100°C" />
 
         <%!-- Zone gauge --%>
-        <.gauge value={62} label="Speed" is_zones value_text="62" />
+        <.gauge value={62} label={gettext("Speed")} is_zones value_text="62" />
       </div>
 
-      <.heading level={4} class="mt-6">Size override · v2.7.0 :size attr</.heading>
+      <.heading level={4} class="mt-6">{gettext("Size override · v2.7.0 :size attr")}</.heading>
       <p class="pa-text--secondary mb-2">
         New <code>:size</code> attr emits <code>--pa-gauge-size</code> inline (default upstream <code>12rem</code>). Width and height (always half the width) both derive from this token. Text inside the donut doesn't auto-scale — set <code>font-size</code> on <code>.pa-gauge__value</code> in your stylesheet for proportional resizing.
       </p>
@@ -172,17 +172,17 @@ defmodule DemoWeb.Live.DataVisualizationLive do
          5. DATA BARS IN TABLES
          ============================================================ --%>
 
-    <.card title_text="5. Data Bars in Tables" subtitle_text="Inline bar visualization inside table cells for quick comparison." has_padding={false}>
+    <.card title_text={gettext("5. Data Bars in Tables")} subtitle_text="Inline bar visualization inside table cells for quick comparison." has_padding={false}>
 
       <table class="pa-table pa-table--striped pa-table--hover">
         <thead>
           <tr>
             <th style="width: 5%">#</th>
-            <th style="width: 25%">Sales Rep</th>
-            <th style="width: 15%">Revenue</th>
-            <th style="width: 35%">Performance</th>
-            <th style="width: 10%">Target</th>
-            <th style="width: 10%">Status</th>
+            <th style="width: 25%">{gettext("Sales Rep")}</th>
+            <th style="width: 15%">{gettext("Revenue")}</th>
+            <th style="width: 35%">{gettext("Performance")}</th>
+            <th style="width: 10%">{gettext("Target")}</th>
+            <th style="width: 10%">{gettext("Status")}</th>
           </tr>
         </thead>
         <tbody>
@@ -234,14 +234,14 @@ defmodule DemoWeb.Live.DataVisualizationLive do
          6. HEATMAP
          ============================================================ --%>
 
-    <.card title_text="6. Activity Heatmap" subtitle_text={"GitHub contribution-style activity grid. Each cell uses data-level=\"0-4\" for intensity."}>
+    <.card title_text={gettext("6. Activity Heatmap")} subtitle_text={"GitHub contribution-style activity grid. Each cell uses data-level=\"0-4\" for intensity."}>
 
-      <.heading level={4} class="mb-sm">Contribution Activity (12 weeks)</.heading>
+      <.heading level={4} class="mb-sm">{gettext("Contribution Activity (12 weeks)")}</.heading>
       <.heatmap columns={12} levels={[0,1,2,0,3,1,0, 1,2,4,3,2,1,0, 0,0,1,2,3,4,2, 3,4,4,3,2,1,0, 1,0,2,3,1,2,0, 2,3,1,0,4,3,2, 0,1,3,4,2,1,3, 2,0,1,2,4,3,1, 1,2,0,3,1,0,2, 4,3,2,4,3,2,1, 0,1,2,3,4,2,1, 1,0,2,1,3,4,2]} />
       <.heatmap_legend />
 
       <%!-- Success color variant --%>
-      <.heading level={4} class="mt-xl mb-sm">Color Variant (Success)</.heading>
+      <.heading level={4} class="mt-xl mb-sm">{gettext("Color Variant (Success)")}</.heading>
       <.heatmap columns={7} variant="success" levels={[0,1,2,3,4,2,0, 1,3,4,2,1,3,4, 2,0,1,4,3,2,1]} />
     </.card>
 
@@ -249,7 +249,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
          7. SPARKLINES
          ============================================================ --%>
 
-    <.card title_text="7. Sparkline Bars" subtitle_text="Compact mini bar charts for inline data visualization inside cards or table cells.">
+    <.card title_text={gettext("7. Sparkline Bars")} subtitle_text="Compact mini bar charts for inline data visualization inside cards or table cells.">
 
       <div class="d-flex gap-xl flex-wrap align-items-end">
         <%!-- Default --%>
@@ -282,7 +282,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
          8. COMBINED: KPI DASHBOARD
          ============================================================ --%>
 
-    <.card title_text="8. Combined: KPI Dashboard" subtitle_text="Real-world example combining stat cards, progress rings, sparklines, and data bars.">
+    <.card title_text={gettext("8. Combined: KPI Dashboard")} subtitle_text="Real-world example combining stat cards, progress rings, sparklines, and data bars.">
 
       <%!-- KPI Row: Stat cards with sparklines --%>
       <.grid>
@@ -325,7 +325,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
       </.grid>
 
       <%!-- System Health: Progress rings row --%>
-      <.heading level={4} class="mt-xl mb-base">System Health</.heading>
+      <.heading level={4} class="mt-xl mb-base">{gettext("System Health")}</.heading>
       <div class="d-flex gap-xl flex-wrap justify-content-center">
         <div class="text-center">
           <.progress_ring value={72} size="sm" />
@@ -346,7 +346,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
       </div>
 
       <%!-- Storage breakdown --%>
-      <.heading level={4} class="mt-xl mb-sm">Storage Breakdown</.heading>
+      <.heading level={4} class="mt-xl mb-sm">{gettext("Storage Breakdown")}</.heading>
       <div class="pa-progress-group">
         <div class="pa-progress__label">
           <span>Server Cluster Storage</span>

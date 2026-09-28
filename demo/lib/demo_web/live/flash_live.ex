@@ -133,41 +133,41 @@ defmodule DemoWeb.Live.FlashLive do
     <%!-- Independent containers demo --%>
     <.grid>
       <.column size="50">
-        <.card title_text="Card A — Contact Form" is_header_underlined>
+        <.card title_text={gettext("Card A — Contact Form")} is_header_underlined>
           <.flash_container id="card-a" />
           <.paragraph>Push flash messages to this card only.</.paragraph>
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
             <.button variant="success" size="sm" phx-click="push-flash" phx-value-container="card-a" phx-value-variant="success">
-              Success
+              {gettext("Success")}
             </.button>
             <.button variant="danger" size="sm" phx-click="push-flash" phx-value-container="card-a" phx-value-variant="danger">
-              Danger
+              {gettext("Danger")}
             </.button>
             <.button variant="warning" size="sm" phx-click="push-flash" phx-value-container="card-a" phx-value-variant="warning">
-              Warning
+              {gettext("Warning")}
             </.button>
             <.button variant="info" size="sm" phx-click="push-flash" phx-value-container="card-a" phx-value-variant="info">
-              Info
+              {gettext("Info")}
             </.button>
           </div>
         </.card>
       </.column>
       <.column size="50">
-        <.card title_text="Card B — Profile" is_header_underlined>
+        <.card title_text={gettext("Card B — Profile")} is_header_underlined>
           <.flash_container id="card-b" />
           <.paragraph>Push flash messages to this card only.</.paragraph>
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
             <.button variant="success" size="sm" phx-click="push-flash" phx-value-container="card-b" phx-value-variant="success">
-              Success
+              {gettext("Success")}
             </.button>
             <.button variant="danger" size="sm" phx-click="push-flash" phx-value-container="card-b" phx-value-variant="danger">
-              Danger
+              {gettext("Danger")}
             </.button>
             <.button variant="info" size="sm" phx-click="push-flash" phx-value-container="card-b" phx-value-variant="info">
-              Info
+              {gettext("Info")}
             </.button>
             <.button variant="secondary" size="sm" phx-click="push-flash-auto" phx-value-container="card-b">
-              Auto-dismiss (5s)
+              {gettext("Auto-dismiss (5s)")}
             </.button>
           </div>
         </.card>
@@ -175,23 +175,23 @@ defmodule DemoWeb.Live.FlashLive do
     </.grid>
 
     <%!-- Advanced: markdown + actions --%>
-    <.card title_text="Advanced: Markdown Body & Action Buttons" is_header_underlined>
+    <.card title_text={gettext("Advanced: Markdown Body & Action Buttons")} is_header_underlined>
       <.flash_container id="advanced" />
       <.paragraph>
         Flash messages support markdown in the body and action buttons that push events back to the server.
       </.paragraph>
       <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
         <.button variant="info" size="sm" phx-click="push-flash-markdown" phx-value-container="advanced">
-          Markdown with list
+          {gettext("Markdown with list")}
         </.button>
         <.button variant="warning" size="sm" phx-click="push-flash-actions" phx-value-container="advanced">
-          Confirm with actions
+          {gettext("Confirm with actions")}
         </.button>
       </div>
     </.card>
 
     <%!-- Standard flash compat --%>
-    <.card title_text="Standard Phoenix Flash">
+    <.card title_text={gettext("Standard Phoenix Flash")}>
       <.paragraph>
         The standard <code>flash_group/1</code> still works with Phoenix's built-in <code>put_flash/3</code>.
         This uses the single <code>@flash</code> map on the socket — the alert appears at the top
@@ -208,14 +208,14 @@ defmodule DemoWeb.Live.FlashLive do
     </.card>
 
     <%!-- Usage examples --%>
-    <.card title_text="Usage">
-      <.heading level="4">Template</.heading>
+    <.card title_text={gettext("Usage")}>
+      <.heading level="4">{gettext("Template")}</.heading>
       <.code_block language="heex">{@usage_template}</.code_block>
 
-      <.heading level="4">Server</.heading>
+      <.heading level="4">{gettext("Server")}</.heading>
       <.code_block language="elixir">{@usage_server}</.code_block>
 
-      <.heading level="4">Standard flash (backwards compatible)</.heading>
+      <.heading level="4">{gettext("Standard flash (backwards compatible)")}</.heading>
       <.code_block language="heex">{@usage_standard}</.code_block>
     </.card>
     """

@@ -9,6 +9,17 @@
   /* Profile-panel nav + favorites Lucide SVGs — sized to match pure-admin's demo. */
   .pa-profile-panel__nav-icon svg,
   .pa-profile-panel__favorite-icon svg { width: 1.7rem; height: 1.7rem; }
+  /* Locale switch in the navbar end slot — demo-only chrome. */
+  .pa-navbar__language { display: inline-flex; gap: 0.2rem; align-items: center; margin-inline: 0.4rem; }
+  .pa-navbar__language-option {
+    padding: 0.2rem 0.6rem; border-radius: var(--pc-border-radius, 0.4rem);
+    font-size: 1.2rem; font-weight: 600; line-height: 1.6;
+    color: var(--pc-navbar-color, inherit); opacity: 0.6; text-decoration: none;
+  }
+  .pa-navbar__language-option:hover { opacity: 1; }
+  .pa-navbar__language-option--active {
+    opacity: 1; background: var(--pc-navbar-active-bg, rgba(255,255,255,0.12));
+  }
 </style>
 <.layout>
   <.navbar>
@@ -25,45 +36,45 @@
         </h1>
       </.app_header>
       <.nav_menu>
-        <.nav_item href="/">Dashboard</.nav_item>
+        <.nav_item href="/">{gettext("Dashboard")}</.nav_item>
         <.nav_item href="/components/buttons" has_dropdown>
-          Components
+          {gettext("Components")}
           <:dropdown>
             <.nav_dropdown>
-              <.nav_item href="/components/buttons">Buttons</.nav_item>
-              <.nav_item href="/components/cards">Cards</.nav_item>
-              <.nav_item href="/components/tabs">Tabs</.nav_item>
+              <.nav_item href="/components/buttons">{gettext("Buttons")}</.nav_item>
+              <.nav_item href="/components/cards">{gettext("Cards")}</.nav_item>
+              <.nav_item href="/components/tabs">{gettext("Tabs")}</.nav_item>
               <.nav_item has_dropdown>
-                More ›
+                {gettext("More")} ›
                 <:dropdown>
                   <.nav_dropdown is_level2>
-                    <.nav_item href="/components/badges">Badges</.nav_item>
-                    <.nav_item href="/components/modals">Modals</.nav_item>
-                    <.nav_item href="/components/modal-dialogs">Modal Dialogs</.nav_item>
-                    <.nav_item href="/components/popconfirm">Popconfirm</.nav_item>
-                    <.nav_item href="/components/command-palette">Command Palette</.nav_item>
-                    <.nav_item href="/components/data-display">Data Display</.nav_item>
-                    <.nav_item href="/components/data-display-2">Data Display 2</.nav_item>
-                    <.nav_item href="/components/data-visualization">Data Visualization</.nav_item>
-                    <.nav_item href="/components/detail-panel">Detail Panel</.nav_item>
-                    <.nav_item href="/components/loaders">Loaders</.nav_item>
-                    <.nav_item href="/components/lists">Lists</.nav_item>
-                    <.nav_item href="/components/code">Code</.nav_item>
-                    <.nav_item href="/components/callouts">Callouts</.nav_item>
-                    <.nav_item href="/components/typography">Typography</.nav_item>
-                    <.nav_item href="/components/stats">Stats</.nav_item>
+                    <.nav_item href="/components/badges">{gettext("Badges")}</.nav_item>
+                    <.nav_item href="/components/modals">{gettext("Modals")}</.nav_item>
+                    <.nav_item href="/components/modal-dialogs">{gettext("Modal Dialogs")}</.nav_item>
+                    <.nav_item href="/components/popconfirm">{gettext("Popconfirm")}</.nav_item>
+                    <.nav_item href="/components/command-palette">{gettext("Command Palette")}</.nav_item>
+                    <.nav_item href="/components/data-display">{gettext("Data Display")}</.nav_item>
+                    <.nav_item href="/components/data-display-2">{gettext("Data Display 2")}</.nav_item>
+                    <.nav_item href="/components/data-visualization">{gettext("Data Visualization")}</.nav_item>
+                    <.nav_item href="/components/detail-panel">{gettext("Detail Panel")}</.nav_item>
+                    <.nav_item href="/components/loaders">{gettext("Loaders")}</.nav_item>
+                    <.nav_item href="/components/lists">{gettext("Lists")}</.nav_item>
+                    <.nav_item href="/components/code">{gettext("Code")}</.nav_item>
+                    <.nav_item href="/components/callouts">{gettext("Callouts")}</.nav_item>
+                    <.nav_item href="/components/typography">{gettext("Typography")}</.nav_item>
+                    <.nav_item href="/components/stats">{gettext("Stats")}</.nav_item>
                   </.nav_dropdown>
                 </:dropdown>
               </.nav_item>
             </.nav_dropdown>
           </:dropdown>
         </.nav_item>
-        <.nav_item href="/forms">Forms</.nav_item>
+        <.nav_item href="/forms">{gettext("Forms")}</.nav_item>
       </.nav_menu>
     </:start>
     <:center>
       <.page_header>
-        <h2>{assigns[:page_title] || "Dashboard"}</h2>
+        <h2>{assigns[:page_title] || gettext("Dashboard")}</h2>
       </.page_header>
       <%!-- rc12 search entry point A — inline live field. Hidden until chosen in
             Settings → Search Box; it takes the CENTRE slot, swapping with the title
@@ -72,41 +83,57 @@
       <.navbar_search_field
         id="navbarSearchInline"
         is_hidden
-        placeholder="Search products, orders, users…"
+        placeholder={gettext("Search products, orders, users…")}
         phx-hook="NavbarSearchDemo"
       />
     </:center>
     <:end_>
       <.nav_menu>
-        <.nav_item href="/components/alerts">Alerts</.nav_item>
-        <.nav_item href="/tables/standard">Tables</.nav_item>
+        <.nav_item href="/components/alerts">{gettext("Alerts")}</.nav_item>
+        <.nav_item href="/tables/standard">{gettext("Tables")}</.nav_item>
       </.nav_menu>
       <%!-- rc12 search entry point B — compact trigger that opens the palette
             (fullscreen sheet on phones). Hidden until chosen in Settings. --%>
       <.navbar_search id="navbarSearchTrigger" is_hidden phx-click={show_command_palette()} />
       <%!-- rc15 search entry point D — type-and-go: a real input in a <form> whose
             native GET submit navigates to /search on Enter. Hidden until chosen. --%>
-      <.navbar_search_input id="navbarSearchGo" is_hidden action="/search" placeholder="Search…" />
+      <.navbar_search_input id="navbarSearchGo" is_hidden action="/search" placeholder={gettext("Search…")} />
       <.notifications count={3}>
         <.notification_item variant="primary" icon="fa-solid fa-file-pen" is_unread>
-          <:title>New task assigned</:title>
-          <:text>Review the Q4 report by end of week</:text>
-          <:time>2 minutes ago</:time>
+          <:title>{gettext("New task assigned")}</:title>
+          <:text>{gettext("Review the Q4 report by end of week")}</:text>
+          <:time>{gettext("2 minutes ago")}</:time>
         </.notification_item>
         <.notification_item variant="success" icon="fa-solid fa-check" is_unread>
-          <:title>Build completed</:title>
-          <:text>Production deployment finished successfully</:text>
-          <:time>15 minutes ago</:time>
+          <:title>{gettext("Build completed")}</:title>
+          <:text>{gettext("Production deployment finished successfully")}</:text>
+          <:time>{gettext("15 minutes ago")}</:time>
         </.notification_item>
         <.notification_item variant="warning" icon="fa-solid fa-triangle-exclamation">
-          <:title>Server maintenance</:title>
-          <:text>Scheduled downtime tonight at 11 PM</:text>
-          <:time>1 hour ago</:time>
+          <:title>{gettext("Server maintenance")}</:title>
+          <:text>{gettext("Scheduled downtime tonight at 11 PM")}</:text>
+          <:time>{gettext("1 hour ago")}</:time>
         </.notification_item>
         <:footer_>
-          <a href="#">View all notifications</a>
+          <a href="#">{gettext("View all notifications")}</a>
         </:footer_>
       </.notifications>
+      <%!-- Locale switch — plain links to the LocaleController (full round-trip,
+            so every LiveView re-mounts at the new locale). --%>
+      <div class="pa-navbar__language" role="group" aria-label={gettext("Language")}>
+        <a
+          :for={lang <- @languages}
+          href={~p"/locale/#{lang.code}?return_to=#{@current_path || "/"}"}
+          class={[
+            "pa-navbar__language-option",
+            lang.code == @locale && "pa-navbar__language-option--active"
+          ]}
+          title={lang.native}
+          aria-current={lang.code == @locale && "true"}
+        >
+          {String.upcase(lang.code)}
+        </a>
+      </div>
       <.profile_button name="John Doe" phx-click={toggle_profile_panel()} />
     </:end_>
   </.navbar>
@@ -117,147 +144,147 @@
       <.sidebar_search id="sidebarSearchTrigger" is_hidden phx-click={show_command_palette()} />
       <%!-- rc15 search entry point E — sidebar type-and-go form; Enter (or the submit
             magnifier from the collapsed icon-rail) navigates to /search. --%>
-      <.sidebar_search id="sidebarSearchGo" is_hidden action="/search" placeholder="Search…" />
+      <.sidebar_search id="sidebarSearchGo" is_hidden action="/search" placeholder={gettext("Search…")} />
       <%!-- Nav IA mirrors pure-admin's demo sidebar (functional groups + inline Lucide
             icons). Items pure-admin lists but keen has no route for are omitted; a few
             keen-only pages are folded into the closest group (marked "keen-only"). --%>
 
       <%!-- ============================ Docs ============================ --%>
       <.sidebar_item
-        label="Getting Started"
+        label={gettext("Getting Started")}
         icon={sidebar_icon("getting_started")}
         href="/getting-started"
         is_active={@current_path == "/getting-started"}
       />
       <.sidebar_item
-        label="Dashboard"
+        label={gettext("Dashboard")}
         icon={sidebar_icon("dashboard")}
         href="/"
         is_active={@current_path == "/"}
       />
       <.sidebar_item
-        label="Components Overview"
+        label={gettext("Components Overview")}
         icon={sidebar_icon("components_overview")}
         href="/components"
         is_active={@current_path == "/components"}
       />
 
       <%!-- Phoenix / LiveView (keen-only — no pure-admin equivalent) --%>
-      <.sidebar_submenu id="phoenix" label="Phoenix / LiveView" icon={sidebar_icon("phoenix")} is_open={String.starts_with?(@current_path, "/phoenix")}>
-        <.sidebar_item label="CoreComponents Migration" href="/phoenix/core-components" is_active={@current_path == "/phoenix/core-components"} />
-        <.sidebar_item label="Flash Messages" href="/phoenix/flash" is_active={@current_path == "/phoenix/flash"} />
-        <.sidebar_item label="Form Demo" href="/phoenix/form-demo" is_active={@current_path == "/phoenix/form-demo"} />
-        <.sidebar_item label="Icons" href="/phoenix/icons" is_active={@current_path == "/phoenix/icons"} />
-        <.sidebar_item label="Command Palette" href="/phoenix/command-palette" is_active={@current_path == "/phoenix/command-palette"} />
+      <.sidebar_submenu id="phoenix" label={gettext("Phoenix / LiveView")} icon={sidebar_icon("phoenix")} is_open={String.starts_with?(@current_path, "/phoenix")}>
+        <.sidebar_item label={gettext("CoreComponents Migration")} href="/phoenix/core-components" is_active={@current_path == "/phoenix/core-components"} />
+        <.sidebar_item label={gettext("Flash Messages")} href="/phoenix/flash" is_active={@current_path == "/phoenix/flash"} />
+        <.sidebar_item label={gettext("Form Demo")} href="/phoenix/form-demo" is_active={@current_path == "/phoenix/form-demo"} />
+        <.sidebar_item label={gettext("Icons")} href="/phoenix/icons" is_active={@current_path == "/phoenix/icons"} />
+        <.sidebar_item label={gettext("Command Palette")} href="/phoenix/command-palette" is_active={@current_path == "/phoenix/command-palette"} />
       </.sidebar_submenu>
 
       <%!-- ============================ Design ========================== --%>
-      <.sidebar_submenu id="design" label="Design" icon={sidebar_icon("design")} is_open={String.starts_with?(@current_path, "/design") or @current_path == "/components/typography"}>
-        <.sidebar_item label="Theme Variables" icon={sidebar_icon("theme_variables")} href="/design/theme-variables" is_active={@current_path == "/design/theme-variables"} />
-        <.sidebar_item label="Colors" icon={sidebar_icon("colors")} href="/design/colors" is_active={@current_path == "/design/colors"} />
-        <.sidebar_item label="Helpers" icon={sidebar_icon("helpers")} href="/design/helpers" is_active={@current_path == "/design/helpers"} />
-        <.sidebar_item label="Layouts" icon={sidebar_icon("layout")} href="/design/layouts" is_active={@current_path == "/design/layouts"} />
-        <.sidebar_item label="Typography" icon={sidebar_icon("typography")} href="/components/typography" is_active={@current_path == "/components/typography"} />
+      <.sidebar_submenu id="design" label={gettext("Design")} icon={sidebar_icon("design")} is_open={String.starts_with?(@current_path, "/design") or @current_path == "/components/typography"}>
+        <.sidebar_item label={gettext("Theme Variables")} icon={sidebar_icon("theme_variables")} href="/design/theme-variables" is_active={@current_path == "/design/theme-variables"} />
+        <.sidebar_item label={gettext("Colors")} icon={sidebar_icon("colors")} href="/design/colors" is_active={@current_path == "/design/colors"} />
+        <.sidebar_item label={gettext("Helpers")} icon={sidebar_icon("helpers")} href="/design/helpers" is_active={@current_path == "/design/helpers"} />
+        <.sidebar_item label={gettext("Layouts")} icon={sidebar_icon("layout")} href="/design/layouts" is_active={@current_path == "/design/layouts"} />
+        <.sidebar_item label={gettext("Typography")} icon={sidebar_icon("typography")} href="/components/typography" is_active={@current_path == "/components/typography"} />
       </.sidebar_submenu>
 
       <%!-- ==================== Layout & responsivity =================== --%>
-      <.sidebar_submenu id="layout" label="Layout & responsivity" icon={sidebar_icon("layout")} is_open={@current_path in ["/components/sizing", "/components/grid", "/responsivity", "/components/fit-to-size", "/components/container-breakpoint", "/components/responsive-form"]}>
-        <.sidebar_item label="Sizing & Layout" icon={sidebar_icon("sizing")} href="/components/sizing" is_active={@current_path == "/components/sizing"} />
-        <.sidebar_item label="Grid System" icon={sidebar_icon("grid")} href="/components/grid" is_active={@current_path == "/components/grid"} />
-        <.sidebar_item label="How It Works" icon={sidebar_icon("responsivity")} href="/responsivity" is_active={@current_path == "/responsivity"} />
-        <.sidebar_item label="Fit to Size" icon={sidebar_icon("fit_to_size")} href="/components/fit-to-size" is_active={@current_path == "/components/fit-to-size"} />
-        <.sidebar_item label="Container Breakpoint" icon={sidebar_icon("container_breakpoint")} href="/components/container-breakpoint" is_active={@current_path == "/components/container-breakpoint"} />
-        <.sidebar_item label="Responsive Form" icon={sidebar_icon("responsive_form")} href="/components/responsive-form" is_active={@current_path == "/components/responsive-form"} />
+      <.sidebar_submenu id="layout" label={gettext("Layout & responsivity")} icon={sidebar_icon("layout")} is_open={@current_path in ["/components/sizing", "/components/grid", "/responsivity", "/components/fit-to-size", "/components/container-breakpoint", "/components/responsive-form"]}>
+        <.sidebar_item label={gettext("Sizing & Layout")} icon={sidebar_icon("sizing")} href="/components/sizing" is_active={@current_path == "/components/sizing"} />
+        <.sidebar_item label={gettext("Grid System")} icon={sidebar_icon("grid")} href="/components/grid" is_active={@current_path == "/components/grid"} />
+        <.sidebar_item label={gettext("How It Works")} icon={sidebar_icon("responsivity")} href="/responsivity" is_active={@current_path == "/responsivity"} />
+        <.sidebar_item label={gettext("Fit to Size")} icon={sidebar_icon("fit_to_size")} href="/components/fit-to-size" is_active={@current_path == "/components/fit-to-size"} />
+        <.sidebar_item label={gettext("Container Breakpoint")} icon={sidebar_icon("container_breakpoint")} href="/components/container-breakpoint" is_active={@current_path == "/components/container-breakpoint"} />
+        <.sidebar_item label={gettext("Responsive Form")} icon={sidebar_icon("responsive_form")} href="/components/responsive-form" is_active={@current_path == "/components/responsive-form"} />
       </.sidebar_submenu>
 
       <%!-- ======================= Forms & inputs ====================== --%>
-      <.sidebar_submenu id="forms" label="Forms & inputs" icon={sidebar_icon("forms_inputs")} is_open={@current_path in ["/components/inputs", "/components/validations", "/forms", "/components/checkbox-lists", "/components/range-group"]}>
-        <.sidebar_item label="Inputs" icon={sidebar_icon("inputs")} href="/components/inputs" is_active={@current_path == "/components/inputs"} />
-        <.sidebar_item label="Validations" icon={sidebar_icon("validations")} href="/components/validations" is_active={@current_path == "/components/validations"} />
-        <.sidebar_item label="Forms" icon={sidebar_icon("forms")} href="/forms" is_active={@current_path == "/forms"} />
-        <.sidebar_item label="Checkbox Lists" icon={sidebar_icon("checkbox_lists")} href="/components/checkbox-lists" is_active={@current_path == "/components/checkbox-lists"} />
-        <.sidebar_item label="Range Group" icon={sidebar_icon("range_group")} href="/components/range-group" is_active={@current_path == "/components/range-group"} />
+      <.sidebar_submenu id="forms" label={gettext("Forms & inputs")} icon={sidebar_icon("forms_inputs")} is_open={@current_path in ["/components/inputs", "/components/validations", "/forms", "/components/checkbox-lists", "/components/range-group"]}>
+        <.sidebar_item label={gettext("Inputs")} icon={sidebar_icon("inputs")} href="/components/inputs" is_active={@current_path == "/components/inputs"} />
+        <.sidebar_item label={gettext("Validations")} icon={sidebar_icon("validations")} href="/components/validations" is_active={@current_path == "/components/validations"} />
+        <.sidebar_item label={gettext("Forms")} icon={sidebar_icon("forms")} href="/forms" is_active={@current_path == "/forms"} />
+        <.sidebar_item label={gettext("Checkbox Lists")} icon={sidebar_icon("checkbox_lists")} href="/components/checkbox-lists" is_active={@current_path == "/components/checkbox-lists"} />
+        <.sidebar_item label={gettext("Range Group")} icon={sidebar_icon("range_group")} href="/components/range-group" is_active={@current_path == "/components/range-group"} />
       </.sidebar_submenu>
 
       <%!-- ===================== Buttons & actions ====================== --%>
-      <.sidebar_submenu id="buttons" label="Buttons & actions" icon={sidebar_icon("buttons_actions")} is_open={@current_path in ["/components/buttons", "/components/pagers", "/components/popconfirm"]}>
-        <.sidebar_item label="Buttons" icon={sidebar_icon("buttons")} href="/components/buttons" is_active={@current_path == "/components/buttons"} />
-        <.sidebar_item label="Pagers" icon={sidebar_icon("pagers")} href="/components/pagers" is_active={@current_path == "/components/pagers"} />
-        <.sidebar_item label="Popconfirm" icon={sidebar_icon("popconfirm")} href="/components/popconfirm" is_active={@current_path == "/components/popconfirm"} />
+      <.sidebar_submenu id="buttons" label={gettext("Buttons & actions")} icon={sidebar_icon("buttons_actions")} is_open={@current_path in ["/components/buttons", "/components/pagers", "/components/popconfirm"]}>
+        <.sidebar_item label={gettext("Buttons")} icon={sidebar_icon("buttons")} href="/components/buttons" is_active={@current_path == "/components/buttons"} />
+        <.sidebar_item label={gettext("Pagers")} icon={sidebar_icon("pagers")} href="/components/pagers" is_active={@current_path == "/components/pagers"} />
+        <.sidebar_item label={gettext("Popconfirm")} icon={sidebar_icon("popconfirm")} href="/components/popconfirm" is_active={@current_path == "/components/popconfirm"} />
       </.sidebar_submenu>
 
       <%!-- ========================== Surfaces ========================== --%>
-      <.sidebar_submenu id="surfaces" label="Surfaces" icon={sidebar_icon("surfaces")} is_open={@current_path in ["/components/cards", "/components/tabs", "/components/modals", "/components/modal-dialogs", "/components/detail-panel", "/components/splitter"]}>
-        <.sidebar_item label="Cards" icon={sidebar_icon("cards")} href="/components/cards" is_active={@current_path == "/components/cards"} />
-        <.sidebar_item label="Tabs" icon={sidebar_icon("tabs")} href="/components/tabs" is_active={@current_path == "/components/tabs"} />
-        <.sidebar_item label="Modals" icon={sidebar_icon("modals")} href="/components/modals" is_active={@current_path == "/components/modals"} />
-        <.sidebar_item label="Modal Dialogs" icon={sidebar_icon("modal_dialogs")} href="/components/modal-dialogs" is_active={@current_path == "/components/modal-dialogs"} />
-        <.sidebar_item label="Detail Panel" icon={sidebar_icon("detail_panel")} href="/components/detail-panel" is_active={@current_path == "/components/detail-panel"} />
-        <.sidebar_item label="Splitter" icon={sidebar_icon("splitter")} href="/components/splitter" is_active={@current_path == "/components/splitter"} />
+      <.sidebar_submenu id="surfaces" label={gettext("Surfaces")} icon={sidebar_icon("surfaces")} is_open={@current_path in ["/components/cards", "/components/tabs", "/components/modals", "/components/modal-dialogs", "/components/detail-panel", "/components/splitter"]}>
+        <.sidebar_item label={gettext("Cards")} icon={sidebar_icon("cards")} href="/components/cards" is_active={@current_path == "/components/cards"} />
+        <.sidebar_item label={gettext("Tabs")} icon={sidebar_icon("tabs")} href="/components/tabs" is_active={@current_path == "/components/tabs"} />
+        <.sidebar_item label={gettext("Modals")} icon={sidebar_icon("modals")} href="/components/modals" is_active={@current_path == "/components/modals"} />
+        <.sidebar_item label={gettext("Modal Dialogs")} icon={sidebar_icon("modal_dialogs")} href="/components/modal-dialogs" is_active={@current_path == "/components/modal-dialogs"} />
+        <.sidebar_item label={gettext("Detail Panel")} icon={sidebar_icon("detail_panel")} href="/components/detail-panel" is_active={@current_path == "/components/detail-panel"} />
+        <.sidebar_item label={gettext("Splitter")} icon={sidebar_icon("splitter")} href="/components/splitter" is_active={@current_path == "/components/splitter"} />
       </.sidebar_submenu>
 
       <%!-- ========================= Data display ======================= --%>
-      <.sidebar_submenu id="data-display" label="Data display" icon={sidebar_icon("data_display_group")} is_open={@current_path in ["/components/lists", "/components/document", "/components/sheet", "/components/code", "/components/data-display", "/components/data-display-2", "/components/stats"] or String.starts_with?(@current_path, "/tables")}>
-        <.sidebar_item label="Lists" icon={sidebar_icon("lists")} href="/components/lists" is_active={@current_path == "/components/lists"} />
-        <.sidebar_item label="Document" icon={sidebar_icon("document")} href="/components/document" is_active={@current_path == "/components/document"} />
-        <.sidebar_item label="Sheet (Invoice)" icon={sidebar_icon("sheet")} href="/components/sheet" is_active={@current_path == "/components/sheet"} />
-        <.sidebar_item label="Code" icon={sidebar_icon("code")} href="/components/code" is_active={@current_path == "/components/code"} />
-        <.sidebar_item label="Data Display" icon={sidebar_icon("data_display")} href="/components/data-display" is_active={@current_path == "/components/data-display"} />
-        <.sidebar_item label="Data Display v2" icon={sidebar_icon("data_display_2")} href="/components/data-display-2" is_active={@current_path == "/components/data-display-2"} />
-        <.sidebar_item label="Stats" icon={sidebar_icon("stats")} href="/components/stats" is_active={@current_path == "/components/stats"} />
+      <.sidebar_submenu id="data-display" label={gettext("Data display")} icon={sidebar_icon("data_display_group")} is_open={@current_path in ["/components/lists", "/components/document", "/components/sheet", "/components/code", "/components/data-display", "/components/data-display-2", "/components/stats"] or String.starts_with?(@current_path, "/tables")}>
+        <.sidebar_item label={gettext("Lists")} icon={sidebar_icon("lists")} href="/components/lists" is_active={@current_path == "/components/lists"} />
+        <.sidebar_item label={gettext("Document")} icon={sidebar_icon("document")} href="/components/document" is_active={@current_path == "/components/document"} />
+        <.sidebar_item label={gettext("Sheet (Invoice)")} icon={sidebar_icon("sheet")} href="/components/sheet" is_active={@current_path == "/components/sheet"} />
+        <.sidebar_item label={gettext("Code")} icon={sidebar_icon("code")} href="/components/code" is_active={@current_path == "/components/code"} />
+        <.sidebar_item label={gettext("Data Display")} icon={sidebar_icon("data_display")} href="/components/data-display" is_active={@current_path == "/components/data-display"} />
+        <.sidebar_item label={gettext("Data Display v2")} icon={sidebar_icon("data_display_2")} href="/components/data-display-2" is_active={@current_path == "/components/data-display-2"} />
+        <.sidebar_item label={gettext("Stats")} icon={sidebar_icon("stats")} href="/components/stats" is_active={@current_path == "/components/stats"} />
 
-        <.sidebar_submenu id="tables" label="Tables" icon={sidebar_icon("table")} is_open={String.starts_with?(@current_path, "/tables")}>
-          <.sidebar_item label="Standard Tables" icon={sidebar_icon("table")} href="/tables/standard" is_active={@current_path == "/tables/standard"} />
-          <.sidebar_item label="Table Sizing" icon={sidebar_icon("sizing")} href="/tables/sizing" is_active={@current_path == "/tables/sizing"} />
-          <.sidebar_item label="Responsive" icon={sidebar_icon("table_responsive")} href="/tables/responsive" is_active={@current_path == "/tables/responsive"} />
-          <.sidebar_item label="Filters" icon={sidebar_icon("table_filters")} href="/tables/filters" is_active={@current_path == "/tables/filters"} />
-          <.sidebar_item label="Multi-Select" icon={sidebar_icon("table_multiselect")} href="/tables/multi-select" is_active={@current_path == "/tables/multi-select"} />
-          <.sidebar_item label="Comparison" icon={sidebar_icon("table_comparison")} href="/tables/comparison" is_active={@current_path == "/tables/comparison"} />
+        <.sidebar_submenu id="tables" label={gettext("Tables")} icon={sidebar_icon("table")} is_open={String.starts_with?(@current_path, "/tables")}>
+          <.sidebar_item label={gettext("Standard Tables")} icon={sidebar_icon("table")} href="/tables/standard" is_active={@current_path == "/tables/standard"} />
+          <.sidebar_item label={gettext("Table Sizing")} icon={sidebar_icon("sizing")} href="/tables/sizing" is_active={@current_path == "/tables/sizing"} />
+          <.sidebar_item label={gettext("Responsive")} icon={sidebar_icon("table_responsive")} href="/tables/responsive" is_active={@current_path == "/tables/responsive"} />
+          <.sidebar_item label={gettext("Filters")} icon={sidebar_icon("table_filters")} href="/tables/filters" is_active={@current_path == "/tables/filters"} />
+          <.sidebar_item label={gettext("Multi-Select")} icon={sidebar_icon("table_multiselect")} href="/tables/multi-select" is_active={@current_path == "/tables/multi-select"} />
+          <.sidebar_item label={gettext("Comparison")} icon={sidebar_icon("table_comparison")} href="/tables/comparison" is_active={@current_path == "/tables/comparison"} />
         </.sidebar_submenu>
       </.sidebar_submenu>
 
       <%!-- ====================== Data visualization ==================== --%>
-      <.sidebar_submenu id="data-viz" label="Data visualization" icon={sidebar_icon("data_viz_group")} is_open={@current_path == "/components/data-visualization" or String.starts_with?(@current_path, "/kpi")}>
-        <.sidebar_item label="Data Visualization" icon={sidebar_icon("data_visualization")} href="/components/data-visualization" is_active={@current_path == "/components/data-visualization"} />
+      <.sidebar_submenu id="data-viz" label={gettext("Data visualization")} icon={sidebar_icon("data_viz_group")} is_open={@current_path == "/components/data-visualization" or String.starts_with?(@current_path, "/kpi")}>
+        <.sidebar_item label={gettext("Data Visualization")} icon={sidebar_icon("data_visualization")} href="/components/data-visualization" is_active={@current_path == "/components/data-visualization"} />
 
-        <.sidebar_submenu id="kpi" label="KPI" icon={sidebar_icon("kpi")} is_open={String.starts_with?(@current_path, "/kpi")}>
-          <.sidebar_item label="Combined dashboard" icon={sidebar_icon("dashboard")} href="/kpi/dashboard" is_active={@current_path == "/kpi/dashboard"} />
-          <.sidebar_item label="Terminal grid" icon={sidebar_icon("kpi_terminal")} href="/kpi/terminal-grid" is_active={@current_path == "/kpi/terminal-grid"} />
-          <.sidebar_item label="Sparkline list" icon={sidebar_icon("kpi_sparkline")} href="/kpi/sparkline-list" is_active={@current_path == "/kpi/sparkline-list"} />
-          <.sidebar_item label="Comparison gauges" icon={sidebar_icon("kpi")} href="/kpi/comparison-gauges" is_active={@current_path == "/kpi/comparison-gauges"} />
-          <.sidebar_item label="Hero + supporting" icon={sidebar_icon("cards")} href="/kpi/hero-supporting" is_active={@current_path == "/kpi/hero-supporting"} />
-          <.sidebar_item label="Bento" icon={sidebar_icon("grid")} href="/kpi/bento" is_active={@current_path == "/kpi/bento"} />
-          <.sidebar_item label="Numeric strip" icon={sidebar_icon("kpi_numeric")} href="/kpi/numeric-strip" is_active={@current_path == "/kpi/numeric-strip"} />
-          <.sidebar_item label="Editorial minimal" icon={sidebar_icon("kpi_editorial")} href="/kpi/editorial-minimal" is_active={@current_path == "/kpi/editorial-minimal"} />
+        <.sidebar_submenu id="kpi" label={gettext("KPI")} icon={sidebar_icon("kpi")} is_open={String.starts_with?(@current_path, "/kpi")}>
+          <.sidebar_item label={gettext("Combined dashboard")} icon={sidebar_icon("dashboard")} href="/kpi/dashboard" is_active={@current_path == "/kpi/dashboard"} />
+          <.sidebar_item label={gettext("Terminal grid")} icon={sidebar_icon("kpi_terminal")} href="/kpi/terminal-grid" is_active={@current_path == "/kpi/terminal-grid"} />
+          <.sidebar_item label={gettext("Sparkline list")} icon={sidebar_icon("kpi_sparkline")} href="/kpi/sparkline-list" is_active={@current_path == "/kpi/sparkline-list"} />
+          <.sidebar_item label={gettext("Comparison gauges")} icon={sidebar_icon("kpi")} href="/kpi/comparison-gauges" is_active={@current_path == "/kpi/comparison-gauges"} />
+          <.sidebar_item label={gettext("Hero + supporting")} icon={sidebar_icon("cards")} href="/kpi/hero-supporting" is_active={@current_path == "/kpi/hero-supporting"} />
+          <.sidebar_item label={gettext("Bento")} icon={sidebar_icon("grid")} href="/kpi/bento" is_active={@current_path == "/kpi/bento"} />
+          <.sidebar_item label={gettext("Numeric strip")} icon={sidebar_icon("kpi_numeric")} href="/kpi/numeric-strip" is_active={@current_path == "/kpi/numeric-strip"} />
+          <.sidebar_item label={gettext("Editorial minimal")} icon={sidebar_icon("kpi_editorial")} href="/kpi/editorial-minimal" is_active={@current_path == "/kpi/editorial-minimal"} />
         </.sidebar_submenu>
       </.sidebar_submenu>
 
       <%!-- ========================== Feedback ========================== --%>
-      <.sidebar_submenu id="feedback" label="Feedback" icon={sidebar_icon("feedback")} is_open={@current_path in ["/components/alerts", "/components/callouts", "/components/toasts", "/components/notifications", "/components/tooltips", "/components/loaders"] or String.starts_with?(@current_path, "/timeline")}>
-        <.sidebar_item label="Alerts" icon={sidebar_icon("alerts")} href="/components/alerts" is_active={@current_path == "/components/alerts"} />
-        <.sidebar_item label="Callouts" icon={sidebar_icon("callouts")} href="/components/callouts" is_active={@current_path == "/components/callouts"} />
-        <.sidebar_item label="Toasts" icon={sidebar_icon("toasts")} href="/components/toasts" is_active={@current_path == "/components/toasts"} />
-        <.sidebar_item label="Notifications" icon={sidebar_icon("notifications")} href="/components/notifications" is_active={@current_path == "/components/notifications"} />
-        <.sidebar_item label="Tooltips" icon={sidebar_icon("tooltips")} href="/components/tooltips" is_active={@current_path == "/components/tooltips"} />
-        <.sidebar_item label="Loaders" icon={sidebar_icon("loaders")} href="/components/loaders" is_active={@current_path == "/components/loaders"} />
+      <.sidebar_submenu id="feedback" label={gettext("Feedback")} icon={sidebar_icon("feedback")} is_open={@current_path in ["/components/alerts", "/components/callouts", "/components/toasts", "/components/notifications", "/components/tooltips", "/components/loaders"] or String.starts_with?(@current_path, "/timeline")}>
+        <.sidebar_item label={gettext("Alerts")} icon={sidebar_icon("alerts")} href="/components/alerts" is_active={@current_path == "/components/alerts"} />
+        <.sidebar_item label={gettext("Callouts")} icon={sidebar_icon("callouts")} href="/components/callouts" is_active={@current_path == "/components/callouts"} />
+        <.sidebar_item label={gettext("Toasts")} icon={sidebar_icon("toasts")} href="/components/toasts" is_active={@current_path == "/components/toasts"} />
+        <.sidebar_item label={gettext("Notifications")} icon={sidebar_icon("notifications")} href="/components/notifications" is_active={@current_path == "/components/notifications"} />
+        <.sidebar_item label={gettext("Tooltips")} icon={sidebar_icon("tooltips")} href="/components/tooltips" is_active={@current_path == "/components/tooltips"} />
+        <.sidebar_item label={gettext("Loaders")} icon={sidebar_icon("loaders")} href="/components/loaders" is_active={@current_path == "/components/loaders"} />
 
-        <.sidebar_submenu id="timeline" label="Timeline" icon={sidebar_icon("timeline")} is_open={String.starts_with?(@current_path, "/timeline")}>
-          <.sidebar_item label="Simple" icon={sidebar_icon("timeline_simple")} href="/timeline/simple" is_active={@current_path == "/timeline/simple"} />
-          <.sidebar_item label="Block" icon={sidebar_icon("timeline_block")} href="/timeline/block" is_active={@current_path == "/timeline/block"} />
-          <.sidebar_item label="Feed" icon={sidebar_icon("timeline_feed")} href="/timeline/feed" is_active={@current_path == "/timeline/feed"} />
-          <.sidebar_item label="Advanced" icon={sidebar_icon("timeline")} href="/timeline/advanced" is_active={@current_path == "/timeline/advanced"} />
+        <.sidebar_submenu id="timeline" label={gettext("Timeline")} icon={sidebar_icon("timeline")} is_open={String.starts_with?(@current_path, "/timeline")}>
+          <.sidebar_item label={gettext("Simple")} icon={sidebar_icon("timeline_simple")} href="/timeline/simple" is_active={@current_path == "/timeline/simple"} />
+          <.sidebar_item label={gettext("Block")} icon={sidebar_icon("timeline_block")} href="/timeline/block" is_active={@current_path == "/timeline/block"} />
+          <.sidebar_item label={gettext("Feed")} icon={sidebar_icon("timeline_feed")} href="/timeline/feed" is_active={@current_path == "/timeline/feed"} />
+          <.sidebar_item label={gettext("Advanced")} icon={sidebar_icon("timeline")} href="/timeline/advanced" is_active={@current_path == "/timeline/advanced"} />
         </.sidebar_submenu>
       </.sidebar_submenu>
 
       <%!-- ===================== Interactive & misc ===================== --%>
-      <.sidebar_submenu id="interactive" label="Interactive & misc" icon={sidebar_icon("interactive")} is_open={@current_path in ["/components/badges", "/components/command-palette"]}>
-        <.sidebar_item label="Badges" icon={sidebar_icon("badges")} href="/components/badges" is_active={@current_path == "/components/badges"} />
-        <.sidebar_item label="Command Palette" icon={sidebar_icon("command_palette")} href="/components/command-palette" is_active={@current_path == "/components/command-palette"} />
+      <.sidebar_submenu id="interactive" label={gettext("Interactive & misc")} icon={sidebar_icon("interactive")} is_open={@current_path in ["/components/badges", "/components/command-palette"]}>
+        <.sidebar_item label={gettext("Badges")} icon={sidebar_icon("badges")} href="/components/badges" is_active={@current_path == "/components/badges"} />
+        <.sidebar_item label={gettext("Command Palette")} icon={sidebar_icon("command_palette")} href="/components/command-palette" is_active={@current_path == "/components/command-palette"} />
       </.sidebar_submenu>
 
       <%!-- ======================= Virtual Scroll ====================== --%>
-      <.sidebar_submenu id="virtual-scroll" label="Virtual Scroll" icon={sidebar_icon("virtual_scroll")} is_open={String.starts_with?(@current_path, "/virtual-scroll")}>
-        <.sidebar_item label="Demo" icon={sidebar_icon("vs_demo")} href="/virtual-scroll/demo" is_active={@current_path == "/virtual-scroll/demo"} />
+      <.sidebar_submenu id="virtual-scroll" label={gettext("Virtual Scroll")} icon={sidebar_icon("virtual_scroll")} is_open={String.starts_with?(@current_path, "/virtual-scroll")}>
+        <.sidebar_item label={gettext("Demo")} icon={sidebar_icon("vs_demo")} href="/virtual-scroll/demo" is_active={@current_path == "/virtual-scroll/demo"} />
       </.sidebar_submenu>
     </.sidebar>
 
@@ -277,11 +304,11 @@
     <div class="pa-tabs pa-tabs--full">
       <button class="pa-tabs__item pa-tabs__item--active" data-profile-tab="profile">
         <span class="pa-icon pa-icon--user" aria-hidden="true"></span>
-        <span class="pa-profile-panel__tab-text">Profile</span>
+        <span class="pa-profile-panel__tab-text">{gettext("Profile")}</span>
       </button>
       <button class="pa-tabs__item" data-profile-tab="favorites">
         <span class="pa-icon pa-icon--favorites" aria-hidden="true"></span>
-        <span class="pa-profile-panel__tab-text">Favorites</span>
+        <span class="pa-profile-panel__tab-text">{gettext("Favorites")}</span>
       </button>
     </div>
   </:tabs>
@@ -289,12 +316,12 @@
   <div class="pa-tabs__panel pa-tabs__panel--active" data-profile-panel="profile">
     <nav class="pa-profile-panel__nav">
       <ul>
-        <.profile_nav_item href="#" icon={sidebar_icon("user")}>Profile Settings</.profile_nav_item>
-        <.profile_nav_item href="#" icon={sidebar_icon("security")}>Security</.profile_nav_item>
-        <.profile_nav_item href="#" icon={sidebar_icon("notifications")}>Notifications</.profile_nav_item>
-        <.profile_nav_item href="#" icon={sidebar_icon("preferences")}>Preferences</.profile_nav_item>
+        <.profile_nav_item href="#" icon={sidebar_icon("user")}>{gettext("Profile Settings")}</.profile_nav_item>
+        <.profile_nav_item href="#" icon={sidebar_icon("security")}>{gettext("Security")}</.profile_nav_item>
+        <.profile_nav_item href="#" icon={sidebar_icon("notifications")}>{gettext("Notifications")}</.profile_nav_item>
+        <.profile_nav_item href="#" icon={sidebar_icon("preferences")}>{gettext("Preferences")}</.profile_nav_item>
         <.profile_nav_item href="#" icon={sidebar_icon("help")}>
-          Help & Support
+          {gettext("Help & Support")}
         </.profile_nav_item>
       </ul>
     </nav>
@@ -306,8 +333,8 @@
         <li>
           <div class="pa-profile-panel__favorite-item" data-href="/">
             <span class="pa-profile-panel__favorite-icon"><%= Phoenix.HTML.raw(sidebar_icon("dashboard")) %></span>
-            <span class="pa-profile-panel__favorite-label">Dashboard</span>
-            <button class="pa-profile-panel__favorite-remove" title="Remove from favorites">
+            <span class="pa-profile-panel__favorite-label">{gettext("Dashboard")}</span>
+            <button class="pa-profile-panel__favorite-remove" title={gettext("Remove from favorites")}>
               <span class="pa-icon pa-icon--x" aria-hidden="true"></span>
             </button>
           </div>
@@ -315,8 +342,8 @@
         <li>
           <div class="pa-profile-panel__favorite-item" data-href="/forms">
             <span class="pa-profile-panel__favorite-icon"><%= Phoenix.HTML.raw(sidebar_icon("forms")) %></span>
-            <span class="pa-profile-panel__favorite-label">Forms</span>
-            <button class="pa-profile-panel__favorite-remove" title="Remove from favorites">
+            <span class="pa-profile-panel__favorite-label">{gettext("Forms")}</span>
+            <button class="pa-profile-panel__favorite-remove" title={gettext("Remove from favorites")}>
               <span class="pa-icon pa-icon--x" aria-hidden="true"></span>
             </button>
           </div>
@@ -327,10 +354,10 @@
 
   <:footer_>
     <button class="pa-btn pa-btn--secondary pa-btn--block">
-      Switch Account
+      {gettext("Switch Account")}
     </button>
     <button class="pa-btn pa-btn--danger pa-btn--block">
-      Sign Out
+      {gettext("Sign Out")}
     </button>
   </:footer_>
 </.profile_panel>

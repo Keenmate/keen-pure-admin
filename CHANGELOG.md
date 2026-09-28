@@ -14,6 +14,29 @@ palette, navbar/sidebar/footer shell) are `--pc-*`. **Component** tokens are `--
 chart, detail-panel, icons…). `--base-*` is unchanged. Apps migrate their own overrides
 accordingly (shell/foundation → `--pc-`, components → `--pa-`).
 
+### Demo — Spanish localization (i18n)
+
+- **The demo now ships English + Spanish, switchable at runtime.** Added Phoenix **Gettext**
+  to the demo and bridged the library chrome into it: `config :keen_pure_admin, translate:
+  &DemoWeb.PaTranslate.translate/2` forwards every `PureAdmin.Translations.t/2` key to the
+  `pure_admin` Gettext domain, falling back to keen's built-in English defaults on a miss.
+  One locale drives both the demo's own content (`default` domain) and the library chrome.
+  This is the intended integration for `PureAdmin.Translations` — the callback is the seam a
+  host's Gettext (or DB translation table) plugs into; keen and Gettext share `%{param}`
+  interpolation, so the bridge is a pass-through.
+- **Locale state + redirect switcher.** New `DemoWeb.Locale` plug resolves session →
+  `Accept-Language` → default and persists it; a `GET /locale/:code` controller
+  (`DemoWeb.LocaleController`) writes the session and redirects back (LiveView can't write the
+  Plug session — the full round-trip re-mounts every LiveView, and the layout-mounted command
+  palette, at the new locale). `DemoWeb.Nav.on_mount` re-applies the locale in the socket.
+  Language picker (EN | ES) in the navbar.
+- **UI labels localized across the whole demo** — nav, sidebar, buttons, placeholders, table
+  headers, KPI/stat labels, statuses, and the command-palette commands/contexts (~1,850
+  message ids). Documentation prose and demo data are intentionally left as-is.
+  `DemoWeb.CommandPaletteSource` `commands/0`/`contexts/0` were moved from module attributes
+  to functions so their strings translate per request — a module attribute would freeze the
+  locale at compile time.
+
 ### Sync to pure-admin-core 3.0.0 → 3.3.0-rc03
 
 **Corrected the component-token prefix (core rc20 ownership split).** An earlier pass

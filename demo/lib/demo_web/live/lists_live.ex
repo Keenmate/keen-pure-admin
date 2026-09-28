@@ -13,8 +13,8 @@ defmodule DemoWeb.Live.ListsLive do
       <%!-- Left Column --%>
       <.column size="100" lg="1-2">
         <%!-- Basic Unordered Lists --%>
-        <.card title_text="Basic Unordered Lists" class="mb-8">
-          <.heading level={4}>Default Spacing</.heading>
+        <.card title_text={gettext("Basic Unordered Lists")} class="mb-8">
+          <.heading level={4}>{gettext("Default Spacing")}</.heading>
           <.basic_list>
             <li>Dashboard with real-time metrics</li>
             <li>User management and permissions</li>
@@ -23,7 +23,7 @@ defmodule DemoWeb.Live.ListsLive do
             <li>Multi-language support</li>
           </.basic_list>
 
-          <.heading level={4} class="mt-8">Compact Spacing</.heading>
+          <.heading level={4} class="mt-8">{gettext("Compact Spacing")}</.heading>
           <.basic_list spacing="compact">
             <li>Reduced vertical spacing</li>
             <li>Perfect for dense content</li>
@@ -31,7 +31,7 @@ defmodule DemoWeb.Live.ListsLive do
             <li>Easy to scan quickly</li>
           </.basic_list>
 
-          <.heading level={4} class="mt-8">Spacious Layout</.heading>
+          <.heading level={4} class="mt-8">{gettext("Spacious Layout")}</.heading>
           <.basic_list spacing="spacious">
             <li>More breathing room between items</li>
             <li>Better for longer content blocks</li>
@@ -40,8 +40,8 @@ defmodule DemoWeb.Live.ListsLive do
         </.card>
 
         <%!-- Ordered Lists --%>
-        <.card title_text="Ordered Lists" class="mb-8">
-          <.heading level={4}>Numeric (Default)</.heading>
+        <.card title_text={gettext("Ordered Lists")} class="mb-8">
+          <.heading level={4}>{gettext("Numeric (Default)")}</.heading>
           <.ordered_list>
             <li>Create a new project</li>
             <li>Configure basic settings</li>
@@ -50,7 +50,7 @@ defmodule DemoWeb.Live.ListsLive do
             <li>Launch and monitor</li>
           </.ordered_list>
 
-          <.heading level={4} class="mt-8">Roman Numerals</.heading>
+          <.heading level={4} class="mt-8">{gettext("Roman Numerals")}</.heading>
           <.ordered_list style="roman">
             <li>Executive summary</li>
             <li>Market analysis</li>
@@ -58,7 +58,7 @@ defmodule DemoWeb.Live.ListsLive do
             <li>Implementation roadmap</li>
           </.ordered_list>
 
-          <.heading level={4} class="mt-8">Alphabetical</.heading>
+          <.heading level={4} class="mt-8">{gettext("Alphabetical")}</.heading>
           <.ordered_list style="alpha">
             <li>Appendix A: Technical specifications</li>
             <li>Appendix B: User testimonials</li>
@@ -67,8 +67,8 @@ defmodule DemoWeb.Live.ListsLive do
         </.card>
 
         <%!-- Definition Lists --%>
-        <.card title_text="Definition Lists" class="mb-8">
-          <.heading level={4}>Standard Layout</.heading>
+        <.card title_text={gettext("Definition Lists")} class="mb-8">
+          <.heading level={4}>{gettext("Standard Layout")}</.heading>
           <.definition_list>
             <dt>API Key</dt>
             <dd>A unique identifier used to authenticate requests to the API</dd>
@@ -78,15 +78,15 @@ defmodule DemoWeb.Live.ListsLive do
             <dd>Industry-standard protocol for authorization allowing third-party access</dd>
           </.definition_list>
 
-          <.heading level={4} class="mt-8">Inline Layout</.heading>
+          <.heading level={4} class="mt-8">{gettext("Inline Layout")}</.heading>
           <.definition_list is_inline>
-            <dt>Status</dt>
+            <dt>{gettext("Status")}</dt>
             <dd>Active</dd>
-            <dt>Created</dt>
+            <dt>{gettext("Created")}</dt>
             <dd>2025-01-15</dd>
-            <dt>Modified</dt>
+            <dt>{gettext("Modified")}</dt>
             <dd>2025-10-05</dd>
-            <dt>Author</dt>
+            <dt>{gettext("Author")}</dt>
             <dd>John Doe</dd>
           </.definition_list>
         </.card>
@@ -95,8 +95,8 @@ defmodule DemoWeb.Live.ListsLive do
       <%!-- Right Column --%>
       <.column size="100" lg="1-2">
         <%!-- Icon Lists --%>
-        <.card title_text="Icon Lists" class="mb-8">
-          <.heading level={4}>Success (Checkmarks)</.heading>
+        <.card title_text={gettext("Icon Lists")} class="mb-8">
+          <.heading level={4}>{gettext("Success (Checkmarks)")}</.heading>
           <.basic_list has_icon>
             <li>SSL/TLS encryption enabled</li>
             <li>Automatic daily backups</li>
@@ -104,14 +104,14 @@ defmodule DemoWeb.Live.ListsLive do
             <li>24/7 customer support</li>
           </.basic_list>
 
-          <.heading level={4} class="mt-8">Danger (X marks)</.heading>
+          <.heading level={4} class="mt-8">{gettext("Danger (X marks)")}</.heading>
           <.basic_list has_icon icon_variant="danger">
             <li>Deprecated API endpoint</li>
             <li>Unsupported browser version</li>
             <li>Missing required permissions</li>
           </.basic_list>
 
-          <.heading level={4} class="mt-8">Info (Arrows)</.heading>
+          <.heading level={4} class="mt-8">{gettext("Info (Arrows)")}</.heading>
           <.basic_list has_icon icon_variant="info">
             <li>Navigate to Settings panel</li>
             <li>Select Integration options</li>
@@ -119,7 +119,7 @@ defmodule DemoWeb.Live.ListsLive do
             <li>Complete authentication</li>
           </.basic_list>
 
-          <.heading level={4} class="mt-8">Warning (Exclamation)</.heading>
+          <.heading level={4} class="mt-8">{gettext("Warning (Exclamation)")}</.heading>
           <.basic_list has_icon icon_variant="warning">
             <li>Rate limit approaching threshold</li>
             <li>Certificate expires in 30 days</li>
@@ -128,8 +128,8 @@ defmodule DemoWeb.Live.ListsLive do
         </.card>
 
         <%!-- Bordered & Striped Lists --%>
-        <.card title_text="Bordered & Striped Lists" class="mb-8">
-          <.heading level={4}>Bordered List</.heading>
+        <.card title_text={gettext("Bordered & Striped Lists")} class="mb-8">
+          <.heading level={4}>{gettext("Bordered List")}</.heading>
           <.basic_list is_bordered>
             <li>User Management Module</li>
             <li>Content Management System</li>
@@ -138,7 +138,7 @@ defmodule DemoWeb.Live.ListsLive do
             <li>Reporting Engine</li>
           </.basic_list>
 
-          <.heading level={4} class="mt-8">Striped List</.heading>
+          <.heading level={4} class="mt-8">{gettext("Striped List")}</.heading>
           <.basic_list is_striped>
             <li>Monthly subscription: $99/month</li>
             <li>Annual subscription: $990/year (2 months free)</li>
@@ -148,8 +148,8 @@ defmodule DemoWeb.Live.ListsLive do
         </.card>
 
         <%!-- Inline & Unstyled Lists --%>
-        <.card title_text="Inline & Unstyled Lists" class="mb-8">
-          <.heading level={4}>Inline List</.heading>
+        <.card title_text={gettext("Inline & Unstyled Lists")} class="mb-8">
+          <.heading level={4}>{gettext("Inline List")}</.heading>
           <.basic_list is_inline>
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
@@ -157,7 +157,7 @@ defmodule DemoWeb.Live.ListsLive do
             <li><a href="#contact">Contact</a></li>
           </.basic_list>
 
-          <.heading level={4} class="mt-8">Unstyled List</.heading>
+          <.heading level={4} class="mt-8">{gettext("Unstyled List")}</.heading>
           <.basic_list is_unstyled>
             <li>No bullets or numbers</li>
             <li>Just plain text items</li>
@@ -167,7 +167,7 @@ defmodule DemoWeb.Live.ListsLive do
         </.card>
 
         <%!-- Complex Lists with Avatars --%>
-        <.card title_text="Complex Lists with Avatars" class="mb-8" has_padding={false}>
+        <.card title_text={gettext("Complex Lists with Avatars")} class="mb-8" has_padding={false}>
           <.list>
             <.list_item title_text="Sarah Johnson" subtitle_text="Product Manager" meta_text="Last active: 2 hours ago">
               <:avatar>👤</:avatar>
@@ -184,10 +184,10 @@ defmodule DemoWeb.Live.ListsLive do
     </.grid>
 
     <%!-- Implementation Guide --%>
-    <.card title_text="Implementation Guide">
-      <.heading level={4}>Available Classes</.heading>
+    <.card title_text={gettext("Implementation Guide")}>
+      <.heading level={4}>{gettext("Available Classes")}</.heading>
 
-      <.heading level={5} class="mt-4">Unordered Lists (ul)</.heading>
+      <.heading level={5} class="mt-4">{gettext("Unordered Lists (ul)")}</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-list-basic</code> - Base unordered list</li>
         <li><code>pa-list-basic--compact</code> - Reduced spacing</li>
@@ -202,20 +202,20 @@ defmodule DemoWeb.Live.ListsLive do
         <li><code>pa-list-basic--icon pa-list-basic--warning</code> - Exclamation marks</li>
       </.basic_list>
 
-      <.heading level={5} class="mt-4">Ordered Lists (ol)</.heading>
+      <.heading level={5} class="mt-4">{gettext("Ordered Lists (ol)")}</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-list-ordered</code> - Base ordered list (numeric)</li>
         <li><code>pa-list-ordered--roman</code> - Roman numerals (I, II, III)</li>
         <li><code>pa-list-ordered--alpha</code> - Lowercase letters (a, b, c)</li>
       </.basic_list>
 
-      <.heading level={5} class="mt-4">Definition Lists (dl)</.heading>
+      <.heading level={5} class="mt-4">{gettext("Definition Lists (dl)")}</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-list-definition</code> - Standard definition list</li>
         <li><code>pa-list-definition--inline</code> - Horizontal key-value pairs</li>
       </.basic_list>
 
-      <.heading level={5} class="mt-4">Complex Lists</.heading>
+      <.heading level={5} class="mt-4">{gettext("Complex Lists")}</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-list</code> - Container for complex list items</li>
         <li><code>pa-list__item</code> - Individual list item with avatar/content</li>

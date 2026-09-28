@@ -114,7 +114,7 @@ defmodule DemoWeb.Live.TableMultiSelectLive do
     <%!-- Introduction --%>
     <.card>
       <:header>
-        <h3>Multi-Select Across Different Filters</h3>
+        <h3>{gettext("Multi-Select Across Different Filters")}</h3>
         <p>Demonstration of maintaining selection state when switching between filters</p>
       </:header>
 
@@ -130,7 +130,7 @@ defmodule DemoWeb.Live.TableMultiSelectLive do
         </:list>
       </.alert>
 
-      <.heading level={4} class="mt-4">Key Features:</.heading>
+      <.heading level={4} class="mt-4">{gettext("Key Features:")}</.heading>
       <.basic_list>
         <li><strong>Compact Summary Bar:</strong> Shows selection count and actions without pushing content down</li>
         <li><strong>Expandable Details:</strong> Click "Show Details" to see full list of selected items</li>
@@ -143,7 +143,7 @@ defmodule DemoWeb.Live.TableMultiSelectLive do
     <%!-- Filter Tabs --%>
     <.card>
       <:header>
-        <.heading level={4}>Filter by Status</.heading>
+        <.heading level={4}>{gettext("Filter by Status")}</.heading>
       </:header>
       <div class="d-flex gap-5 flex-wrap">
         <.button
@@ -163,18 +163,18 @@ defmodule DemoWeb.Live.TableMultiSelectLive do
         <strong>{map_size(@selected)} items selected</strong>
         <.button size="sm" variant="secondary" phx-click="toggle-details">
           <i class={if @show_details, do: "fas fa-chevron-up", else: "fas fa-chevron-down"} />
-          {if @show_details, do: "Hide Details", else: "Show Details"}
+          {if @show_details, do: gettext("Hide Details"), else: gettext("Show Details")}
         </.button>
       </div>
       <div class="d-flex gap-5">
         <.button size="sm" variant="primary">
-          <i class="fas fa-download" /> Export
+          <i class="fas fa-download" /> {gettext("Export")}
         </.button>
         <.button size="sm" variant="danger">
-          <i class="fas fa-trash" /> Delete
+          <i class="fas fa-trash" /> {gettext("Delete")}
         </.button>
         <.button size="sm" variant="secondary" phx-click="clear-selection">
-          <i class="fas fa-times" /> Clear All
+          <i class="fas fa-times" /> {gettext("Clear All")}
         </.button>
       </div>
     </.alert>
@@ -185,11 +185,11 @@ defmodule DemoWeb.Live.TableMultiSelectLive do
         <table class="pa-table pa-table--striped">
           <thead>
             <tr>
-              <th class="col-auto">Actions</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th>Source Filter</th>
+              <th class="col-auto">{gettext("Actions")}</th>
+              <th>{gettext("Name")}</th>
+              <th>{gettext("Email")}</th>
+              <th>{gettext("Status")}</th>
+              <th>{gettext("Source Filter")}</th>
             </tr>
           </thead>
           <tbody>
@@ -218,10 +218,10 @@ defmodule DemoWeb.Live.TableMultiSelectLive do
         </h4>
         <div class="d-flex gap-5">
           <.button size="sm" variant="secondary" phx-click="select-all-visible">
-            <i class="fas fa-check-square" /> Select All Visible
+            <i class="fas fa-check-square" /> {gettext("Select All Visible")}
           </.button>
           <.button size="sm" variant="secondary" phx-click="deselect-all-visible">
-            <i class="fas fa-square" /> Deselect All Visible
+            <i class="fas fa-square" /> {gettext("Deselect All Visible")}
           </.button>
         </div>
       </:header>
@@ -236,11 +236,11 @@ defmodule DemoWeb.Live.TableMultiSelectLive do
                   phx-click={if all_visible_selected?(@selected, @current_filter), do: "deselect-all-visible", else: "select-all-visible"}
                 />
               </th>
-              <th class="col-auto">Actions</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th>Last Login</th>
+              <th class="col-auto">{gettext("Actions")}</th>
+              <th>{gettext("Name")}</th>
+              <th>{gettext("Email")}</th>
+              <th>{gettext("Status")}</th>
+              <th>{gettext("Last Login")}</th>
             </tr>
           </thead>
           <tbody>
@@ -274,10 +274,10 @@ defmodule DemoWeb.Live.TableMultiSelectLive do
     <%!-- Implementation Notes --%>
     <.card>
       <:header>
-        <.heading level={4}>Implementation Notes</.heading>
+        <.heading level={4}>{gettext("Implementation Notes")}</.heading>
       </:header>
 
-      <.heading level={5}>Visual Pattern Components</.heading>
+      <.heading level={5}>{gettext("Visual Pattern Components")}</.heading>
       <.ordered_list>
         <li>
           <strong>Selection Summary Bar</strong>
@@ -321,7 +321,7 @@ defmodule DemoWeb.Live.TableMultiSelectLive do
         </li>
       </.ordered_list>
 
-      <.heading level={5} class="mt-4">LiveView Implementation</.heading>
+      <.heading level={5} class="mt-4">{gettext("LiveView Implementation")}</.heading>
       <.paragraph>This demo uses server-side state management via LiveView assigns:</.paragraph>
       <.basic_list>
         <li>Selection stored as a Map keyed by item ID with item data and source filter</li>

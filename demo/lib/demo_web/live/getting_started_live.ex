@@ -70,7 +70,7 @@ defmodule DemoWeb.Live.GettingStartedLive do
   def render(assigns) do
     ~H"""
     <%!-- Hero/Intro --%>
-    <.card title_text="Welcome to PureAdmin for Phoenix">
+    <.card title_text={gettext("Welcome to PureAdmin for Phoenix")}>
       <.paragraph>
         <strong>keen_pure_admin</strong> is a Phoenix LiveView component library that wraps the
         Pure Admin CSS framework (<code>@keenmate/pure-admin-core</code>) into function components
@@ -104,30 +104,30 @@ defmodule DemoWeb.Live.GettingStartedLive do
     </.card>
 
     <%!-- About This Demo --%>
-    <.card title_text="About This Demo">
+    <.card title_text={gettext("About This Demo")}>
       <.paragraph>
         This documentation site showcases the keen_pure_admin component library with multiple theme options.
         Use the settings panel (gear icon) to switch between themes and customize the appearance.
       </.paragraph>
 
-      <.callout variant="info" heading_text="Theme Switching & FOUC">
+      <.callout variant="info" heading_text={gettext("Theme Switching & FOUC")}>
         <p>On initial page load, you may notice a brief flash of the default theme before your selected theme loads. This is expected behavior in this demo.</p>
         <p class="mb-0"><strong>Why?</strong> The default theme is bundled statically to prevent unstyled content (FOUC), then your saved theme preference loads dynamically via JavaScript.</p>
       </.callout>
 
-      <.callout variant="success" heading_text="Production Usage">
+      <.callout variant="success" heading_text={gettext("Production Usage")}>
         <p>In a production application, you would import only <strong>one</strong> theme statically in your CSS. This eliminates the flash entirely since there's no theme switching overhead.</p>
       </.callout>
     </.card>
 
     <%!-- About SettingsPanel --%>
-    <.card title_text="About SettingsPanel">
+    <.card title_text={gettext("About SettingsPanel")}>
       <.paragraph>
         The <code>SettingsPanel</code> component (gear icon in the corner) is primarily a <strong>demo and development tool</strong>
         to showcase what's possible with pure-admin-core. It's not typically something you'd expose to end users in production.
       </.paragraph>
 
-      <.callout variant="warning" heading_text="Production Architecture">
+      <.callout variant="warning" heading_text={gettext("Production Architecture")}>
         <p>In a real application, these settings would be handled differently:</p>
         <ul>
           <li><strong>App-level constants</strong> (hardcoded): theme, layout width, sidebar behavior — decided during development</li>
@@ -139,7 +139,7 @@ defmodule DemoWeb.Live.GettingStartedLive do
     </.card>
 
     <%!-- Installation --%>
-    <.card title_text="Installation">
+    <.card title_text={gettext("Installation")}>
       <.paragraph>Prerequisites: create a Phoenix project <strong>without Tailwind</strong>:</.paragraph>
       <.code_block language="bash">mix phx.new my_app --no-tailwind</.code_block>
 
@@ -151,25 +151,25 @@ defmodule DemoWeb.Live.GettingStartedLive do
 
       <.grid>
         <.column size="100" md="1-2">
-          <p><strong>From Hex (recommended)</strong></p>
+          <p><strong>{gettext("From Hex (recommended)")}</strong></p>
           <.code_block language="elixir">{@dep_hex}</.code_block>
         </.column>
         <.column size="100" md="1-2">
-          <p><strong>From GitHub</strong></p>
+          <p><strong>{gettext("From GitHub")}</strong></p>
           <.code_block language="elixir">{@dep_github}</.code_block>
         </.column>
       </.grid>
     </.card>
 
     <%!-- Basic Setup --%>
-    <.card title_text="Basic Setup">
+    <.card title_text={gettext("Basic Setup")}>
       <.paragraph>
         After installation, replace Phoenix's CoreComponents with PureAdmin and set up the layout.
       </.paragraph>
 
       <.timeline variant="simple">
         <.timeline_item>
-          <:title>Replace CoreComponents import</:title>
+          <:title>{gettext("Replace CoreComponents import")}</:title>
           <.paragraph>
             In your <code>MyAppWeb</code> module, replace
             <code>import MyAppWeb.CoreComponents</code> with:
@@ -177,40 +177,40 @@ defmodule DemoWeb.Live.GettingStartedLive do
           <.code_block language="elixir">use PureAdmin.Components</.code_block>
         </.timeline_item>
         <.timeline_item>
-          <:title>Install a theme</:title>
+          <:title>{gettext("Install a theme")}</:title>
           <.paragraph>
             Download a theme from <a href="https://pureadmin.io" class="pa-link">pureadmin.io</a> or use the Pure Admin CLI:
           </.paragraph>
           <.code_block language="bash">npx @keenmate/pureadmin install audi</.code_block>
         </.timeline_item>
         <.timeline_item>
-          <:title>Set up the layout</:title>
+          <:title>{gettext("Set up the layout")}</:title>
           <.code_block language="html">{@setup_layout}</.code_block>
         </.timeline_item>
         <.timeline_item>
-          <:title>Register JS hooks</:title>
+          <:title>{gettext("Register JS hooks")}</:title>
           <.paragraph>In your <code>app.js</code>:</.paragraph>
           <.code_block language="javascript">{@setup_hooks}</.code_block>
         </.timeline_item>
         <.timeline_item>
-          <:title>Use components anywhere</:title>
+          <:title>{gettext("Use components anywhere")}</:title>
           <.code_block language="html">{@setup_usage}</.code_block>
         </.timeline_item>
       </.timeline>
     </.card>
 
     <%!-- Responsive Font Sizing --%>
-    <.card title_text="Responsive Font Sizing">
+    <.card title_text={gettext("Responsive Font Sizing")}>
       <.paragraph>
         Pure Admin uses a <strong>10px rem base</strong> — the <code>html</code> font-size is 10px, so all rem values
         scale proportionally. Changing the html font-size scales the entire UI: text, spacing, components.
       </.paragraph>
 
-      <h4>Shorthand (recommended)</h4>
+      <h4>{gettext("Shorthand (recommended)")}</h4>
       <.paragraph>One class for the common case — default on desktop, larger on mobile:</.paragraph>
       <.code_block language="html">{@font_responsive_html}</.code_block>
 
-      <h4 class="mt-4">Granular Control</h4>
+      <h4 class="mt-4">{gettext("Granular Control")}</h4>
       <.paragraph>Pick exact sizes for desktop and mobile independently:</.paragraph>
       <.code_block language="html">&lt;html class="pa-font-base-10 pa-font-mobile-12"&gt;</.code_block>
 
@@ -218,9 +218,9 @@ defmodule DemoWeb.Live.GettingStartedLive do
         <table class="pa-table pa-table--striped pa-table--compact mt-4">
           <thead>
             <tr>
-              <th>Class</th>
-              <th>html font-size</th>
-              <th>Body text result</th>
+              <th>{gettext("Class")}</th>
+              <th>{gettext("html font-size")}</th>
+              <th>{gettext("Body text result")}</th>
             </tr>
           </thead>
           <tbody>
@@ -260,7 +260,7 @@ defmodule DemoWeb.Live.GettingStartedLive do
     </.card>
 
     <%!-- Available Themes --%>
-    <.card title_text="Available Themes">
+    <.card title_text={gettext("Available Themes")}>
       <.paragraph>
         Pure Admin comes with 5 example themes that serve as starter packs for your own customization.
         Each theme demonstrates different color schemes and provides a foundation you can build upon.
@@ -321,14 +321,14 @@ defmodule DemoWeb.Live.GettingStartedLive do
     </.card>
 
     <%!-- Component Categories --%>
-    <.card title_text="Component Overview">
+    <.card title_text={gettext("Component Overview")}>
       <.paragraph>
         The library includes 35+ components organized into logical categories:
       </.paragraph>
 
       <.grid>
         <.column size="100" md="1-2" lg="1-3">
-          <h4>Layout</h4>
+          <h4>{gettext("Layout")}</h4>
           <ul>
             <li>Layout, LayoutInner, LayoutContent</li>
             <li>Navbar, NavItem, NavDropdown</li>
@@ -337,7 +337,7 @@ defmodule DemoWeb.Live.GettingStartedLive do
           </ul>
         </.column>
         <.column size="100" md="1-2" lg="1-3">
-          <h4>Forms</h4>
+          <h4>{gettext("Forms")}</h4>
           <ul>
             <li>Input, Select, Textarea</li>
             <li>Checkbox, Radio</li>
@@ -346,7 +346,7 @@ defmodule DemoWeb.Live.GettingStartedLive do
           </ul>
         </.column>
         <.column size="100" md="1-2" lg="1-3">
-          <h4>Feedback</h4>
+          <h4>{gettext("Feedback")}</h4>
           <ul>
             <li>Alert, Callout</li>
             <li>Toast, Flash</li>
@@ -355,7 +355,7 @@ defmodule DemoWeb.Live.GettingStartedLive do
           </ul>
         </.column>
         <.column size="100" md="1-2" lg="1-3">
-          <h4>Data Display</h4>
+          <h4>{gettext("Data Display")}</h4>
           <ul>
             <li>Table, TableResponsive</li>
             <li>Card, Stat</li>
@@ -364,7 +364,7 @@ defmodule DemoWeb.Live.GettingStartedLive do
           </ul>
         </.column>
         <.column size="100" md="1-2" lg="1-3">
-          <h4>Navigation</h4>
+          <h4>{gettext("Navigation")}</h4>
           <ul>
             <li>Tabs</li>
             <li>CommandPalette</li>
@@ -373,7 +373,7 @@ defmodule DemoWeb.Live.GettingStartedLive do
           </ul>
         </.column>
         <.column size="100" md="1-2" lg="1-3">
-          <h4>Interactive</h4>
+          <h4>{gettext("Interactive")}</h4>
           <ul>
             <li>Button, ButtonGroup</li>
             <li>Tooltip, Popover</li>
@@ -389,17 +389,17 @@ defmodule DemoWeb.Live.GettingStartedLive do
     </.card>
 
     <%!-- Next Steps --%>
-    <.card title_text="Next Steps">
+    <.card title_text={gettext("Next Steps")}>
       <.grid>
         <.column size="100" md="1-2">
           <.callout variant="primary">
-            <strong>Explore Components</strong>
+            <strong>{gettext("Explore Components")}</strong>
             <p class="mb-0">Browse the <a href="/components" class="pa-link">Components Overview</a> to see all available components with live examples.</p>
           </.callout>
         </.column>
         <.column size="100" md="1-2">
           <.callout variant="info">
-            <strong>CoreComponents Migration</strong>
+            <strong>{gettext("CoreComponents Migration")}</strong>
             <p class="mb-0">See the <a href="/phoenix/core-components" class="pa-link">CoreComponents Migration</a> guide for a full mapping from Phoenix defaults.</p>
           </.callout>
         </.column>

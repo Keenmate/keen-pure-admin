@@ -72,7 +72,7 @@ defmodule DemoWeb.Live.GridLive do
     </style>
 
     <%!-- Overview --%>
-    <.card title_text="Overview">
+    <.card title_text={gettext("Overview")}>
       <.paragraph class="pa-text--secondary mb-4">
         Pure Admin uses a custom flexbox grid system with intuitive naming. Columns use <.code>pc-col-&#123;size&#125;</.code> for percentages
         and <.code>pc-col-&#123;x&#125;-&#123;y&#125;</.code> for fractions.
@@ -80,7 +80,7 @@ defmodule DemoWeb.Live.GridLive do
 
       <.grid>
         <.column size="100" md="50">
-          <.heading level={4}>Key Features</.heading>
+          <.heading level={4}>{gettext("Key Features")}</.heading>
           <ul style="line-height: 1.8;">
             <li><strong>Gutter:</strong> 0.8rem (8px) per side, 1.6rem (16px) total gap</li>
             <li><strong>Percentage columns:</strong> 5% increments (5, 10, 15... 100)</li>
@@ -90,25 +90,25 @@ defmodule DemoWeb.Live.GridLive do
           </ul>
         </.column>
         <.column size="100" md="50">
-          <.heading level={4}>Breakpoints</.heading>
+          <.heading level={4}>{gettext("Breakpoints")}</.heading>
           <.table rows={[
             %{prefix: "sm", width: "576px", example: "pc-col-sm-50"},
             %{prefix: "md", width: "768px", example: "pc-col-md-50"},
             %{prefix: "lg", width: "992px", example: "pc-col-lg-50"},
             %{prefix: "xl", width: "1200px", example: "pc-col-xl-50"}
           ]} is_striped>
-            <:col :let={row} label="Prefix"><.code>{row.prefix}</.code></:col>
-            <:col :let={row} label="Min Width">{row.width}</:col>
-            <:col :let={row} label="Example"><.code>{row.example}</.code></:col>
+            <:col :let={row} label={gettext("Prefix")}><.code>{row.prefix}</.code></:col>
+            <:col :let={row} label={gettext("Min Width")}>{row.width}</:col>
+            <:col :let={row} label={gettext("Example")}><.code>{row.example}</.code></:col>
           </.table>
         </.column>
       </.grid>
     </.card>
 
     <%!-- Basic Usage --%>
-    <.card title_text="Basic Usage">
+    <.card title_text={gettext("Basic Usage")}>
       <:subtitle>Auto-equal width columns with <.code>.pc-col</.code></:subtitle>
-      <.heading level={4}>Two Equal Columns</.heading>
+      <.heading level={4}>{gettext("Two Equal Columns")}</.heading>
       <.grid class="mb-4">
         <.column>
           <div class="grid-demo-cell">.pc-col</div>
@@ -118,24 +118,8 @@ defmodule DemoWeb.Live.GridLive do
         </.column>
       </.grid>
 
-      <.heading level={4}>Three Equal Columns</.heading>
+      <.heading level={4}>{gettext("Three Equal Columns")}</.heading>
       <.grid class="mb-4">
-        <.column>
-          <div class="grid-demo-cell">.pc-col</div>
-        </.column>
-        <.column>
-          <div class="grid-demo-cell">.pc-col</div>
-        </.column>
-        <.column>
-          <div class="grid-demo-cell">.pc-col</div>
-        </.column>
-      </.grid>
-
-      <.heading level={4}>Four Equal Columns</.heading>
-      <.grid class="mb-4">
-        <.column>
-          <div class="grid-demo-cell">.pc-col</div>
-        </.column>
         <.column>
           <div class="grid-demo-cell">.pc-col</div>
         </.column>
@@ -147,7 +131,23 @@ defmodule DemoWeb.Live.GridLive do
         </.column>
       </.grid>
 
-      <.heading level={4}>Auto Width Column</.heading>
+      <.heading level={4}>{gettext("Four Equal Columns")}</.heading>
+      <.grid class="mb-4">
+        <.column>
+          <div class="grid-demo-cell">.pc-col</div>
+        </.column>
+        <.column>
+          <div class="grid-demo-cell">.pc-col</div>
+        </.column>
+        <.column>
+          <div class="grid-demo-cell">.pc-col</div>
+        </.column>
+        <.column>
+          <div class="grid-demo-cell">.pc-col</div>
+        </.column>
+      </.grid>
+
+      <.heading level={4}>{gettext("Auto Width Column")}</.heading>
       <.grid>
         <.column>
           <div class="grid-demo-cell">.pc-col (fills remaining)</div>
@@ -159,7 +159,7 @@ defmodule DemoWeb.Live.GridLive do
     </.card>
 
     <%!-- Percentage Columns --%>
-    <.card title_text="Percentage Columns">
+    <.card title_text={gettext("Percentage Columns")}>
       <:subtitle>Fixed widths in 5% increments: <.code>.pc-col-5</.code> through <.code>.pc-col-100</.code></:subtitle>
       <.grid class="mb-2">
         <.column size="25"><div class="grid-demo-cell">.pc-col-25</div></.column>
@@ -194,15 +194,15 @@ defmodule DemoWeb.Live.GridLive do
     </.card>
 
     <%!-- Fraction Columns --%>
-    <.card title_text="Fraction Columns">
+    <.card title_text={gettext("Fraction Columns")}>
       <:subtitle>Intuitive naming for common layouts: <.code>.pc-col-1-3</.code>, <.code>.pc-col-2-3</.code>, etc.</:subtitle>
-      <.heading level={4}>Halves (1/2)</.heading>
+      <.heading level={4}>{gettext("Halves (1/2)")}</.heading>
       <.grid class="mb-4">
         <.column size="1-2"><div class="grid-demo-cell">.pc-col-1-2 (50%)</div></.column>
         <.column size="1-2"><div class="grid-demo-cell">.pc-col-1-2 (50%)</div></.column>
       </.grid>
 
-      <.heading level={4}>Thirds (1/3, 2/3)</.heading>
+      <.heading level={4}>{gettext("Thirds (1/3, 2/3)")}</.heading>
       <.grid class="mb-2">
         <.column size="1-3"><div class="grid-demo-cell">.pc-col-1-3 (33.3%)</div></.column>
         <.column size="2-3"><div class="grid-demo-cell">.pc-col-2-3 (66.7%)</div></.column>
@@ -213,7 +213,7 @@ defmodule DemoWeb.Live.GridLive do
         <.column size="1-3"><div class="grid-demo-cell">1/3</div></.column>
       </.grid>
 
-      <.heading level={4}>Quarters (1/4, 3/4)</.heading>
+      <.heading level={4}>{gettext("Quarters (1/4, 3/4)")}</.heading>
       <.grid class="mb-2">
         <.column size="1-4"><div class="grid-demo-cell">.pc-col-1-4 (25%)</div></.column>
         <.column size="3-4"><div class="grid-demo-cell">.pc-col-3-4 (75%)</div></.column>
@@ -225,7 +225,7 @@ defmodule DemoWeb.Live.GridLive do
         <.column size="1-4"><div class="grid-demo-cell">1/4</div></.column>
       </.grid>
 
-      <.heading level={4}>Fifths (1/5, 2/5, 3/5, 4/5)</.heading>
+      <.heading level={4}>{gettext("Fifths (1/5, 2/5, 3/5, 4/5)")}</.heading>
       <.grid class="mb-2">
         <.column size="1-5"><div class="grid-demo-cell">1/5</div></.column>
         <.column size="4-5"><div class="grid-demo-cell">4/5</div></.column>
@@ -235,7 +235,7 @@ defmodule DemoWeb.Live.GridLive do
         <.column size="3-5"><div class="grid-demo-cell">3/5</div></.column>
       </.grid>
 
-      <.heading level={4}>Sixths (1/6, 5/6)</.heading>
+      <.heading level={4}>{gettext("Sixths (1/6, 5/6)")}</.heading>
       <.grid class="mb-2">
         <.column size="1-6"><div class="grid-demo-cell">1/6</div></.column>
         <.column size="5-6"><div class="grid-demo-cell">5/6</div></.column>
@@ -249,7 +249,7 @@ defmodule DemoWeb.Live.GridLive do
         <.column size="1-6"><div class="grid-demo-cell">1/6</div></.column>
       </.grid>
 
-      <.heading level={4}>Twelfths (1/12, 5/12, 7/12, 11/12)</.heading>
+      <.heading level={4}>{gettext("Twelfths (1/12, 5/12, 7/12, 11/12)")}</.heading>
       <.grid class="mb-2">
         <.column size="1-12"><div class="grid-demo-cell">1/12</div></.column>
         <.column size="11-12"><div class="grid-demo-cell">11/12</div></.column>
@@ -261,15 +261,15 @@ defmodule DemoWeb.Live.GridLive do
     </.card>
 
     <%!-- Responsive Grid --%>
-    <.card title_text="Responsive Grid" subtitle_text="Stack on mobile, columns on larger screens. Resize your browser to see the effect.">
-      <.heading level={4}>Mobile-First Pattern</.heading>
+    <.card title_text={gettext("Responsive Grid")} subtitle_text={gettext("Stack on mobile, columns on larger screens. Resize your browser to see the effect.")}>
+      <.heading level={4}>{gettext("Mobile-First Pattern")}</.heading>
       <.paragraph class="pa-text--secondary mb-2">Full width on mobile, 50% on medium screens and up:</.paragraph>
       <.grid class="mb-4">
         <.column size="100" md="50"><div class="grid-demo-cell">.pc-col-100 .pc-col-md-50</div></.column>
         <.column size="100" md="50"><div class="grid-demo-cell">.pc-col-100 .pc-col-md-50</div></.column>
       </.grid>
 
-      <.heading level={4}>Progressive Columns</.heading>
+      <.heading level={4}>{gettext("Progressive Columns")}</.heading>
       <.paragraph class="pa-text--secondary mb-2">Different layouts at each breakpoint:</.paragraph>
       <.grid class="mb-4">
         <.column size="100" sm="50" lg="25">
@@ -286,7 +286,7 @@ defmodule DemoWeb.Live.GridLive do
         </.column>
       </.grid>
 
-      <.heading level={4}>Responsive Fractions</.heading>
+      <.heading level={4}>{gettext("Responsive Fractions")}</.heading>
       <.paragraph class="pa-text--secondary mb-2">Fractions also support breakpoints:</.paragraph>
       <.grid>
         <.column size="100" md="1-3"><div class="grid-demo-cell">.pc-col-100 .pc-col-md-1-3</div></.column>
@@ -295,9 +295,9 @@ defmodule DemoWeb.Live.GridLive do
     </.card>
 
     <%!-- Offsets --%>
-    <.card title_text="Offsets">
+    <.card title_text={gettext("Offsets")}>
       <:subtitle>Push columns with left margin: <.code>.pc-offset-{"{size}"}</.code></:subtitle>
-      <.heading level={4}>Centering with Offsets</.heading>
+      <.heading level={4}>{gettext("Centering with Offsets")}</.heading>
       <.grid class="mb-2">
         <.column size="50" offset="25"><div class="grid-demo-cell">.pc-col-50 .pc-offset-25</div></.column>
       </.grid>
@@ -305,7 +305,7 @@ defmodule DemoWeb.Live.GridLive do
         <.column size="1-3" class="pc-offset-33"><div class="grid-demo-cell">.pc-col-1-3 .pc-offset-33</div></.column>
       </.grid>
 
-      <.heading level={4}>Asymmetric Layouts</.heading>
+      <.heading level={4}>{gettext("Asymmetric Layouts")}</.heading>
       <.grid>
         <.column size="30" offset="10"><div class="grid-demo-cell">.pc-col-30 .pc-offset-10</div></.column>
         <.column size="40" offset="10"><div class="grid-demo-cell">.pc-col-40 .pc-offset-10</div></.column>
@@ -313,8 +313,8 @@ defmodule DemoWeb.Live.GridLive do
     </.card>
 
     <%!-- Row Alignment --%>
-    <.card title_text="Row Alignment" subtitle_text="Control horizontal and vertical alignment of columns">
-      <.heading level={4}>Horizontal Alignment</.heading>
+    <.card title_text={gettext("Row Alignment")} subtitle_text={gettext("Control horizontal and vertical alignment of columns")}>
+      <.heading level={4}>{gettext("Horizontal Alignment")}</.heading>
 
       <.paragraph class="pa-text--secondary mb-2"><.code>.pc-row--center</.code></.paragraph>
       <.grid align="center" class="mb-2" style="background: var(--pc-surface-hover);">
@@ -339,7 +339,7 @@ defmodule DemoWeb.Live.GridLive do
         <.column size="20"><div class="grid-demo-cell">C</div></.column>
       </.grid>
 
-      <.heading level={4}>Vertical Alignment</.heading>
+      <.heading level={4}>{gettext("Vertical Alignment")}</.heading>
       <.grid>
         <.column size="100" md="1-3">
           <.paragraph class="pa-text--secondary mb-2"><.code>.pc-row--top</.code></.paragraph>
@@ -366,16 +366,16 @@ defmodule DemoWeb.Live.GridLive do
     </.card>
 
     <%!-- No Gutter --%>
-    <.card title_text="No Gutter">
+    <.card title_text={gettext("No Gutter")}>
       <:subtitle>Remove spacing between columns with <.code>.pc-row--no-gutter</.code></:subtitle>
-      <.heading level={4}>Default (with gutter)</.heading>
+      <.heading level={4}>{gettext("Default (with gutter)")}</.heading>
       <.grid class="mb-4">
         <.column size="1-3"><div class="grid-demo-cell">1/3</div></.column>
         <.column size="1-3"><div class="grid-demo-cell">1/3</div></.column>
         <.column size="1-3"><div class="grid-demo-cell">1/3</div></.column>
       </.grid>
 
-      <.heading level={4}>No Gutter</.heading>
+      <.heading level={4}>{gettext("No Gutter")}</.heading>
       <.grid is_no_gutter>
         <.column size="1-3"><div class="grid-demo-cell">1/3</div></.column>
         <.column size="1-3"><div class="grid-demo-cell">1/3</div></.column>
@@ -384,7 +384,7 @@ defmodule DemoWeb.Live.GridLive do
     </.card>
 
     <%!-- Visibility Utilities --%>
-    <.card title_text="Visibility Utilities" subtitle_text="Show/hide elements at different breakpoints">
+    <.card title_text={gettext("Visibility Utilities")} subtitle_text={gettext("Show/hide elements at different breakpoints")}>
       <.table rows={[
         %{class: ".pc-hide", desc: "Always hidden"},
         %{class: ".pc-show", desc: "Always visible"},
@@ -393,11 +393,11 @@ defmodule DemoWeb.Live.GridLive do
         %{class: ".pc-hide-below-{bp}", desc: "Hidden below breakpoint"},
         %{class: ".pc-show-below-{bp}", desc: "Visible below breakpoint"}
       ]} is_striped class="mb-4">
-        <:col :let={row} label="Class"><.code>{row.class}</.code></:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Class")}><.code>{row.class}</.code></:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
 
-      <.heading level={4}>Live Demo (resize browser)</.heading>
+      <.heading level={4}>{gettext("Live Demo (resize browser)")}</.heading>
       <.grid>
         <.column>
           <div class="grid-demo-cell pc-hide-md" style="background: var(--base-danger-color);">
@@ -411,7 +411,7 @@ defmodule DemoWeb.Live.GridLive do
     </.card>
 
     <%!-- Nested Grids --%>
-    <.card title_text="Nested Grids" subtitle_text="Grids can be nested inside columns">
+    <.card title_text={gettext("Nested Grids")} subtitle_text={gettext("Grids can be nested inside columns")}>
       <.grid>
         <.column size="1-3">
           <div class="grid-demo-cell">1/3</div>
@@ -429,8 +429,8 @@ defmodule DemoWeb.Live.GridLive do
     </.card>
 
     <%!-- pc-grid: CSS-Grid layout primitive --%>
-    <.card title_text="pc-grid — CSS-Grid layout primitive" subtitle_text="Two-dimensional cell co-alignment + a ruled box-matrix that prints (real borders). Companion to the flex grid/column.">
-      <.heading level={4}>3 columns, ruled</.heading>
+    <.card title_text={gettext("pc-grid — CSS-Grid layout primitive")} subtitle_text={gettext("Two-dimensional cell co-alignment + a ruled box-matrix that prints (real borders). Companion to the flex grid/column.")}>
+      <.heading level={4}>{gettext("3 columns, ruled")}</.heading>
       <.pc_grid cols={3} is_ruled class="mb-4">
         <.pc_grid_cell col_span={2}><div class="grid-demo-cell">col_span=2</div></.pc_grid_cell>
         <.pc_grid_cell><div class="grid-demo-cell">cell</div></.pc_grid_cell>
@@ -439,7 +439,7 @@ defmodule DemoWeb.Live.GridLive do
         <.pc_grid_cell><div class="grid-demo-cell">cell</div></.pc_grid_cell>
       </.pc_grid>
 
-      <.heading level={4}>pa-table--plain (neutral ruled grid)</.heading>
+      <.heading level={4}>{gettext("pa-table--plain (neutral ruled grid)")}</.heading>
       <.paragraph class="pa-text--secondary mb-2">
         <.code>is_plain</.code> strips the themed header/stripe fills so the table reads as a plain ruled
         grid — for paper forms and embedded sheet grids. Pair with <.code>is_bordered</.code>.
@@ -449,16 +449,16 @@ defmodule DemoWeb.Live.GridLive do
         is_plain
         is_bordered
       >
-        <:col :let={row} label="Field">{row.f}</:col>
-        <:col :let={row} label="Value">{row.v}</:col>
+        <:col :let={row} label={gettext("Field")}>{row.f}</:col>
+        <:col :let={row} label={gettext("Value")}>{row.v}</:col>
       </.table>
     </.card>
 
     <%!-- Quick Reference --%>
-    <.card title_text="Quick Reference">
+    <.card title_text={gettext("Quick Reference")}>
       <.grid>
         <.column size="100" md="50">
-          <.heading level={4}>Percentage Classes</.heading>
+          <.heading level={4}>{gettext("Percentage Classes")}</.heading>
           <.paragraph class="pa-text--secondary">
             <.code>.pc-col-5</.code> <.code>.pc-col-10</.code> <.code>.pc-col-15</.code> <.code>.pc-col-20</.code> <.code>.pc-col-25</.code><br />
             <.code>.pc-col-30</.code> <.code>.pc-col-35</.code> <.code>.pc-col-40</.code> <.code>.pc-col-45</.code> <.code>.pc-col-50</.code><br />
@@ -467,7 +467,7 @@ defmodule DemoWeb.Live.GridLive do
           </.paragraph>
         </.column>
         <.column size="100" md="50">
-          <.heading level={4}>Fraction Classes</.heading>
+          <.heading level={4}>{gettext("Fraction Classes")}</.heading>
           <.paragraph class="pa-text--secondary">
             <.code>.pc-col-1-2</.code><br />
             <.code>.pc-col-1-3</.code> <.code>.pc-col-2-3</.code><br />
@@ -481,25 +481,25 @@ defmodule DemoWeb.Live.GridLive do
     </.card>
 
     <%!-- Code Examples --%>
-    <.card title_text="Code Examples">
+    <.card title_text={gettext("Code Examples")}>
       <.grid>
         <.column size="100" md="50">
-          <.heading level={4} class="mb-2">Basic Grid</.heading>
+          <.heading level={4} class="mb-2">{gettext("Basic Grid")}</.heading>
           <.code_block language="heex"><%= @code_examples.basic %></.code_block>
         </.column>
         <.column size="100" md="50">
-          <.heading level={4} class="mb-2">Responsive Grid</.heading>
+          <.heading level={4} class="mb-2">{gettext("Responsive Grid")}</.heading>
           <.code_block language="heex"><%= @code_examples.responsive %></.code_block>
         </.column>
       </.grid>
 
       <.grid class="mt-4">
         <.column size="100" md="50">
-          <.heading level={4} class="mb-2">Grid Props</.heading>
+          <.heading level={4} class="mb-2">{gettext("Grid Props")}</.heading>
           <.code_block language="heex"><%= @code_examples.grid_props %></.code_block>
         </.column>
         <.column size="100" md="50">
-          <.heading level={4} class="mb-2">Column Props</.heading>
+          <.heading level={4} class="mb-2">{gettext("Column Props")}</.heading>
           <.code_block language="heex"><%= @code_examples.column_props %></.code_block>
         </.column>
       </.grid>

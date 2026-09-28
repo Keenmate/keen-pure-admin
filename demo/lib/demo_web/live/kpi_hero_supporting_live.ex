@@ -11,11 +11,11 @@ defmodule DemoWeb.Live.KpiHeroSupportingLive do
 
   defp side_tiles do
     [
-      %{label_text: "ARPU", prefix_text: "$", value_text: "34.20", delta_text: "▲ 7.5%", variant: "positive"},
-      %{label_text: "Active users", value_text: "12.3", unit_text: "K", delta_text: "▲ 4.1%", variant: "positive"},
-      %{label_text: "Conversion", value_text: "3.92", unit_text: "%", delta_text: "▲ 12.6%", variant: "up_strong"},
-      %{label_text: "Churn", value_text: "2.4", unit_text: "%", delta_text: "▲ 0.3pp", variant: "negative"},
-      %{label_text: "NPS", value_text: "64", delta_text: "— 0", variant: "neutral"}
+      %{label_text: gettext("ARPU"), prefix_text: "$", value_text: "34.20", delta_text: "▲ 7.5%", variant: "positive"},
+      %{label_text: gettext("Active users"), value_text: "12.3", unit_text: "K", delta_text: "▲ 4.1%", variant: "positive"},
+      %{label_text: gettext("Conversion"), value_text: "3.92", unit_text: "%", delta_text: "▲ 12.6%", variant: "up_strong"},
+      %{label_text: gettext("Churn"), value_text: "2.4", unit_text: "%", delta_text: "▲ 0.3pp", variant: "negative"},
+      %{label_text: gettext("NPS"), value_text: "64", delta_text: "— 0", variant: "neutral"}
     ]
   end
 
@@ -29,11 +29,11 @@ defmodule DemoWeb.Live.KpiHeroSupportingLive do
 
     <%!-- 1. Canonical card · default 1:1 split --%>
 
-    <.kpi_hero_list title_text="Q4 Revenue Dashboard · Default 1:1 split" is_live footer_text="Default 1:1 — Hero + 5 supporting · Hover hero or any side tile for detail">
+    <.kpi_hero_list title_text={gettext("Q4 Revenue Dashboard · Default 1:1 split")} is_live footer_text="Default 1:1 — Hero + 5 supporting · Hover hero or any side tile for detail">
       <.kpi_hero_main
         id="hero-default"
         variant="positive"
-        label_text="Monthly Revenue"
+        label_text={gettext("Monthly Revenue")}
         prefix_text="$"
         value_text="847"
         unit_text="K"
@@ -82,11 +82,11 @@ defmodule DemoWeb.Live.KpiHeroSupportingLive do
     <h3><code>hero_split="2_3"</code> — hero 2/3, rail 1/3</h3>
     <p>Shifts weight onto the hero. Same markup as above, just one prop change.</p>
 
-    <.kpi_hero_list title_text="Q4 Revenue · 2:3 split" is_live hero_split="2_3">
+    <.kpi_hero_list title_text={gettext("Q4 Revenue · 2:3 split")} is_live hero_split="2_3">
       <.kpi_hero_main
         id="hero-23"
         variant="positive"
-        label_text="Monthly Revenue"
+        label_text={gettext("Monthly Revenue")}
         prefix_text="$"
         value_text="847"
         unit_text="K"
@@ -115,11 +115,11 @@ defmodule DemoWeb.Live.KpiHeroSupportingLive do
 
     <h3><code>hero_split="3_4"</code> — hero dominant, rail thin sidebar</h3>
 
-    <.kpi_hero_list title_text="Q4 Revenue · 3:4 split" is_live hero_split="3_4">
+    <.kpi_hero_list title_text={gettext("Q4 Revenue · 3:4 split")} is_live hero_split="3_4">
       <.kpi_hero_main
         id="hero-34"
         variant="up_strong"
-        label_text="Annual Recurring Revenue"
+        label_text={gettext("Annual Recurring Revenue")}
         prefix_text="$"
         value_text="9.4"
         unit_text="M"
@@ -153,11 +153,11 @@ defmodule DemoWeb.Live.KpiHeroSupportingLive do
       so Chart.js picks up the sentiment colour automatically and re-colours on theme change.
     </p>
 
-    <.kpi_hero_list title_text="Q4 Revenue · Chart.js" is_live>
+    <.kpi_hero_list title_text={gettext("Q4 Revenue · Chart.js")} is_live>
       <.kpi_hero_main
         id="hero-cjs"
         variant="positive"
-        label_text="Monthly Revenue"
+        label_text={gettext("Monthly Revenue")}
         prefix_text="$"
         value_text="847"
         unit_text="K"
@@ -186,7 +186,7 @@ defmodule DemoWeb.Live.KpiHeroSupportingLive do
 
     <%!-- Usage Guide --%>
 
-    <.card title_text="Usage Guide">
+    <.card title_text={gettext("Usage Guide")}>
       <h4>When to use</h4>
       <p>
         Marketing or exec dashboards where one headline metric needs to dominate while supporting metrics
@@ -230,7 +230,7 @@ defmodule DemoWeb.Live.KpiHeroSupportingLive do
 
     <%!-- CSS Classes Reference --%>
 
-    <.card title_text="CSS Classes Reference">
+    <.card title_text={gettext("CSS Classes Reference")}>
       <h4>Card structure</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
         <li><code>pa-kpi-hero-list</code> — page-namespace class on <code>.pa-card</code>. Container query host.</li>

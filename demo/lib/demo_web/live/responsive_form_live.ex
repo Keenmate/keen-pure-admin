@@ -30,7 +30,7 @@ defmodule DemoWeb.Live.ResponsiveFormLive do
     </style>
 
     <div class="pa-page-content">
-      <.heading level={1} class="mb-2">Responsive form</.heading>
+      <.heading level={1} class="mb-2">{gettext("Responsive form")}</.heading>
       <.paragraph class="pa-text--secondary mb-3">
         The form <em>is</em> the breakpoint container; each field group is a
         <code>&lt;.breaker&gt;</code> that declares the modes it survives in. As the
@@ -40,11 +40,11 @@ defmodule DemoWeb.Live.ResponsiveFormLive do
       </.paragraph>
 
       <div class="rf-slider-row">
-        <span>Card width</span>
+        <span>{gettext("Card width")}</span>
         <input
           type="range" min="240" max="760" value="520"
           id="rf-slider" phx-hook="StageWidth" data-stage="rf-stage" data-output="rf-w"
-          aria-label="Form width"
+          aria-label={gettext("Form width")}
         />
         <output id="rf-w">520px</output>
       </div>
@@ -58,30 +58,30 @@ defmodule DemoWeb.Live.ResponsiveFormLive do
           style="margin: 0"
         >
           <div class="pa-card__header">
-            <div class="pa-card__title"><span class="pa-card__title-text">New contact</span></div>
+            <div class="pa-card__title"><span class="pa-card__title-text">{gettext("New contact")}</span></div>
           </div>
           <div class="pa-card__body">
             <form phx-submit="save" class="pa-form">
               <%!-- Essentials: no <.breaker> → the engine never touches them, always visible. --%>
               <.form_group>
-                <.form_label for="rf-name">Full name</.form_label>
+                <.form_label for="rf-name">{gettext("Full name")}</.form_label>
                 <.input id="rf-name" name="name" required placeholder="Jane Doe" />
               </.form_group>
               <.form_group>
-                <.form_label for="rf-email">Email</.form_label>
+                <.form_label for="rf-email">{gettext("Email")}</.form_label>
                 <.input id="rf-email" type="email" name="email" required placeholder="jane@acme.com" />
               </.form_group>
 
               <%!-- Secondary: present in comfy + wide, dropped in compact. --%>
               <.breaker show="comfy wide">
                 <.form_group>
-                  <.form_label for="rf-phone">Phone</.form_label>
+                  <.form_label for="rf-phone">{gettext("Phone")}</.form_label>
                   <.input id="rf-phone" type="tel" name="phone" placeholder="+1 555 0142" />
                 </.form_group>
               </.breaker>
               <.breaker show="comfy wide">
                 <.form_group>
-                  <.form_label for="rf-company">Company</.form_label>
+                  <.form_label for="rf-company">{gettext("Company")}</.form_label>
                   <.input id="rf-company" name="company" placeholder="Acme Inc." />
                 </.form_group>
               </.breaker>
@@ -90,19 +90,19 @@ defmodule DemoWeb.Live.ResponsiveFormLive do
               <.breaker show="wide">
                 <div class="rf-cols">
                   <.form_group>
-                    <.form_label for="rf-title">Job title</.form_label>
+                    <.form_label for="rf-title">{gettext("Job title")}</.form_label>
                     <.input id="rf-title" name="title" placeholder="Head of Ops" />
                   </.form_group>
                   <.form_group>
-                    <.form_label for="rf-source">Lead source</.form_label>
+                    <.form_label for="rf-source">{gettext("Lead source")}</.form_label>
                     <.select
-                      id="rf-source" name="source" prompt="Choose…"
-                      options={[{"web", "Website"}, {"ref", "Referral"}, {"event", "Event"}]}
+                      id="rf-source" name="source" prompt={gettext("Choose…")}
+                      options={[{"web", gettext("Website")}, {"ref", gettext("Referral")}, {"event", gettext("Event")}]}
                     />
                   </.form_group>
                 </div>
                 <.form_group>
-                  <.form_label for="rf-notes">Notes</.form_label>
+                  <.form_label for="rf-notes">{gettext("Notes")}</.form_label>
                   <.textarea id="rf-notes" name="notes" rows="4" placeholder="Context, next steps…" />
                   <.form_help>Only you and your team can see this.</.form_help>
                 </.form_group>
@@ -116,7 +116,7 @@ defmodule DemoWeb.Live.ResponsiveFormLive do
               </.breaker>
 
               <%!-- The submit is essential → always present. --%>
-              <.button type="submit" variant="primary" class="mt-3">Save contact</.button>
+              <.button type="submit" variant="primary" class="mt-3">{gettext("Save contact")}</.button>
             </form>
           </div>
         </.breakpoint_container>

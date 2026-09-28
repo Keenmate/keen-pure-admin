@@ -319,38 +319,38 @@ defmodule DemoWeb.Live.FormDemoLive do
       </ul>
     </.callout>
 
-    <.card title_text="New Entry" is_header_underlined>
+    <.card title_text={gettext("New Entry")} is_header_underlined>
       <.flash_container id="form-demo" />
 
       <.simple_form for={@form} id="form-demo-form" phx-submit="submit">
         <.grid>
           <.column size="100" md="50">
             <.form_group field={@form[:first_name]}>
-              <.form_label>First Name</.form_label>
+              <.form_label>{gettext("First Name")}</.form_label>
               <.input field={@form[:first_name]} placeholder="Jane" required />
             </.form_group>
           </.column>
 
           <.column size="100" md="50">
             <.form_group field={@form[:last_name]}>
-              <.form_label>Last Name</.form_label>
+              <.form_label>{gettext("Last Name")}</.form_label>
               <.input field={@form[:last_name]} placeholder="Doe" required />
             </.form_group>
           </.column>
 
           <.column size="100" md="50">
             <.form_group field={@form[:email]}>
-              <.form_label>Email</.form_label>
+              <.form_label>{gettext("Email")}</.form_label>
               <.input field={@form[:email]} type="email" placeholder="jane@example.com" required />
             </.form_group>
           </.column>
 
           <.column size="100" md="50">
             <.form_group>
-              <.form_label>Department</.form_label>
+              <.form_label>{gettext("Department")}</.form_label>
               <.select
                 field={@form[:department]}
-                prompt="Choose a department..."
+                prompt={gettext("Choose a department...")}
                 options={@departments}
               />
             </.form_group>
@@ -358,21 +358,21 @@ defmodule DemoWeb.Live.FormDemoLive do
 
           <.column size="100" md="50">
             <.form_group>
-              <.form_label>Start Date</.form_label>
+              <.form_label>{gettext("Start Date")}</.form_label>
               <.input field={@form[:start_date]} type="date" />
             </.form_group>
           </.column>
 
           <.column size="100">
             <.form_group>
-              <.form_label>Bio</.form_label>
-              <.textarea field={@form[:bio]} rows="3" placeholder="A few words about this person..." />
+              <.form_label>{gettext("Bio")}</.form_label>
+              <.textarea field={@form[:bio]} rows="3" placeholder={gettext("A few words about this person...")} />
             </.form_group>
           </.column>
 
           <.column size="100">
             <.form_group>
-              <.checkbox field={@form[:force_errors]} label="Force validation errors on every field (for testing that values stick and errors render)" />
+              <.checkbox field={@form[:force_errors]} label={gettext("Force validation errors on every field (for testing that values stick and errors render)")} />
             </.form_group>
           </.column>
         </.grid>
@@ -384,31 +384,31 @@ defmodule DemoWeb.Live.FormDemoLive do
             variant="secondary"
             phx-click="cancel_edit"
           >
-            Cancel
+            {gettext("Cancel")}
           </.button>
-          <.button :if={@editing_id == nil} type="reset" variant="secondary">Reset</.button>
+          <.button :if={@editing_id == nil} type="reset" variant="secondary">{gettext("Reset")}</.button>
           <.button type="submit" variant="primary">
             <i class="fa-solid fa-floppy-disk"></i>
-            <%= if @editing_id, do: "Update Entry", else: "Save Entry" %>
+            <%= if @editing_id, do: gettext("Update Entry"), else: gettext("Save Entry") %>
           </.button>
         </:actions>
       </.simple_form>
     </.card>
 
-    <.table_card title_text="Stored Submissions" is_scrollable>
+    <.table_card title_text={gettext("Stored Submissions")} is_scrollable>
       <:actions>
-        <.badge variant="secondary">{length(@entries)} total</.badge>
+        <.badge variant="secondary">{length(@entries)} {gettext("total")}</.badge>
         <.popconfirm
           :if={@entries != []}
           id="clear-all-confirm"
-          message="Remove all stored submissions for this session?"
+          message={gettext("Remove all stored submissions for this session?")}
           icon_variant="danger"
-          confirm_text="Clear all"
+          confirm_text={gettext("Clear all")}
           confirm_variant="danger"
           confirm_event="clear"
         >
           <.button variant="danger" size="sm">
-            <i class="fa-solid fa-trash"></i> Clear All
+            <i class="fa-solid fa-trash"></i> {gettext("Clear All")}
           </.button>
         </.popconfirm>
       </:actions>
@@ -418,23 +418,23 @@ defmodule DemoWeb.Live.FormDemoLive do
       </.callout>
 
       <.table :if={@entries != []} rows={@entries} is_striped>
-        <:col :let={e} label="Name">{full_name(e)}</:col>
-        <:col :let={e} label="Email">
+        <:col :let={e} label={gettext("Name")}>{full_name(e)}</:col>
+        <:col :let={e} label={gettext("Email")}>
           <a href={"mailto:" <> e.email} class="pa-link">{e.email}</a>
         </:col>
-        <:col :let={e} label="Department">
+        <:col :let={e} label={gettext("Department")}>
           <.badge :if={e.department != ""} variant="info">{e.department}</.badge>
           <span :if={e.department == ""} class="pa-text--secondary">—</span>
         </:col>
-        <:col :let={e} label="Start Date">
+        <:col :let={e} label={gettext("Start Date")}>
           <span :if={e.start_date == ""} class="pa-text--secondary">—</span>
           <span :if={e.start_date != ""}>{e.start_date}</span>
         </:col>
-        <:col :let={e} label="Bio" class="col-auto">
+        <:col :let={e} label={gettext("Bio")} class="col-auto">
           <span :if={e.bio == ""} class="pa-text--secondary">—</span>
           <span :if={e.bio != ""} title={e.bio}>{truncate(e.bio, 60)}</span>
         </:col>
-        <:col :let={e} label="Submitted">
+        <:col :let={e} label={gettext("Submitted")}>
           <span class="pa-text--secondary" title={PureAdmin.DateTime.format(e.inserted_at, :long_date_time)}>
             {PureAdmin.DateTime.relative(e.inserted_at)}
           </span>
@@ -443,7 +443,7 @@ defmodule DemoWeb.Live.FormDemoLive do
           <.button
             variant="danger"
             size="xs"
-            title="Delete entry"
+            title={gettext("Delete entry")}
             phx-click="delete"
             phx-value-id={e.id}
           >
@@ -452,7 +452,7 @@ defmodule DemoWeb.Live.FormDemoLive do
           <.button
             variant="secondary"
             size="xs"
-            title="Edit entry"
+            title={gettext("Edit entry")}
             phx-click="edit"
             phx-value-id={e.id}
           >
@@ -462,8 +462,8 @@ defmodule DemoWeb.Live.FormDemoLive do
       </.table>
     </.table_card>
 
-    <.card title_text="How it works">
-      <.heading level={4}>Form binding</.heading>
+    <.card title_text={gettext("How it works")}>
+      <.heading level={4}>{gettext("Form binding")}</.heading>
       <.basic_list>
         <li>
           <code>&lt;.simple_form for=&#123;@form&#125;&gt;</code> wraps a Phoenix form; every input uses
@@ -484,7 +484,7 @@ defmodule DemoWeb.Live.FormDemoLive do
         </li>
       </.basic_list>
 
-      <.heading level={4} class="mt-4">State & UX</.heading>
+      <.heading level={4} class="mt-4">{gettext("State & UX")}</.heading>
       <.basic_list>
         <li>
           Per-browser session id is planted in the cookie by <code>DemoWeb.SessionPlug</code>.

@@ -20,7 +20,7 @@ defmodule DemoWeb.Live.DocumentLive do
     </.paragraph>
 
     <%!-- Auto-numbered document --%>
-    <.card title_text="Auto-numbered sections">
+    <.card title_text={gettext("Auto-numbered sections")}>
       <.document>
         <.document_section heading="Introduction">
           <.document_text>
@@ -50,7 +50,7 @@ defmodule DemoWeb.Live.DocumentLive do
     <%!-- Density + flush --%>
     <.grid>
       <.column size="100" md="50">
-        <.card title_text="Compact density">
+        <.card title_text={gettext("Compact density")}>
           <.document density="compact">
             <.document_section heading="Terms">
               <.document_text>Tighter vertical rhythm between sections.</.document_text>
@@ -62,7 +62,7 @@ defmodule DemoWeb.Live.DocumentLive do
         </.card>
       </.column>
       <.column size="100" md="50">
-        <.card title_text="Flush (no indentation)">
+        <.card title_text={gettext("Flush (no indentation)")}>
           <.document is_flush>
             <.document_section heading="Terms">
               <.document_text>The number chain alone conveys the hierarchy.</.document_text>
@@ -76,7 +76,7 @@ defmodule DemoWeb.Live.DocumentLive do
     </.grid>
 
     <%!-- Manual numbering --%>
-    <.card title_text="Manual numbering (appendix scheme)">
+    <.card title_text={gettext("Manual numbering (appendix scheme)")}>
       <.paragraph class="pa-text-secondary">
         Set <code>is_manual</code> on the container and write each number via the
         <code>number</code> attr — for appendices or non-decimal schemes the auto engine can't produce.
@@ -95,7 +95,7 @@ defmodule DemoWeb.Live.DocumentLive do
     </.card>
 
     <%!-- Worked example: content mid-chapter --%>
-    <.card title_text="Non-section content mid-chapter">
+    <.card title_text={gettext("Non-section content mid-chapter")}>
       <.paragraph class="pa-text-secondary">
         A table (or any non-section content) between the heading and the nested sections does
         NOT disturb the numbering — only sections increment the counters.

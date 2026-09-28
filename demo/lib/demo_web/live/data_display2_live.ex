@@ -13,40 +13,40 @@ defmodule DemoWeb.Live.DataDisplay2Live do
          1. ANT DESIGN DESCRIPTIONS TABLE
          ============================================================ --%>
 
-    <.card title_text="1. Descriptions Table">
+    <.card title_text={gettext("1. Descriptions Table")}>
       <:description>Ant Design style. Label cells get a tinted background. Dense, structured, and very readable.</:description>
       <.desc_table>
-        <.desc_label>Company</.desc_label>
+        <.desc_label>{gettext("Company")}</.desc_label>
         <.desc_value>Novak &amp; Partners s.r.o.</.desc_value>
-        <.desc_label>Reg. No.</.desc_label>
+        <.desc_label>{gettext("Reg. No.")}</.desc_label>
         <.desc_value>CZ48207497</.desc_value>
-        <.desc_label>VAT ID</.desc_label>
+        <.desc_label>{gettext("VAT ID")}</.desc_label>
         <.desc_value>CZ48207497</.desc_value>
-        <.desc_label>Contact</.desc_label>
+        <.desc_label>{gettext("Contact")}</.desc_label>
         <.desc_value>Jan Novak</.desc_value>
-        <.desc_label>Email</.desc_label>
+        <.desc_label>{gettext("Email")}</.desc_label>
         <.desc_value>jan.novak@novakpartners.cz</.desc_value>
-        <.desc_label>Phone</.desc_label>
+        <.desc_label>{gettext("Phone")}</.desc_label>
         <.desc_value>+420 234 111 222</.desc_value>
-        <.desc_label>Notes</.desc_label>
+        <.desc_label>{gettext("Notes")}</.desc_label>
         <.desc_value is_full>Preferred carrier for Central European routes. Framework agreement renewed annually.</.desc_value>
       </.desc_table>
     </.card>
 
     <%!-- 2-column variant --%>
-    <.card title_text="1b. Descriptions Table (2 columns)">
+    <.card title_text={gettext("1b. Descriptions Table (2 columns)")}>
       <.desc_table cols="2">
-        <.desc_label>First Name</.desc_label>
+        <.desc_label>{gettext("First Name")}</.desc_label>
         <.desc_value>Elena</.desc_value>
-        <.desc_label>Last Name</.desc_label>
+        <.desc_label>{gettext("Last Name")}</.desc_label>
         <.desc_value>Petrova</.desc_value>
-        <.desc_label>Date of Birth</.desc_label>
+        <.desc_label>{gettext("Date of Birth")}</.desc_label>
         <.desc_value>14 March 1992</.desc_value>
-        <.desc_label>Role</.desc_label>
+        <.desc_label>{gettext("Role")}</.desc_label>
         <.desc_value>Senior Developer</.desc_value>
-        <.desc_label>Office</.desc_label>
+        <.desc_label>{gettext("Office")}</.desc_label>
         <.desc_value>Prague, Karlin</.desc_value>
-        <.desc_label>Start Date</.desc_label>
+        <.desc_label>{gettext("Start Date")}</.desc_label>
         <.desc_value>1 Sep 2019</.desc_value>
       </.desc_table>
     </.card>
@@ -54,31 +54,31 @@ defmodule DemoWeb.Live.DataDisplay2Live do
     <%!-- Fixed label width + truncate --%>
     <.grid>
       <.column size="1-2">
-        <.card title_text="1c. Descriptions Table — Fixed + Truncate">
+        <.card title_text={gettext("1c. Descriptions Table — Fixed + Truncate")}>
           <:description><code>--fixed</code> locks label columns to 14rem. <code>--truncate</code> clips long values with ellipsis.</:description>
           <.desc_table cols="2" is_fixed is_truncate>
-            <.desc_label>Company</.desc_label>
+            <.desc_label>{gettext("Company")}</.desc_label>
             <.desc_value>Novak &amp; Partners International Consulting Group s.r.o.</.desc_value>
-            <.desc_label>Reg. No.</.desc_label>
+            <.desc_label>{gettext("Reg. No.")}</.desc_label>
             <.desc_value>CZ48207497</.desc_value>
-            <.desc_label>Address</.desc_label>
+            <.desc_label>{gettext("Address")}</.desc_label>
             <.desc_value>Vinohradska 2468/164, Prague 3, Vinohrady, 130 00, Czech Republic</.desc_value>
-            <.desc_label>Email</.desc_label>
+            <.desc_label>{gettext("Email")}</.desc_label>
             <.desc_value>jan.novak@novakpartners-international.cz</.desc_value>
           </.desc_table>
         </.card>
       </.column>
       <.column size="1-2">
-        <.card title_text="1d. Descriptions Table — Custom Label Width">
+        <.card title_text={gettext("1d. Descriptions Table — Custom Label Width")}>
           <:description><code>--fixed</code> with <code>--label-width: 20rem</code> via CSS custom property.</:description>
           <.desc_table cols="2" is_fixed label_width="20rem">
-            <.desc_label>Full Legal Name</.desc_label>
+            <.desc_label>{gettext("Full Legal Name")}</.desc_label>
             <.desc_value>Elena Petrova</.desc_value>
-            <.desc_label>Date of Birth</.desc_label>
+            <.desc_label>{gettext("Date of Birth")}</.desc_label>
             <.desc_value>14 March 1992</.desc_value>
-            <.desc_label>Department</.desc_label>
+            <.desc_label>{gettext("Department")}</.desc_label>
             <.desc_value>Engineering</.desc_value>
-            <.desc_label>Employment Type</.desc_label>
+            <.desc_label>{gettext("Employment Type")}</.desc_label>
             <.desc_value>Full-time permanent</.desc_value>
           </.desc_table>
         </.card>
@@ -91,25 +91,25 @@ defmodule DemoWeb.Live.DataDisplay2Live do
 
     <.grid>
       <.column size="1-2">
-        <.card title_text="2. Dot Leaders">
+        <.card title_text={gettext("2. Dot Leaders")}>
           <:description>Restaurant menu / invoice style. Dotted line connects label to value.</:description>
           <.dot_leaders>
-            <.dot_leader label="Contract No." value="CTR-2025-00194" />
-            <.dot_leader label="Type" value="Framework Agreement" />
-            <.dot_leader label="Status" value="Active" />
-            <.dot_leader label="Renewal Date" value="1 Jan 2027" />
-            <.dot_leader label="Seats" value="48 / 50" />
+            <.dot_leader label={gettext("Contract No.")} value="CTR-2025-00194" />
+            <.dot_leader label={gettext("Type")} value="Framework Agreement" />
+            <.dot_leader label={gettext("Status")} value="Active" />
+            <.dot_leader label={gettext("Renewal Date")} value="1 Jan 2027" />
+            <.dot_leader label={gettext("Seats")} value="48 / 50" />
           </.dot_leaders>
         </.card>
       </.column>
       <.column size="1-2">
-        <.card title_text="2b. Dot Leaders — Invoice Totals">
+        <.card title_text={gettext("2b. Dot Leaders — Invoice Totals")}>
           <:description>Perfect for financial summaries.</:description>
           <.dot_leaders>
-            <.dot_leader label="Subtotal" value="$2,094.00" />
-            <.dot_leader label="Shipping" value="$24.00" />
+            <.dot_leader label={gettext("Subtotal")} value="$2,094.00" />
+            <.dot_leader label={gettext("Shipping")} value="$24.00" />
             <.dot_leader label="VAT 21%" value="$439.74" />
-            <.dot_leader label="Total" value="$2,557.74" is_total />
+            <.dot_leader label={gettext("Total")} value="$2,557.74" is_total />
           </.dot_leaders>
         </.card>
       </.column>
@@ -121,28 +121,28 @@ defmodule DemoWeb.Live.DataDisplay2Live do
 
     <.grid>
       <.column size="1-2">
-        <.card title_text="3. Property Card">
+        <.card title_text={gettext("3. Property Card")}>
           <:description>Grouped in bordered card with thin dividers. Clean, professional.</:description>
-          <.prop_card header="Order Details">
-            <.prop_card_row label="Order ID" value="#ORD-2026-00847" />
-            <.prop_card_row label="Date" value="28 January 2026" />
-            <.prop_card_row label="Status"><.badge variant="success">Delivered</.badge></.prop_card_row>
-            <.prop_card_row label="Payment" value="Visa *4242" />
-            <.prop_card_row label="Total" is_bold>$1,249.00</.prop_card_row>
+          <.prop_card header={gettext("Order Details")}>
+            <.prop_card_row label={gettext("Order ID")} value="#ORD-2026-00847" />
+            <.prop_card_row label={gettext("Date")} value="28 January 2026" />
+            <.prop_card_row label={gettext("Status")}><.badge variant="success">Delivered</.badge></.prop_card_row>
+            <.prop_card_row label={gettext("Payment")} value="Visa *4242" />
+            <.prop_card_row label={gettext("Total")} is_bold>$1,249.00</.prop_card_row>
           </.prop_card>
         </.card>
       </.column>
       <.column size="1-2">
-        <.card title_text="3b. Property Card — Stacked">
+        <.card title_text={gettext("3b. Property Card — Stacked")}>
           <:description>Multiple property groups in sequence.</:description>
-          <.prop_card header="Customer" class="mb-4">
-            <.prop_card_row label="Name" value="Elena Petrova" />
-            <.prop_card_row label="Email" value="elena.petrova@example.com" />
-            <.prop_card_row label="Phone" value="+420 776 123 456" />
+          <.prop_card header={gettext("Customer")} class="mb-4">
+            <.prop_card_row label={gettext("Name")} value="Elena Petrova" />
+            <.prop_card_row label={gettext("Email")} value="elena.petrova@example.com" />
+            <.prop_card_row label={gettext("Phone")} value="+420 776 123 456" />
           </.prop_card>
-          <.prop_card header="Shipping">
-            <.prop_card_row label="Address" value="Vinohradska 2468/164, Prague 3" />
-            <.prop_card_row label="Method" value="Express (2-day)" />
+          <.prop_card header={gettext("Shipping")}>
+            <.prop_card_row label={gettext("Address")} value="Vinohradska 2468/164, Prague 3" />
+            <.prop_card_row label={gettext("Method")} value="Express (2-day)" />
           </.prop_card>
         </.card>
       </.column>
@@ -154,17 +154,17 @@ defmodule DemoWeb.Live.DataDisplay2Live do
 
     <.grid>
       <.column size="1-3">
-        <.card title_text="4. Linear Minimal">
+        <.card title_text={gettext("4. Linear Minimal")}>
           <:description>Ultra-clean. Only weight + color contrast. No decoration.</:description>
           <div class="pa-fields-container">
             <.fields is_linear is_no_border>
-              <.field label="Status"><.badge variant="success">Active</.badge></.field>
-              <.field label="Priority">High</.field>
-              <.field label="Assignee">Elena Petrova</.field>
-              <.field label="Created">28 Jan 2026</.field>
-              <.field label="Due Date">14 Feb 2026</.field>
-              <.field label="Project">Platform v2</.field>
-              <.field label="Labels">
+              <.field label={gettext("Status")}><.badge variant="success">Active</.badge></.field>
+              <.field label={gettext("Priority")}>High</.field>
+              <.field label={gettext("Assignee")}>Elena Petrova</.field>
+              <.field label={gettext("Created")}>28 Jan 2026</.field>
+              <.field label={gettext("Due Date")}>14 Feb 2026</.field>
+              <.field label={gettext("Project")}>Platform v2</.field>
+              <.field label={gettext("Labels")}>
                 <.badge>Frontend</.badge>
                 <.badge>UX</.badge>
               </.field>
@@ -174,31 +174,31 @@ defmodule DemoWeb.Live.DataDisplay2Live do
       </.column>
 
       <.column size="1-3">
-        <.card title_text="5. Inline Chips">
+        <.card title_text={gettext("5. Inline Chips")}>
           <:description>Properties as flowing inline pairs. Value in a chip/pill.</:description>
           <div class="pa-fields-container">
             <.fields is_chips is_no_border>
-              <.field label="Status" value_variant="success">Active</.field>
-              <.field label="Role">Senior Dev</.field>
-              <.field label="Team">Platform</.field>
-              <.field label="Office">Prague</.field>
-              <.field label="Start">2019</.field>
-              <.field label="Contract" value_variant="warning">Renewal</.field>
+              <.field label={gettext("Status")} value_variant="success">Active</.field>
+              <.field label={gettext("Role")}>Senior Dev</.field>
+              <.field label={gettext("Team")}>Platform</.field>
+              <.field label={gettext("Office")}>Prague</.field>
+              <.field label={gettext("Start")}>2019</.field>
+              <.field label={gettext("Contract")} value_variant="warning">Renewal</.field>
             </.fields>
           </div>
         </.card>
       </.column>
 
       <.column size="1-3">
-        <.card title_text="7. Banded Rows" has_padding={false}>
+        <.card title_text={gettext("7. Banded Rows")} has_padding={false}>
           <:description>Label gets a fixed-width tinted column. Clear visual anchor.</:description>
           <div class="pa-banded-container">
             <.banded>
-              <.banded_row label="Server" value="prod-api-01" />
-              <.banded_row label="IP Address" value="10.0.12.45" />
+              <.banded_row label={gettext("Server")} value="prod-api-01" />
+              <.banded_row label={gettext("IP Address")} value="10.0.12.45" />
               <.banded_row label="OS" value="Ubuntu 22.04 LTS" />
-              <.banded_row label="Memory" value="16 GB DDR5" />
-              <.banded_row label="Uptime" value="47 days" />
+              <.banded_row label={gettext("Memory")} value="16 GB DDR5" />
+              <.banded_row label={gettext("Uptime")} value="47 days" />
             </.banded>
           </div>
         </.card>
@@ -208,40 +208,40 @@ defmodule DemoWeb.Live.DataDisplay2Live do
     <%!-- Banded width variants --%>
     <.grid>
       <.column size="1-3">
-        <.card title_text="7b. Banded — Narrow" has_padding={false}>
+        <.card title_text={gettext("7b. Banded — Narrow")} has_padding={false}>
           <:description><code>pa-banded--narrow</code> — 10rem label band.</:description>
           <div class="pa-banded-container">
             <.banded is_narrow>
-              <.banded_row label="Server" value="prod-api-01" />
-              <.banded_row label="IP Address" value="10.0.12.45" />
+              <.banded_row label={gettext("Server")} value="prod-api-01" />
+              <.banded_row label={gettext("IP Address")} value="10.0.12.45" />
               <.banded_row label="OS" value="Ubuntu 22.04 LTS" />
-              <.banded_row label="Memory" value="16 GB DDR5" />
+              <.banded_row label={gettext("Memory")} value="16 GB DDR5" />
             </.banded>
           </div>
         </.card>
       </.column>
       <.column size="1-3">
-        <.card title_text="7c. Banded — Default" has_padding={false}>
+        <.card title_text={gettext("7c. Banded — Default")} has_padding={false}>
           <:description>No modifier — default 14rem label band.</:description>
           <div class="pa-banded-container">
             <.banded>
-              <.banded_row label="Server" value="prod-api-01" />
-              <.banded_row label="IP Address" value="10.0.12.45" />
+              <.banded_row label={gettext("Server")} value="prod-api-01" />
+              <.banded_row label={gettext("IP Address")} value="10.0.12.45" />
               <.banded_row label="OS" value="Ubuntu 22.04 LTS" />
-              <.banded_row label="Memory" value="16 GB DDR5" />
+              <.banded_row label={gettext("Memory")} value="16 GB DDR5" />
             </.banded>
           </div>
         </.card>
       </.column>
       <.column size="1-3">
-        <.card title_text="7d. Banded — Wide" has_padding={false}>
+        <.card title_text={gettext("7d. Banded — Wide")} has_padding={false}>
           <:description><code>pa-banded--wide</code> — 20rem label band.</:description>
           <div class="pa-banded-container">
             <.banded is_wide>
-              <.banded_row label="Server" value="prod-api-01" />
-              <.banded_row label="IP Address" value="10.0.12.45" />
+              <.banded_row label={gettext("Server")} value="prod-api-01" />
+              <.banded_row label={gettext("IP Address")} value="10.0.12.45" />
               <.banded_row label="OS" value="Ubuntu 22.04 LTS" />
-              <.banded_row label="Memory" value="16 GB DDR5" />
+              <.banded_row label={gettext("Memory")} value="16 GB DDR5" />
             </.banded>
           </div>
         </.card>
@@ -251,20 +251,20 @@ defmodule DemoWeb.Live.DataDisplay2Live do
     <%!-- Banded truncate + utility width --%>
     <.grid>
       <.column size="1-2">
-        <.card title_text="7e. Banded — Truncate" has_padding={false}>
+        <.card title_text={gettext("7e. Banded — Truncate")} has_padding={false}>
           <:description><code>--truncate</code> clips long values with ellipsis.</:description>
           <div class="pa-banded-container">
             <.banded is_truncate>
-              <.banded_row label="Server" value="prod-api-gateway-eu-west-01.internal.novakpartners.cz" />
-              <.banded_row label="Path" value="/var/lib/docker/containers/a1b2c3d4e5f6/config.v2.json" />
-              <.banded_row label="Hash" value="sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" />
-              <.banded_row label="Cert">CN=*.novakpartners.cz, O=Novak &amp; Partners, L=Prague, C=CZ</.banded_row>
+              <.banded_row label={gettext("Server")} value="prod-api-gateway-eu-west-01.internal.novakpartners.cz" />
+              <.banded_row label={gettext("Path")} value="/var/lib/docker/containers/a1b2c3d4e5f6/config.v2.json" />
+              <.banded_row label={gettext("Hash")} value="sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" />
+              <.banded_row label={gettext("Cert")}>CN=*.novakpartners.cz, O=Novak &amp; Partners, L=Prague, C=CZ</.banded_row>
             </.banded>
           </div>
         </.card>
       </.column>
       <.column size="1-2">
-        <.card title_text="7f. Banded — wr-* Utility Width" has_padding={false}>
+        <.card title_text={gettext("7f. Banded — wr-* Utility Width")} has_padding={false}>
           <:description>Label width set per-label with <code>wr-8</code> utility class (8rem).</:description>
           <div class="pa-banded-container">
             <div class="pa-banded pa-banded--truncate">
@@ -293,27 +293,27 @@ defmodule DemoWeb.Live.DataDisplay2Live do
     <%!-- Banded + desc-table multiline wrap --%>
     <.grid>
       <.column size="1-2">
-        <.card title_text="7g. Banded — Multiline (default top)" has_padding={false}>
+        <.card title_text={gettext("7g. Banded — Multiline (default top)")} has_padding={false}>
           <:description>Labels top-align by default when values wrap to multiple lines.</:description>
           <div class="pa-banded-container">
             <.banded>
-              <.banded_row label="Server" value="prod-api-01" />
-              <.banded_row label="Description" value="Primary API gateway for Central European region. Handles authentication, rate limiting, and request routing to downstream microservices." />
-              <.banded_row label="Tags" value="production, eu-west, api-gateway, load-balanced, auto-scaling, monitored, pci-compliant" />
-              <.banded_row label="Notes" value="Scheduled for maintenance window on 2026-03-01 02:00 UTC. Failover to prod-api-02 will be active during this period. Contact SRE team before any manual restarts." />
+              <.banded_row label={gettext("Server")} value="prod-api-01" />
+              <.banded_row label={gettext("Description")} value="Primary API gateway for Central European region. Handles authentication, rate limiting, and request routing to downstream microservices." />
+              <.banded_row label={gettext("Tags")} value="production, eu-west, api-gateway, load-balanced, auto-scaling, monitored, pci-compliant" />
+              <.banded_row label={gettext("Notes")} value="Scheduled for maintenance window on 2026-03-01 02:00 UTC. Failover to prod-api-02 will be active during this period. Contact SRE team before any manual restarts." />
             </.banded>
           </div>
         </.card>
       </.column>
       <.column size="1-2">
-        <.card title_text="7h. Banded — Multiline + --middle" has_padding={false}>
+        <.card title_text={gettext("7h. Banded — Multiline + --middle")} has_padding={false}>
           <:description><code>pa-banded--middle</code> vertically centers labels against wrapped values.</:description>
           <div class="pa-banded-container">
             <.banded is_middle>
-              <.banded_row label="Server" value="prod-api-01" />
-              <.banded_row label="Description">Primary API gateway for Central European region. Handles authentication, rate limiting, and request routing to downstream microservices.</.banded_row>
-              <.banded_row label="Tags">production, eu-west, api-gateway, load-balanced, auto-scaling, monitored, pci-compliant</.banded_row>
-              <.banded_row label="Notes">Scheduled for maintenance window on 2026-03-01 02:00 UTC. Failover to prod-api-02 will be active during this period. Contact SRE team before any manual restarts.</.banded_row>
+              <.banded_row label={gettext("Server")} value="prod-api-01" />
+              <.banded_row label={gettext("Description")}>Primary API gateway for Central European region. Handles authentication, rate limiting, and request routing to downstream microservices.</.banded_row>
+              <.banded_row label={gettext("Tags")}>production, eu-west, api-gateway, load-balanced, auto-scaling, monitored, pci-compliant</.banded_row>
+              <.banded_row label={gettext("Notes")}>Scheduled for maintenance window on 2026-03-01 02:00 UTC. Failover to prod-api-02 will be active during this period. Contact SRE team before any manual restarts.</.banded_row>
             </.banded>
           </div>
         </.card>
@@ -323,31 +323,31 @@ defmodule DemoWeb.Live.DataDisplay2Live do
     <%!-- Desc-table multiline: top (default) vs middle --%>
     <.grid>
       <.column size="1-2">
-        <.card title_text="1e. Desc Table — Multiline (default top)">
+        <.card title_text={gettext("1e. Desc Table — Multiline (default top)")}>
           <:description>Labels top-align by default in grid cells.</:description>
           <.desc_table cols="2">
-            <.desc_label>Company</.desc_label>
+            <.desc_label>{gettext("Company")}</.desc_label>
             <.desc_value>Novak &amp; Partners s.r.o.</.desc_value>
-            <.desc_label>Address</.desc_label>
+            <.desc_label>{gettext("Address")}</.desc_label>
             <.desc_value>Vinohradska 2468/164, Prague 3, Vinohrady, 130 00, Czech Republic</.desc_value>
-            <.desc_label>Notes</.desc_label>
+            <.desc_label>{gettext("Notes")}</.desc_label>
             <.desc_value>Preferred carrier for Central European routes. Framework agreement renewed annually. Contact Jan Novak for any billing disputes or special rate negotiations.</.desc_value>
-            <.desc_label>Status</.desc_label>
+            <.desc_label>{gettext("Status")}</.desc_label>
             <.desc_value>Active</.desc_value>
           </.desc_table>
         </.card>
       </.column>
       <.column size="1-2">
-        <.card title_text="1f. Desc Table — Multiline + --middle">
+        <.card title_text={gettext("1f. Desc Table — Multiline + --middle")}>
           <:description>Cells stretch to fill the row, content centered inside. Label backgrounds fill the full row height.</:description>
           <.desc_table cols="2" is_middle>
-            <.desc_label>Company</.desc_label>
+            <.desc_label>{gettext("Company")}</.desc_label>
             <.desc_value>Novak &amp; Partners s.r.o.</.desc_value>
-            <.desc_label>Address</.desc_label>
+            <.desc_label>{gettext("Address")}</.desc_label>
             <.desc_value>Vinohradska 2468/164, Prague 3, Vinohrady, 130 00, Czech Republic</.desc_value>
-            <.desc_label>Notes</.desc_label>
+            <.desc_label>{gettext("Notes")}</.desc_label>
             <.desc_value>Preferred carrier for Central European routes. Framework agreement renewed annually. Contact Jan Novak for any billing disputes or special rate negotiations.</.desc_value>
-            <.desc_label>Status</.desc_label>
+            <.desc_label>{gettext("Status")}</.desc_label>
             <.desc_value>Active</.desc_value>
           </.desc_table>
         </.card>
@@ -357,34 +357,34 @@ defmodule DemoWeb.Live.DataDisplay2Live do
     <%!-- Label horizontal alignment --%>
     <.grid>
       <.column size="1-3">
-        <.card title_text="Banded — Label Start (default)" has_padding={false}>
+        <.card title_text={gettext("Banded — Label Start (default)")} has_padding={false}>
           <div class="pa-banded-container">
             <.banded>
-              <.banded_row label="Server" value="prod-api-01" />
-              <.banded_row label="IP Address" value="10.0.12.45" />
-              <.banded_row label="Memory" value="16 GB DDR5" />
+              <.banded_row label={gettext("Server")} value="prod-api-01" />
+              <.banded_row label={gettext("IP Address")} value="10.0.12.45" />
+              <.banded_row label={gettext("Memory")} value="16 GB DDR5" />
             </.banded>
           </div>
         </.card>
       </.column>
       <.column size="1-3">
-        <.card title_text="Banded — --label-end" has_padding={false}>
+        <.card title_text={gettext("Banded — --label-end")} has_padding={false}>
           <div class="pa-banded-container">
             <.banded is_label_end>
-              <.banded_row label="Server" value="prod-api-01" />
-              <.banded_row label="IP Address" value="10.0.12.45" />
-              <.banded_row label="Memory" value="16 GB DDR5" />
+              <.banded_row label={gettext("Server")} value="prod-api-01" />
+              <.banded_row label={gettext("IP Address")} value="10.0.12.45" />
+              <.banded_row label={gettext("Memory")} value="16 GB DDR5" />
             </.banded>
           </div>
         </.card>
       </.column>
       <.column size="1-3">
-        <.card title_text="Banded — --label-center" has_padding={false}>
+        <.card title_text={gettext("Banded — --label-center")} has_padding={false}>
           <div class="pa-banded-container">
             <.banded is_label_center>
-              <.banded_row label="Server" value="prod-api-01" />
-              <.banded_row label="IP Address" value="10.0.12.45" />
-              <.banded_row label="Memory" value="16 GB DDR5" />
+              <.banded_row label={gettext("Server")} value="prod-api-01" />
+              <.banded_row label={gettext("IP Address")} value="10.0.12.45" />
+              <.banded_row label={gettext("Memory")} value="16 GB DDR5" />
             </.banded>
           </div>
         </.card>
@@ -393,37 +393,37 @@ defmodule DemoWeb.Live.DataDisplay2Live do
 
     <.grid>
       <.column size="1-3">
-        <.card title_text="Desc Table — Label Start (default)">
+        <.card title_text={gettext("Desc Table — Label Start (default)")}>
           <.desc_table cols="2" is_fixed>
-            <.desc_label>Server</.desc_label>
+            <.desc_label>{gettext("Server")}</.desc_label>
             <.desc_value>prod-api-01</.desc_value>
-            <.desc_label>IP Address</.desc_label>
+            <.desc_label>{gettext("IP Address")}</.desc_label>
             <.desc_value>10.0.12.45</.desc_value>
-            <.desc_label>Memory</.desc_label>
+            <.desc_label>{gettext("Memory")}</.desc_label>
             <.desc_value>16 GB DDR5</.desc_value>
           </.desc_table>
         </.card>
       </.column>
       <.column size="1-3">
-        <.card title_text="Desc Table — --label-end">
+        <.card title_text={gettext("Desc Table — --label-end")}>
           <.desc_table cols="2" is_fixed is_label_end>
-            <.desc_label>Server</.desc_label>
+            <.desc_label>{gettext("Server")}</.desc_label>
             <.desc_value>prod-api-01</.desc_value>
-            <.desc_label>IP Address</.desc_label>
+            <.desc_label>{gettext("IP Address")}</.desc_label>
             <.desc_value>10.0.12.45</.desc_value>
-            <.desc_label>Memory</.desc_label>
+            <.desc_label>{gettext("Memory")}</.desc_label>
             <.desc_value>16 GB DDR5</.desc_value>
           </.desc_table>
         </.card>
       </.column>
       <.column size="1-3">
-        <.card title_text="Desc Table — --label-center">
+        <.card title_text={gettext("Desc Table — --label-center")}>
           <.desc_table cols="2" is_fixed is_label_center>
-            <.desc_label>Server</.desc_label>
+            <.desc_label>{gettext("Server")}</.desc_label>
             <.desc_value>prod-api-01</.desc_value>
-            <.desc_label>IP Address</.desc_label>
+            <.desc_label>{gettext("IP Address")}</.desc_label>
             <.desc_value>10.0.12.45</.desc_value>
-            <.desc_label>Memory</.desc_label>
+            <.desc_label>{gettext("Memory")}</.desc_label>
             <.desc_value>16 GB DDR5</.desc_value>
           </.desc_table>
         </.card>
@@ -436,23 +436,23 @@ defmodule DemoWeb.Live.DataDisplay2Live do
 
     <.grid>
       <.column size="1-2">
-        <.card title_text="Normal Card + Accent-Bar">
+        <.card title_text={gettext("Normal Card + Accent-Bar")}>
           <.accent_grid>
-            <.accent_grid_item label="Order ID" value="#ORD-2026-00847" />
-            <.accent_grid_item label="Status" value="Delivered" variant="success" />
-            <.accent_grid_item label="Payment" value="Visa *4242" variant="info" />
-            <.accent_grid_item label="Customer" value="Elena Petrova" />
+            <.accent_grid_item label={gettext("Order ID")} value="#ORD-2026-00847" />
+            <.accent_grid_item label={gettext("Status")} value="Delivered" variant="success" />
+            <.accent_grid_item label={gettext("Payment")} value="Visa *4242" variant="info" />
+            <.accent_grid_item label={gettext("Customer")} value="Elena Petrova" />
           </.accent_grid>
         </.card>
       </.column>
       <.column size="1-2">
-        <.card title_text="Ghost Card + Accent-Bar" is_ghost>
+        <.card title_text={gettext("Ghost Card + Accent-Bar")} is_ghost>
           <:description><code>pa-card--ghost</code> — same sizing, no visible container.</:description>
           <.accent_grid>
-            <.accent_grid_item label="Order ID" value="#ORD-2026-00847" />
-            <.accent_grid_item label="Status" value="Delivered" variant="success" />
-            <.accent_grid_item label="Payment" value="Visa *4242" variant="info" />
-            <.accent_grid_item label="Customer" value="Elena Petrova" />
+            <.accent_grid_item label={gettext("Order ID")} value="#ORD-2026-00847" />
+            <.accent_grid_item label={gettext("Status")} value="Delivered" variant="success" />
+            <.accent_grid_item label={gettext("Payment")} value="Visa *4242" variant="info" />
+            <.accent_grid_item label={gettext("Customer")} value="Elena Petrova" />
           </.accent_grid>
         </.card>
       </.column>
@@ -462,15 +462,15 @@ defmodule DemoWeb.Live.DataDisplay2Live do
          8. ACCENT-BAR MINI CARDS
          ============================================================ --%>
 
-    <.card title_text="8. Accent-Bar Grid" is_ghost>
+    <.card title_text={gettext("8. Accent-Bar Grid")} is_ghost>
       <:description>Each property gets a color-coded left border. Good for status-heavy panels.</:description>
       <.accent_grid>
-        <.accent_grid_item label="Order ID" value="#ORD-2026-00847" />
-        <.accent_grid_item label="Status" value="Delivered" variant="success" />
-        <.accent_grid_item label="Payment" value="Visa *4242" variant="info" />
-        <.accent_grid_item label="Customer" value="Elena Petrova" />
-        <.accent_grid_item label="Renewal" value="1 Jan 2027" variant="warning" />
-        <.accent_grid_item label="Total" value="$1,249.00" />
+        <.accent_grid_item label={gettext("Order ID")} value="#ORD-2026-00847" />
+        <.accent_grid_item label={gettext("Status")} value="Delivered" variant="success" />
+        <.accent_grid_item label={gettext("Payment")} value="Visa *4242" variant="info" />
+        <.accent_grid_item label={gettext("Customer")} value="Elena Petrova" />
+        <.accent_grid_item label={gettext("Renewal")} value="1 Jan 2027" variant="warning" />
+        <.accent_grid_item label={gettext("Total")} value="$1,249.00" />
       </.accent_grid>
     </.card>
 
@@ -478,11 +478,11 @@ defmodule DemoWeb.Live.DataDisplay2Live do
          COPYABLE FIELDS
          ============================================================ --%>
 
-    <.card title_text="Copyable Fields">
+    <.card title_text={gettext("Copyable Fields")}>
       <:description>Three copy-to-clipboard styles applied to the new data display patterns. Click to test each variant.</:description>
       <.grid>
         <.column size="1-3">
-          <.heading level={4}>Copy Button (always visible)</.heading>
+          <.heading level={4}>{gettext("Copy Button (always visible)")}</.heading>
           <p class="text-secondary mb-2"><code>pa-banded__row--copy-btn</code></p>
           <div class="pa-banded">
             <div class="pa-banded__row pa-banded__row--copy-btn">
@@ -506,7 +506,7 @@ defmodule DemoWeb.Live.DataDisplay2Live do
           </div>
         </.column>
         <.column size="1-3">
-          <.heading level={4}>Click Value to Copy</.heading>
+          <.heading level={4}>{gettext("Click Value to Copy")}</.heading>
           <p class="text-secondary mb-2"><code>pa-banded__row--copy-click</code></p>
           <div class="pa-banded">
             <div class="pa-banded__row pa-banded__row--copy-click">
@@ -520,7 +520,7 @@ defmodule DemoWeb.Live.DataDisplay2Live do
           </div>
         </.column>
         <.column size="1-3">
-          <.heading level={4}>Icon on Hover Only</.heading>
+          <.heading level={4}>{gettext("Icon on Hover Only")}</.heading>
           <p class="text-secondary mb-2"><code>pa-banded__row--copy-hover</code></p>
           <div class="pa-banded">
             <div class="pa-banded__row pa-banded__row--copy-hover">
@@ -547,7 +547,7 @@ defmodule DemoWeb.Live.DataDisplay2Live do
 
       <.grid class="mt-8">
         <.column size="1-2">
-          <.heading level={4}>Property Card — Hover Copy</.heading>
+          <.heading level={4}>{gettext("Property Card — Hover Copy")}</.heading>
           <p class="text-secondary mb-2"><code>pa-prop-card__row--copy-hover</code></p>
           <div class="pa-prop-card">
             <div class="pa-prop-card__header">Order Details</div>
@@ -580,7 +580,7 @@ defmodule DemoWeb.Live.DataDisplay2Live do
           </div>
         </.column>
         <.column size="1-2">
-          <.heading level={4}>Descriptions Table — Copy Button</.heading>
+          <.heading level={4}>{gettext("Descriptions Table — Copy Button")}</.heading>
           <p class="text-secondary mb-2"><code>pa-desc-table__value--copy-btn</code></p>
           <div class="pa-desc-container">
             <div class="pa-desc-table pa-desc-table--cols-2">
@@ -617,7 +617,7 @@ defmodule DemoWeb.Live.DataDisplay2Live do
         </.column>
       </.grid>
 
-      <.heading level={4} class="mt-8">Accent Grid — Hover Copy</.heading>
+      <.heading level={4} class="mt-8">{gettext("Accent Grid — Hover Copy")}</.heading>
       <p class="text-secondary mb-2"><code>pa-accent-grid__item--copy-hover</code></p>
       <div class="pa-accent-grid">
         <div class="pa-accent-grid__item pa-accent-grid__item--copy-hover">
@@ -673,66 +673,66 @@ defmodule DemoWeb.Live.DataDisplay2Live do
          REAL-WORLD: Full Invoice using multiple patterns
          ============================================================ --%>
 
-    <.card title_text="Real-World: Invoice combining patterns">
+    <.card title_text={gettext("Real-World: Invoice combining patterns")}>
       <:description>Descriptions table for customer, banded rows for addresses, dot leaders for totals.</:description>
 
       <%!-- Customer: Ant-style descriptions --%>
-      <.heading level={4} class="mb-2">Customer</.heading>
+      <.heading level={4} class="mb-2">{gettext("Customer")}</.heading>
       <.desc_table class="mb-8">
-        <.desc_label>Name</.desc_label>
+        <.desc_label>{gettext("Name")}</.desc_label>
         <.desc_value>Novak &amp; Partners s.r.o.</.desc_value>
-        <.desc_label>Reg. No.</.desc_label>
+        <.desc_label>{gettext("Reg. No.")}</.desc_label>
         <.desc_value>CZ48207497</.desc_value>
-        <.desc_label>VAT ID</.desc_label>
+        <.desc_label>{gettext("VAT ID")}</.desc_label>
         <.desc_value>CZ48207497</.desc_value>
-        <.desc_label>Contact</.desc_label>
+        <.desc_label>{gettext("Contact")}</.desc_label>
         <.desc_value>Jan Novak</.desc_value>
-        <.desc_label>Email</.desc_label>
+        <.desc_label>{gettext("Email")}</.desc_label>
         <.desc_value>jan.novak@novakpartners.cz</.desc_value>
-        <.desc_label>Phone</.desc_label>
+        <.desc_label>{gettext("Phone")}</.desc_label>
         <.desc_value>+420 234 111 222</.desc_value>
       </.desc_table>
 
       <%!-- Addresses: Banded rows side-by-side --%>
       <.grid class="mb-8">
         <.column size="1-2">
-          <.heading level={4} class="mb-2">Receipt Address</.heading>
+          <.heading level={4} class="mb-2">{gettext("Receipt Address")}</.heading>
           <.banded>
-            <.banded_row label="Street" value="Vinohradska 2468/164" />
-            <.banded_row label="City" value="Prague 3, 130 00" />
-            <.banded_row label="Country" value="Czech Republic" />
+            <.banded_row label={gettext("Street")} value="Vinohradska 2468/164" />
+            <.banded_row label={gettext("City")} value="Prague 3, 130 00" />
+            <.banded_row label={gettext("Country")} value="Czech Republic" />
           </.banded>
         </.column>
         <.column size="1-2">
-          <.heading level={4} class="mb-2">Delivery Address</.heading>
+          <.heading level={4} class="mb-2">{gettext("Delivery Address")}</.heading>
           <.banded>
-            <.banded_row label="Street" value="Prumyslova 1234/5" />
-            <.banded_row label="City" value="Brno-Slatina, 627 00" />
-            <.banded_row label="Country" value="Czech Republic" />
+            <.banded_row label={gettext("Street")} value="Prumyslova 1234/5" />
+            <.banded_row label={gettext("City")} value="Brno-Slatina, 627 00" />
+            <.banded_row label={gettext("Country")} value="Czech Republic" />
           </.banded>
         </.column>
       </.grid>
 
       <%!-- Items: regular table --%>
-      <.heading level={4} class="mb-2">Items</.heading>
+      <.heading level={4} class="mb-2">{gettext("Items")}</.heading>
       <.table rows={[
         %{product: "Mechanical Keyboard", sku: "KB-MX-BRN", qty: "2", price: "$149", total: "$298"},
         %{product: "27\" 4K Monitor", sku: "MON-27-4K", qty: "4", price: "$449", total: "$1,796"}
       ]} is_striped class="mb-8">
-        <:col :let={row} label="Product">{row.product}</:col>
+        <:col :let={row} label={gettext("Product")}>{row.product}</:col>
         <:col :let={row} label="SKU">{row.sku}</:col>
-        <:col :let={row} label="Qty" align="end">{row.qty}</:col>
-        <:col :let={row} label="Price" align="end">{row.price}</:col>
-        <:col :let={row} label="Total" align="end">{row.total}</:col>
+        <:col :let={row} label={gettext("Qty")} align="end">{row.qty}</:col>
+        <:col :let={row} label={gettext("Price")} align="end">{row.price}</:col>
+        <:col :let={row} label={gettext("Total")} align="end">{row.total}</:col>
       </.table>
 
       <%!-- Totals: Dot leaders --%>
       <div style="max-width: 28rem; margin-inline-start: auto;">
         <.dot_leaders>
-          <.dot_leader label="Subtotal" value="$2,094.00" />
-          <.dot_leader label="Shipping" value="$24.00" />
+          <.dot_leader label={gettext("Subtotal")} value="$2,094.00" />
+          <.dot_leader label={gettext("Shipping")} value="$24.00" />
           <.dot_leader label="VAT 21%" value="$439.74" />
-          <.dot_leader label="Total" value="$2,557.74" is_total />
+          <.dot_leader label={gettext("Total")} value="$2,557.74" is_total />
         </.dot_leaders>
       </div>
     </.card>
@@ -741,7 +741,7 @@ defmodule DemoWeb.Live.DataDisplay2Live do
          CSS REFERENCE
          ============================================================ --%>
 
-    <.card title_text="CSS Reference" has_padding={false}>
+    <.card title_text={gettext("CSS Reference")} has_padding={false}>
       <table class="pa-table pa-table--striped">
         <thead>
           <tr>

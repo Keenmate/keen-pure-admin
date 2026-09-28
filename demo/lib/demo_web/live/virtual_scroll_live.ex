@@ -64,10 +64,10 @@ defmodule DemoWeb.Live.VirtualScrollLive do
   def render(assigns) do
     ~H"""
     <%!-- How It Works --%>
-    <.card title_text="How It Works">
+    <.card title_text={gettext("How It Works")}>
       <.grid>
         <.column size="50">
-          <.heading level={4}>Virtual Scroll (True Virtualization)</.heading>
+          <.heading level={4}>{gettext("Virtual Scroll (True Virtualization)")}</.heading>
           <.basic_list>
             <li><strong>Constant DOM size</strong> - Only ~20 items in DOM regardless of total dataset</li>
             <li><strong>Performance</strong> - Can handle millions of items smoothly</li>
@@ -77,7 +77,7 @@ defmodule DemoWeb.Live.VirtualScrollLive do
           </.basic_list>
         </.column>
         <.column size="50">
-          <.heading level={4}>Infinite Scroll (Lazy Loading)</.heading>
+          <.heading level={4}>{gettext("Infinite Scroll (Lazy Loading)")}</.heading>
           <.basic_list>
             <li><strong>Growing DOM</strong> - All loaded items stay in DOM</li>
             <li><strong>Performance</strong> - Good for hundreds/low thousands of items</li>
@@ -90,31 +90,31 @@ defmodule DemoWeb.Live.VirtualScrollLive do
     </.card>
 
     <%!-- Virtual Scroll Examples --%>
-    <.section title_text="Virtual Scroll Examples">
+    <.section title_text={gettext("Virtual Scroll Examples")}>
       <.paragraph class="mb-4">True virtualization - constant DOM size</.paragraph>
       <.grid>
         <.column size="50">
-          <.card title_text="Timeline - 5000 Items">
-            <:description>Only ~20 items in DOM at any time</:description>
+          <.card title_text={gettext("Timeline - 5000 Items")}>
+            <:description>{gettext("Only ~20 items in DOM at any time")}</:description>
             <.callout variant="warning">
-              <:title>Not Yet Supported</:title>
+              <:title>{gettext("Not Yet Supported")}</:title>
               True virtual scroll (windowed rendering) requires a custom JS hook that calculates visible indices from scroll position and row height, then only renders those rows. This is planned for a future release.
             </.callout>
             <.callout variant="info">
-              <:title>Why It's Complex in LiveView</:title>
+              <:title>{gettext("Why It's Complex in LiveView")}</:title>
               LiveView manages the DOM server-side. True virtualization needs client-side DOM manipulation that conflicts with LiveView's diffing. A proper implementation requires a dedicated JS hook that coordinates with the server to only request visible data windows.
             </.callout>
           </.card>
         </.column>
         <.column size="50">
-          <.card title_text="Table - 10000 Rows">
-            <:description>Smooth scrolling through large datasets</:description>
+          <.card title_text={gettext("Table - 10000 Rows")}>
+            <:description>{gettext("Smooth scrolling through large datasets")}</:description>
             <.callout variant="warning">
-              <:title>Not Yet Supported</:title>
+              <:title>{gettext("Not Yet Supported")}</:title>
               Virtual scroll for tables requires fixed row heights and a hook that renders spacer rows above/below the visible window. This approach works in LiveView but needs careful implementation to avoid conflicts with DOM patching.
             </.callout>
             <.callout variant="info">
-              <:title>Alternative: Server-Side Pagination</:title>
+              <:title>{gettext("Alternative: Server-Side Pagination")}</:title>
               For large datasets, use the <code>&lt;.pager&gt;</code> component with server-side queries. This is more efficient than virtual scroll for most use cases since it transfers only the visible page of data.
             </.callout>
           </.card>
@@ -123,9 +123,9 @@ defmodule DemoWeb.Live.VirtualScrollLive do
     </.section>
 
     <%!-- Infinite Scroll Example --%>
-    <.section title_text="Infinite Scroll Example">
+    <.section title_text={gettext("Infinite Scroll Example")}>
       <.paragraph class="mb-4">Lazy loading - items accumulate in DOM. Uses <code>PureAdminInfiniteScroll</code> hook.</.paragraph>
-      <.card title_text="Timeline Feed - Infinite Scroll">
+      <.card title_text={gettext("Timeline Feed - Infinite Scroll")}>
         <:description>Loads more items automatically as you scroll ({@loaded_count} of {@total_items} loaded)</:description>
         <div class="pa-timeline__scroll-container">
           <.timeline variant="feed">
@@ -157,7 +157,7 @@ defmodule DemoWeb.Live.VirtualScrollLive do
     </.section>
 
     <%!-- Usage Reference --%>
-    <.card title_text="Infinite Scroll Hook Usage">
+    <.card title_text={gettext("Infinite Scroll Hook Usage")}>
       <.code_block language="heex">
         &lt;div
           id="scroll-sentinel"
@@ -176,9 +176,9 @@ defmodule DemoWeb.Live.VirtualScrollLive do
         %{attr: "data-root-margin", default: "200px", desc: "Preload buffer distance"},
         %{attr: "data-throttle", default: "500", desc: "Minimum ms between triggers"}
       ]} is_striped>
-        <:col :let={row} label="Attribute"><code>{row.attr}</code></:col>
-        <:col :let={row} label="Default"><code>{row.default}</code></:col>
-        <:col :let={row} label="Description">{row.desc}</:col>
+        <:col :let={row} label={gettext("Attribute")}><code>{row.attr}</code></:col>
+        <:col :let={row} label={gettext("Default")}><code>{row.default}</code></:col>
+        <:col :let={row} label={gettext("Description")}>{row.desc}</:col>
       </.table>
     </.card>
     """

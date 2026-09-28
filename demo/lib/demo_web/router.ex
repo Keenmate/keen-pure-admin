@@ -9,11 +9,15 @@ defmodule DemoWeb.Router do
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
     plug(DemoWeb.SessionPlug)
+    plug(DemoWeb.Locale)
   end
 
   live_session :default, on_mount: [{DemoWeb.Nav, :default}], layout: {DemoWeb.Layouts, :app} do
     scope "/", DemoWeb do
       pipe_through(:browser)
+
+      # Locale switch — plain controller (LiveView can't write the Plug session)
+      get("/locale/:code", LocaleController, :set)
 
       live("/", Live.DashboardLive, :index)
       live("/getting-started", Live.GettingStartedLive, :index)

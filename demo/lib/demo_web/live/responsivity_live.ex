@@ -148,7 +148,7 @@ defmodule DemoWeb.Live.ResponsivityLive do
     </style>
 
     <div class="pa-page-content">
-      <.heading level={1} class="mb-2">Responsivity — how it works</.heading>
+      <.heading level={1} class="mb-2">{gettext("Responsivity — how it works")}</.heading>
       <.paragraph class="pa-text--secondary mb-4">
         Two small JavaScript engines let a component react to <strong>the space it is
         actually given</strong> — not the size of the window. That is the difference
@@ -167,7 +167,7 @@ defmodule DemoWeb.Live.ResponsivityLive do
       </.callout>
 
       <%!-- ── The two engines ─────────────────────────────────────────────── --%>
-      <.heading level={2} class="mt-4 mb-2">The two engines</.heading>
+      <.heading level={2} class="mt-4 mb-2">{gettext("The two engines")}</.heading>
       <.table rows={@engines} is_bordered class="mb-4">
         <:col :let={r} label="">{r.aspect}</:col>
         <:col :let={r} label="Fit — fit.js">{r.fit}</:col>
@@ -217,12 +217,12 @@ defmodule DemoWeb.Live.ResponsivityLive do
       </.paragraph>
 
       <div class="resp-slider-row">
-        <span>Bar width</span>
+        <span>{gettext("Bar width")}</span>
         <input
           type="range" min="240" max="720" value="720"
           id="resp-slider" phx-hook="StageWidth"
           data-stage="respStage" data-output="resp-w"
-          aria-label="Relocate demo width"
+          aria-label={gettext("Relocate demo width")}
         />
         <output id="resp-w">720px</output>
       </div>
@@ -239,7 +239,7 @@ defmodule DemoWeb.Live.ResponsivityLive do
             <.badge theme_color="5">Subs&nbsp;45</.badge>
           </span>
           <span class="resp-bar__spacer"></span>
-          <.button variant="primary" size="sm" data-pc-fit-ignore="true">New</.button>
+          <.button variant="primary" size="sm" data-pc-fit-ignore="true">{gettext("New")}</.button>
         </div>
       </div>
 
@@ -308,7 +308,7 @@ defmodule DemoWeb.Live.ResponsivityLive do
       </.callout>
 
       <%!-- ── Which do I use ──────────────────────────────────────────────── --%>
-      <.heading level={2} class="mt-4 mb-2">Which one do I reach for?</.heading>
+      <.heading level={2} class="mt-4 mb-2">{gettext("Which one do I reach for?")}</.heading>
       <.callout variant="warning" class="mb-4">
         <strong>Row of items fighting for one line?</strong>
         Fit — it measures and sheds by priority.<br />

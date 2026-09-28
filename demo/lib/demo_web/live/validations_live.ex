@@ -90,37 +90,37 @@ defmodule DemoWeb.Live.ValidationsLive do
     <.paragraph>Different UI patterns for displaying form validation errors. Choose the pattern that best fits your UX requirements.</.paragraph>
 
     <%!-- Pattern 1: Inline Field Errors --%>
-    <.card title_text="1. Inline Field Errors">
+    <.card title_text={gettext("1. Inline Field Errors")}>
       <.paragraph class="mb-3">The most common pattern. Error messages appear directly below each field. Best for forms where users need immediate field-level feedback.</.paragraph>
 
       <form class="pa-form">
         <.grid>
           <.column size="100" md="50">
             <.form_group validation="error">
-              <.form_label>Email Address</.form_label>
+              <.form_label>{gettext("Email Address")}</.form_label>
               <.input type="email" value="invalid-email" validation="error" required />
-              <.form_help variant="error">Please enter a valid email address</.form_help>
+              <.form_help variant="error">{gettext("Please enter a valid email address")}</.form_help>
             </.form_group>
           </.column>
           <.column size="100" md="50">
             <.form_group validation="error">
-              <.form_label>Password</.form_label>
+              <.form_label>{gettext("Password")}</.form_label>
               <.input type="password" value="123" validation="error" required />
-              <.form_help variant="error">Password must be at least 8 characters</.form_help>
+              <.form_help variant="error">{gettext("Password must be at least 8 characters")}</.form_help>
             </.form_group>
           </.column>
           <.column size="100" md="50">
             <.form_group validation="success">
-              <.form_label>Username</.form_label>
+              <.form_label>{gettext("Username")}</.form_label>
               <.input type="text" value="johndoe" validation="success" required />
-              <.form_help variant="success">Username is available</.form_help>
+              <.form_help variant="success">{gettext("Username is available")}</.form_help>
             </.form_group>
           </.column>
           <.column size="100" md="50">
             <.form_group validation="warning">
-              <.form_label>Phone Number</.form_label>
+              <.form_label>{gettext("Phone Number")}</.form_label>
               <.input type="tel" value="555-1234" validation="warning" />
-              <.form_help variant="warning">Consider adding country code for international format</.form_help>
+              <.form_help variant="warning">{gettext("Consider adding country code for international format")}</.form_help>
             </.form_group>
           </.column>
         </.grid>
@@ -132,49 +132,49 @@ defmodule DemoWeb.Live.ValidationsLive do
     </.card>
 
     <%!-- Pattern 2: Summary Block --%>
-    <.card title_text="2. Summary Block (Top of Form)">
+    <.card title_text={gettext("2. Summary Block (Top of Form)")}>
       <.paragraph class="mb-3">All errors collected in a single alert at the top. Good for accessibility and giving users a quick overview of all issues.</.paragraph>
 
       <form class="pa-form">
         <.alert variant="danger" class="mb-4">
-          <strong>Please fix the following errors:</strong>
+          <strong>{gettext("Please fix the following errors:")}</strong>
           <ul class="mt-0 mb-0">
-            <li>First name is required</li>
-            <li>Email address is not valid</li>
-            <li>Password must contain at least one uppercase letter</li>
-            <li>Please accept the terms and conditions</li>
+            <li>{gettext("First name is required")}</li>
+            <li>{gettext("Email address is not valid")}</li>
+            <li>{gettext("Password must contain at least one uppercase letter")}</li>
+            <li>{gettext("Please accept the terms and conditions")}</li>
           </ul>
         </.alert>
 
         <.grid>
           <.column size="100" md="50">
             <.form_group validation="error">
-              <.form_label>First Name</.form_label>
-              <.input type="text" placeholder="Enter first name" validation="error" required />
+              <.form_label>{gettext("First Name")}</.form_label>
+              <.input type="text" placeholder={gettext("Enter first name")} validation="error" required />
             </.form_group>
           </.column>
           <.column size="100" md="50">
             <.form_group>
-              <.form_label>Last Name</.form_label>
+              <.form_label>{gettext("Last Name")}</.form_label>
               <.input type="text" value="Smith" />
             </.form_group>
           </.column>
           <.column size="100" md="50">
             <.form_group validation="error">
-              <.form_label>Email</.form_label>
+              <.form_label>{gettext("Email")}</.form_label>
               <.input type="email" value="not-an-email" validation="error" required />
             </.form_group>
           </.column>
           <.column size="100" md="50">
             <.form_group validation="error">
-              <.form_label>Password</.form_label>
+              <.form_label>{gettext("Password")}</.form_label>
               <.input type="password" value="password" validation="error" required />
             </.form_group>
           </.column>
           <.column size="100">
             <.form_group validation="error">
               <.checkbox id="terms">
-                <:label_content>I accept the terms and conditions <span class="text-danger">*</span></:label_content>
+                <:label_content>{gettext("I accept the terms and conditions")} <span class="text-danger">*</span></:label_content>
               </.checkbox>
             </.form_group>
           </.column>
@@ -187,7 +187,7 @@ defmodule DemoWeb.Live.ValidationsLive do
     </.card>
 
     <%!-- Pattern 3: Inline + Summary Combined --%>
-    <.card title_text="3. Combined: Summary + Inline (Recommended)">
+    <.card title_text={gettext("3. Combined: Summary + Inline (Recommended)")}>
       <.paragraph class="mb-3">The best of both worlds. Summary for overview, inline for specific guidance. Most accessible approach.</.paragraph>
 
       <form class="pa-form">
@@ -202,23 +202,23 @@ defmodule DemoWeb.Live.ValidationsLive do
         <.grid>
           <.column size="100" md="50">
             <.form_group validation="error">
-              <.form_label for="card-number">Card Number</.form_label>
+              <.form_label for="card-number">{gettext("Card Number")}</.form_label>
               <.input type="text" id="card-number" value="1234-5678-XXXX" validation="error" required />
-              <.form_help variant="error">Invalid card number format. Please use 16 digits.</.form_help>
+              <.form_help variant="error">{gettext("Invalid card number format. Please use 16 digits.")}</.form_help>
             </.form_group>
           </.column>
           <.column size="100" md="25">
             <.form_group validation="success">
-              <.form_label>Expiry Date</.form_label>
+              <.form_label>{gettext("Expiry Date")}</.form_label>
               <.input type="text" value="12/25" validation="success" />
-              <.form_help variant="success">Valid</.form_help>
+              <.form_help variant="success">{gettext("Valid")}</.form_help>
             </.form_group>
           </.column>
           <.column size="100" md="25">
             <.form_group validation="error">
-              <.form_label for="cvv">CVV</.form_label>
+              <.form_label for="cvv">{gettext("CVV")}</.form_label>
               <.input type="text" id="cvv" value="12" validation="error" required />
-              <.form_help variant="error">Must be 3 or 4 digits</.form_help>
+              <.form_help variant="error">{gettext("Must be 3 or 4 digits")}</.form_help>
             </.form_group>
           </.column>
         </.grid>
@@ -230,36 +230,36 @@ defmodule DemoWeb.Live.ValidationsLive do
     </.card>
 
     <%!-- Pattern 4: Border + Icon Only --%>
-    <.card title_text="4. Border + Icon Only (Minimal)">
+    <.card title_text={gettext("4. Border + Icon Only (Minimal)")}>
       <.paragraph class="mb-3">Space-efficient but less informative. Red border and icon indicate error without text message. User must infer the issue or hover/click for details.</.paragraph>
 
       <form class="pa-form">
         <.grid>
           <.column size="100" md="1-3">
             <.form_group>
-              <.form_label>Username</.form_label>
+              <.form_label>{gettext("Username")}</.form_label>
               <.input_group>
                 <.input type="text" value="" validation="error" />
                 <:append>
-                  <span class="pa-text--danger" title="This field is required">!</span>
+                  <span class="pa-text--danger" title={gettext("This field is required")}>!</span>
                 </:append>
               </.input_group>
             </.form_group>
           </.column>
           <.column size="100" md="1-3">
             <.form_group>
-              <.form_label>Email</.form_label>
+              <.form_label>{gettext("Email")}</.form_label>
               <.input_group>
                 <.input type="email" value="bad@" validation="error" />
                 <:append>
-                  <span class="pa-text--danger" title="Invalid email format">!</span>
+                  <span class="pa-text--danger" title={gettext("Invalid email format")}>!</span>
                 </:append>
               </.input_group>
             </.form_group>
           </.column>
           <.column size="100" md="1-3">
             <.form_group>
-              <.form_label>Password</.form_label>
+              <.form_label>{gettext("Password")}</.form_label>
               <.input_group>
                 <.input type="password" value="securepass123" validation="success" />
                 <:append>
@@ -277,30 +277,30 @@ defmodule DemoWeb.Live.ValidationsLive do
     </.card>
 
     <%!-- Pattern 5: Right-side Indicators --%>
-    <.card title_text="5. Right-side Indicators">
+    <.card title_text={gettext("5. Right-side Indicators")}>
       <.paragraph class="mb-3">Error text positioned to the right of the input. Works well in horizontal form layouts with more screen real estate.</.paragraph>
 
       <form class="pa-form">
         <.form_group is_horizontal class="align-items-center">
-          <.form_label class="pc-col-md-25" for="company-name">Company Name</.form_label>
+          <.form_label class="pc-col-md-25" for="company-name">{gettext("Company Name")}</.form_label>
           <div class="pc-col-md-40">
             <.input type="text" id="company-name" value="" validation="error" />
           </div>
           <div class="pc-col-md-35">
-            <.form_help variant="error" class="mt-0">Company name is required</.form_help>
+            <.form_help variant="error" class="mt-0">{gettext("Company name is required")}</.form_help>
           </div>
         </.form_group>
         <.form_group is_horizontal class="align-items-center">
-          <.form_label class="pc-col-md-25" for="website-url">Website URL</.form_label>
+          <.form_label class="pc-col-md-25" for="website-url">{gettext("Website URL")}</.form_label>
           <div class="pc-col-md-40">
             <.input type="url" id="website-url" value="not-a-url" validation="error" />
           </div>
           <div class="pc-col-md-35">
-            <.form_help variant="error" class="mt-0">Please enter a valid URL (e.g., https://example.com)</.form_help>
+            <.form_help variant="error" class="mt-0">{gettext("Please enter a valid URL (e.g., https://example.com)")}</.form_help>
           </div>
         </.form_group>
         <.form_group is_horizontal class="align-items-center">
-          <.form_label class="pc-col-md-25" for="industry-select">Industry</.form_label>
+          <.form_label class="pc-col-md-25" for="industry-select">{gettext("Industry")}</.form_label>
           <div class="pc-col-md-40">
             <.select id="industry-select" validation="success" options={["Technology"]} />
           </div>
@@ -312,7 +312,7 @@ defmodule DemoWeb.Live.ValidationsLive do
     </.card>
 
     <%!-- Pattern 6: Helper Text Transforms to Error --%>
-    <.card title_text="6. Helper Text Transforms to Error">
+    <.card title_text={gettext("6. Helper Text Transforms to Error")}>
       <.paragraph class="mb-3">Helper text below the field transforms into error text when validation fails. Maintains consistent spacing.</.paragraph>
 
       <form class="pa-form">
@@ -325,7 +325,7 @@ defmodule DemoWeb.Live.ValidationsLive do
               data-msg="Maximum {max} characters ({count}/{max})"
               data-msg-over="Maximum {max} characters exceeded ({count}/{max})"
             >
-              <.form_label>Bio</.form_label>
+              <.form_label>{gettext("Bio")}</.form_label>
               <.textarea rows={3} value="This is my bio text that keeps going and going..." />
               <.form_help></.form_help>
             </.form_group>
@@ -335,20 +335,20 @@ defmodule DemoWeb.Live.ValidationsLive do
     </.card>
 
     <%!-- Pattern 7: Toast Notifications --%>
-    <.card title_text="7. Toast Notifications">
+    <.card title_text={gettext("7. Toast Notifications")}>
       <.paragraph class="mb-3">Validation errors shown as toast notifications. Best for submit-level errors or async validation (e.g., server-side checks).</.paragraph>
 
       <form class="pa-form">
         <.grid>
           <.column size="100" md="50">
             <.form_group>
-              <.form_label>Email</.form_label>
+              <.form_label>{gettext("Email")}</.form_label>
               <.input type="email" value="user@example.com" />
             </.form_group>
           </.column>
           <.column size="100" md="50">
             <.form_group>
-              <.form_label>Password</.form_label>
+              <.form_label>{gettext("Password")}</.form_label>
               <.input type="password" value="password123" />
             </.form_group>
           </.column>
@@ -359,7 +359,7 @@ defmodule DemoWeb.Live.ValidationsLive do
       <.card class="mt-4" has_padding>
         <.paragraph class="pa-text--secondary mb-2"><em>Toast preview (normally appears in corner):</em></.paragraph>
         <.alert variant="danger">
-          <strong>Validation Failed</strong> — Invalid credentials. Please check your email and password.
+          <strong>{gettext("Validation Failed")}</strong> — {gettext("Invalid credentials. Please check your email and password.")}
         </.alert>
       </.card>
 
@@ -369,29 +369,29 @@ defmodule DemoWeb.Live.ValidationsLive do
     </.card>
 
     <%!-- Pattern 8: Validation Timing --%>
-    <.card title_text="8. Validation Timing Strategies">
+    <.card title_text={gettext("8. Validation Timing Strategies")}>
       <.paragraph class="mb-3">When to trigger validation affects user experience significantly.</.paragraph>
 
       <.grid>
         <%!-- On Input (Real-time) --%>
         <.column size="100" md="1-3">
-          <.card variant="warning" title_text="On Input (Real-time)">
+          <.card variant="warning" title_text={gettext("On Input (Real-time)")}>
             <form phx-change="realtime_change">
               <.form_group validation={email_validation(@realtime_touched, @realtime_email)}>
-                <.form_label>Email</.form_label>
+                <.form_label>{gettext("Email")}</.form_label>
                 <.input
                   type="email"
                   name="realtime_email"
                   value={@realtime_email}
                   validation={email_validation(@realtime_touched, @realtime_email)}
-                  placeholder="Type to see validation..."
+                  placeholder={gettext("Type to see validation...")}
                   phx-debounce="100"
                 />
                 <.form_help :if={@realtime_touched && !valid_email?(@realtime_email)} variant="error">
-                  <%= if @realtime_email == "", do: "Email is required", else: "Invalid email format" %>
+                  <%= if @realtime_email == "", do: gettext("Email is required"), else: gettext("Invalid email format") %>
                 </.form_help>
-                <.form_help :if={@realtime_touched && valid_email?(@realtime_email)} variant="success">Valid email</.form_help>
-                <.form_help :if={!@realtime_touched}>Type to see validation</.form_help>
+                <.form_help :if={@realtime_touched && valid_email?(@realtime_email)} variant="success">{gettext("Valid email")}</.form_help>
+                <.form_help :if={!@realtime_touched}>{gettext("Type to see validation")}</.form_help>
               </.form_group>
             </form>
             <small class="mt-2 pa-text--secondary">Validates as user types. Can feel aggressive.</small>
@@ -400,21 +400,21 @@ defmodule DemoWeb.Live.ValidationsLive do
 
         <%!-- On Blur (Recommended) --%>
         <.column size="100" md="1-3">
-          <.card variant="success" title_text="On Blur (Recommended)">
+          <.card variant="success" title_text={gettext("On Blur (Recommended)")}>
             <.form_group validation={email_validation(@blur_touched, @blur_email)}>
-              <.form_label>Email</.form_label>
+              <.form_label>{gettext("Email")}</.form_label>
               <.input
                 type="email"
                 value={@blur_email}
                 validation={email_validation(@blur_touched, @blur_email)}
-                placeholder="Tab out to validate..."
+                placeholder={gettext("Tab out to validate...")}
                 phx-blur="blur_validate"
               />
               <.form_help :if={@blur_touched && !valid_email?(@blur_email)} variant="error">
-                <%= if @blur_email == "", do: "Email is required", else: "Invalid email format" %>
+                <%= if @blur_email == "", do: gettext("Email is required"), else: gettext("Invalid email format") %>
               </.form_help>
-              <.form_help :if={@blur_touched && valid_email?(@blur_email)} variant="success">Valid email</.form_help>
-              <.form_help :if={!@blur_touched}>Click away to validate</.form_help>
+              <.form_help :if={@blur_touched && valid_email?(@blur_email)} variant="success">{gettext("Valid email")}</.form_help>
+              <.form_help :if={!@blur_touched}>{gettext("Click away to validate")}</.form_help>
             </.form_group>
             <small class="mt-2 pa-text--secondary">Validates when field loses focus. Good balance.</small>
           </.card>
@@ -422,24 +422,24 @@ defmodule DemoWeb.Live.ValidationsLive do
 
         <%!-- On Submit --%>
         <.column size="100" md="1-3">
-          <.card variant="primary" title_text="On Submit">
+          <.card variant="primary" title_text={gettext("On Submit")}>
             <form phx-submit="submit_validate">
               <.form_group validation={email_validation(@submit_touched, @submit_email)}>
-                <.form_label>Email</.form_label>
+                <.form_label>{gettext("Email")}</.form_label>
                 <.input
                   type="email"
                   name="submit_email"
                   value={@submit_email}
                   validation={email_validation(@submit_touched, @submit_email)}
-                  placeholder="No validation until submit"
+                  placeholder={gettext("No validation until submit")}
                 />
                 <.form_help :if={@submit_touched && !valid_email?(@submit_email)} variant="error">
-                  <%= if @submit_email == "", do: "Email is required", else: "Invalid email format" %>
+                  <%= if @submit_email == "", do: gettext("Email is required"), else: gettext("Invalid email format") %>
                 </.form_help>
-                <.form_help :if={@submit_touched && valid_email?(@submit_email)} variant="success">Valid email</.form_help>
-                <.form_help :if={!@submit_touched}>Submit to validate</.form_help>
+                <.form_help :if={@submit_touched && valid_email?(@submit_email)} variant="success">{gettext("Valid email")}</.form_help>
+                <.form_help :if={!@submit_touched}>{gettext("Submit to validate")}</.form_help>
               </.form_group>
-              <.button variant="info" size="sm" type="submit" class="mt-2">Validate</.button>
+              <.button variant="info" size="sm" type="submit" class="mt-2">{gettext("Validate")}</.button>
             </form>
             <small class="mt-2 pa-text--secondary">All errors shown at once on submit. Traditional approach.</small>
           </.card>
@@ -448,7 +448,7 @@ defmodule DemoWeb.Live.ValidationsLive do
     </.card>
 
     <%!-- Pattern 9: Multi-field Validation --%>
-    <.card title_text="9. Multi-field / Cross-field Validation">
+    <.card title_text={gettext("9. Multi-field / Cross-field Validation")}>
       <.paragraph class="mb-3">When validation depends on multiple fields (e.g., password confirmation, date ranges).</.paragraph>
 
       <%!-- Password confirmation --%>
@@ -462,14 +462,14 @@ defmodule DemoWeb.Live.ValidationsLive do
               nil -> nil
             end %>
             <.form_group validation={pw_state}>
-              <.form_label>New Password</.form_label>
-              <.input type="password" name="password" value={@password} validation={pw_state} placeholder="Enter password..." phx-debounce="200" />
-              <.form_help :if={password_strength(@password) == :strong} variant="success">Strong password</.form_help>
-              <.form_help :if={password_strength(@password) == :medium} variant="warning">Medium — add a special character</.form_help>
+              <.form_label>{gettext("New Password")}</.form_label>
+              <.input type="password" name="password" value={@password} validation={pw_state} placeholder={gettext("Enter password...")} phx-debounce="200" />
+              <.form_help :if={password_strength(@password) == :strong} variant="success">{gettext("Strong password")}</.form_help>
+              <.form_help :if={password_strength(@password) == :medium} variant="warning">{gettext("Medium — add a special character")}</.form_help>
               <.form_help :if={password_strength(@password) == :weak} variant="error">
-                <%= if String.length(@password) < 8, do: "Must be at least 8 characters", else: "Add uppercase and numbers" %>
+                <%= if String.length(@password) < 8, do: gettext("Must be at least 8 characters"), else: gettext("Add uppercase and numbers") %>
               </.form_help>
-              <.form_help :if={@password == ""}>Min 8 chars, uppercase, number, special char</.form_help>
+              <.form_help :if={@password == ""}>{gettext("Min 8 chars, uppercase, number, special char")}</.form_help>
             </.form_group>
           </.column>
           <.column size="100" md="50">
@@ -479,11 +479,11 @@ defmodule DemoWeb.Live.ValidationsLive do
               true -> "error"
             end %>
             <.form_group validation={confirm_state}>
-              <.form_label>Confirm Password</.form_label>
-              <.input type="password" name="password_confirm" value={@password_confirm} validation={confirm_state} placeholder="Confirm password..." phx-debounce="200" />
-              <.form_help :if={passwords_match?(@password, @password_confirm)} variant="success">Passwords match</.form_help>
-              <.form_help :if={@password_confirm != "" && !passwords_match?(@password, @password_confirm)} variant="error">Passwords do not match</.form_help>
-              <.form_help :if={@password_confirm == ""}>Re-enter your password</.form_help>
+              <.form_label>{gettext("Confirm Password")}</.form_label>
+              <.input type="password" name="password_confirm" value={@password_confirm} validation={confirm_state} placeholder={gettext("Confirm password...")} phx-debounce="200" />
+              <.form_help :if={passwords_match?(@password, @password_confirm)} variant="success">{gettext("Passwords match")}</.form_help>
+              <.form_help :if={@password_confirm != "" && !passwords_match?(@password, @password_confirm)} variant="error">{gettext("Passwords do not match")}</.form_help>
+              <.form_help :if={@password_confirm == ""}>{gettext("Re-enter your password")}</.form_help>
             </.form_group>
           </.column>
         </.grid>
@@ -496,24 +496,24 @@ defmodule DemoWeb.Live.ValidationsLive do
         <.grid>
           <.column size="100" md="50">
             <.form_group validation={date_validation(@start_date, @end_date)}>
-              <.form_label>Start Date</.form_label>
+              <.form_label>{gettext("Start Date")}</.form_label>
               <.input type="date" name="start_date" value={@start_date} validation={date_validation(@start_date, @end_date)} />
             </.form_group>
           </.column>
           <.column size="100" md="50">
             <.form_group validation={date_validation(@start_date, @end_date)}>
-              <.form_label>End Date</.form_label>
+              <.form_label>{gettext("End Date")}</.form_label>
               <.input type="date" name="end_date" value={@end_date} validation={date_validation(@start_date, @end_date)} />
             </.form_group>
           </.column>
           <.column :if={dates_valid?(@start_date, @end_date) == false} size="100">
             <.alert variant="danger">
-              End date must be after start date
+              {gettext("End date must be after start date")}
             </.alert>
           </.column>
           <.column :if={dates_valid?(@start_date, @end_date) == true} size="100">
             <.alert variant="success">
-              Valid date range
+              {gettext("Valid date range")}
             </.alert>
           </.column>
         </.grid>
@@ -521,70 +521,70 @@ defmodule DemoWeb.Live.ValidationsLive do
     </.card>
 
     <%!-- Pattern 10: Progressive Validation --%>
-    <.card title_text="10. Progressive Validation (Multi-step Forms)">
+    <.card title_text={gettext("10. Progressive Validation (Multi-step Forms)")}>
       <.paragraph class="mb-3">Validate each step before allowing progression. Prevents users from reaching the end with invalid data.</.paragraph>
 
       <%!-- Step indicators --%>
       <.grid class="mb-4">
         <.column size="1-3" class="text-center">
           <.badge variant="success" size="lg">1</.badge>
-          <.paragraph class="mt-2 text-success">Account</.paragraph>
+          <.paragraph class="mt-2 text-success">{gettext("Account")}</.paragraph>
         </.column>
         <.column size="1-3" class="text-center">
           <.badge variant="danger" size="lg">2</.badge>
-          <.paragraph class="mt-2 text-danger">Profile</.paragraph>
+          <.paragraph class="mt-2 text-danger">{gettext("Profile")}</.paragraph>
         </.column>
         <.column size="1-3" class="text-center">
           <.badge size="lg" class="pa-badge--default">3</.badge>
-          <.paragraph class="mt-2 pa-text--secondary">Confirm</.paragraph>
+          <.paragraph class="mt-2 pa-text--secondary">{gettext("Confirm")}</.paragraph>
         </.column>
       </.grid>
 
       <.alert variant="danger" class="mb-3">
-        Please complete all required fields in Step 2 before proceeding.
+        {gettext("Please complete all required fields in Step 2 before proceeding.")}
       </.alert>
 
       <form class="pa-form">
         <.grid>
           <.column size="100" md="50">
             <.form_group validation="error">
-              <.form_label>Display Name</.form_label>
-              <.input type="text" placeholder="Enter display name" validation="error" required />
-              <.form_help variant="error">Display name is required</.form_help>
+              <.form_label>{gettext("Display Name")}</.form_label>
+              <.input type="text" placeholder={gettext("Enter display name")} validation="error" required />
+              <.form_help variant="error">{gettext("Display name is required")}</.form_help>
             </.form_group>
           </.column>
           <.column size="100" md="50">
             <.form_group validation="success">
-              <.form_label>Avatar URL</.form_label>
+              <.form_label>{gettext("Avatar URL")}</.form_label>
               <.input type="url" value="https://example.com/avatar.jpg" validation="success" />
-              <.form_help variant="success">Valid URL</.form_help>
+              <.form_help variant="success">{gettext("Valid URL")}</.form_help>
             </.form_group>
           </.column>
         </.grid>
         <.button_group class="pa-form-actions">
-          <.button variant="secondary">Back</.button>
-          <.button variant="primary" disabled>Next Step</.button>
+          <.button variant="secondary">{gettext("Back")}</.button>
+          <.button variant="primary" disabled>{gettext("Next Step")}</.button>
         </.button_group>
       </form>
     </.card>
 
     <%!-- CSS Classes Reference --%>
-    <.card title_text="CSS Classes Reference">
-      <.heading level={4}>Form Group States</.heading>
+    <.card title_text={gettext("CSS Classes Reference")}>
+      <.heading level={4}>{gettext("Form Group States")}</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-form-group--success</code> - Success state (green)</li>
         <li><code>pa-form-group--warning</code> - Warning state (yellow/orange)</li>
         <li><code>pa-form-group--error</code> - Error state (red)</li>
       </.basic_list>
 
-      <.heading level={4} class="mt-4">Input States</.heading>
+      <.heading level={4} class="mt-4">{gettext("Input States")}</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-input--success</code> - Success border on input</li>
         <li><code>pa-input--warning</code> - Warning border on input</li>
         <li><code>pa-input--error</code> - Error border on input</li>
       </.basic_list>
 
-      <.heading level={4} class="mt-4">Help/Message Text</.heading>
+      <.heading level={4} class="mt-4">{gettext("Help/Message Text")}</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-form-help</code> - Base help text styling</li>
         <li><code>pa-form-help--success</code> - Green help text</li>
@@ -592,7 +592,7 @@ defmodule DemoWeb.Live.ValidationsLive do
         <li><code>pa-form-help--error</code> - Red help text</li>
       </.basic_list>
 
-      <.heading level={4} class="mt-4">Alert Variants (for Summary Blocks)</.heading>
+      <.heading level={4} class="mt-4">{gettext("Alert Variants (for Summary Blocks)")}</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-alert pa-alert--danger</code> - Error summary block</li>
         <li><code>pa-alert pa-alert--warning</code> - Warning summary block</li>
@@ -600,7 +600,7 @@ defmodule DemoWeb.Live.ValidationsLive do
         <li><code>pa-alert pa-alert--info</code> - Info message block</li>
       </.basic_list>
 
-      <.heading level={4} class="mt-4">Text Utility Classes</.heading>
+      <.heading level={4} class="mt-4">{gettext("Text Utility Classes")}</.heading>
       <.basic_list spacing="compact">
         <li><code>text-danger</code> - Red text color</li>
         <li><code>text-warning</code> - Yellow/orange text color</li>

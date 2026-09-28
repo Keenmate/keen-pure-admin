@@ -9,7 +9,7 @@ defmodule DemoWeb.Live.TimelineLive do
     ~H"""
     <p>Timeline components for displaying chronological events.</p>
 
-    <.card title_text="Project Timeline">
+    <.card title_text={gettext("Project Timeline")}>
       <.timeline>
         <.timeline_item variant="success">
           <:title>Project Started</:title>
@@ -39,7 +39,7 @@ defmodule DemoWeb.Live.TimelineLive do
       </.timeline>
     </.card>
 
-    <.card title_text="Activity Feed">
+    <.card title_text={gettext("Activity Feed")}>
       <.timeline>
         <.timeline_item variant="success">
           <:title>Sarah Johnson</:title>

@@ -13,7 +13,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
     [
       %{
         id: "revenue",
-        label_text: "Revenue",
+        label_text: gettext("Revenue"),
         prefix_text: "$",
         value_text: "848",
         unit_text: "K",
@@ -29,7 +29,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
       },
       %{
         id: "sessions",
-        label_text: "Sessions",
+        label_text: gettext("Sessions"),
         value_text: "12.3",
         unit_text: "K",
         variant: "up_strong",
@@ -44,7 +44,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
       },
       %{
         id: "conversion",
-        label_text: "Conversion",
+        label_text: gettext("Conversion"),
         value_text: "3.92",
         unit_text: "%",
         variant: "up",
@@ -59,7 +59,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
       },
       %{
         id: "bounce",
-        label_text: "Bounce Rate",
+        label_text: gettext("Bounce Rate"),
         value_text: "42.1",
         unit_text: "%",
         variant: "down",
@@ -74,7 +74,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
       },
       %{
         id: "errors",
-        label_text: "Error Rate",
+        label_text: gettext("Error Rate"),
         value_text: "0.18",
         unit_text: "%",
         variant: "up_strong",
@@ -89,7 +89,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
       },
       %{
         id: "latency",
-        label_text: "Latency p95",
+        label_text: gettext("Latency p95"),
         value_text: "148",
         unit_text: "ms",
         variant: "flat",
@@ -116,7 +116,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
 
     <%!-- 1. Canonical card --%>
 
-    <.kpi_sparkline_list title_text="Live KPIs · 24h" is_live footer_text="Sparkline list — Fast scan · Hover any row for detail">
+    <.kpi_sparkline_list title_text={gettext("Live KPIs · 24h")} is_live footer_text="Sparkline list — Fast scan · Hover any row for detail">
       <.row :for={r <- rows()} {row_assigns(r)} />
     </.kpi_sparkline_list>
 
@@ -174,7 +174,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
     <h3><code>is_no_delta</code>: drop the rightmost Δ% column</h3>
     <p>Useful when the chart slope already conveys direction.</p>
 
-    <.kpi_sparkline_list title_text="Compact KPIs" is_no_delta>
+    <.kpi_sparkline_list title_text={gettext("Compact KPIs")} is_no_delta>
       <.row :for={r <- Enum.take(rows(), 3)} {row_assigns(r, "nd-")} />
     </.kpi_sparkline_list>
 
@@ -189,9 +189,9 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
       up the row's sentiment <code>currentColor</code>.
     </p>
 
-    <.kpi_sparkline_list title_text="Live KPIs · Chart.js" is_live>
+    <.kpi_sparkline_list title_text={gettext("Live KPIs · Chart.js")} is_live>
       <.kpi_sparkline_row
-        label_text="Revenue"
+        label_text={gettext("Revenue")}
         prefix_text="$"
         value_text="848"
         unit_text="K"
@@ -213,7 +213,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
       </.kpi_sparkline_row>
 
       <.kpi_sparkline_row
-        label_text="Sessions"
+        label_text={gettext("Sessions")}
         value_text="12.3"
         unit_text="K"
         variant="up_strong"
@@ -238,7 +238,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
 
     <%!-- Usage Guide --%>
 
-    <.card title_text="Usage Guide">
+    <.card title_text={gettext("Usage Guide")}>
       <h4>When to use</h4>
       <p>
         Side-by-side comparison of many metrics in one panel, with the sparkline shape giving fast visual
@@ -280,7 +280,7 @@ defmodule DemoWeb.Live.KpiSparklineListLive do
 
     <%!-- CSS Classes Reference --%>
 
-    <.card title_text="CSS Classes Reference">
+    <.card title_text={gettext("CSS Classes Reference")}>
       <h4>Card structure</h4>
       <ul class="pa-list-basic pa-list-basic--compact">
         <li><code>pa-kpi-spark-list</code> — page-namespace class on <code>.pa-card</code>. Container query host.</li>

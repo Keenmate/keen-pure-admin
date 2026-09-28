@@ -21,11 +21,11 @@ defmodule DemoWeb.Live.KpiDashboardLive do
 
     <%!-- Row 1: Hero + supporting (full-width) --%>
 
-    <.kpi_hero_list title_text="Q4 Revenue Overview" is_live hero_split="2_3">
+    <.kpi_hero_list title_text={gettext("Q4 Revenue Overview")} is_live hero_split="2_3">
       <.kpi_hero_main
         id="cd-hero"
         variant="positive"
-        label_text="Monthly Revenue"
+        label_text={gettext("Monthly Revenue")}
         prefix_text="$"
         value_text="847"
         unit_text="K"
@@ -48,10 +48,10 @@ defmodule DemoWeb.Live.KpiDashboardLive do
         </:chart>
       </.kpi_hero_main>
       <:rail>
-        <.kpi_hero_side id="cd-side-arpu" variant="positive" label_text="ARPU" prefix_text="$" value_text="34.20" delta_text="▲ 7.5%" />
-        <.kpi_hero_side id="cd-side-users" variant="positive" label_text="Active users" value_text="12.3" unit_text="K" delta_text="▲ 4.1%" />
-        <.kpi_hero_side id="cd-side-conv" variant="up_strong" label_text="Conversion" value_text="3.92" unit_text="%" delta_text="▲ 12.6%" />
-        <.kpi_hero_side id="cd-side-churn" variant="negative" label_text="Churn" value_text="2.4" unit_text="%" delta_text="▲ 0.3pp" />
+        <.kpi_hero_side id="cd-side-arpu" variant="positive" label_text={gettext("ARPU")} prefix_text="$" value_text="34.20" delta_text="▲ 7.5%" />
+        <.kpi_hero_side id="cd-side-users" variant="positive" label_text={gettext("Active users")} value_text="12.3" unit_text="K" delta_text="▲ 4.1%" />
+        <.kpi_hero_side id="cd-side-conv" variant="up_strong" label_text={gettext("Conversion")} value_text="3.92" unit_text="%" delta_text="▲ 12.6%" />
+        <.kpi_hero_side id="cd-side-churn" variant="negative" label_text={gettext("Churn")} value_text="2.4" unit_text="%" delta_text="▲ 0.3pp" />
       </:rail>
     </.kpi_hero_list>
 
@@ -61,23 +61,23 @@ defmodule DemoWeb.Live.KpiDashboardLive do
 
     <div class="pc-row">
       <div class="pc-col-100 pc-col-md-50">
-        <.kpi_terminal title_text="Operations" is_live>
-          <.kpi_tile id="cd-t1" id_text="OPS.01" status_text="GOOD" status_variant="good" label_text="Uptime" value_text="99.97" unit_text="%" variant="up" delta_text="▲ 0.04pp" delta_variant="positive">
+        <.kpi_terminal title_text={gettext("Operations")} is_live>
+          <.kpi_tile id="cd-t1" id_text="OPS.01" status_text="GOOD" status_variant="good" label_text={gettext("Uptime")} value_text="99.97" unit_text="%" variant="up" delta_text="▲ 0.04pp" delta_variant="positive">
             <:chart>
               <.kpi_sparkline id="cd-t1-spark" points="0,15 12,14 24,13 36,12 48,11 60,10 72,9 84,8 96,7" dot_at={{96, 7}} />
             </:chart>
           </.kpi_tile>
-          <.kpi_tile id="cd-t2" id_text="OPS.02" status_text="WARN" status_variant="warn" label_text="Latency p95" value_text="148" unit_text="ms" variant="flat" delta_text="▲ 0.7%" delta_variant="neutral">
+          <.kpi_tile id="cd-t2" id_text="OPS.02" status_text="WARN" status_variant="warn" label_text={gettext("Latency p95")} value_text="148" unit_text="ms" variant="flat" delta_text="▲ 0.7%" delta_variant="neutral">
             <:chart>
               <.kpi_sparkline id="cd-t2-spark" points="0,14 12,13 24,14 36,13 48,14 60,13 72,14 84,13 96,14" dot_at={{96, 14}} />
             </:chart>
           </.kpi_tile>
-          <.kpi_tile id="cd-t3" id_text="OPS.03" status_text="GOOD" status_variant="good" label_text="Error Rate" value_text="0.18" unit_text="%" variant="up_strong" delta_text="▼ 56%" delta_variant="very_positive">
+          <.kpi_tile id="cd-t3" id_text="OPS.03" status_text="GOOD" status_variant="good" label_text={gettext("Error Rate")} value_text="0.18" unit_text="%" variant="up_strong" delta_text="▼ 56%" delta_variant="very_positive">
             <:chart>
               <.kpi_sparkline id="cd-t3-spark" points="0,8 12,9 24,11 36,12 48,13 60,14 72,15 84,16 96,17" dot_at={{96, 17}} />
             </:chart>
           </.kpi_tile>
-          <.kpi_tile id="cd-t4" id_text="OPS.04" status_text="NEUTRAL" status_variant="neutral" label_text="Deploys / day" value_text="14" variant="up" delta_text="▲ 27%" delta_variant="positive">
+          <.kpi_tile id="cd-t4" id_text="OPS.04" status_text="NEUTRAL" status_variant="neutral" label_text={gettext("Deploys / day")} value_text="14" variant="up" delta_text="▲ 27%" delta_variant="positive">
             <:chart>
               <.kpi_sparkline id="cd-t4-spark" points="0,18 12,16 24,15 36,13 48,12 60,11 72,10 84,9 96,8" dot_at={{96, 8}} />
             </:chart>
@@ -86,11 +86,11 @@ defmodule DemoWeb.Live.KpiDashboardLive do
       </div>
 
       <div class="pc-col-100 pc-col-md-50">
-        <.kpi_editorial title_text="Executive Summary" is_2_columns>
-          <.kpi_editorial_tile label_text="REVENUE" prefix_text="$" value_text="847" unit_text="K" delta_text="+13.3%" delta_variant="positive" target_text="$900K" />
-          <.kpi_editorial_tile label_text="ARPU" prefix_text="$" value_text="34.20" delta_text="+7.5%" delta_variant="positive" target_text="$36" />
-          <.kpi_editorial_tile label_text="USERS" value_text="12.3" unit_text="K" delta_text="+4.1%" delta_variant="positive" target_text="11K" />
-          <.kpi_editorial_tile label_text="CHURN" value_text="2.4" unit_text="%" delta_text="+14%" delta_variant="negative" target_text="≤ 2%" />
+        <.kpi_editorial title_text={gettext("Executive Summary")} is_2_columns>
+          <.kpi_editorial_tile label_text={gettext("REVENUE")} prefix_text="$" value_text="847" unit_text="K" delta_text="+13.3%" delta_variant="positive" target_text="$900K" />
+          <.kpi_editorial_tile label_text={gettext("ARPU")} prefix_text="$" value_text="34.20" delta_text="+7.5%" delta_variant="positive" target_text="$36" />
+          <.kpi_editorial_tile label_text={gettext("USERS")} value_text="12.3" unit_text="K" delta_text="+4.1%" delta_variant="positive" target_text="11K" />
+          <.kpi_editorial_tile label_text={gettext("CHURN")} value_text="2.4" unit_text="%" delta_text="+14%" delta_variant="negative" target_text="≤ 2%" />
         </.kpi_editorial>
       </div>
     </div>
@@ -99,8 +99,8 @@ defmodule DemoWeb.Live.KpiDashboardLive do
 
     <%!-- Row 3: Sparkline list (full-width) --%>
 
-    <.kpi_sparkline_list title_text="Live KPIs · 24h" is_live>
-      <.kpi_sparkline_row label_text="Revenue" prefix_text="$" value_text="848" unit_text="K" variant="up" delta_text="▲ 12.4%" delta_variant="positive">
+    <.kpi_sparkline_list title_text={gettext("Live KPIs · 24h")} is_live>
+      <.kpi_sparkline_row label_text={gettext("Revenue")} prefix_text="$" value_text="848" unit_text="K" variant="up" delta_text="▲ 12.4%" delta_variant="positive">
         <:chart>
           <svg id="cd-sl-1" viewBox="0 0 100 24" preserveAspectRatio="none" phx-hook="PureAdminKpiSparkDot">
             <polygon points="0,24 0,18 12,16 24,14 36,15 48,13 60,11 72,10 84,9 96,8 96,24" />
@@ -109,7 +109,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
           </svg>
         </:chart>
       </.kpi_sparkline_row>
-      <.kpi_sparkline_row label_text="Sessions" value_text="12.3" unit_text="K" variant="up_strong" delta_text="▲ 28.7%" delta_variant="very_positive">
+      <.kpi_sparkline_row label_text={gettext("Sessions")} value_text="12.3" unit_text="K" variant="up_strong" delta_text="▲ 28.7%" delta_variant="very_positive">
         <:chart>
           <svg id="cd-sl-2" viewBox="0 0 100 24" preserveAspectRatio="none" phx-hook="PureAdminKpiSparkDot">
             <polygon points="0,24 0,20 12,18 24,15 36,12 48,11 60,9 72,7 84,5 96,4 96,24" />
@@ -118,7 +118,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
           </svg>
         </:chart>
       </.kpi_sparkline_row>
-      <.kpi_sparkline_row label_text="Conversion" value_text="3.92" unit_text="%" variant="up" delta_text="▲ 4.3%" delta_variant="positive">
+      <.kpi_sparkline_row label_text={gettext("Conversion")} value_text="3.92" unit_text="%" variant="up" delta_text="▲ 4.3%" delta_variant="positive">
         <:chart>
           <svg id="cd-sl-3" viewBox="0 0 100 24" preserveAspectRatio="none" phx-hook="PureAdminKpiSparkDot">
             <polygon points="0,24 0,15 12,14 24,15 36,13 48,12 60,13 72,11 84,12 96,10 96,24" />
@@ -133,32 +133,32 @@ defmodule DemoWeb.Live.KpiDashboardLive do
 
     <%!-- Row 4: Gauges (full-width) --%>
 
-    <.kpi_gauge_list title_text="Quarterly targets" grid_layout="max_3">
-      <.kpi_gauge label_text="Completion" value_text="88.6" unit_text="%" variant="positive" bar_percent={98} scale_end_text="tgt 90.0%" />
-      <.kpi_gauge label_text="Revenue" prefix_text="$" value_text="835" unit_text="K" variant="positive" bar_percent={93} scale_end_text="tgt $900K" />
-      <.kpi_gauge label_text="Capacity" value_text="84.5" unit_text="%" variant="warning" bar_percent={100} tick_position="80%" scale_end_text="tgt 80%" />
-      <.kpi_gauge label_text="Error rate" value_text="0.27" unit_text="%" variant="positive" bar_percent={54} scale_end_text="tgt 0.5%" />
-      <.kpi_gauge label_text="NPS" value_text="64" variant="neutral" bar_percent={71} scale_end_text="tgt 90" />
-      <.kpi_gauge label_text="Latency p95" value_text="148" unit_text="ms" variant="positive" bar_percent={74} scale_end_text="≤ 200ms" />
+    <.kpi_gauge_list title_text={gettext("Quarterly targets")} grid_layout="max_3">
+      <.kpi_gauge label_text={gettext("Completion")} value_text="88.6" unit_text="%" variant="positive" bar_percent={98} scale_end_text="tgt 90.0%" />
+      <.kpi_gauge label_text={gettext("Revenue")} prefix_text="$" value_text="835" unit_text="K" variant="positive" bar_percent={93} scale_end_text="tgt $900K" />
+      <.kpi_gauge label_text={gettext("Capacity")} value_text="84.5" unit_text="%" variant="warning" bar_percent={100} tick_position="80%" scale_end_text="tgt 80%" />
+      <.kpi_gauge label_text={gettext("Error rate")} value_text="0.27" unit_text="%" variant="positive" bar_percent={54} scale_end_text="tgt 0.5%" />
+      <.kpi_gauge label_text={gettext("NPS")} value_text="64" variant="neutral" bar_percent={71} scale_end_text="tgt 90" />
+      <.kpi_gauge label_text={gettext("Latency p95")} value_text="148" unit_text="ms" variant="positive" bar_percent={74} scale_end_text="≤ 200ms" />
     </.kpi_gauge_list>
 
     <br />
 
     <%!-- Row 5: Numeric strip (full-width) --%>
 
-    <.kpi_strip title_text="Weekly review" is_live no_target_bar>
-      <.kpi_strip_row metric_text="REVENUE" prefix_text="$" value_text="847K" previous_value_text="$748K" delta_text="▲ 13.3%" delta_variant="positive" />
-      <.kpi_strip_row metric_text="ARPU" prefix_text="$" value_text="34.20" previous_value_text="$31.80" delta_text="▲ 7.5%" delta_variant="positive" />
-      <.kpi_strip_row metric_text="ACTIVE USERS" value_text="12.3K" previous_value_text="11.8K" delta_text="▲ 4.1%" delta_variant="positive" />
-      <.kpi_strip_row metric_text="CHURN" value_text="2.4%" previous_value_text="2.1%" delta_text="▲ 14%" delta_variant="negative" />
+    <.kpi_strip title_text={gettext("Weekly review")} is_live no_target_bar>
+      <.kpi_strip_row metric_text={gettext("REVENUE")} prefix_text="$" value_text="847K" previous_value_text="$748K" delta_text="▲ 13.3%" delta_variant="positive" />
+      <.kpi_strip_row metric_text={gettext("ARPU")} prefix_text="$" value_text="34.20" previous_value_text="$31.80" delta_text="▲ 7.5%" delta_variant="positive" />
+      <.kpi_strip_row metric_text={gettext("ACTIVE USERS")} value_text="12.3K" previous_value_text="11.8K" delta_text="▲ 4.1%" delta_variant="positive" />
+      <.kpi_strip_row metric_text={gettext("CHURN")} value_text="2.4%" previous_value_text="2.1%" delta_text="▲ 14%" delta_variant="negative" />
     </.kpi_strip>
 
     <br />
 
     <%!-- Row 6: Bento (full-width) --%>
 
-    <.kpi_bento title_text="Magazine snapshot">
-      <.kpi_bento_tile is_hero variant="positive" label_text="Revenue" prefix_text="$" value_text="849" unit_text="K" delta_text="▲ 13.4%">
+    <.kpi_bento title_text={gettext("Magazine snapshot")}>
+      <.kpi_bento_tile is_hero variant="positive" label_text={gettext("Revenue")} prefix_text="$" value_text="849" unit_text="K" delta_text="▲ 13.4%">
         <:chart>
           <span class="pa-kpi-bento-tile__chart-svg">
             <svg id="cd-bn-hero" viewBox="0 0 100 24" preserveAspectRatio="none" phx-hook="PureAdminKpiSparkDot">
@@ -169,7 +169,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
           </span>
         </:chart>
       </.kpi_bento_tile>
-      <.kpi_bento_tile variant="negative" label_text="Cloud Spend" prefix_text="$" value_text="128" unit_text="K" delta_text="▲ 18%">
+      <.kpi_bento_tile variant="negative" label_text={gettext("Cloud Spend")} prefix_text="$" value_text="128" unit_text="K" delta_text="▲ 18%">
         <:chart>
           <span class="pa-kpi-bento-tile__chart-svg">
             <svg id="cd-bn-a" viewBox="0 0 100 24" preserveAspectRatio="none" phx-hook="PureAdminKpiSparkDot">
@@ -180,7 +180,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
           </span>
         </:chart>
       </.kpi_bento_tile>
-      <.kpi_bento_tile variant="up_strong" label_text="Conversion" value_text="3.92" unit_text="%" delta_text="▲ 12.6%">
+      <.kpi_bento_tile variant="up_strong" label_text={gettext("Conversion")} value_text="3.92" unit_text="%" delta_text="▲ 12.6%">
         <:chart>
           <span class="pa-kpi-bento-tile__chart-svg">
             <svg id="cd-bn-b" viewBox="0 0 100 24" preserveAspectRatio="none" phx-hook="PureAdminKpiSparkDot">
@@ -191,7 +191,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
           </span>
         </:chart>
       </.kpi_bento_tile>
-      <.kpi_bento_tile variant="positive" label_text="Sessions" value_text="12.3K" delta_text="▲ 4.1%">
+      <.kpi_bento_tile variant="positive" label_text={gettext("Sessions")} value_text="12.3K" delta_text="▲ 4.1%">
         <:chart>
           <span class="pa-kpi-bento-tile__chart-svg">
             <svg id="cd-bn-c" viewBox="0 0 100 24" preserveAspectRatio="none" phx-hook="PureAdminKpiSparkDot">
@@ -202,7 +202,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
           </span>
         </:chart>
       </.kpi_bento_tile>
-      <.kpi_bento_tile variant="negative" label_text="Churn" value_text="2.4%" delta_text="▲ 0.3pp">
+      <.kpi_bento_tile variant="negative" label_text={gettext("Churn")} value_text="2.4%" delta_text="▲ 0.3pp">
         <:chart>
           <span class="pa-kpi-bento-tile__chart-svg">
             <svg id="cd-bn-d" viewBox="0 0 100 24" preserveAspectRatio="none" phx-hook="PureAdminKpiSparkDot">
@@ -213,7 +213,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
           </span>
         </:chart>
       </.kpi_bento_tile>
-      <.kpi_bento_tile variant="neutral" label_text="NPS" value_text="64" delta_text="— 0">
+      <.kpi_bento_tile variant="neutral" label_text={gettext("NPS")} value_text="64" delta_text="— 0">
         <:chart>
           <span class="pa-kpi-bento-tile__chart-svg">
             <svg id="cd-bn-e" viewBox="0 0 100 24" preserveAspectRatio="none" phx-hook="PureAdminKpiSparkDot">
@@ -240,11 +240,11 @@ defmodule DemoWeb.Live.KpiDashboardLive do
       <code>pa:theme-change</code> event.
     </p>
 
-    <.kpi_sparkline_list title_text="Revenue by Segment · Q1–Q4 weekly" is_live>
+    <.kpi_sparkline_list title_text={gettext("Revenue by Segment · Q1–Q4 weekly")} is_live>
       <.kpi_sparkline_row
         id="seg-enterprise"
         variant="up"
-        label_text="Enterprise"
+        label_text={gettext("Enterprise")}
         prefix_text="$"
         value_text="590"
         unit_text="K"
@@ -272,7 +272,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
       <.kpi_sparkline_row
         id="seg-smb"
         variant="up"
-        label_text="SMB"
+        label_text={gettext("SMB")}
         prefix_text="$"
         value_text="325"
         unit_text="K"
@@ -300,7 +300,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
       <.kpi_sparkline_row
         id="seg-consumer"
         variant="up_strong"
-        label_text="Consumer"
+        label_text={gettext("Consumer")}
         prefix_text="$"
         value_text="410"
         unit_text="K"
@@ -328,7 +328,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
       <.kpi_sparkline_row
         id="seg-marketplace"
         variant="down"
-        label_text="Marketplace"
+        label_text={gettext("Marketplace")}
         prefix_text="$"
         value_text="180"
         unit_text="K"
@@ -356,8 +356,8 @@ defmodule DemoWeb.Live.KpiDashboardLive do
 
     <br />
 
-    <.kpi_bento title_text="Pipeline & Distribution · Chart.js mix">
-      <.kpi_bento_tile is_hero variant="positive" label_text="Pipeline by Stage" prefix_text="$" value_text="2.84" unit_text="M" delta_text="▲ 14.2%">
+    <.kpi_bento title_text={gettext("Pipeline & Distribution · Chart.js mix")}>
+      <.kpi_bento_tile is_hero variant="positive" label_text={gettext("Pipeline by Stage")} prefix_text="$" value_text="2.84" unit_text="M" delta_text="▲ 14.2%">
         <:chart>
           <canvas
             id="cjs-bento-hero"
@@ -371,7 +371,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
         </:chart>
       </.kpi_bento_tile>
 
-      <.kpi_bento_tile variant="up_strong" label_text="Customer Mix" value_text="4" unit_text="segments" delta_text="▲ 2.1%">
+      <.kpi_bento_tile variant="up_strong" label_text={gettext("Customer Mix")} value_text="4" unit_text="segments" delta_text="▲ 2.1%">
         <:chart>
           <canvas
             id="cjs-bento-a"
@@ -384,7 +384,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
         </:chart>
       </.kpi_bento_tile>
 
-      <.kpi_bento_tile variant="positive" label_text="Top Channels" value_text="5" unit_text="active" delta_text="▲ 8.7%">
+      <.kpi_bento_tile variant="positive" label_text={gettext("Top Channels")} value_text="5" unit_text="active" delta_text="▲ 8.7%">
         <:chart>
           <canvas
             id="cjs-bento-b"
@@ -397,7 +397,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
         </:chart>
       </.kpi_bento_tile>
 
-      <.kpi_bento_tile variant="positive" label_text="Deals by Region" value_text="6" unit_text="regions" delta_text="▲ 5.0%">
+      <.kpi_bento_tile variant="positive" label_text={gettext("Deals by Region")} value_text="6" unit_text="regions" delta_text="▲ 5.0%">
         <:chart>
           <canvas
             id="cjs-bento-c"
@@ -411,7 +411,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
         </:chart>
       </.kpi_bento_tile>
 
-      <.kpi_bento_tile variant="negative" label_text="Stalled %" value_text="11.4" unit_text="%" delta_text="▲ 1.8pp">
+      <.kpi_bento_tile variant="negative" label_text={gettext("Stalled %")} value_text="11.4" unit_text="%" delta_text="▲ 1.8pp">
         <:chart>
           <canvas
             id="cjs-bento-d"
@@ -425,7 +425,7 @@ defmodule DemoWeb.Live.KpiDashboardLive do
         </:chart>
       </.kpi_bento_tile>
 
-      <.kpi_bento_tile variant="neutral" label_text="Forecast Confidence" value_text="78" unit_text="%" delta_text="— 0">
+      <.kpi_bento_tile variant="neutral" label_text={gettext("Forecast Confidence")} value_text="78" unit_text="%" delta_text="— 0">
         <:chart>
           <canvas
             id="cjs-bento-e"

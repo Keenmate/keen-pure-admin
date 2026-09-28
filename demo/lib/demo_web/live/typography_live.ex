@@ -9,7 +9,7 @@ defmodule DemoWeb.Live.TypographyLive do
     ~H"""
     <p>Text styles and heading components.</p>
 
-    <.card title_text="Headings">
+    <.card title_text={gettext("Headings")}>
       <.heading level="1">Heading 1</.heading>
       <.heading level="2">Heading 2</.heading>
       <.heading level="3">Heading 3</.heading>
@@ -18,7 +18,7 @@ defmodule DemoWeb.Live.TypographyLive do
       <.heading level="6">Heading 6</.heading>
     </.card>
 
-    <.card title_text="Paragraphs">
+    <.card title_text={gettext("Paragraphs")}>
       <.paragraph>
         This is a standard paragraph with default styling. Lorem ipsum dolor sit amet, consectetur
         adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -33,7 +33,7 @@ defmodule DemoWeb.Live.TypographyLive do
 
     <.grid>
       <.column size="50">
-        <.card title_text="Text Variants">
+        <.card title_text={gettext("Text Variants")}>
           <div style="display: flex; flex-direction: column; gap: 8px;">
             <.text>Default text</.text>
             <.text variant="muted">Muted text for secondary information</.text>
@@ -44,7 +44,7 @@ defmodule DemoWeb.Live.TypographyLive do
         </.card>
       </.column>
       <.column size="50">
-        <.card title_text="Links">
+        <.card title_text={gettext("Links")}>
           <div style="display: flex; flex-direction: column; gap: 8px;">
             <.pa_link href="#">Default link style</.pa_link>
             <%!-- pa-link has no colour modifiers; for a dimmed link add a .text-* utility --%>

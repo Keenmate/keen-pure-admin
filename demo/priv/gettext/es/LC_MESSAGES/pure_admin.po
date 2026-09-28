@@ -1,0 +1,125 @@
+## Bridge domain for library chrome (PureAdmin.Translations via DemoWeb.PaTranslate).
+## msgid is a dotted `pureAdmin.*` key. Untranslated keys fall back to keen's
+## built-in English defaults (DemoWeb.PaTranslate returns nil on an unchanged msgid).
+msgid ""
+msgstr ""
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Command palette
+msgid "pureAdmin.commandPalette.placeholder"
+msgstr "Escriba / para comandos, : para buscar, o simplemente escriba…"
+
+msgid "pureAdmin.commandPalette.emptyText"
+msgstr "Escriba / para comandos, : para buscar, o empiece a escribir"
+
+msgid "pureAdmin.commandPalette.searching"
+msgstr "Buscando…"
+
+msgid "pureAdmin.commandPalette.filterPlaceholder"
+msgstr "Escriba para filtrar…"
+
+msgid "pureAdmin.commandPalette.navigate"
+msgstr "Navegar"
+
+msgid "pureAdmin.commandPalette.select"
+msgstr "Seleccionar"
+
+msgid "pureAdmin.commandPalette.pages"
+msgstr "Páginas"
+
+msgid "pureAdmin.commandPalette.back"
+msgstr "Atrás"
+
+msgid "pureAdmin.commandPalette.close"
+msgstr "Cerrar"
+
+msgid "pureAdmin.commandPalette.stepOf"
+msgstr "Paso %{current} de %{total}"
+
+msgid "pureAdmin.commandPalette.searchingIn"
+msgstr "Buscando en %{name}"
+
+msgid "pureAdmin.commandPalette.pageOf"
+msgstr "Página %{page} de %{total} · %{count} resultados"
+
+msgid "pureAdmin.commandPalette.commands"
+msgstr "Comandos"
+
+msgid "pureAdmin.commandPalette.search"
+msgstr "Buscar"
+
+# Buttons
+msgid "pureAdmin.buttons.cancel"
+msgstr "Cancelar"
+
+msgid "pureAdmin.buttons.confirm"
+msgstr "Confirmar"
+
+msgid "pureAdmin.buttons.close"
+msgstr "Cerrar"
+
+msgid "pureAdmin.buttons.ok"
+msgstr "Aceptar"
+
+# Search
+msgid "pureAdmin.search.searching"
+msgstr "Buscando…"
+
+msgid "pureAdmin.search.noResults"
+msgstr "No se encontraron resultados"
+
+# Pagination
+msgid "pureAdmin.pagination.firstPage"
+msgstr "Primera página"
+
+msgid "pureAdmin.pagination.prevPage"
+msgstr "Página anterior"
+
+msgid "pureAdmin.pagination.nextPage"
+msgstr "Página siguiente"
+
+msgid "pureAdmin.pagination.lastPage"
+msgstr "Última página"
+
+msgid "pureAdmin.pagination.pages"
+msgstr "/ %{total} páginas"
+
+msgid "pureAdmin.pagination.loadMore"
+msgstr "Cargar más"
+
+# Popconfirm
+msgid "pureAdmin.popconfirm.confirm"
+msgstr "Confirmar"
+
+msgid "pureAdmin.popconfirm.cancel"
+msgstr "Cancelar"
+
+# Settings panel
+msgid "pureAdmin.settings.title"
+msgstr "Configuración"
+
+msgid "pureAdmin.settings.theme"
+msgstr "Tema"
+
+msgid "pureAdmin.settings.colorVariant"
+msgstr "Variante de color"
+
+msgid "pureAdmin.settings.mode"
+msgstr "Modo"
+
+msgid "pureAdmin.settings.layoutWidth"
+msgstr "Ancho del diseño"
+
+msgid "pureAdmin.settings.sidebarMode"
+msgstr "Modo de barra lateral"
+
+msgid "pureAdmin.settings.resetToDefaults"
+msgstr "Restablecer valores predeterminados"
+
+# Accessibility
+msgid "pureAdmin.a11y.close"
+msgstr "Cerrar"
+
+msgid "pureAdmin.a11y.settings"
+msgstr "Configuración"

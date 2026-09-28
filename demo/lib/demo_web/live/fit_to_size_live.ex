@@ -103,7 +103,7 @@ defmodule DemoWeb.Live.FitToSizeLive do
     </style>
 
     <div class="pa-page-content">
-      <.heading level={1} class="mb-2">Fit to Size</.heading>
+      <.heading level={1} class="mb-2">{gettext("Fit to Size")}</.heading>
       <.paragraph>
         The Fit engine (<code>fit.js</code>) shrinks a horizontal row to fit its
         container — degrading the least-important slots first, lowest priority first,
@@ -134,27 +134,27 @@ defmodule DemoWeb.Live.FitToSizeLive do
       </.paragraph>
 
       <div class="fit-slider-row">
-        <span>Container width</span>
+        <span>{gettext("Container width")}</span>
         <input type="range" min="200" max="720" value="360" id="stage1-slider" phx-hook="StageWidth" data-stage="stage1" data-output="stage1-w" aria-label="Example 1 width" />
         <output id="stage1-w">360px</output>
       </div>
 
       <div class="fit-stage" id="stage1" style="max-width: 360px">
-        <.card style="margin: 0" title_text="Sales Overview">
+        <.card style="margin: 0" title_text={gettext("Sales Overview")}>
           <div id="ex1-toolbar" class="fit-toolbar" data-pc-fit-auto="true" data-pc-fit-default-priority="20" phx-hook="PureAdminNavFit">
             <.button variant="primary" data-pc-fit-ignore="true">
-              <:icon>💾</:icon> Save
+              <:icon>💾</:icon> {gettext("Save")}
             </.button>
             <.button data-pc-fit="steps" data-pc-fit-priority="40">
-              <span data-pc-fit-step="0"><span class="pa-btn__icon">⧉</span> Duplicate</span>
+              <span data-pc-fit-step="0"><span class="pa-btn__icon">⧉</span> {gettext("Duplicate")}</span>
               <span data-pc-fit-step="1" class="pc-fit-hidden"><span class="pa-btn__icon">⧉</span></span>
             </.button>
             <.button data-pc-fit="steps" data-pc-fit-priority="30">
-              <span data-pc-fit-step="0"><span class="pa-btn__icon">⬇️</span> Export</span>
+              <span data-pc-fit-step="0"><span class="pa-btn__icon">⬇️</span> {gettext("Export")}</span>
               <span data-pc-fit-step="1" class="pc-fit-hidden"><span class="pa-btn__icon">⬇️</span></span>
             </.button>
             <.button>
-              <:icon>🗑️</:icon> Delete
+              <:icon>🗑️</:icon> {gettext("Delete")}
             </.button>
           </div>
           <.paragraph class="mt-3 mb-0 pa-text--secondary">
@@ -175,7 +175,7 @@ defmodule DemoWeb.Live.FitToSizeLive do
       </.paragraph>
 
       <div class="fit-slider-row">
-        <span>Container width</span>
+        <span>{gettext("Container width")}</span>
         <input type="range" min="260" max="720" value="640" id="stage2-slider" phx-hook="StageWidth" data-stage="stage2" data-output="stage2-w" aria-label="Example 2 width" />
         <output id="stage2-w">640px</output>
       </div>
@@ -214,7 +214,7 @@ defmodule DemoWeb.Live.FitToSizeLive do
       </.paragraph>
 
       <div class="fit-slider-row">
-        <span>Container width</span>
+        <span>{gettext("Container width")}</span>
         <input type="range" min="260" max="880" value="760" id="stage3-slider" phx-hook="StageWidth" data-stage="stage3" data-output="stage3-w" aria-label="Example 3 width" />
         <output id="stage3-w">760px</output>
       </div>
@@ -281,7 +281,7 @@ defmodule DemoWeb.Live.FitToSizeLive do
       </.callout>
 
       <div class="fit-slider-row">
-        <span>Container width</span>
+        <span>{gettext("Container width")}</span>
         <input type="range" min="260" max="880" value="760" id="stage4-slider" phx-hook="StageWidth" data-stage="stage4" data-output="stage4-w" aria-label="Example 4 width" />
         <output id="stage4-w">760px</output>
       </div>
@@ -371,7 +371,7 @@ defmodule DemoWeb.Live.FitToSizeLive do
           <canvas id={@chart_id} phx-hook="FitSparkline" data-points="[612, 640, 606, 701, 760, 803, 847]"></canvas>
         </div>
         <div class="fit-cq__kpi">
-          <.stat number="$847K" label_text="Revenue" icon_variant="success">
+          <.stat number="$847K" label_text={gettext("Revenue")} icon_variant="success">
             <:icon>📈</:icon>
           </.stat>
           <.badge variant="success">▲ 12.5%</.badge>

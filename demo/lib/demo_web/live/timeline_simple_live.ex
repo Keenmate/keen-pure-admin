@@ -10,8 +10,8 @@ defmodule DemoWeb.Live.TimelineSimpleLive do
     <.paragraph class="mb-6">Start-aligned timeline with dot markers - perfect for logs and simple event lists</.paragraph>
 
     <%!-- Color-Coded Events --%>
-    <.card title_text="Color-Coded Events">
-      <:description>Use color modifiers to categorize different event types</:description>
+    <.card title_text={gettext("Color-Coded Events")}>
+      <:description>{gettext("Use color modifiers to categorize different event types")}</:description>
       <.timeline variant="simple">
         <.timeline_item variant="primary" time_text="09:00 AM">
           System startup initialized
@@ -47,8 +47,8 @@ defmodule DemoWeb.Live.TimelineSimpleLive do
     </.card>
 
     <%!-- Filled Bullets --%>
-    <.card title_text="Filled Bullets">
-      <:description>Solid bullet markers for stronger visual emphasis</:description>
+    <.card title_text={gettext("Filled Bullets")}>
+      <:description>{gettext("Solid bullet markers for stronger visual emphasis")}</:description>
       <.timeline variant="simple">
         <.timeline_item variant="primary" is_filled time_text="Jan 2024">
           Project kickoff and team formation

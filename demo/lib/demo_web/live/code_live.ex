@@ -55,7 +55,7 @@ defmodule DemoWeb.Live.CodeLive do
     ~H"""
     <p>Code display components for inline code and code blocks.</p>
 
-    <.card title_text="Inline Code">
+    <.card title_text={gettext("Inline Code")}>
       <p>
         Use the
         <.code>mix phx.server</.code>
@@ -66,22 +66,22 @@ defmodule DemoWeb.Live.CodeLive do
       </p>
     </.card>
 
-    <.card title_text="Code Block">
+    <.card title_text={gettext("Code Block")}>
       <.code_block language="elixir">{@elixir_code}</.code_block>
     </.card>
 
-    <.card title_text="Code Block with Header">
+    <.card title_text={gettext("Code Block with Header")}>
       <.code_block language="javascript" filename="app.js">{@js_code}</.code_block>
     </.card>
 
     <.grid>
       <.column size="50">
-        <.card title_text="HTML Example">
+        <.card title_text={gettext("HTML Example")}>
           <.code_block language="html">{@html_code}</.code_block>
         </.card>
       </.column>
       <.column size="50">
-        <.card title_text="CSS Example">
+        <.card title_text={gettext("CSS Example")}>
           <.code_block language="css">{@css_code}</.code_block>
         </.card>
       </.column>

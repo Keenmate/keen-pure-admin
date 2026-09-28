@@ -52,24 +52,24 @@ defmodule DemoWeb.Live.PagersLive do
     <.paragraph>Pagination controls and load more buttons for navigating through data.</.paragraph>
 
     <%!-- Basic Pager --%>
-    <.card title_text="Basic Pager">
-      <.heading level={4}>Start Aligned</.heading>
+    <.card title_text={gettext("Basic Pager")}>
+      <.heading level={4}>{gettext("Start Aligned")}</.heading>
       <.pager page={@page} total_pages={@total_pages} align="start" show_info={false} on_previous="prev_page" on_next="next_page" />
 
-      <.heading level={4} class="mt-6">Center Aligned (default)</.heading>
+      <.heading level={4} class="mt-6">{gettext("Center Aligned (default)")}</.heading>
       <.pager page={@page} total_pages={@total_pages} show_info={false} on_previous="prev_page" on_next="next_page" />
 
-      <.heading level={4} class="mt-6">End Aligned</.heading>
+      <.heading level={4} class="mt-6">{gettext("End Aligned")}</.heading>
       <.pager page={@page} total_pages={@total_pages} align="end" show_info={false} on_previous="prev_page" on_next="next_page" />
     </.card>
 
     <%!-- Pager with Page Info --%>
-    <.card title_text="Pager with Page Info">
+    <.card title_text={gettext("Pager with Page Info")}>
       <.pager page={@page} total_pages={@total_pages} on_previous="prev_page" on_next="next_page" on_page_change="go_to_page" />
     </.card>
 
     <%!-- Pager with Item Count --%>
-    <.card title_text="Pager with Item Count">
+    <.card title_text={gettext("Pager with Item Count")}>
       <.pager
         page={@page}
         total_pages={@total_pages}
@@ -81,37 +81,37 @@ defmodule DemoWeb.Live.PagersLive do
     </.card>
 
     <%!-- Pager with First/Last --%>
-    <.card title_text="Pager with First/Last Buttons">
+    <.card title_text={gettext("Pager with First/Last Buttons")}>
       <.pager page={@page} total_pages={@total_pages} on_previous="prev_page" on_next="next_page" on_first="first_page" on_last="last_page" on_page_change="go_to_page" />
     </.card>
 
     <%!-- Load More Button --%>
-    <.card title_text="Load More Button">
-      <.heading level={4}>Start Aligned</.heading>
+    <.card title_text={gettext("Load More Button")}>
+      <.heading level={4}>{gettext("Start Aligned")}</.heading>
       <.load_more align="start" />
 
-      <.heading level={4} class="mt-6">Center Aligned (default)</.heading>
+      <.heading level={4} class="mt-6">{gettext("Center Aligned (default)")}</.heading>
       <.load_more />
 
-      <.heading level={4} class="mt-6">End Aligned</.heading>
+      <.heading level={4} class="mt-6">{gettext("End Aligned")}</.heading>
       <.load_more align="end" />
     </.card>
 
     <%!-- Load More with Count & Loading State --%>
-    <.card title_text="Load More with Count">
+    <.card title_text={gettext("Load More with Count")}>
       <.load_more
         phx-click="load_more"
         count={"#{@loaded_items} of #{@total_items}"}
         is_loading={@load_more_loading}
       />
 
-      <.heading level={4} class="mt-6">Loading State</.heading>
-      <.load_more is_loading>Loading...</.load_more>
+      <.heading level={4} class="mt-6">{gettext("Loading State")}</.heading>
+      <.load_more is_loading>{gettext("Loading...")}</.load_more>
     </.card>
 
     <%!-- CSS Classes Reference --%>
-    <.card title_text="CSS Classes Reference">
-      <.heading level={4}>Pager</.heading>
+    <.card title_text={gettext("CSS Classes Reference")}>
+      <.heading level={4}>{gettext("Pager")}</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-pager</code> - Pager container (centered by default)</li>
         <li><code>pa-pager--start</code> - Start-aligned</li>
@@ -124,7 +124,7 @@ defmodule DemoWeb.Live.PagersLive do
         <li><code>pa-pager__text</code> - Info text</li>
       </.basic_list>
 
-      <.heading level={4} class="mt-4">Load More</.heading>
+      <.heading level={4} class="mt-4">{gettext("Load More")}</.heading>
       <.basic_list spacing="compact">
         <li><code>pa-load-more</code> - Load more container (centered by default)</li>
         <li><code>pa-load-more--start</code> - Start-aligned</li>
