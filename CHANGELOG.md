@@ -47,6 +47,19 @@ so those runtime overrides resolve again (they had become silent no-ops).
 - **`table_item/1` two-line cell** (`pa-table__item-title` + optional `pa-table__item-desc`)
   and **`is_plain`** on `table/1` (`pa-table--plain`, neutral ruled table for paper forms).
 - **`modal/1` `title_icon`** — optional leading masked severity glyph in `.pa-modal__title`.
+- **Stateful, extensible command palette — `PureAdmin.CommandPalette` LiveComponent +
+  `PureAdmin.CommandPalette.Source` behaviour.** The reusable interaction state machine
+  (modes `/command` · `:context` · global, the multi-step wizard, pagination, keyboard nav,
+  inline/token display, open/close, global `Ctrl+K`/`⌘K`) now ships as a LiveComponent you
+  mount **once in your layout**. Per-project behaviour — commands, contexts, step options,
+  search and selection actions — is injected via a `use PureAdmin.CommandPalette.Source`
+  module (`commands/0`, `contexts/0`, `step_options/4`, `search/2`, `on_select/1`,
+  `on_complete/2`, all overridable). Side-effecting actions are declarative return values
+  the component executes (`{:navigate, path}`, `{:patch, path}`, `{:toast, …}`, `:close`),
+  so the palette can live globally without every LiveView needing matching handlers. Drive
+  it from a parent via `send_update/2` (`open_with:` / `display:`). The presentational
+  `PureAdmin.Components.CommandPalette.command_palette/1` remains for plain-LiveView hosts;
+  its shared inner markup is now `command_palette_body/1`.
 
 #### Changed
 
@@ -85,6 +98,14 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Command palette did nothing except on its own demo page — including `Ctrl+K`.** The
+  palette component (and the JS hook that registers the global `Ctrl+K`/`⌘K` listener) was
+  only rendered on `/components/command-palette`, so on every other page the navbar/sidebar
+  search triggers dispatched `pa:command-palette:open` to a `#command-palette` element that
+  didn't exist, and the keyboard shortcut had nowhere to bind. Reworked the palette into the
+  `PureAdmin.CommandPalette` LiveComponent (see Added) and mounted it once in the demo app
+  layout, so search triggers and `Ctrl+K` now work on **every** page. The hook pushes its
+  `cp:*` events to the component when mounted inside one (falls back to the view otherwise).
 - **Demo loaded a stale theme stylesheet — the whole app ran on an outdated build.** The
   root layout linked `/themes/{t}/css/{t}.css`, but the current theme install now writes
   `/themes/{t}/dist/{t}.css`; a leftover `css/{t}.css` in `_build` shadowed it (the

@@ -84,6 +84,7 @@ defmodule DemoWeb.Router do
       live("/phoenix/flash", Live.FlashLive, :index)
       live("/phoenix/form-demo", Live.FormDemoLive, :index)
       live("/phoenix/icons", Live.IconsLive, :index)
+      live("/phoenix/command-palette", Live.CommandPaletteGuideLive, :index)
 
       # Virtual Scroll
       live("/virtual-scroll/demo", Live.VirtualScrollLive, :index)
