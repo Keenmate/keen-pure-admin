@@ -160,6 +160,19 @@ and drop a knob core can't back.
 - +3 tests (alert outline guard; modal banded guard both directions). Suite **203 tests + 16
   doctests, 0 failures**; demo compiles clean.
 
+### Batch 9 — tooltip / popconfirm / list small wins (2026-09-29) ✅ DONE (uncommitted)
+- **tooltip.ex** — always emit `pa-tooltip--floating` (base class) → kills the `is_inline`
+  double-tooltip (SCSS suppresses the CSS pseudo under `--floating`; JS portal is the single tooltip).
+  Dropped the broken `is_inline` (no class + broke floating); `is_keyword` is the single inline-term
+  prop. Demo's 3 term-explanation tooltips → `is_keyword`.
+- **popconfirm.ex** — `icon_variant="default"` reaches the bare `pa-popconfirm__icon` (base glyph, no
+  colour modifier); `confirm_value` now forwards EVERY key as `phx-value-*` (was `:id`-only). Left the
+  inline-block trigger wrapper as-is (display:contents would break Floating UI anchoring).
+- **list.ex** — `list/1` + `list_item/1` gain `as` (`div` default / `ul` / `li`) via `<.dynamic_tag>`,
+  so the semantic `<ul>/<li>` list form core recommends is reachable without raw markup.
+- +11 tests (new tooltip_test + popconfirm_test; list_test extended). Suite **214 tests + 16
+  doctests, 0 failures**; demo compiles clean.
+
 **Remaining P1 ergonomics (not yet done):** `pa_icon/1`-style semantic-name masked component (the
 one thing keen's dispatcher still lacks vs svelte's `masked()` provider — name is set-specific in
 the FA fallback), table selection/responsive `data-label`, fit-to-size wrapper, profile
@@ -281,14 +294,22 @@ structurally verified in prior audit.
 - ✅ Sizes (md→bare, no phantom `--container--md`), `is_static` suppresses backdrop/ESC/close, `title_icon` (`pa-icon--*`), themed close-button variants all correct. Programmatic `pureAdmin.confirm/alert/prompt` intentionally not ported (JS-imperative; declarative `<.modal>` is the LiveView equivalent).
 
 ### tooltip.ex — `tooltip/1`, `popover/1`
-- 🟡 **`is_inline` tooltip renders a DOUBLE tooltip** — inline omits `pa-tooltip--floating` so the CSS pseudo is active, but the global delegated listener (tooltip.js:165) still portals a `.pa-tooltip-floating` for any `[data-tooltip]`. Two tooltips stack. Fix: always emit `--floating` (JS portal is keen's canonical path) or skip elements lacking it.
-- 🔵 **`is_inline` vs `is_keyword` overlap; `is_inline` is a partial no-op** — only `is_keyword` emits `--keyword`; `is_inline` emits no class (no `pa-tooltip--inline` in core), so the promised dotted underline never appears (demo uses is_inline for API/CSS terms). Fix: collapse to one prop emitting `--keyword`.
+- 🟡 **`is_inline` tooltip renders a DOUBLE tooltip** — ✅ FIXED (Batch 9). Tooltip now ALWAYS emits
+  `pa-tooltip--floating` (base class), which the SCSS uses to suppress the CSS `::before/::after`
+  pseudo (comment: "prevents double tooltips"); the JS portal is keen's canonical single tooltip.
+- 🔵 **`is_inline` vs `is_keyword` overlap; `is_inline` is a partial no-op** — ✅ FIXED (Batch 9).
+  Dropped `is_inline` (emitted no class + broke floating). `is_keyword` (`pa-tooltip--keyword`) is now
+  the single inline-term prop (dotted underline + help cursor); demo's 3 uses converted.
 - ✅ Positions (top=default no class; bottom/end/start map 1:1), popover structure/sizes/alignment, body-portal alignment-class survival all correct.
 
 ### popconfirm.ex — `popconfirm/1`
-- 🟠 **base warning icon (no modifier) unreachable** — `__icon` only emitted when `icon_variant != nil` and always paired with `--{variant}`; core supports bare `pa-popconfirm__icon` (SCSS:72-82). Fix: allow `has_icon` / `icon_variant="default"` for the bare icon.
-- 🔵 **trigger wrapped in a non-contract inline-block `<div>`** — anchoring workaround (uses inline style, not a phantom class) that can perturb button-group layouts. Fix: consider `display:contents` on the wrapper.
-- ⚪ `confirm_value` map only forwards `:id`. Fix: iterate map to multiple `phx-value-*` or document.
+- 🟠 **base warning icon (no modifier) unreachable** — ✅ FIXED (Batch 9). Added `icon_variant="default"`
+  → emits the bare `pa-popconfirm__icon` (the base triangle-alert glyph, dist=6) with no colour modifier.
+- 🔵 **trigger wrapped in a non-contract inline-block `<div>`** — LEFT AS-IS. `display:contents` would
+  strip the wrapper's box, breaking Floating UI's trigger-rect anchoring; the inline-block+relative
+  wrapper is a working non-phantom workaround. Not worth the regression risk. *(open, intentionally)*
+- ⚪ `confirm_value` map only forwards `:id` — ✅ FIXED (Batch 9). Now forwards EVERY key as
+  `phx-value-{k}` (`confirm_value_attrs/1`), so multi-key values reach the confirm event.
 - ✅ `__arrow`/`__content`/`__message`/`__actions` structure, always-authored position, `--compact`, danger/warning/info icon variants all correct.
 
 ## DATA-LISTS
@@ -302,7 +323,9 @@ structurally verified in prior audit.
 - ✅ Sizes, striped/bordered/plain, compact→xs, `table_card` variants/color-N/plain/scrollable/description/actions/footer, `table_item` all clean.
 
 ### list.ex — `basic_list/1`, `ordered_list/1`, `definition_list/1`, `list/1`, `list_item/1`
-- 🟠 **complex `.pa-list` can't render the semantic `<ul>/<li>` form** core recommends (snippet 194-211) — `list/1`/`list_item/1` hardcode `<div>` (list.ex:138,175). Fix: add `as`/`tag` attr (div default, allow ul+li).
+- 🟠 **complex `.pa-list` can't render the semantic `<ul>/<li>` form** — ✅ FIXED (Batch 9). Added
+  `as` attr to both: `list/1` (`div`/`ul`) + `list_item/1` (`div`/`li`), via `<.dynamic_tag>` (keen's
+  established tag-swap; div default keeps back-compat). `.pa-list` styles the same either way.
 - 🟡 list_item inner_block placed as bare `__item` child (off-contract for edge combo). Fix: route into `__content` or document.
 - ✅ basic_list correctly suppresses `--success`; roman/alpha, definition inline, `__meta`-inside-`__content` nesting all match. Dead `pa-list--bordered` correctly documented.
 

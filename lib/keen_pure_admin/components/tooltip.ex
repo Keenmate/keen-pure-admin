@@ -43,8 +43,15 @@ defmodule PureAdmin.Components.Tooltip do
 
   attr(:multiline, :boolean, default: false, doc: "Multiline tooltip (wider, left-aligned)")
   attr(:is_help, :boolean, default: false, doc: "Help cursor (question mark)")
-  attr(:is_inline, :boolean, default: false, doc: "Inline text style with dotted underline")
-  attr(:is_keyword, :boolean, default: false, doc: "Dotted underline + help cursor for inline term explanations")
+
+  attr(:is_keyword, :boolean,
+    default: false,
+    doc:
+      "Inline-term style: dotted underline + help cursor (`pa-tooltip--keyword`), for explaining " <>
+        "an abbreviation/term mid-sentence. (This replaces the former `is_inline`, which emitted no " <>
+        "class and — by dropping `--floating` — caused a double tooltip.)"
+  )
+
   attr(:class, :string, default: nil)
   attr(:rest, :global)
   slot(:inner_block, required: true)
@@ -52,8 +59,10 @@ defmodule PureAdmin.Components.Tooltip do
   def tooltip(assigns) do
     ~H"""
     <span
-      class={build_classes("pa-tooltip", [
-        {"pa-tooltip--floating", !@is_inline},
+      class={build_classes("pa-tooltip pa-tooltip--floating", [
+        # Always `--floating`: keen's canonical tooltip is the JS-portaled one
+        # (the global [data-tooltip] listener). `--floating` suppresses the CSS
+        # `::before/::after` pseudo, so the two can't stack into a double tooltip.
         # "top" is the default position — core defines no `pa-tooltip--top`.
         {"pa-tooltip--#{@position}", @position not in [nil, "top"]},
         {"pa-tooltip--#{@variant}", @variant != nil},

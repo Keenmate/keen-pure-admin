@@ -42,8 +42,11 @@ defmodule PureAdmin.Components.Popconfirm do
 
   attr(:icon_variant, :string,
     default: nil,
-    values: [nil, "danger", "warning", "info"],
-    doc: "Icon style for the message"
+    values: [nil, "default", "danger", "warning", "info"],
+    doc:
+      "Message icon. `nil` = no icon; `\"default\"` = the bare `pa-popconfirm__icon` (the base " <>
+        "triangle-alert glyph, no colour modifier); `danger`/`warning`/`info` add " <>
+        "`pa-popconfirm__icon--{variant}` for the coloured severity glyph."
   )
 
   attr(:is_compact, :boolean, default: false, doc: "Compact variant for table actions")
@@ -67,6 +70,7 @@ defmodule PureAdmin.Components.Popconfirm do
       assigns
       |> assign(:confirm_text, assigns.confirm_text || t("pureAdmin.popconfirm.confirm"))
       |> assign(:cancel_text, assigns.cancel_text || t("pureAdmin.popconfirm.cancel"))
+      |> assign(:confirm_value_attrs, confirm_value_attrs(assigns.confirm_value))
 
     ~H"""
     <%!-- Anchor wrapper: keen can't attach the trigger data-attr to arbitrary
@@ -92,7 +96,7 @@ defmodule PureAdmin.Components.Popconfirm do
       <div class="pa-popconfirm__content">
         <div class={build_classes("pa-popconfirm__message", [
           {"pa-popconfirm__icon", @icon_variant != nil},
-          {"pa-popconfirm__icon--#{@icon_variant}", @icon_variant != nil}
+          {"pa-popconfirm__icon--#{@icon_variant}", @icon_variant not in [nil, "default"]}
         ])}>
           <p><%= @message %></p>
         </div>
@@ -104,8 +108,8 @@ defmodule PureAdmin.Components.Popconfirm do
             class={"pa-btn pa-btn--#{@confirm_variant}"}
             type="button"
             phx-click={@confirm_event}
-            phx-value-id={@confirm_value[:id]}
             data-pa-popconfirm-close={@id}
+            {@confirm_value_attrs}
           >
             <%= @confirm_text %>
           </button>
@@ -113,5 +117,12 @@ defmodule PureAdmin.Components.Popconfirm do
       </div>
     </div>
     """
+  end
+
+  # Forward EVERY key of `confirm_value` as a `phx-value-*` attribute (was only
+  # `:id`). So `confirm_value={%{id: 1, kind: "row"}}` sends both id + kind with
+  # the confirm event. Nil values are dropped (Phoenix omits nil attrs).
+  defp confirm_value_attrs(confirm_value) do
+    Map.new(confirm_value, fn {k, v} -> {"phx-value-#{k}", v} end)
   end
 end

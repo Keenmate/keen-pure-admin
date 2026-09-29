@@ -126,6 +126,15 @@ defmodule PureAdmin.Components.List do
   # ─── Complex Structured Lists ───
 
   @doc "Renders a styled list container."
+  attr(:as, :string,
+    default: "div",
+    values: ["div", "ul"],
+    doc:
+      "Container element. `\"div\"` (default) or `\"ul\"` for the semantic list form core " <>
+        "recommends (snippets/lists.html) — pair with `list_item as=\"li\"`. `.pa-list` styles " <>
+        "the same either way."
+  )
+
   attr(:class, :string, default: nil)
   attr(:rest, :global)
   slot(:inner_block, required: true)
@@ -135,9 +144,9 @@ defmodule PureAdmin.Components.List do
     # `.pa-list-basic--bordered` exists, on `basic_list/1`). The former
     # `is_bordered` attr emitted a dead `pa-list--bordered` class and was dropped.
     ~H"""
-    <div class={build_classes("pa-list", [], @class)} {@rest}>
+    <.dynamic_tag tag_name={@as} class={build_classes("pa-list", [], @class)} {@rest}>
       <%= render_slot(@inner_block) %>
-    </div>
+    </.dynamic_tag>
     """
   end
 
@@ -156,6 +165,12 @@ defmodule PureAdmin.Components.List do
         Custom content here
       </.list_item>
   """
+  attr(:as, :string,
+    default: "div",
+    values: ["div", "li"],
+    doc: "Item element. `\"div\"` (default) or `\"li\"` when the parent list uses `as=\"ul\"`."
+  )
+
   attr(:title_text, :string, default: nil, doc: "Title text")
   attr(:subtitle_text, :string, default: nil, doc: "Subtitle text")
   attr(:meta_text, :string, default: nil, doc: "Meta text (right side)")
@@ -172,7 +187,7 @@ defmodule PureAdmin.Components.List do
     assigns = assign(assigns, :has_structured, has_structured)
 
     ~H"""
-    <div class={build_classes("pa-list__item", [], @class)} {@rest}>
+    <.dynamic_tag tag_name={@as} class={build_classes("pa-list__item", [], @class)} {@rest}>
       <div :if={@avatar != []} class="pa-list__avatar">
         <%= for avatar <- @avatar do %>
           <%= render_slot(avatar) %>
@@ -200,7 +215,7 @@ defmodule PureAdmin.Components.List do
           <%= render_slot(@inner_block) %>
         <% end %>
       <% end %>
-    </div>
+    </.dynamic_tag>
     """
   end
 end
