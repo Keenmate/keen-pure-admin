@@ -7,6 +7,10 @@ defmodule PureAdmin.Components.Table do
   use Phoenix.Component
 
   import PureAdmin.Helpers
+  # Header select-all checkbox reuses the canonical checkbox (indeterminate needs
+  # its PureAdminCheckbox hook). Row checkboxes are hand-written (they need
+  # phx-value-id, which checkbox/1's :rest allowlist doesn't pass through).
+  import PureAdmin.Components.Form, only: [checkbox: 1]
 
   @doc """
   Renders a data table with Pure Admin BEM classes.
@@ -66,6 +70,35 @@ defmodule PureAdmin.Components.Table do
   )
 
   attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
+
+  attr(:selectable, :boolean,
+    default: false,
+    doc:
+      "Render a leading checkbox column (`pa-table__checkbox-col`): a select-all box in the header " <>
+        "and a per-row box. Wire `on_row_select` / `on_select_all` + `row_selected` / `select_id`."
+  )
+
+  attr(:row_selected, :any,
+    default: nil,
+    doc: "Fn `(row -> boolean)` — marks a row `pa-table__row--selected` and checks its box."
+  )
+
+  attr(:select_id, :any,
+    default: nil,
+    doc:
+      "Fn `(row -> value)` for the row checkbox's `phx-value-id` (sent with `on_row_select`). " <>
+        "Falls back to `row_id` when unset."
+  )
+
+  attr(:on_row_select, :string, default: nil, doc: "`phx-click` event on a row checkbox (sends `phx-value-id`).")
+  attr(:on_select_all, :string, default: nil, doc: "`phx-click` event on the header select-all checkbox.")
+  attr(:all_selected, :boolean, default: false, doc: "Header checkbox checked state (all rows selected).")
+
+  attr(:some_selected, :boolean,
+    default: false,
+    doc: "Header checkbox indeterminate state (some — but not all — rows selected)."
+  )
+
   attr(:class, :string, default: nil)
   attr(:rest, :global)
 
@@ -106,6 +139,13 @@ defmodule PureAdmin.Components.Table do
     <table id={@id} class={table_classes(assigns)} {@rest}>
       <thead>
         <tr>
+          <th :if={@selectable} class="pa-table__checkbox-col">
+            <.checkbox
+              checked={@all_selected}
+              is_indeterminate={@some_selected && !@all_selected}
+              phx-click={@on_select_all}
+            />
+          </th>
           <th :for={action <- @action} class={action[:class] || "col-auto"}><%= action[:label] %></th>
           <th :for={col <- @col} class={col_header_class(col)}><%= col[:label] %></th>
         </tr>
@@ -114,9 +154,21 @@ defmodule PureAdmin.Components.Table do
         <tr
           :for={row <- @rows}
           id={@row_id && @row_id.(row)}
+          class={@row_selected && @row_selected.(row) && "pa-table__row--selected"}
           phx-click={@row_click && @row_click.(row)}
           data-grid={@is_responsive_grid && (@responsive_grid_cols || "")}
         >
+          <td :if={@selectable} class="pa-table__checkbox-col">
+            <label class="pa-checkbox">
+              <input
+                type="checkbox"
+                checked={@row_selected && @row_selected.(row)}
+                phx-click={@on_row_select}
+                phx-value-id={select_value(assigns, row)}
+              />
+              <span class="pa-checkbox__box"></span>
+            </label>
+          </td>
           <td
             :for={action <- @action}
             class={action[:class] || "col-auto"}
@@ -141,6 +193,16 @@ defmodule PureAdmin.Components.Table do
       </tfoot>
     </table>
     """
+  end
+
+  # phx-value-id for a row checkbox: prefer the explicit select_id fn, else fall
+  # back to row_id (the DOM-id fn). nil → attribute omitted.
+  defp select_value(assigns, row) do
+    cond do
+      assigns.select_id -> assigns.select_id.(row)
+      assigns.row_id -> assigns.row_id.(row)
+      true -> nil
+    end
   end
 
   defp col_header_class(col) do

@@ -226,48 +226,32 @@ defmodule DemoWeb.Live.TableMultiSelectLive do
         </div>
       </:header>
       <.table_container>
-        <table class="pa-table pa-table--striped">
-          <thead>
-            <tr>
-              <th class="col-auto">
-                <.checkbox
-                  checked={all_visible_selected?(@selected, @current_filter)}
-                  is_indeterminate={some_visible_selected?(@selected, @current_filter) && !all_visible_selected?(@selected, @current_filter)}
-                  phx-click={if all_visible_selected?(@selected, @current_filter), do: "deselect-all-visible", else: "select-all-visible"}
-                />
-              </th>
-              <th class="col-auto">{gettext("Actions")}</th>
-              <th>{gettext("Name")}</th>
-              <th>{gettext("Email")}</th>
-              <th>{gettext("Status")}</th>
-              <th>{gettext("Last Login")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              :for={row <- @rows}
-              class={if Map.has_key?(@selected, row.id), do: "pa-table__row--selected"}
-            >
-              <td class="col-auto">
-                <.checkbox
-                  checked={Map.has_key?(@selected, row.id)}
-                  phx-click="toggle-row"
-                  phx-value-id={row.id}
-                />
-              </td>
-              <td class="col-auto">
-                <.button_group>
-                  <.button size="xs" variant="primary" is_icon_only title="View"><i class="fas fa-eye" /></.button>
-                  <.button size="xs" variant="secondary" is_icon_only title="Edit"><i class="fas fa-edit" /></.button>
-                </.button_group>
-              </td>
-              <td>{row.name}</td>
-              <td>{row.email}</td>
-              <td><.badge variant={status_variant(row.status)} size="sm">{row.status}</.badge></td>
-              <td>{row.last_login}</td>
-            </tr>
-          </tbody>
-        </table>
+        <.table
+          rows={@rows}
+          is_striped
+          selectable
+          row_selected={fn row -> Map.has_key?(@selected, row.id) end}
+          select_id={fn row -> row.id end}
+          on_row_select="toggle-row"
+          on_select_all={
+            if all_visible_selected?(@selected, @current_filter),
+              do: "deselect-all-visible",
+              else: "select-all-visible"
+          }
+          all_selected={all_visible_selected?(@selected, @current_filter)}
+          some_selected={some_visible_selected?(@selected, @current_filter)}
+        >
+          <:action label={gettext("Actions")}>
+            <.button size="xs" variant="primary" is_icon_only title="View"><i class="fas fa-eye" /></.button>
+            <.button size="xs" variant="secondary" is_icon_only title="Edit"><i class="fas fa-edit" /></.button>
+          </:action>
+          <:col :let={row} label={gettext("Name")}>{row.name}</:col>
+          <:col :let={row} label={gettext("Email")}>{row.email}</:col>
+          <:col :let={row} label={gettext("Status")}>
+            <.badge variant={status_variant(row.status)} size="sm">{row.status}</.badge>
+          </:col>
+          <:col :let={row} label={gettext("Last Login")}>{row.last_login}</:col>
+        </.table>
       </.table_container>
     </.card>
 

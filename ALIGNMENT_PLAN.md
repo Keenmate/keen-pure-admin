@@ -185,10 +185,24 @@ hand-authored raw `<table>`). Contract verified against `_tables.scss` + `snippe
   `<.table is_responsive_grid responsive_grid_cols="2">` with `:col span=`.
 - +4 tests. Suite **218 tests + 16 doctests, 0 failures**; demo compiles clean (no warnings).
 
-Table selection API (finding 279) is the next table item — deferred to its own batch (needs the
-stateful multi-select demo rewired).
+### Batch 11 — table selection API (2026-09-30) ✅ DONE (uncommitted)
+Gave row selection a component surface (was entirely hand-authored in the demo, bypassing `<.table>`).
+Contract from `snippets/tables.html` (selectable rows) + `_checkbox-lists.scss`.
+- **table.ex** — new `selectable` → leading `pa-table__checkbox-col` (header select-all + per-row box);
+  `row_selected`/`select_id` fns; `on_row_select`/`on_select_all` events; `all_selected`/`some_selected`
+  (header checked + indeterminate). Header box = `<.checkbox>` (reuses its indeterminate hook; imported
+  `checkbox: 1` — verified no circular dep); row box = hand-written canonical `label.pa-checkbox`
+  (checkbox/1's `:rest` doesn't pass `phx-value-id`). `select_value/2` prefers `select_id`, falls back
+  to `row_id`.
+- **demo** — `table_multi_select_live.ex` main table fully converted to `<.table selectable ...>`; the
+  card-header select-all/deselect-all buttons + all event handlers unchanged (same event names).
+- +5 tests. Suite **223 tests + 16 doctests, 0 failures**; demo compiles clean (no warnings).
 
-**Remaining P1 ergonomics (not yet done):** table selection API (279); `pa_icon/1`-style semantic-name masked component (the
+**Table component now fully aligned** (responsive + selection + `:col span`). Remaining table nits are
+low-pri: `:col` arbitrary `data-*`/`colspan` (slot `:global` limitation), deprecated `--panel` subtree
+removal (282).
+
+**Remaining P1 ergonomics (not yet done):** `pa_icon/1`-style semantic-name masked component (the
 one thing keen's dispatcher still lacks vs svelte's `masked()` provider — name is set-specific in
 the FA fallback), table selection/responsive `data-label`, fit-to-size wrapper, profile
 favorites/tabs, kpi chart-svg, etc. Plus minor doc-overclaim tidies.
@@ -335,7 +349,12 @@ structurally verified in prior audit.
   whenever `is_responsive`/`is_responsive_grid`. New `responsive_grid_cols` attr → `data-grid` on each
   `<tr>` (nil = bare auto-fit, "2"/"3" = presets). New `:col` `span` attr → `data-span` ("2"/"3"/"full").
   Demo's hand-authored responsive-grid `<table>` (tables_responsive_live.ex) converted to `<.table>`.
-- 🔵 **no selection API** — row selection (`.pa-table__checkbox-col` + `tr.pa-table__row--selected`) has no component surface; the entire multi-select feature bypasses `.table` with hand-authored internals (table_multi_select_live.ex:228-270). Fix: add `selectable`/`selected` row predicate + checkbox-column affordance.
+- 🔵 **no selection API** — ✅ FIXED (Batch 11). Added `selectable` → leading `pa-table__checkbox-col`
+  (header select-all + per-row box); `row_selected` fn → `pa-table__row--selected` + checked box;
+  `select_id` fn → row `phx-value-id`; `on_row_select` / `on_select_all` events; `all_selected` /
+  `some_selected` (header checked + indeterminate). Header box reuses `<.checkbox>` (indeterminate hook);
+  row box is the hand-written canonical `label.pa-checkbox` (needs `phx-value-id`). Demo's hand-authored
+  multi-select `<table>` (table_multi_select_live.ex) fully converted to `<.table selectable>`.
 - 🔴 **demo leaks `pa-table--hover`** (grep=0) — attr correctly dropped from component, but demo markup still writes it (table_multi_select_live.ex:229). Fix: drop from demo.
 - 🟠 **`:col` cells can't set colspan/data-*/title** — PARTIAL (Batch 10): added `:col` `span`
   (→ `data-span`), which covers the responsive-grid need. Arbitrary `data-*`/`title`/`colspan` remain

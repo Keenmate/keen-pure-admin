@@ -129,6 +129,48 @@ defmodule PureAdmin.Components.TableTest do
     end
   end
 
+  defp render_sel(opts) do
+    base = %{
+      rows: [%{id: 1, name: "A"}, %{id: 2, name: "B"}],
+      selectable: true,
+      row_selected: fn r -> r.id == 1 end,
+      select_id: fn r -> r.id end,
+      on_row_select: "toggle-row",
+      on_select_all: "toggle-all",
+      all_selected: false,
+      some_selected: true,
+      col: [%{__slot__: :col, label: "Name", inner_block: fn _, r -> r.name end}],
+      action: []
+    }
+
+    render_component(&Table.table/1, Map.merge(base, opts))
+  end
+
+  describe "table/1 selectable" do
+    test "renders the checkbox column in header + rows" do
+      assert_class(render_sel(%{}), "pa-table__checkbox-col")
+    end
+
+    test "row_selected marks the row pa-table__row--selected" do
+      assert_class(render_sel(%{}), "pa-table__row--selected")
+    end
+
+    test "row checkbox carries on_row_select + phx-value-id from select_id" do
+      html = render_sel(%{})
+      assert html =~ ~s(phx-click="toggle-row")
+      assert html =~ ~s(phx-value-id="1")
+      assert html =~ ~s(phx-value-id="2")
+    end
+
+    test "header select-all checkbox carries on_select_all" do
+      assert render_sel(%{}) =~ ~s(phx-click="toggle-all")
+    end
+
+    test "not selectable emits no checkbox column" do
+      refute render_sel(%{selectable: false}) =~ "pa-table__checkbox-col"
+    end
+  end
+
   describe "table_container/1" do
     test "bare container has no header (blessed card-less shape)" do
       html =
