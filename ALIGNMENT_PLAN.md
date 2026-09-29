@@ -228,6 +228,14 @@ workaround for core's fixed limit; flagged for tomorrow).
 - +6 tests (checkbox disabled; new range_group_test; data_bar value_text). Suite **234 tests + 16
   doctests, 0 failures**.
 
+### Batch 15 — small structural / demo fidelity (2026-09-30) ✅ DONE (uncommitted)
+- **simple_form/1** — actions row now `pa-form-actions justify-content-end` (was `pc-row/pc-col-100 text-end`).
+- **field/1** — dropped the non-canonical inner `<span data-copy-value>`; text sits directly in
+  `.pa-field__value` + copy button sibling, `data-copy-value` on `.pa-field__value` (button resolves via
+  ancestor per copy_value.js). Matches snippet.
+- **demo** — `alerts_live.ex` System Update alert uses the `:list` slot instead of raw `pa-alert__list`.
+- +2 tests (simple_form actions; field copy shape). Suite **236 tests + 16 doctests, 0 failures**; demo clean.
+
 **Remaining P1 ergonomics (not yet done):** `bar_list` component (deferred, new build); `pa_icon/1`-style semantic-name masked component (the
 one thing keen's dispatcher still lacks vs svelte's `masked()` provider — name is set-specific in
 the FA fallback), table selection/responsive `data-label`, fit-to-size wrapper, profile
@@ -285,7 +293,8 @@ structurally verified in prior audit.
 - ⚪ **checkbox/1 `pa-checkbox--disabled` is dead** — ✅ FIXED (Batch 14). Declared `attr(:disabled)`
   (removed from `:rest` include), passed `disabled={@disabled}` to the input, and `checkbox_classes`
   now reads `assigns.disabled` → `pa-checkbox--disabled` emits correctly.
-- 🟡 **simple_form actions use `pc-row/pc-col-100 text-end`, not `.pa-form-actions`** — misses the blessed actions-row spacing contract (form.ex:693-697 vs forms.html:57-60). Fix: emit `<div class="pa-form-actions justify-content-end">`.
+- 🟡 **simple_form actions use `pc-row/pc-col-100 text-end`, not `.pa-form-actions`** — ✅ FIXED (Batch 15).
+  Now emits `<div class="pa-form-actions justify-content-end">` (the blessed actions row, forms.html:57-60).
 - 🟡 **input_group fixes button addons after append** — leading/interleaved buttons (stepper −/input/+, forms.html:312-317) unreachable via slots. Fix: `:prepend_button`/`:append_button` positioned slots, or document composing inside inner_block.
 - ✅ Input sizes/validation, color-1..9, textarea (correctly no validation border), input-group sizes, input-wrapper `__clear` (`pa-icon--x`), form_group horizontal/validation/required, bare-`<label>` auto-styling — all aligned. Dropped-dead `pa-form--inline` correctly gone.
 
@@ -304,7 +313,8 @@ structurally verified in prior audit.
 - 🟠 **outline + {secondary,light,dark} → unstyled `pa-alert--outline-*`** — ✅ FIXED (Batch 8).
   Added `@outline_variants ~w(primary success warning danger info)`; `is_outline` only emits the
   outline class for those five, else falls back to the solid fill. Same pattern as the button guard.
-- 🔵 **demo leaks raw `pa-alert__list`** — `alerts_live.ex:98` uses `<.basic_list class="pa-alert__list">` instead of the working `:list` slot (component API is fine). Fix: use the slot in the demo.
+- 🔵 **demo leaks raw `pa-alert__list`** — ✅ FIXED (Batch 15). `alerts_live.ex` System Update alert now
+  uses the `:list` slot (renders `ul.pa-alert__list`) instead of hand-authored `<.basic_list class=…>`.
 - ✅ Both shapes (icon→`__content`, no-icon→direct children), close glyph `pa-icon--x`, sizes (sm/lg only) aligned.
 
 ### callout.ex — `callout/1`
@@ -434,7 +444,10 @@ structurally verified in prior audit.
 ## DATA-VIZ
 
 ### data_display.ex — fields/field-group/desc-table/prop-card/banded/accent-grid/dot-leaders
-- 🟡 **field copy markup inserts a non-canonical wrapper `<span>`** — snippet puts value text directly in `.pa-field__value` then the button (data-display.html:366-374); keen wraps text in an extra span. Codegen-fidelity drift (harmless to layout). Fix: drop the inner wrapper; put `data-copy-value` on the value element.
+- 🟡 **field copy markup inserts a non-canonical wrapper `<span>`** — ✅ FIXED (Batch 15). Dropped the
+  inner `<span data-copy-value>`; text now sits directly in `.pa-field__value` with the copy button as its
+  sibling, and `data-copy-value` moved onto `.pa-field__value` (matches snippet). Verified safe against
+  `copy_value.js` — the button resolves `data-copy-value` via its ancestor lookup (rule 3).
 - ⚪ verify the `data-pa-copy` JS delegator actually toggles `--copied` (else the "Copied!" feedback never appears).
 - ✅ accent-grid correctly restricted to the 4 semantic accents (no phantom `--primary`/`--color-N`); desc-table/banded/prop-card/field layouts/field-group/dot-leaders all mapped; `value_variant` correctly excludes nonexistent `--secondary`.
 

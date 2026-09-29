@@ -380,6 +380,27 @@ defmodule PureAdmin.Components.FormTest do
     end
   end
 
+  describe "simple_form/1 actions" do
+    test "actions render in the blessed pa-form-actions row, not a grid row" do
+      form = to_form(%{}, as: :user)
+
+      html =
+        render(
+          fn assigns ->
+            ~H"""
+            <.simple_form for={@form}>
+              <:actions><button type="submit">Save</button></:actions>
+            </.simple_form>
+            """
+          end,
+          %{form: form}
+        )
+
+      assert_class(html, "pa-form-actions")
+      refute html =~ "pc-col-100"
+    end
+  end
+
   # Used by the configured-formatter test above
   def shout_error({msg, _opts}), do: String.upcase(msg) <> "!"
 end

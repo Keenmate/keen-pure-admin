@@ -50,15 +50,24 @@ defmodule PureAdmin.Components.DataDisplay do
               data-pa-copy-on-click
               data-copy-value={@copy_value}><%= render_slot(@inner_block) %></span>
       <% else %>
-        <span class={build_classes("pa-field__value", [{"pa-field__value--#{@value_variant}", @value_variant != nil}])}>
-          <%= if @is_copy_btn || @is_copy_hover do %>
-            <span data-copy-value={@copy_value}><%= render_slot(@inner_block) %></span>
-            <button type="button" class="pa-field__copy" data-pa-copy title="Copy to clipboard">
-              <span class="pa-icon pa-icon--copy" aria-hidden="true"></span>
-            </button>
-          <% else %>
-            <%= render_slot(@inner_block) %>
-          <% end %>
+        <%!-- Canonical shape (snippets/data-display.html): value text sits directly
+             in .pa-field__value with the copy button as its sibling — no inner
+             wrapper span. data-copy-value goes on .pa-field__value; the copy JS
+             resolves it via its ancestor lookup (copy_value.js rule 3). --%>
+        <span
+          class={build_classes("pa-field__value", [{"pa-field__value--#{@value_variant}", @value_variant != nil}])}
+          data-copy-value={(@is_copy_btn || @is_copy_hover) && @copy_value || nil}
+        >
+          <%= render_slot(@inner_block) %>
+          <button
+            :if={@is_copy_btn || @is_copy_hover}
+            type="button"
+            class="pa-field__copy"
+            data-pa-copy
+            title="Copy to clipboard"
+          >
+            <span class="pa-icon pa-icon--copy" aria-hidden="true"></span>
+          </button>
         </span>
       <% end %>
     </div>

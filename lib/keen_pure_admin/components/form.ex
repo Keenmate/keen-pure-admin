@@ -746,10 +746,10 @@ defmodule PureAdmin.Components.Form do
       {@rest}
     >
       <%= render_slot(@inner_block) %>
-      <div :for={actions <- @actions} class="pc-row">
-        <div class="pc-col-100 text-end">
-          <%= render_slot(actions) %>
-        </div>
+      <%!-- Blessed actions row: pa-form-actions (forms.html:57-60), not a grid row.
+           justify-content-end keeps the buttons right-aligned. --%>
+      <div :for={actions <- @actions} class="pa-form-actions justify-content-end">
+        <%= render_slot(actions) %>
       </div>
     </.form>
     """

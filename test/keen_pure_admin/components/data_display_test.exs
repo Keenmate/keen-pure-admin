@@ -42,4 +42,21 @@ defmodule PureAdmin.Components.DataDisplayTest do
       assert html =~ ~s(<h3 class="pa-field-group__title">Personal</h3>)
     end
   end
+
+  describe "field/1 copy button — canonical shape (no inner wrapper span)" do
+    test "copy-btn puts data-copy-value on .pa-field__value with the button as sibling" do
+      html =
+        render_component(&DataDisplay.field/1, %{
+          label: "API key",
+          is_copy_btn: true,
+          copy_value: "sk_live_123",
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "sk_live_123" end}]
+        })
+
+      assert html =~ ~r/<span class="pa-field__value"[^>]*data-copy-value="sk_live_123"/
+      assert_class(html, "pa-field__copy")
+      # no extra inner wrapper span carrying data-copy-value (button resolves via ancestor)
+      refute html =~ ~r/<span data-copy-value=/
+    end
+  end
 end

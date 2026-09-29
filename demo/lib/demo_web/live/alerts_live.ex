@@ -95,11 +95,11 @@ defmodule DemoWeb.Live.AlertsLive do
           <.alert variant="info" heading_size="lg">
             <:heading>System Update</:heading>
             <.paragraph>A new version of the application is available. This update includes:</.paragraph>
-            <.basic_list class="pa-alert__list">
+            <:list>
               <li>Performance improvements</li>
               <li>Bug fixes</li>
               <li>New dashboard features</li>
-            </.basic_list>
+            </:list>
             <:actions>
               <.button variant="primary" size="sm">{gettext("Update Now")}</.button>
               <.button variant="secondary" size="sm">{gettext("Remind Me Later")}</.button>
