@@ -100,16 +100,40 @@ defmodule PureAdmin.Components.Icon do
     doc: "Accessibility label — emits as `aria-label` in HTML."
   )
 
+  attr(:is_interactive, :boolean,
+    default: false,
+    doc:
+      "Make a STANDALONE icon its own hover affordance by wrapping it in " <>
+        "`<span class=\"pc-icon-hover\">` (the foundation hover context; see pure-css " <>
+        "`_icon-hover.scss`). Not needed when the icon sits inside an interactive control " <>
+        "(button, nav link, tab): the control is already the hover context, and the marker " <>
+        "class this component stamps reacts to it. Mirrors svelte's `isInteractive`."
+  )
+
   def icon(%{name: nil} = assigns), do: ~H""
   def icon(%{name: ""} = assigns), do: ~H""
 
-  def icon(%{name: "hero-" <> rest} = assigns) do
-    assigns = assign(assigns, :hero_name, rest)
+  # `is_interactive` adds the standalone hover CONTEXT (`.pc-icon-hover`). The CSS
+  # uses a descendant selector (`.pc-icon-hover:hover .pc-icon-hover-fill|…`), so
+  # the marker must live INSIDE this wrapper — hence the span. The per-set marker
+  # itself is stamped by the branch (a "provider") in render_icon/1.
+  def icon(assigns) do
+    ~H"""
+    <%= if @is_interactive do %><span class="pc-icon-hover"><%= render_icon(assigns) %></span><% else %><%= render_icon(assigns) %><% end %>
+    """
+  end
+
+  # Heroicon (outline SVG) → recolour-on-hover marker (no solid form to fill).
+  defp render_icon(%{name: "hero-" <> rest} = assigns) do
+    assigns =
+      assigns
+      |> assign(:hero_name, rest)
+      |> assign(:hero_class, join_class(assigns.class, "pc-icon-hover-highlight"))
 
     ~H"""
     <.heroicon
       name={@hero_name}
-      class={@class}
+      class={@hero_class}
       color={@color}
       size={@size}
       variant={@variant}
@@ -121,7 +145,7 @@ defmodule PureAdmin.Components.Icon do
     """
   end
 
-  def icon(%{name: name} = assigns) when is_binary(name) do
+  defp render_icon(%{name: name} = assigns) when is_binary(name) do
     assigns = assign(assigns, :size_value, assigns[:size] || PureAdmin.Config.icon_size())
 
     case PureAdmin.Config.icon_callback() do
@@ -130,15 +154,25 @@ defmodule PureAdmin.Components.Icon do
     end
   end
 
+  # FA-style fallback → font-weight regular→solid flip marker (`pc-icon-hover-fill`).
+  # This branch IS keen's built-in Font Awesome "provider", so it stamps the FA
+  # marker like svelte's `fontAwesome()` does. (A configured `:icon_callback`
+  # owns its own markup + markers, exactly like a custom svelte provider.)
   defp fallback_icon(assigns) do
+    assigns = assign(assigns, :fa_class, join_class(join_class(assigns.name, assigns.class), "pc-icon-hover-fill"))
+
     ~H"""
     <i
-      class={[@name, @class]}
+      class={@fa_class}
       style={"font-size: #{@size_value}"}
       color={@color}
       title={@title}
       aria-label={@aria_label}
     ></i>
     """
+  end
+
+  defp join_class(a, b) do
+    [a, b] |> Enum.reject(&(is_nil(&1) or &1 == "")) |> Enum.join(" ")
   end
 end

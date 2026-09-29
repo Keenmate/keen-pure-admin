@@ -132,9 +132,26 @@ svelte fix (`Radio` __label span + `labelPosition` + group `layout`). All classe
   classes AND the raw radio-markup blocks; now pure component props.
 - +6 tests. Suite **193 tests + 16 doctests, 0 failures**; demo compiles clean.
 
-**Remaining P1 ergonomics (not yet done):** `pa_icon/1` component (highest payoff), table
-selection/responsive `data-label`, fit-to-size wrapper, profile favorites/tabs, kpi chart-svg, etc.
-Plus minor doc-overclaim tidies.
+### Batch 7 — icon hover affordance parity with svelte (2026-09-29) ✅ DONE (uncommitted)
+Mirror svelte's `Icon` `isInteractive` + provider-owned hover markers into keen's `icon/1`
+dispatcher (svelte was based on this elixir solution). Hover behaviour is a foundation feature
+(pure-css `_icon-hover.scss`; `pc-icon-hover`=14 / `-fill`=5 / `-highlight`=5 in core dist).
+- **`icon/1` now stamps the per-branch hover marker** (branches = keen's built-in "providers"):
+  FA-style fallback `<i>` → `pc-icon-hover-fill` (regular→solid weight flip); `hero-` → Heroicon
+  gets `pc-icon-hover-highlight` (outline recolour). Markers are inert until inside a hover
+  context (a control's `:hover`, or `pc-icon-hover`), so icons in buttons/nav now react for free.
+- **New `is_interactive` attr** → wraps the icon in `<span class="pc-icon-hover">` so a STANDALONE
+  icon is its own hover context (CSS uses a descendant selector, so the marker must sit inside the
+  context — hence the wrapper). Matches svelte's `isInteractive`.
+- `:icon_callback` markup is left untouched (a custom provider owns its own markup + markers),
+  but still gets the `pc-icon-hover` wrapper when interactive — same as a custom svelte provider.
+- New `test/.../icon_test.exs` (+7): marker stamping (FA/hero), class preservation, interactive
+  wrapper present/absent, nil/empty → nothing. Suite **200 tests + 16 doctests, 0 failures**.
+
+**Remaining P1 ergonomics (not yet done):** `pa_icon/1`-style semantic-name masked component (the
+one thing keen's dispatcher still lacks vs svelte's `masked()` provider — name is set-specific in
+the FA fallback), table selection/responsive `data-label`, fit-to-size wrapper, profile
+favorites/tabs, kpi chart-svg, etc. Plus minor doc-overclaim tidies.
 
 ---
 
