@@ -12,6 +12,12 @@ defmodule PureAdmin.Components.Button do
   import PureAdmin.Components.Icon
   import PureAdmin.Helpers
 
+  # Core defines outline variants for these six only (snippets/buttons.html +
+  # _buttons.scss). There is NO pa-btn--outline-light/-dark/-ghost — grep on
+  # dist/css/main.css = 0. `is_outline` with any other variant falls back to the
+  # solid fill so we never emit a phantom class.
+  @outline_variants ~w(primary secondary success warning danger info)
+
   # -- button/1 --
 
   @doc """
@@ -34,23 +40,24 @@ defmodule PureAdmin.Components.Button do
         <:icon><i class="fa-solid fa-floppy-disk"></i></:icon>
       </.button>
 
-      # Truncation (canonical pure-admin pattern): constrain the width and put
-      # `text-truncate` on an inner <span> — works with or without an icon. The
-      # label is a bare flex child of `.pa-btn` (not wrapped in `.pa-btn__label`,
-      # which has no `min-width: 0` and would refuse to shrink), so the span's
-      # `overflow: hidden` resolves its flex min-size to 0 and ellipsis kicks in.
-      <.button variant="secondary" class="minwr-10 maxwr-10">
+      # Truncation: set `should_truncate_text` and cap the width via `class`.
+      # The wrapper emits the inner `<span class="text-truncate">` for you — works
+      # with or without an icon. (Under the hood the label becomes a shrinkable
+      # flex child so `overflow: hidden` resolves its flex min-size to 0 and
+      # ellipsis kicks in; you never hand-author the span.)
+      <.button variant="secondary" should_truncate_text class="maxwr-10">
         <:icon>×</:icon>
-        <span class="text-truncate">Cancel and Go Back</span>
+        Cancel and Go Back
       </.button>
 
-  > #### `.pa-btn__label` wrapper {: .info}
+  > #### Label wrapper {: .info}
   >
-  > The label is emitted as a bare child matching the pure-admin snippet, EXCEPT
-  > when `align="center"` — that wraps it in `.pa-btn__label` so the core
-  > `--align-center` rule (`flex: 1; text-align: center`) can flex-fill the label.
-  > `align="center"` is therefore incompatible with `text-truncate` (a flex-fill
-  > wrapper can't also shrink to ellipsis) — same limitation as pure-admin core.
+  > The label is emitted as a bare child matching the pure-admin snippet, EXCEPT:
+  > `should_truncate_text` wraps it in `.text-truncate` (ellipsis), and
+  > `align="center"` wraps it in `.pa-btn__label` so the core `--align-center`
+  > rule (`flex: 1; text-align: center`) can flex-fill it. The two are mutually
+  > exclusive — a flex-fill label can't also shrink to ellipsis (same limitation
+  > as pure-admin core) — so `should_truncate_text` takes precedence.
   """
   attr(:variant, :string,
     default: "primary",
@@ -72,6 +79,21 @@ defmodule PureAdmin.Components.Button do
   attr(:is_icon_only, :boolean, default: false, doc: "Icon-only button (square)")
   attr(:is_ripple, :boolean, default: false, doc: "Ripple effect on click")
 
+  attr(:is_input_group_button, :boolean,
+    default: false,
+    doc:
+      "Emit `pa-input-group__button` alongside `pa-btn` so the button flattens as an addon " <>
+        "inside a `.pa-input-group` (keeps the group's border radius / seams). See the input_group snippet."
+  )
+
+  attr(:should_truncate_text, :boolean,
+    default: false,
+    doc:
+      "Wrap the label in `<span class=\"text-truncate\">` so a too-long label ellipsizes instead of " <>
+        "stretching the button. Pair with a width cap via `class` (e.g. `class=\"maxwr-12\"`). " <>
+        "Takes precedence over `align=\"center\"` (a flex-fill label can't also shrink to ellipsis)."
+  )
+
   attr(:align, :string,
     default: nil,
     values: [nil, "start", "end", "center", "justify"],
@@ -89,7 +111,21 @@ defmodule PureAdmin.Components.Button do
   slot(:inner_block, required: true)
 
   def button(assigns) do
-    assigns = assign(assigns, :btn_classes, button_classes(assigns))
+    # One label-wrapper decision, shared by the <a> and <button> branches:
+    #   truncate → inner text-truncate span (needs a width cap via class)
+    #   center   → .pa-btn__label so the core --align-center flex-fill rule applies
+    #   else     → bare flex child (matches the pure-admin snippet)
+    label_wrap_class =
+      cond do
+        assigns.should_truncate_text -> "text-truncate"
+        assigns.align == "center" -> "pa-btn__label"
+        true -> nil
+      end
+
+    assigns =
+      assigns
+      |> assign(:btn_classes, button_classes(assigns))
+      |> assign(:label_wrap_class, label_wrap_class)
 
     ~H"""
     <%= if @href do %>
@@ -102,7 +138,7 @@ defmodule PureAdmin.Components.Button do
       >
         <span :if={@is_loading} class="pa-btn__spinner"></span>
         <span :if={@icon != [] && @icon_position == "start"} :for={icon <- @icon} class="pa-btn__icon"><%= render_slot(icon) %></span>
-        <%= if @align == "center" do %><span class="pa-btn__label"><%= render_slot(@inner_block) %></span><% else %><%= render_slot(@inner_block) %><% end %>
+        <%= if @label_wrap_class do %><span class={@label_wrap_class}><%= render_slot(@inner_block) %></span><% else %><%= render_slot(@inner_block) %><% end %>
         <span :if={@icon != [] && @icon_position == "end"} :for={icon <- @icon} class="pa-btn__icon"><%= render_slot(icon) %></span>
       </a>
     <% else %>
@@ -115,7 +151,7 @@ defmodule PureAdmin.Components.Button do
       >
         <span :if={@is_loading} class="pa-btn__spinner"></span>
         <span :if={@icon != [] && @icon_position == "start"} :for={icon <- @icon} class="pa-btn__icon"><%= render_slot(icon) %></span>
-        <%= if @align == "center" do %><span class="pa-btn__label"><%= render_slot(@inner_block) %></span><% else %><%= render_slot(@inner_block) %><% end %>
+        <%= if @label_wrap_class do %><span class={@label_wrap_class}><%= render_slot(@inner_block) %></span><% else %><%= render_slot(@inner_block) %><% end %>
         <span :if={@icon != [] && @icon_position == "end"} :for={icon <- @icon} class="pa-btn__icon"><%= render_slot(icon) %></span>
       </button>
     <% end %>
@@ -131,7 +167,7 @@ defmodule PureAdmin.Components.Button do
         assigns.theme_color != nil ->
           "pa-btn--color-#{assigns.theme_color}"
 
-        assigns.is_outline ->
+        assigns.is_outline and assigns.variant in @outline_variants ->
           "pa-btn--outline-#{assigns.variant}"
 
         true ->
@@ -147,6 +183,7 @@ defmodule PureAdmin.Components.Button do
         {"pa-btn--loading", assigns.is_loading},
         {"pa-btn--icon-only", assigns.is_icon_only},
         {"pa-btn--ripple", assigns.is_ripple},
+        {"pa-input-group__button", assigns.is_input_group_button},
         {"pa-btn--align-#{assigns.align}", assigns.align != nil}
       ],
       assigns.class

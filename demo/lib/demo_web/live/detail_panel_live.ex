@@ -108,7 +108,7 @@ defmodule DemoWeb.Live.DetailPanelLive do
 
   defp users_table(assigns) do
     ~H"""
-    <table class="pa-table pa-table--hover pa-table--striped">
+    <table class="pa-table pa-table--striped">
       <thead>
         <tr>
           <th>{gettext("Name")}</th>

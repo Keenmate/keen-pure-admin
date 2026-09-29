@@ -6,10 +6,10 @@ defmodule PureAdmin.Components.LayoutTest do
   defp inner(text), do: [%{__slot__: :inner_block, inner_block: fn _, _ -> text end}]
 
   describe "nav_item/1 (rc14)" do
-    test "plain leaf carries NO class (pa-navmenu styles its <li>/<a> directly)" do
+    test "plain leaf carries NO class (pc-navmenu styles its <li>/<a> directly)" do
       html = render_component(&Layout.nav_item/1, %{href: "/reports", inner_block: inner("Reports")})
 
-      refute html =~ "pa-navmenu__item"
+      refute html =~ "pc-navmenu__item"
       assert html =~ ~s(href="/reports")
     end
 
@@ -17,7 +17,7 @@ defmodule PureAdmin.Components.LayoutTest do
       html =
         render_component(&Layout.nav_item/1, %{href: "/", is_active: true, inner_block: inner("Dashboard")})
 
-      assert_class(html, "pa-navmenu__item--active")
+      assert_class(html, "pc-navmenu__item--active")
     end
 
     test "priority/icon/collapse become data attributes" do
@@ -30,51 +30,51 @@ defmodule PureAdmin.Components.LayoutTest do
           inner_block: inner("X")
         })
 
-      assert html =~ ~s(data-pa-nav-priority="10")
-      assert html =~ ~s(data-pa-nav-icon="🏠")
-      assert html =~ ~s(data-pa-nav-collapse="hide")
+      assert html =~ ~s(data-pc-fit-nav-priority="10")
+      assert html =~ ~s(data-pc-nav-icon="🏠")
+      assert html =~ ~s(data-pc-fit-nav="hide")
     end
 
-    test "has_dropdown emits the item + has-dropdown classes and pa-navmenu__link" do
+    test "has_dropdown emits the item + has-dropdown classes and pc-navmenu__link" do
       html = render_component(&Layout.nav_item/1, %{has_dropdown: true, inner_block: inner("Products")})
 
-      assert_class(html, "pa-navmenu__item")
-      assert_class(html, "pa-navmenu__item--has-dropdown")
-      assert_class(html, "pa-navmenu__link")
+      assert_class(html, "pc-navmenu__item")
+      assert_class(html, "pc-navmenu__item--has-dropdown")
+      assert_class(html, "pc-navmenu__link")
     end
   end
 
   describe "nav_menu/1 (rc14)" do
-    test "plain menu is pa-navmenu with no collapse attrs or hook" do
+    test "plain menu is pc-navmenu with no collapse attrs or hook" do
       html = render_component(&Layout.nav_menu/1, %{inner_block: inner("x")})
 
-      assert_class(html, "pa-navmenu")
-      refute html =~ "data-pa-nav-collapse"
-      refute html =~ "PureAdminNavCollapse"
+      assert_class(html, "pc-navmenu")
+      refute html =~ "data-pc-fit-nav"
+      refute html =~ "PureAdminNavFitCollapse"
       # rc14 dropped the --start/--end modifiers
-      refute html =~ "pa-navmenu--"
+      refute html =~ "pc-navmenu--"
     end
 
     test "collapse mode wires the hook, data attrs, phx-update ignore, and an id" do
       html =
         render_component(&Layout.nav_menu/1, %{collapse: "menu", more_label: "More", inner_block: inner("x")})
 
-      assert html =~ ~s(data-pa-nav-collapse="menu")
-      assert html =~ ~s(data-pa-nav-more-label="More")
-      assert html =~ ~s(phx-hook="PureAdminNavCollapse")
+      assert html =~ ~s(data-pc-fit-nav="menu")
+      assert html =~ ~s(data-pc-fit-nav-more-label="More")
+      assert html =~ ~s(phx-hook="PureAdminNavFitCollapse")
       assert html =~ ~s(phx-update="ignore")
-      assert html =~ ~s(id="pa-navmenu-)
+      assert html =~ ~s(id="pc-navmenu-)
     end
   end
 
   describe "nav_dropdown/1 (rc14)" do
-    test "renders pa-navmenu__dropdown; level2 modifier optional" do
+    test "renders pc-navmenu__dropdown; level2 modifier optional" do
       html = render_component(&Layout.nav_dropdown/1, %{inner_block: inner("x")})
-      assert_class(html, "pa-navmenu__dropdown")
-      refute_class(html, "pa-navmenu__dropdown--level2")
+      assert_class(html, "pc-navmenu__dropdown")
+      refute_class(html, "pc-navmenu__dropdown--level2")
 
       l2 = render_component(&Layout.nav_dropdown/1, %{is_level2: true, inner_block: inner("x")})
-      assert_class(l2, "pa-navmenu__dropdown--level2")
+      assert_class(l2, "pc-navmenu__dropdown--level2")
     end
   end
 
@@ -82,7 +82,7 @@ defmodule PureAdmin.Components.LayoutTest do
     test "renders a flat li heading from label" do
       html = render_component(&Layout.sidebar_section/1, %{label: "Project"})
 
-      assert html =~ ~r{<li class="pa-sidebar__section"[^>]*>\s*Project\s*</li>}
+      assert html =~ ~r{<li class="pc-sidebar__section"[^>]*>\s*Project\s*</li>}
     end
 
     test "slot content overrides label" do
@@ -101,7 +101,7 @@ defmodule PureAdmin.Components.LayoutTest do
     test "renders an empty li divider" do
       html = render_component(&Layout.sidebar_divider/1, %{})
 
-      assert html =~ ~r{<li class="pa-sidebar__divider"[^>]*></li>}
+      assert html =~ ~r{<li class="pc-sidebar__divider"[^>]*></li>}
     end
   end
 
@@ -113,51 +113,51 @@ defmodule PureAdmin.Components.LayoutTest do
           inner_block: inner("nav")
         })
 
-      assert_class(html, "pa-layout__sidebar--resizable")
-      # The resize module creates .pa-sidebar-resize itself; server must not.
-      refute html =~ "pa-sidebar-resize"
+      assert_class(html, "pc-layout__sidebar--resizable")
+      # The resize module creates .pc-sidebar-resize itself; server must not.
+      refute html =~ "pc-sidebar-resize"
     end
 
     test "plain sidebar is not resizable" do
       html = render_component(&Layout.sidebar/1, %{inner_block: inner("nav")})
-      refute_class(html, "pa-layout__sidebar--resizable")
+      refute_class(html, "pc-layout__sidebar--resizable")
     end
   end
 
   describe "app_header/1 (rc14)" do
-    test "renders pa-app-header; children own the markup (no fit injection)" do
+    test "renders pc-app-header; children own the markup (no fit injection)" do
       html = render_component(&Layout.app_header/1, %{inner_block: inner("Custom")})
 
-      assert_class(html, "pa-app-header")
+      assert_class(html, "pc-app-header")
       assert html =~ "Custom"
-      refute html =~ "data-pa-fit"
+      refute html =~ "data-pc-fit"
       refute html =~ "pa-header__"
     end
 
     test "config fallback renders an <h1> app name when no children" do
       html = render_component(&Layout.app_header/1, %{})
 
-      assert_class(html, "pa-app-header")
+      assert_class(html, "pc-app-header")
       assert html =~ ~r{<h1}
     end
   end
 
   describe "page_header/1 (rc14)" do
-    test "renders a plain pa-page-header wrapper (no built-in fit)" do
+    test "renders a plain pc-page-header wrapper (no built-in fit)" do
       html = render_component(&Layout.page_header/1, %{inner_block: inner("Dashboard")})
 
-      assert_class(html, "pa-page-header")
+      assert_class(html, "pc-page-header")
       assert html =~ "Dashboard"
-      refute html =~ "data-pa-fit"
+      refute html =~ "data-pc-fit"
     end
   end
 
   describe "profile_button/1 (rc14)" do
-    test "renders pa-navbar__profile-btn with name span" do
+    test "renders pc-navbar__profile-btn with name span" do
       html = render_component(&Layout.profile_button/1, %{name: "John Doe"})
 
-      assert_class(html, "pa-navbar__profile-btn")
-      assert html =~ ~s(class="pa-navbar__profile-name")
+      assert_class(html, "pc-navbar__profile-btn")
+      assert html =~ ~s(class="pc-navbar__profile-name")
       assert html =~ "John Doe"
       refute html =~ "pa-header__"
     end
@@ -168,10 +168,10 @@ defmodule PureAdmin.Components.LayoutTest do
       html = render_component(&Layout.navbar/1, %{start: inner("brand")})
 
       assert html =~ ~s(phx-hook="PureAdminNavFit")
-      assert html =~ ~r{id="pa-navbar-inner-\d+"}
+      assert html =~ ~r{id="pc-navbar-inner-\d+"}
     end
 
-    test "burger renders as the first child, before the pa-navbar__* zones" do
+    test "burger renders as the first child, before the pc-navbar__* zones" do
       html =
         render_component(&Layout.navbar/1, %{
           burger: inner("BURGER"),
@@ -180,34 +180,34 @@ defmodule PureAdmin.Components.LayoutTest do
           end_: inner("E")
         })
 
-      assert html =~ "pa-navbar__start"
-      assert html =~ "pa-navbar__center"
-      assert html =~ "pa-navbar__end"
+      assert html =~ "pc-navbar__start"
+      assert html =~ "pc-navbar__center"
+      assert html =~ "pc-navbar__end"
       refute html =~ "pa-header__"
       # burger sits before the start zone
-      assert html =~ ~r{BURGER.*pa-navbar__start}s
+      assert html =~ ~r{BURGER.*pc-navbar__start}s
     end
   end
 
   describe "search entry points (rc12)" do
     test "navbar_search is a fit=hide trigger button" do
       html = render_component(&Layout.navbar_search/1, %{})
-      assert html =~ ~s(class="pa-navbar-search pa-navbar-search--sm")
-      assert html =~ ~s(data-pa-fit="hide")
-      assert html =~ ~s(data-pa-fit-priority="25")
-      assert html =~ "pa-navbar-search__shortcut"
+      assert html =~ ~s(class="pc-navbar-search pc-navbar-search--sm")
+      assert html =~ ~s(data-pc-fit="hide")
+      assert html =~ ~s(data-pc-fit-priority="25")
+      assert html =~ "pc-navbar-search__shortcut"
     end
 
     test "navbar_search_input (rc15) is a fit=hide GET form with a real input" do
       html = render_component(&Layout.navbar_search_input/1, %{action: "/search"})
 
-      assert html =~ ~r{<form[^>]*class="pa-navbar-search pa-navbar-search--input"}
+      assert html =~ ~r{<form[^>]*class="pc-navbar-search pc-navbar-search--input"}
       assert html =~ ~s(action="/search")
       assert html =~ ~s(method="get")
       assert html =~ ~s(role="search")
-      assert html =~ ~s(data-pa-fit="hide")
+      assert html =~ ~s(data-pc-fit="hide")
       assert html =~ ~r{<input[^>]*type="search"[^>]*name="q"}
-      assert html =~ ~s(class="pa-navbar-search__field")
+      assert html =~ ~s(class="pc-navbar-search__field")
     end
 
     test "navbar_search_input honours name and method" do
@@ -219,50 +219,50 @@ defmodule PureAdmin.Components.LayoutTest do
     test "sidebar_search with action (rc15) switches to a --input form" do
       html = render_component(&Layout.sidebar_search/1, %{action: "/search"})
 
-      assert html =~ ~r{<form[^>]*class="pa-sidebar__search pa-sidebar__search--input"}
+      assert html =~ ~r{<form[^>]*class="pc-sidebar__search pc-sidebar__search--input"}
       assert html =~ ~s(action="/search")
       # submit magnifier so the collapsed icon-rail still submits
-      assert html =~ ~r{<button[^>]*type="submit"[^>]*class="pa-sidebar__search-icon"}
-      assert html =~ ~s(class="pa-sidebar__search-field")
-      refute html =~ "pa-sidebar__label"
+      assert html =~ ~r{<button[^>]*type="submit"[^>]*class="pc-sidebar__search-icon"}
+      assert html =~ ~s(class="pc-sidebar__search-field")
+      refute html =~ "pc-sidebar__label"
     end
 
     test "navbar_search_field renders an input + autocomplete container" do
       html = render_component(&Layout.navbar_search_field/1, %{id: "nav-search"})
-      assert html =~ ~s(class="pa-navbar-search pa-navbar-search--field")
+      assert html =~ ~s(class="pc-navbar-search pc-navbar-search--field")
       assert html =~ ~s(id="nav-search-input")
-      assert html =~ ~s(class="pa-navbar-search__field")
+      assert html =~ ~s(class="pc-navbar-search__field")
       assert html =~ ~r{class="pa-search-autocomplete"[^>]*hidden}
     end
 
     test "sidebar_search is a full-width sidebar trigger" do
       html = render_component(&Layout.sidebar_search/1, %{})
-      assert html =~ ~s(class="pa-sidebar__search")
-      assert html =~ "pa-sidebar__label"
+      assert html =~ ~s(class="pc-sidebar__search")
+      assert html =~ "pc-sidebar__label"
     end
   end
 
   describe "fit_slot/1 + fit_step/1 (rc12/rc14)" do
-    test "hide (default) wraps content with data-pa-fit=hide + priority" do
+    test "hide (default) wraps content with data-pc-fit=hide + priority" do
       html = render_component(&Layout.fit_slot/1, %{priority: 15, inner_block: inner("x")})
-      assert html =~ ~s(data-pa-fit="hide")
-      assert html =~ ~s(data-pa-fit-priority="15")
+      assert html =~ ~s(data-pc-fit="hide")
+      assert html =~ ~s(data-pc-fit-priority="15")
       assert html =~ "x"
       # default wrapper tag is a span
-      assert html =~ ~r{<span[^>]*data-pa-fit="hide"}
+      assert html =~ ~r{<span[^>]*data-pc-fit="hide"}
     end
 
-    test "strategy=steps carries data-pa-fit=steps + the styled class" do
+    test "strategy=steps carries data-pc-fit=steps + the styled class" do
       html =
         render_component(&Layout.fit_slot/1, %{
           strategy: "steps",
           priority: 30,
-          class: "pa-app-header__name",
+          class: "pc-app-header__name",
           inner_block: inner("ladder")
         })
 
-      assert html =~ ~s(data-pa-fit="steps")
-      assert html =~ ~s(class="pa-app-header__name")
+      assert html =~ ~s(data-pc-fit="steps")
+      assert html =~ ~s(class="pc-app-header__name")
       assert html =~ "ladder"
     end
 
@@ -274,21 +274,21 @@ defmodule PureAdmin.Components.LayoutTest do
           inner_block: inner("y")
         })
 
-      assert html =~ ~s(data-pa-fit="sidebar")
-      assert html =~ ~s(data-pa-fit-sidebar-target="#main-nav")
+      assert html =~ ~s(data-pc-fit="sidebar")
+      assert html =~ ~s(data-pc-fit-sidebar-target="#main-nav")
     end
 
     test "tag can be overridden to a block element" do
       html = render_component(&Layout.fit_slot/1, %{tag: "div", inner_block: inner("z")})
-      assert html =~ ~r{<div[^>]*data-pa-fit="hide"}
+      assert html =~ ~r{<div[^>]*data-pc-fit="hide"}
     end
 
-    test "fit_step: step 0 emits no class; later steps carry pa-fit-hidden" do
+    test "fit_step: step 0 emits no class; later steps carry pc-fit-hidden" do
       s0 = render_component(&Layout.fit_step/1, %{index: 0, inner_block: inner("Pure Admin")})
-      assert s0 =~ ~r{<span data-pa-fit-step="0">Pure Admin</span>}
+      assert s0 =~ ~r{<span data-pc-fit-step="0">Pure Admin</span>}
 
       s1 = render_component(&Layout.fit_step/1, %{index: 1, inner_block: inner("PA")})
-      assert s1 =~ ~r{data-pa-fit-step="1" class="pa-fit-hidden">PA</span>}
+      assert s1 =~ ~r{data-pc-fit-step="1" class="pc-fit-hidden">PA</span>}
     end
   end
 

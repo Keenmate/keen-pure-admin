@@ -82,7 +82,7 @@ defmodule PureAdmin.Components.Typography do
 
   Core's `.pa-link` has no colour modifiers — it inherits the accent colour.
   For a dimmed or semantic link, add a `.text-*` utility via `class`
-  (e.g. `class="text-secondary"`).
+  (e.g. `class="text-color-2"` for muted, or `text-danger`/`text-success`/etc.).
   """
   attr(:href, :string, default: "#")
   attr(:class, :string, default: nil)

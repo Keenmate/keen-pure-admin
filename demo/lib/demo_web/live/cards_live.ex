@@ -324,35 +324,6 @@ defmodule DemoWeb.Live.CardsLive do
       </.grid>
     </.section>
 
-    <%!-- Bordered Cards --%>
-    <.section title_text={gettext("Bordered Cards")}>
-      <.paragraph class="mb-2">
-        Cards can have visible borders using the <code>pa-card--bordered</code> class.
-      </.paragraph>
-      <.grid>
-        <.column size="100" md="1-2">
-          <.card is_bordered title_text={gettext("Bordered Card")}>
-            <.paragraph>Card with visible border styling.</.paragraph>
-          </.card>
-        </.column>
-        <.column size="100" md="1-2">
-          <.card is_bordered variant="primary" title_text={gettext("Bordered Primary")}>
-            <.paragraph>Bordered card with color variant.</.paragraph>
-          </.card>
-        </.column>
-        <.column size="100" md="1-2">
-          <.card is_bordered variant="success" title_text={gettext("Bordered Success")}>
-            <.paragraph>Bordered card with success variant.</.paragraph>
-          </.card>
-        </.column>
-        <.column size="100" md="1-2">
-          <.card is_bordered variant="danger" title_text={gettext("Bordered Danger")}>
-            <.paragraph>Bordered card with danger variant.</.paragraph>
-          </.card>
-        </.column>
-      </.grid>
-    </.section>
-
     <%!-- Ghost Card --%>
     <.section title_text={gettext("Ghost Card")}>
       <.paragraph class="mb-4">

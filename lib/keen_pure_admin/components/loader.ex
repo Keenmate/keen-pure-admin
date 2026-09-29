@@ -94,7 +94,7 @@ defmodule PureAdmin.Components.Loader do
   defp color_style(nil), do: nil
   defp color_style("primary"), do: "color: var(--pc-accent)"
   defp color_style("secondary"), do: "color: var(--pc-text-color-2)"
-  defp color_style(color), do: "color: var(--pc-#{color}-bg)"
+  defp color_style(color), do: "color: var(--pa-#{color}-bg)"
 
   @doc "Renders a centered loader container (flexbox centering)."
   attr(:class, :string, default: nil)

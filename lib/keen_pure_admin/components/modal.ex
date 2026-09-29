@@ -97,7 +97,7 @@ defmodule PureAdmin.Components.Modal do
       <div class={container_classes(assigns)}>
         <div :if={@has_header} class={header_classes(assigns)}>
           <%= if @header != [] do %>
-            <h3 :for={header <- @header} class="pa-modal__title"><%= render_slot(header) %></h3>
+            <h3 class="pa-modal__title"><%= render_slot(@header) %></h3>
           <% else %>
             <h3 :if={@title_text} class="pa-modal__title"><span :if={@title_icon} class={"pa-icon pa-icon--#{@title_icon}"} aria-hidden="true"></span><%= if @title_icon, do: " " %><%= @title_text %></h3>
           <% end %>

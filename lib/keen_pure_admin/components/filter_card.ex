@@ -54,7 +54,7 @@ defmodule PureAdmin.Components.FilterCard do
   attr(:has_refresh, :boolean, default: true, doc: "Show the refresh button")
   attr(:has_advanced_actions, :boolean, default: true, doc: "Show Apply/Clear in advanced footer")
   attr(:is_disabled, :boolean, default: false, doc: "Disable all filter interactions")
-  attr(:is_loading, :boolean, default: false, doc: "Loading state (disables inputs, spins refresh)")
+  attr(:is_loading, :boolean, default: false, doc: "Loading state (disables inputs, dims the card via pa-filter-card--loading)")
   attr(:on_toggle, :string, default: nil, doc: "phx-click event for toggle button")
   attr(:on_clear, :string, default: nil, doc: "phx-click event for clear button")
   attr(:on_refresh, :string, default: nil, doc: "phx-click event for refresh button")

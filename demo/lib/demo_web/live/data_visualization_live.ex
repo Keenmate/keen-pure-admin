@@ -174,7 +174,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
 
     <.card title_text={gettext("5. Data Bars in Tables")} subtitle_text="Inline bar visualization inside table cells for quick comparison." has_padding={false}>
 
-      <table class="pa-table pa-table--striped pa-table--hover">
+      <table class="pa-table pa-table--striped">
         <thead>
           <tr>
             <th style="width: 5%">#</th>

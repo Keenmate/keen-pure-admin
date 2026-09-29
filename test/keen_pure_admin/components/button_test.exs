@@ -47,6 +47,75 @@ defmodule PureAdmin.Components.ButtonTest do
       assert_class(html, "pa-btn--sm")
     end
 
+    test "outline guard: light/dark/ghost fall back to solid (no phantom outline class)" do
+      for variant <- ~w(light dark ghost) do
+        html =
+          render_component(&Button.button/1, %{
+            variant: variant,
+            size: nil,
+            is_outline: true,
+            is_block: false,
+            is_loading: false,
+            is_icon_only: false,
+            is_ripple: false,
+            should_truncate_text: false,
+            align: nil,
+            type: "button",
+            class: nil,
+            icon: [],
+            inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "X" end}]
+          })
+
+        # Core has no pa-btn--outline-light/-dark/-ghost — must emit the solid fill.
+        refute_class(html, "pa-btn--outline-#{variant}")
+        assert_class(html, "pa-btn--#{variant}")
+      end
+    end
+
+    test "should_truncate_text wraps the label in a text-truncate span" do
+      html =
+        render_component(&Button.button/1, %{
+          variant: "secondary",
+          size: nil,
+          is_outline: false,
+          is_block: false,
+          is_loading: false,
+          is_icon_only: false,
+          is_ripple: false,
+          should_truncate_text: true,
+          align: nil,
+          type: "button",
+          class: "maxwr-10",
+          icon: [],
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "Cancel and Go Back" end}]
+        })
+
+      assert html =~ ~r/<span class="text-truncate">\s*Cancel and Go Back\s*<\/span>/
+    end
+
+    test "is_input_group_button appends pa-input-group__button alongside pa-btn" do
+      html =
+        render_component(&Button.button/1, %{
+          variant: "primary",
+          size: nil,
+          is_outline: false,
+          is_block: false,
+          is_loading: false,
+          is_icon_only: false,
+          is_ripple: false,
+          is_input_group_button: true,
+          should_truncate_text: false,
+          align: nil,
+          type: "button",
+          class: nil,
+          icon: [],
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "Go" end}]
+        })
+
+      assert_class(html, "pa-btn")
+      assert_class(html, "pa-input-group__button")
+    end
+
     test "renders block and loading states" do
       html =
         render_component(&Button.button/1, %{

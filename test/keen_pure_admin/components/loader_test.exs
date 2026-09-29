@@ -13,17 +13,17 @@ defmodule PureAdmin.Components.LoaderTest do
       assert html =~ "color: var(--pc-accent)"
     end
 
-    test "semantic colors map to --pc-{color}-bg" do
+    test "semantic colors map to --pa-{color}-bg" do
       html = render_component(&Loader.loader/1, %{type: "ring", color: "danger"})
 
       refute_class(html, "pa-loader-ring--danger")
-      assert html =~ "color: var(--pc-danger-bg)"
+      assert html =~ "color: var(--pa-danger-bg)"
     end
 
     test "no color → no inline color style" do
       html = render_component(&Loader.loader/1, %{type: "dots"})
 
-      refute html =~ "color: var(--pc-"
+      refute html =~ "color: var("
     end
 
     test "size still emits the real --lg modifier" do

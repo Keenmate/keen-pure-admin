@@ -1269,9 +1269,7 @@ defmodule PureAdmin.Components.Layout do
   def main(assigns) do
     ~H"""
     <main class={build_classes("pc-layout__main", [], @class)} {@rest}>
-      <div class="pc-layout__main__inner">
-        <%= render_slot(@inner_block) %>
-      </div>
+      <%= render_slot(@inner_block) %>
     </main>
     """
   end

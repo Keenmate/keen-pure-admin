@@ -226,7 +226,7 @@ defmodule DemoWeb.Live.TableMultiSelectLive do
         </div>
       </:header>
       <.table_container>
-        <table class="pa-table pa-table--striped pa-table--hover">
+        <table class="pa-table pa-table--striped">
           <thead>
             <tr>
               <th class="col-auto">

@@ -32,11 +32,6 @@ defmodule PureAdmin.Components.Navigation do
     doc: "Tab style variant"
   )
 
-  attr(:is_border_top, :boolean,
-    default: false,
-    doc: "Border on top instead of bottom (shorthand for style='border-top')"
-  )
-
   attr(:size, :string, default: nil, values: [nil, "sm", "lg"])
   attr(:align, :string, default: nil, values: [nil, "centered", "full"])
   attr(:overflow, :string, default: nil, values: [nil, "nowrap", "scrollable", "collapse"])
@@ -72,12 +67,10 @@ defmodule PureAdmin.Components.Navigation do
   end
 
   defp tabs_classes(assigns) do
-    effective_style = if assigns.is_border_top && assigns.style == nil, do: "border-top", else: assigns.style
-
     build_classes(
       "pa-tabs",
       [
-        {"pa-tabs--#{effective_style}", effective_style != nil},
+        {"pa-tabs--#{assigns.style}", assigns.style != nil},
         {"pa-tabs--#{assigns.size}", assigns.size != nil},
         {"pa-tabs--#{assigns.align}", assigns.align != nil},
         {"pa-tabs--#{assigns.overflow}", assigns.overflow != nil},

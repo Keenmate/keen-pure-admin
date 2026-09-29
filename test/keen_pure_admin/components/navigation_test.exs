@@ -7,7 +7,6 @@ defmodule PureAdmin.Components.NavigationTest do
     base = %{
       id: "t",
       style: nil,
-      is_border_top: false,
       size: nil,
       align: nil,
       overflow: nil,
