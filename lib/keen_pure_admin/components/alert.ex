@@ -8,6 +8,12 @@ defmodule PureAdmin.Components.Alert do
   import PureAdmin.Helpers
   import PureAdmin.Translations, only: [t: 1]
 
+  # Core defines alert outline variants for these five only (snippets/alerts.html
+  # + _alerts.scss). There is NO pa-alert--outline-secondary/-light/-dark (grep on
+  # dist/css/main.css = 0). `is_outline` with any other variant falls back to the
+  # solid fill so we never emit an unstyled phantom class.
+  @outline_variants ~w(primary success warning danger info)
+
   @doc """
   Renders an alert with Pure Admin BEM classes.
 
@@ -178,7 +184,7 @@ defmodule PureAdmin.Components.Alert do
         assigns.theme_color != nil ->
           "pa-alert--color-#{assigns.theme_color}"
 
-        assigns.is_outline ->
+        assigns.is_outline and assigns.variant in @outline_variants ->
           "pa-alert--outline-#{assigns.variant}"
 
         true ->

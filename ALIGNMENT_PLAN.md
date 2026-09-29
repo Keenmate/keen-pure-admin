@@ -148,6 +148,18 @@ dispatcher (svelte was based on this elixir solution). Hover behaviour is a foun
 - New `test/.../icon_test.exs` (+7): marker stamping (FA/hero), class preservation, interactive
   wrapper present/absent, nil/empty → nothing. Suite **200 tests + 16 doctests, 0 failures**.
 
+### Batch 8 — outline/banded guards + leaky-knob removal (2026-09-29) ✅ DONE (uncommitted)
+Same class of fix as the button outline guard — stop emitting phantom/unstyled modifier classes,
+and drop a knob core can't back.
+- **alert.ex** — `is_outline` guarded to the 5 core outline variants (`@outline_variants`);
+  secondary/light/dark fall back to the solid fill (were emitting unstyled `pa-alert--outline-*`).
+- **modal.ex** — dropped the `header_variant` attr (core has no independent header theming axis;
+  it only collapsed to the root `.pa-modal--{variant}`). Demo's 5 usages → `variant=` (identical
+  render). `is_banded` guarded to the 4 band roles (`@band_variants`) so `variant="primary" is_banded`
+  no longer emits an unstyled `--banded`.
+- +3 tests (alert outline guard; modal banded guard both directions). Suite **203 tests + 16
+  doctests, 0 failures**; demo compiles clean.
+
 **Remaining P1 ergonomics (not yet done):** `pa_icon/1`-style semantic-name masked component (the
 one thing keen's dispatcher still lacks vs svelte's `masked()` provider — name is set-specific in
 the FA fallback), table selection/responsive `data-label`, fit-to-size wrapper, profile
@@ -218,7 +230,9 @@ structurally verified in prior audit.
 ## FEEDBACK
 
 ### alert.ex — `alert/1`
-- 🟠 **outline + {secondary,light,dark} → unstyled `pa-alert--outline-*`** — core defines outline only for primary/success/danger/warning/info (grep=0 for the others; snippet L198). `is_outline` accepts all 8. Fix: guard to the 5 supported.
+- 🟠 **outline + {secondary,light,dark} → unstyled `pa-alert--outline-*`** — ✅ FIXED (Batch 8).
+  Added `@outline_variants ~w(primary success warning danger info)`; `is_outline` only emits the
+  outline class for those five, else falls back to the solid fill. Same pattern as the button guard.
 - 🔵 **demo leaks raw `pa-alert__list`** — `alerts_live.ex:98` uses `<.basic_list class="pa-alert__list">` instead of the working `:list` slot (component API is fine). Fix: use the slot in the demo.
 - ✅ Both shapes (icon→`__content`, no-icon→direct children), close glyph `pa-icon--x`, sizes (sm/lg only) aligned.
 
@@ -255,8 +269,13 @@ structurally verified in prior audit.
 ## OVERLAYS
 
 ### modal.ex — `modal/1`, `show_modal/1`, `hide_modal/1`
-- 🔵 **`header_variant` is a redundant/leaky knob** — core has one theming axis (root `.pa-modal--{variant}`); keen exposes both `variant` and `header_variant` but collapses them to the same root class (modal.ex:152). "Header-only theming" is a promise core can't keep; the demo leans on it as if real. Fix: drop `header_variant`.
-- 🟠 **`variant="primary"` + `is_banded` → unstyled band** — band tokens exist only for success/warning/danger/info (snippet L369,379). No guard. Fix: restrict banded to the 4 band roles.
+- 🔵 **`header_variant` is a redundant/leaky knob** — ✅ FIXED (Batch 8). Dropped the `header_variant`
+  attr entirely (core has no `pa-modal__header--{variant}` axis; it only ever collapsed to the root
+  `.pa-modal--{variant}`). Demo's 5 `header_variant="X"` modals converted to `variant="X"` (identical
+  render). close_button + moduledoc example updated.
+- 🟠 **`variant="primary"` + `is_banded` → unstyled band** — ✅ FIXED (Batch 8). Added
+  `@band_variants ~w(success warning danger info)`; `is_banded` only emits `pa-modal--banded` when the
+  variant is a band role, else it's ignored (no unstyled phantom). Doc updated.
 - 🟡 **header slot emits one `<h3>` per slot entry** — `:for` over the slot risks multiple `.pa-modal__title` (modal.ex:100). Fix: render once.
 - ⚪ **no scrollbar-gutter compensation** on show/hide → page shift on open (behavior gap vs modals.html:313-316). Fix: add padding-right / `scrollbar-gutter: stable`.
 - ✅ Sizes (md→bare, no phantom `--container--md`), `is_static` suppresses backdrop/ESC/close, `title_icon` (`pa-icon--*`), themed close-button variants all correct. Programmatic `pureAdmin.confirm/alert/prompt` intentionally not ported (JS-imperative; declarative `<.modal>` is the LiveView equivalent).

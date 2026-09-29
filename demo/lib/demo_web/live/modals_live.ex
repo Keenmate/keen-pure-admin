@@ -260,7 +260,7 @@ defmodule DemoWeb.Live.ModalsLive do
     </.modal>
 
     <%!-- Type Modals --%>
-    <.modal id="modal-success" header_variant="success" title_text={gettext("✓ Success!")}>
+    <.modal id="modal-success" variant="success" title_text={gettext("✓ Success!")}>
       <p>Your action has been completed successfully!</p>
       <.alert variant="success">
         Operation completed without any errors.
@@ -270,7 +270,7 @@ defmodule DemoWeb.Live.ModalsLive do
       </:footer>
     </.modal>
 
-    <.modal id="modal-warning" header_variant="warning" title_text={gettext("⚠ Warning")}>
+    <.modal id="modal-warning" variant="warning" title_text={gettext("⚠ Warning")}>
       <p>Please review your action before proceeding.</p>
       <.alert variant="warning">
         This action may have consequences that cannot be undone.
@@ -281,7 +281,7 @@ defmodule DemoWeb.Live.ModalsLive do
       </:footer>
     </.modal>
 
-    <.modal id="modal-danger" header_variant="danger" title_text={gettext("🔥 Danger Zone")}>
+    <.modal id="modal-danger" variant="danger" title_text={gettext("🔥 Danger Zone")}>
       <p>This action is potentially destructive.</p>
       <.alert variant="danger">
         <strong>Warning:</strong> This action cannot be undone and may result in data loss.
@@ -392,7 +392,7 @@ defmodule DemoWeb.Live.ModalsLive do
     </.modal>
 
     <%!-- Confirmation Modals --%>
-    <.modal id="modal-delete" size="sm" header_variant="danger" title_text={gettext("Confirm Delete")}>
+    <.modal id="modal-delete" size="sm" variant="danger" title_text={gettext("Confirm Delete")}>
       <p>Are you sure you want to delete this item?</p>
       <.alert variant="danger">
         <strong>This action cannot be undone.</strong>
@@ -412,7 +412,7 @@ defmodule DemoWeb.Live.ModalsLive do
       </:footer>
     </.modal>
 
-    <.modal id="modal-info" header_variant="info" title_text={gettext("Information")}>
+    <.modal id="modal-info" variant="info" title_text={gettext("Information")}>
       <p>Here's some important information you should know:</p>
       <.alert variant="info">
         Your subscription will expire in 7 days. Consider renewing to continue enjoying all features.

@@ -72,6 +72,38 @@ defmodule PureAdmin.Components.ModalTest do
     end
   end
 
+  describe "is_banded guard" do
+    defp render_banded(variant) do
+      render_component(&Modal.modal/1, %{
+        id: "b-modal",
+        variant: variant,
+        is_banded: true,
+        size: nil,
+        is_static: false,
+        is_top: false,
+        is_scrollable: false,
+        show: false,
+        on_cancel: %Phoenix.LiveView.JS{},
+        class: nil,
+        header: [],
+        footer: [],
+        inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "x" end}]
+      })
+    end
+
+    test "band roles emit pa-modal--banded" do
+      for variant <- ~w(success warning danger info) do
+        assert_class(render_banded(variant), "pa-modal--banded")
+      end
+    end
+
+    test "non-band variants do NOT emit pa-modal--banded (unstyled phantom)" do
+      for variant <- ["primary", "secondary", "light", "dark", nil] do
+        refute_class(render_banded(variant), "pa-modal--banded")
+      end
+    end
+  end
+
   describe "show_modal/1 and hide_modal/1" do
     test "returns JS structs" do
       assert %Phoenix.LiveView.JS{} = Modal.show_modal("test")

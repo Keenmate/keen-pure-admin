@@ -24,7 +24,7 @@ defmodule PureAdmin.Components.Modal do
         </:footer>
       </.modal>
 
-      <.modal id="danger-modal" variant="danger" header_variant="danger" title_text="Delete Item">
+      <.modal id="danger-modal" variant="danger" title_text="Delete Item">
         This action cannot be undone.
         <:footer>
           <.button variant="danger" phx-click="delete">Delete</.button>
@@ -42,19 +42,14 @@ defmodule PureAdmin.Components.Modal do
     doc: "Full modal theming"
   )
 
-  attr(:header_variant, :string,
-    default: nil,
-    values: [nil, "primary", "success", "warning", "danger", "info"],
-    doc: "Header-only theming"
-  )
-
   attr(:size, :string, default: nil, values: [nil, "sm", "md", "lg", "xl", "xxl", "fw"])
 
   attr(:is_banded, :boolean,
     default: false,
     doc:
-      "Apply `pa-modal--banded` (filled header + footer bands). Composes with the role `:variant` " <>
-        "(`success` / `warning` / `danger` / `info`). Buttons inside the bands auto-invert for cross-theme contrast."
+      "Apply `pa-modal--banded` (filled header + footer bands). Requires a band role `:variant` " <>
+        "(`success` / `warning` / `danger` / `info`) — core ships band tokens for those four only, " <>
+        "so `is_banded` is ignored for any other variant. Buttons inside the bands auto-invert for cross-theme contrast."
   )
 
   attr(:is_static, :boolean, default: false, doc: "Prevent closing via ESC/backdrop")
@@ -144,18 +139,23 @@ defmodule PureAdmin.Components.Modal do
     |> JS.remove_class("overflow-hidden", to: "body")
   end
 
+  # Band styling exists only for these four roles (`.pa-modal--banded.pa-modal--{role}`
+  # in dist). `is_banded` with any other variant would emit an unstyled `--banded`
+  # class, so it's guarded to these.
+  @band_variants ~w(success warning danger info)
+
   defp modal_classes(assigns) do
     # Core has ONE variant knob: the root `.pa-modal--{variant}`, which colours
     # the header (and, with `--banded`, the footer) via descendant rules. There
-    # is NO `pa-modal__header--{variant}` class. `header_variant` is a keen alias
-    # that core can't express independently, so it falls back into the root class.
-    variant = assigns.variant || assigns.header_variant
+    # is NO `pa-modal__header--{variant}` class — so no separate header-only knob.
+    variant = assigns.variant
+    banded = assigns.is_banded and variant in @band_variants
 
     build_classes(
       "pa-modal",
       [
         {"pa-modal--#{variant}", variant != nil},
-        {"pa-modal--banded", assigns.is_banded},
+        {"pa-modal--banded", banded},
         {"pa-modal--static", assigns.is_static},
         {"pa-modal--top", assigns.is_top}
       ],
@@ -175,7 +175,8 @@ defmodule PureAdmin.Components.Modal do
 
   # Header colour comes from the root `.pa-modal--{variant}` (see modal_classes);
   # `pa-modal__header--{variant}` does not exist in core, so the header carries
-  # only its base class.
+  # only its base class. (This is why there's no separate `header_variant` knob —
+  # core can't theme the header independently of the modal.)
   defp header_classes(_assigns), do: "pa-modal__header"
 
   defp body_classes(assigns) do
@@ -195,7 +196,7 @@ defmodule PureAdmin.Components.Modal do
   # Header close button: themed modals get pa-btn--light to read against
   # the coloured header strip; default modal uses pa-btn--secondary.
   defp close_button_classes(assigns) do
-    variant = assigns.header_variant || assigns.variant
+    variant = assigns.variant
     color = if variant != nil, do: "light", else: "secondary"
     "pa-btn pa-btn--sm pa-btn--icon-only pa-btn--#{color}"
   end

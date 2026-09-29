@@ -42,6 +42,20 @@ defmodule PureAdmin.Components.AlertTest do
       assert_class(html, "pa-alert--outline-danger")
     end
 
+    test "outline guard: secondary/light/dark fall back to solid (no phantom outline)" do
+      for variant <- ~w(secondary light dark) do
+        html =
+          render_component(&Alert.alert/1, %{
+            variant: variant,
+            is_outline: true,
+            inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "x" end}]
+          })
+
+        refute_class(html, "pa-alert--outline-#{variant}")
+        assert_class(html, "pa-alert--#{variant}")
+      end
+    end
+
     test "renders dismissible alert with id" do
       html =
         render_component(&Alert.alert/1, %{
