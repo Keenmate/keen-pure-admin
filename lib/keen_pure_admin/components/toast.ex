@@ -108,9 +108,13 @@ defmodule PureAdmin.Components.Toast do
       ], @class)}
       {@rest}
     >
-      <div :if={@icon != []} class="pa-toast__icon">
-        <%= for icon <- @icon do %>
-          <%= render_slot(icon) %>
+      <%!-- Severity chip: the snippet always leads with pa-toast__icon. Use the
+           :icon slot if given, else auto-derive the masked glyph from the variant. --%>
+      <div class="pa-toast__icon">
+        <%= if @icon != [] do %>
+          <%= for icon <- @icon do %><%= render_slot(icon) %><% end %>
+        <% else %>
+          <span class={"pa-icon pa-icon--#{toast_icon_glyph(@variant)}"} aria-hidden="true"></span>
         <% end %>
       </div>
       <%= if @inner_block != [] do %>
@@ -192,4 +196,9 @@ defmodule PureAdmin.Components.Toast do
         "pa-toast--#{assigns.variant}"
     end
   end
+
+  # Severity glyph for the auto-derived toast icon chip (snippet: success/danger/
+  # warning/info use their own glyph; primary/other fall back to info).
+  defp toast_icon_glyph(variant) when variant in ~w(success danger warning info), do: variant
+  defp toast_icon_glyph(_), do: "info"
 end

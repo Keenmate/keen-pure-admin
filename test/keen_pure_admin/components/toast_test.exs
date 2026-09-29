@@ -26,6 +26,21 @@ defmodule PureAdmin.Components.ToastTest do
       assert html =~ "Done."
     end
 
+    test "auto-derives the severity icon chip from variant (no :icon slot)" do
+      for {variant, glyph} <- [{"success", "success"}, {"danger", "danger"}, {"warning", "warning"}, {"info", "info"}, {"primary", "info"}] do
+        html =
+          render_component(&Toast.toast/1, %{
+            id: "t",
+            variant: variant,
+            icon: [],
+            inner_block: []
+          })
+
+        assert_class(html, "pa-toast__icon")
+        assert html =~ ~s(pa-icon pa-icon--#{glyph})
+      end
+    end
+
     test "renders theme color" do
       html =
         render_component(&Toast.toast/1, %{

@@ -209,6 +209,18 @@ removal (282).
 - +4 tests (new comparison_test + pager_test). Suite **227 tests + 16 doctests, 0 failures**; demo clean.
 - TODO flagged: full comparison-demo `data_label` sweep (~31 cells, mobile-cosmetic).
 
+### Batch 13 — toast/flash severity icon parity (2026-09-30) ✅ DONE (uncommitted)
+Both JS-hook paths were rendering icon-less feedback (off-contract vs snippet + the SSR components).
+- **toast.js** — client `push_toast` now leads with the `pa-toast__icon` severity chip (glyph from
+  variant). **toast.ex** SSR — auto-derives the same chip when no `:icon` slot (`toast_icon_glyph/1`).
+- **flash.js** — now emits the leading `pa-alert__icon` (glyph from variant, error→danger), matching
+  the SSR `flash/1`; the hook path is no longer an icon-less alert.
+- +1 SSR toast test (5 variant→glyph cases). Suite **228 tests + 16 doctests, 0 failures**; demo clean.
+  (JS hooks have no unit harness in keen — verified by shape against the snippet.)
+
+**Deferred / needs review:** badge_group `--show-all` rework (see 🔴 entry above — partly-justified
+workaround for core's fixed limit; flagged for tomorrow).
+
 **Remaining P1 ergonomics (not yet done):** `pa_icon/1`-style semantic-name masked component (the
 one thing keen's dispatcher still lacks vs svelte's `masked()` provider — name is set-specific in
 the FA fallback), table selection/responsive `data-label`, fit-to-size wrapper, profile
@@ -290,12 +302,17 @@ structurally verified in prior audit.
 
 ### toast.ex — `toast/1`, `toast_container/1`, `push_toast/*` (+ toast.js)
 - 🔴 **JS phantom `pa-toast--dismissing`** — hook adds it on exit (toast.js:140) but core's exit class is `pa-toast--hide` (grep: dismissing=0, hide=5). Exit animation never fires. Fix: swap to `pa-toast--hide`.
-- 🟠 **client toasts (the recommended `push_toast` path) emit no `pa-toast__icon`** — hook builds no icon chip (toast.js:70-79); snippet always includes the severity chip. Fix: derive glyph from variant in the hook.
+- 🟠 **client toasts (the recommended `push_toast` path) emit no `pa-toast__icon`** — ✅ FIXED (Batch 13).
+  `toast.js` now leads with `<div class="pa-toast__icon"><span class="pa-icon pa-icon--{glyph}">`, glyph
+  derived from variant (success/danger/warning/info; else info). The SSR `toast/1` was ALSO slot-only —
+  now auto-derives the same chip (`toast_icon_glyph/1`) when no `:icon` slot, so both paths match the snippet.
 - 🟡 **`__progress` supported only in client path**, not server `toast/1` (minor asymmetry). Fix: optional progress attr on `toast/1`.
 - ✅ Six logical container positions, close glyph, `__actions` `pa-btn--xs` all aligned.
 
 ### flash.ex — `flash/1`, `flash_group/1`, `push_flash/*` (+ flash.js)
-- 🟡 **two render paths disagree** — SSR `flash/1` emits `__icon`+`__content` (on-contract, flash.ex:90-91); the `PureAdminFlash` hook (the demo's actual path) drops the icon but keeps `__content` (flash.js:82), producing an off-contract icon-less-but-wrapped alert. Fix: emit the severity icon in flash.js (resolves both).
+- 🟡 **two render paths disagree** — ✅ FIXED (Batch 13). `flash.js` now emits the leading
+  `<span class="pa-alert__icon"><span class="pa-icon pa-icon--{variant}">` (normalising error→danger,
+  unknown→info), matching the SSR `flash/1` shape. Both paths now render the same on-contract alert.
 - ⚪ `pa-link` on markdown links is redundant inside alerts (bare `<a>` auto-styles) — cosmetic.
 - ✅ Variant map (error→danger), kinds, close glyph correct.
 
@@ -441,7 +458,7 @@ structurally verified in prior audit.
 - ✅ Loader types/`--lg`/spinner/`--xs`/center/overlay all match; inline-`color` architecture correct — only the token prefix is wrong.
 
 ### badge.ex — `badge/1`, `label/1`, `composite_badge/1`, `badge_group/1`
-- 🔴 **badge_group forces `--show-all` then re-hides via injected `<style>` keyed on undefined `pa-badge-group--expanded`** — fights core's native nth-child hiding instead of using it (badge.ex:290-291,328-345; grep expanded=0). Fix: don't force `--show-all` when `limit != nil`; toggle only the expanded override.
+- 🔴 **badge_group forces `--show-all` then re-hides via injected `<style>` keyed on undefined `pa-badge-group--expanded`** — ⏸️ **DEFERRED — NEEDS REVIEW (2026-09-30).** On closer read this is *partly justified*, not a clean bug: core's native hiding uses a **fixed** SCSS limit (`$badge-group-visible-limit` in `badges/_badge-group.scss`), but keen exposes an **arbitrary per-instance `limit` prop** core's class can't express — so keen turns OFF native hiding (`--show-all`) and re-implements a dynamic-limit hide via the per-`#id` `<style>`. The genuinely-off-contract bit is the invented `pa-badge-group--expanded` class (grep=0) used by the JS toggle. **Options to weigh tomorrow:** (a) keep the dynamic limit but rename the expanded class to a `data-*` attr (no phantom class); (b) drop the dynamic `limit` prop and use core's fixed-limit native hiding (simpler, less flexible, API change); (c) leave as-is. Changing it risks breaking the working client-side JS multi-expand (`data-pa-badge-group-expand`), so it wasn't touched in this pass.
 - 🟠 **composite_badge missing `icon_variant`** — core defines `--icon-{v}` for all 8 (SCSS:85-88); keen exposes label/button variant but not icon. Fix: add `icon_variant`.
 - ⚪ `is_interactive` correctly inert+documented; `--btn-danger` DOES exist (the stale "no --btn-danger" lore is in the core snippet, not keen).
 - ✅ badge (all variants/sizes/`--pill`/`--ellipsis-start`/`--color-1..9`/`__icon`), label (correctly excludes light/dark), composite base structure all clean.
