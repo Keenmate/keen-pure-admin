@@ -100,6 +100,13 @@ defmodule PureAdmin.Components.Comparison do
     attr(:is_changed, :boolean, doc: "Pink highlight for changed values")
     attr(:is_solid, :boolean, doc: "Solid background variant (no left border)")
     attr(:is_conflict, :boolean, doc: "Orange highlight for merge conflicts")
+
+    attr(:data_label, :string,
+      doc:
+        "Column name for the ≤mobile stacked view (emits `data-label`). Core renders it as the " <>
+          "per-cell label when the table collapses to one cell per line — set it to the column " <>
+          "header (e.g. \"Base\" / \"New\"). Without it the mobile stack shows a blank label gutter."
+    )
   end
 
   def comparison_row(assigns) do
@@ -110,6 +117,7 @@ defmodule PureAdmin.Components.Comparison do
         <td
           :for={cell <- @cell}
           class={cell_classes(cell)}
+          data-label={cell[:data_label]}
         >
           <%= render_slot(cell) %>
         </td>

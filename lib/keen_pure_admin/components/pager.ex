@@ -77,12 +77,21 @@ defmodule PureAdmin.Components.Pager do
         <%= if @controls != [] do %>
           <%= render_slot(@controls) %>
         <% else %>
+          <%!-- Canonical shape (snippets/tables.html:382-393): ALL nav buttons in a
+               SINGLE .pa-pager__controls, then a trailing .pa-pager__info. (keen
+               used to split into two __controls groups straddling __info.) --%>
           <div class="pa-pager__controls">
             <button :if={@on_first} class="pa-btn pa-btn--sm pa-btn--secondary" title={t("pureAdmin.pagination.firstPage")} disabled={@page <= 1} phx-click={@on_first}>
               <%= if @first_icon != [], do: render_slot(@first_icon), else: @icon_first %>
             </button>
             <button class="pa-btn pa-btn--sm pa-btn--secondary" title={t("pureAdmin.pagination.prevPage")} disabled={@page <= 1} phx-click={@on_previous}>
               <%= if @previous_icon != [], do: render_slot(@previous_icon), else: @icon_previous %>
+            </button>
+            <button class="pa-btn pa-btn--sm pa-btn--secondary" title={t("pureAdmin.pagination.nextPage")} disabled={@page >= @total_pages} phx-click={@on_next}>
+              <%= if @next_icon != [], do: render_slot(@next_icon), else: @icon_next %>
+            </button>
+            <button :if={@on_last} class="pa-btn pa-btn--sm pa-btn--secondary" title={t("pureAdmin.pagination.lastPage")} disabled={@page >= @total_pages} phx-click={@on_last}>
+              <%= if @last_icon != [], do: render_slot(@last_icon), else: @icon_last %>
             </button>
           </div>
 
@@ -103,15 +112,6 @@ defmodule PureAdmin.Components.Pager do
             </div>
             <span :if={@info_text} class="pa-pager__text"><%= @info_text %></span>
           <% end %>
-
-          <div class="pa-pager__controls">
-            <button class="pa-btn pa-btn--sm pa-btn--secondary" title={t("pureAdmin.pagination.nextPage")} disabled={@page >= @total_pages} phx-click={@on_next}>
-              <%= if @next_icon != [], do: render_slot(@next_icon), else: @icon_next %>
-            </button>
-            <button :if={@on_last} class="pa-btn pa-btn--sm pa-btn--secondary" title={t("pureAdmin.pagination.lastPage")} disabled={@page >= @total_pages} phx-click={@on_last}>
-              <%= if @last_icon != [], do: render_slot(@last_icon), else: @icon_last %>
-            </button>
-          </div>
         <% end %>
       </div>
     </div>

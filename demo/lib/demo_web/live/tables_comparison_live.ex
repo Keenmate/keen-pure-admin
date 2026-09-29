@@ -33,14 +33,14 @@ defmodule DemoWeb.Live.TablesComparisonLive do
         </:head>
 
         <.comparison_row label={gettext("Country Iso 2")}>
-          <:cell><.comparison_value value="be" /></:cell>
-          <:cell><.comparison_value value="be" /></:cell>
+          <:cell data_label={gettext("Base values")}><.comparison_value value="be" /></:cell>
+          <:cell data_label={gettext("New values")}><.comparison_value value="be" /></:cell>
         </.comparison_row>
         <.comparison_row label={gettext("Region")} cells={2} />
         <.comparison_row label={gettext("Subregion")} cells={2} />
         <.comparison_row label={gettext("Town")}>
-          <:cell><.comparison_value value="Beveren" /></:cell>
-          <:cell is_changed><.comparison_value value="Antwerpen" /></:cell>
+          <:cell data_label={gettext("Base values")}><.comparison_value value="Beveren" /></:cell>
+          <:cell data_label={gettext("New values")} is_changed><.comparison_value value="Antwerpen" /></:cell>
         </.comparison_row>
         <.comparison_row label={gettext("Postal Code")}>
           <:cell><.comparison_value value="9130" /></:cell>

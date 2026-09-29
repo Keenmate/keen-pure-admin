@@ -202,6 +202,13 @@ Contract from `snippets/tables.html` (selectable rows) + `_checkbox-lists.scss`.
 low-pri: `:col` arbitrary `data-*`/`colspan` (slot `:global` limitation), deprecated `--panel` subtree
 removal (282).
 
+### Batch 12 — comparison data-label + pager single-controls (2026-09-30) ✅ DONE (uncommitted)
+- **comparison.ex** — `:cell` gains `data_label` → `data-label` on the value `<td>` (mobile stacking).
+- **pager.ex** — all nav buttons in ONE `pa-pager__controls` + trailing `__info` (was a 2-group
+  sandwich); matches the snippet.
+- +4 tests (new comparison_test + pager_test). Suite **227 tests + 16 doctests, 0 failures**; demo clean.
+- TODO flagged: full comparison-demo `data_label` sweep (~31 cells, mobile-cosmetic).
+
 **Remaining P1 ergonomics (not yet done):** `pa_icon/1`-style semantic-name masked component (the
 one thing keen's dispatcher still lacks vs svelte's `masked()` provider — name is set-specific in
 the FA fallback), table selection/responsive `data-label`, fit-to-size wrapper, profile
@@ -302,7 +309,11 @@ structurally verified in prior audit.
 - ✅ Variant list, ghost, live-state, `--stat`, tabs, `--wrap`, responsive/overflow actions plumbing, canonical title emission all match.
 
 ### comparison.ex — `comparison_table/1`, `comparison_row/1`
-- 🟠🟡 **`data-label` never emitted → broken mobile stacking** — every value `<td>` needs `data-label` (SCSS renders `content:attr(data-label)` ≤768px; without it a 120px blank label gutter shows). `comparison_row` emits no data-label and has no slot attr for it (comparison.ex:110-114). Fix: add `label`/`data_label` on the `:cell` slot (or auto-derive from column head).
+- 🟠🟡 **`data-label` never emitted → broken mobile stacking** — ✅ FIXED (Batch 12). Added `data_label`
+  to the `:cell` slot → emits `data-label` on the value `<td>`. (Can't auto-derive: the row has no column
+  context — the label is the *column* head, which lives in the separate `:head` row.) Demo: first two
+  content rows updated as the example. **TODO (low-pri, mobile-cosmetic):** sweep the remaining ~31
+  `<:cell>` across the 3 comparison tables in `tables_comparison_live.ex` to add `data_label`.
 - ✅ 2/3-col, `__label`, `__section` colspan, `__changed`/`--solid`/`__conflict`/`__conflict--solid` composition, `__value`+`__copy` all correct.
 
 ### stat.ex — `stat/1`
@@ -371,7 +382,10 @@ structurally verified in prior audit.
 - ✅ basic_list correctly suppresses `--success`; roman/alpha, definition inline, `__meta`-inside-`__content` nesting all match. Dead `pa-list--bordered` correctly documented.
 
 ### pager.ex — `pager/1`, `load_more/1`
-- 🟡 **pager splits controls into TWO `__controls` groups straddling `__info`** — snippet uses a single `__controls` + trailing `__info` (tables.html:382-394). Changes button grouping/gap semantics. Fix: one `__controls` with all buttons, `__info` trailing (or bless the sandwich deliberately).
+- 🟡 **pager splits controls into TWO `__controls` groups straddling `__info`** — ✅ FIXED (Batch 12).
+  All four nav buttons now in a SINGLE `pa-pager__controls`, with a trailing `pa-pager__info`
+  (matches snippet tables.html:382-393). Note: this changes the default layout (page-input moves from
+  between prev/next to after all buttons) — the canonical shape.
 - ✅ Alignment (start/center/end), `load_more` (`__button--loading`/`__spinner`/`__text`/`__count`) all match. Icon override is a clean addition.
 
 ## LAYOUT / NAV
