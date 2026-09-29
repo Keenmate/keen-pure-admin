@@ -322,6 +322,51 @@ defmodule PureAdmin.Components.FormTest do
     end
   end
 
+  describe "radio/1 canonical label + label_position" do
+    test "wraps label text in the canonical pa-radio__label span" do
+      html = render(fn assigns -> ~H'<.radio name="p" value="a" label="Option A" />' end, %{})
+      assert html =~ ~r/<span class="pa-radio__label">\s*Option A\s*<\/span>/
+    end
+
+    test "label_position emits pa-radio--label-{position}" do
+      for pos <- ~w(start end top) do
+        html = render(fn assigns -> ~H'<.radio name="p" value="a" label="X" label_position={@pos} />' end, %{pos: pos})
+        assert_class(html, "pa-radio--label-#{pos}")
+      end
+    end
+  end
+
+  describe "checkbox/1 label_position" do
+    test "emits pa-checkbox--label-{position}" do
+      for pos <- ~w(start end top) do
+        html = render(fn assigns -> ~H'<.checkbox name="c" label="X" label_position={@pos} />' end, %{pos: pos})
+        assert_class(html, "pa-checkbox--label-#{pos}")
+      end
+    end
+  end
+
+  describe "checkbox_group/1 + radio_group/1 layout" do
+    test "checkbox_group layout emits pa-checkbox-group--{layout}" do
+      for layout <- ~w(horizontal grid 2col 3col) do
+        html = render(fn assigns -> ~H'<.checkbox_group layout={@l}><span>x</span></.checkbox_group>' end, %{l: layout})
+        assert_class(html, "pa-checkbox-group--#{layout}")
+      end
+    end
+
+    test "radio_group layout emits pa-radio-group--{layout}" do
+      for layout <- ~w(horizontal grid 2col 3col) do
+        html = render(fn assigns -> ~H'<.radio_group layout={@l}><span>x</span></.radio_group>' end, %{l: layout})
+        assert_class(html, "pa-radio-group--#{layout}")
+      end
+    end
+
+    test "no layout → bare group class (vertical stack)" do
+      html = render(fn assigns -> ~H'<.radio_group><span>x</span></.radio_group>' end, %{})
+      assert_class(html, "pa-radio-group")
+      refute html =~ "pa-radio-group--"
+    end
+  end
+
   # Used by the configured-formatter test above
   def shout_error({msg, _opts}), do: String.upcase(msg) <> "!"
 end

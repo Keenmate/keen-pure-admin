@@ -120,9 +120,21 @@ First P1-tier item (closest to the original button-alignment trigger). Two `butt
 - +3 tests (outline guard across light/dark/ghost; truncate span wrap; input-group button). Suite
   now **187 tests + 16 doctests, 0 failures**; demo compiles clean.
 
-**Remaining easy-tier candidates (not yet done):** various doc-overclaim tidies. Then more P1
-ergonomics: fit-to-size wrapper, `pa_icon/1` component, table selection/responsive `data-label`,
-checkbox/radio group orientation, etc.
+### Batch 6 — forms choice-control ergonomics (2026-09-29) ✅ DONE (uncommitted)
+The sharpest design-goal violation in the plan (the demo couldn't even use `<.radio>` for
+label-position/group-layout — it hand-wrote raw `<label class="pa-radio">` markup). Mirrors the
+svelte fix (`Radio` __label span + `labelPosition` + group `layout`). All classes verified in core.
+- **`radio/1`** — now emits the canonical `<span class="pa-radio__label">` wrapper + `:label_content`
+  slot (parity with checkbox); new `radio_classes/1` helper.
+- **`checkbox/1` + `radio/1`** — new `label_position` attr (`start/end/top` → `pa-*--label-{pos}`).
+- **`checkbox_group/1` + `radio_group/1`** — new `layout` attr (`horizontal/grid/2col/3col`).
+- **Demo** (`forms_live.ex`) — dropped ALL hand-written `pa-checkbox--label-*` / `pa-*-group--*`
+  classes AND the raw radio-markup blocks; now pure component props.
+- +6 tests. Suite **193 tests + 16 doctests, 0 failures**; demo compiles clean.
+
+**Remaining P1 ergonomics (not yet done):** `pa_icon/1` component (highest payoff), table
+selection/responsive `data-label`, fit-to-size wrapper, profile favorites/tabs, kpi chart-svg, etc.
+Plus minor doc-overclaim tidies.
 
 ---
 
@@ -163,9 +175,16 @@ structurally verified in prior audit.
 ## FORMS
 
 ### form.ex — `input/1`, `select/1`, `textarea/1`, `checkbox/1`, `radio/1`, `checkbox_group/1`, `radio_group/1`, `form_group/1`, `input_group/1`, `input_wrapper/1`, `simple_form/1`
-- 🔵 **checkbox_group / radio_group have no orientation/layout prop** — core supports `--horizontal/--grid/--2col/--3col` on both; keen exposes only `class`, so the demo itself hand-writes `class="pa-checkbox-group--grid"` / `pa-radio-group--horizontal` (forms_live.ex:444,505,510,521). The clearest design-goal violation. Fix: add `orientation` (vertical/horizontal) + `layout` (grid/2col/3col) attrs to both.
-- 🔵 **radio emits bare-text label, not `.pa-radio__label` span** — blocks the whole label-position render-form family and yields a non-canonical tree (form.ex:446-453 vs forms.html:251-260). Fix: wrap label in `<span class="pa-radio__label">` + add `:label_content` slot parity with checkbox.
-- 🟠 **checkbox/radio label-position modifiers unexposed** — core ships `--label-start/-end/-top` on both (SCSS `_checkboxes-radios.scss:202-222,276-292`; dist grep=2). No `label_position` prop. Fix: add `label_position` attr.
+- 🔵 **checkbox_group / radio_group have no orientation/layout prop** — ✅ FIXED (Batch 6). Added
+  `layout` attr (`horizontal/grid/2col/3col` → `pa-{checkbox,radio}-group--{layout}`; all 4 dist=1)
+  to both groups. Demo no longer hand-writes group classes.
+- 🔵 **radio emits bare-text label, not `.pa-radio__label` span** — ✅ FIXED (Batch 6). `radio/1`
+  now wraps the label in `<span class="pa-radio__label">` (canonical, snippet forms.html:257; dist=7)
+  and gained a `:label_content` slot for parity with checkbox. This unblocks label-position and lets
+  the demo drop its entire raw `<label class="pa-radio">…</label>` hand-authored markup (it couldn't
+  use `<.radio>` at all before).
+- 🟠 **checkbox/radio label-position modifiers unexposed** — ✅ FIXED (Batch 6). Added `label_position`
+  attr (`start/end/top` → `pa-{checkbox,radio}--label-{pos}`; dist=2 each) to both.
 - ⚪ **checkbox/1 `pa-checkbox--disabled` is dead** — `disabled` only in `:rest` include, so `Map.get(assigns,:disabled,false)` always false (form.ex:353,403). Dimming still works via core `:has(input:disabled)`. Fix: declare `attr(:disabled)` (as `checkbox_box/1` does) or drop the branch.
 - 🟡 **simple_form actions use `pc-row/pc-col-100 text-end`, not `.pa-form-actions`** — misses the blessed actions-row spacing contract (form.ex:693-697 vs forms.html:57-60). Fix: emit `<div class="pa-form-actions justify-content-end">`.
 - 🟡 **input_group fixes button addons after append** — leading/interleaved buttons (stepper −/input/+, forms.html:312-317) unreachable via slots. Fix: `:prepend_button`/`:append_button` positioned slots, or document composing inside inner_block.

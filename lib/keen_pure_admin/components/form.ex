@@ -349,6 +349,15 @@ defmodule PureAdmin.Components.Form do
   attr(:is_x_mark, :boolean, default: false, doc: "X mark instead of checkmark")
   attr(:label, :string, default: nil, doc: "Plain text label")
   attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
+
+  attr(:label_position, :string,
+    default: nil,
+    values: [nil, "start", "end", "top"],
+    doc:
+      "Label placement relative to the box (emits `pa-checkbox--label-{position}`). " <>
+        "`end` (default look) puts the label after the box; `start` before; `top` above."
+  )
+
   attr(:class, :string, default: nil)
   attr(:rest, :global, include: ~w(disabled required form phx-change phx-click phx-debounce))
   slot(:label_content, doc: "Rich HTML label content (alternative to label attr)")
@@ -399,6 +408,7 @@ defmodule PureAdmin.Components.Form do
       "pa-checkbox",
       [
         {"pa-checkbox--#{assigns.size}", assigns.size != nil},
+        {"pa-checkbox--label-#{assigns.label_position}", assigns.label_position != nil},
         {"pa-checkbox--x", assigns.is_x_mark},
         {"pa-checkbox--disabled", Map.get(assigns, :disabled, false)}
       ],
@@ -430,8 +440,19 @@ defmodule PureAdmin.Components.Form do
   attr(:checked, :boolean, default: false)
   attr(:label, :string, default: nil)
   attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"], doc: "Scales the native radio (emits pa-radio--{size})")
+
+  attr(:label_position, :string,
+    default: nil,
+    values: [nil, "start", "end", "top"],
+    doc:
+      "Label placement relative to the control (emits `pa-radio--label-{position}`; requires the " <>
+        "`pa-radio__label` wrapper, which this component always emits). `end` (default look) after, " <>
+        "`start` before, `top` above."
+  )
+
   attr(:class, :string, default: nil)
   attr(:rest, :global, include: ~w(disabled required form phx-change phx-click phx-debounce))
+  slot(:label_content, doc: "Rich HTML label content (alternative to label attr)")
 
   def radio(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     assigns
@@ -445,11 +466,25 @@ defmodule PureAdmin.Components.Form do
 
   def radio(assigns) do
     ~H"""
-    <label class={build_classes("pa-radio", [{"pa-radio--#{@size}", @size != nil}], @class)}>
+    <label class={radio_classes(assigns)}>
       <input type="radio" name={@name} id={@id} value={@value} checked={@checked} {@rest} />
-      <%= @label %>
+      <span :if={@label && @label_content == []} class="pa-radio__label"><%= @label %></span>
+      <span :if={@label_content != []} class="pa-radio__label"><%= render_slot(@label_content) %></span>
     </label>
     """
+  end
+
+  # Canonical radio wraps its label text in `.pa-radio__label` (snippets/forms.html:257).
+  # The span is required for label positioning and the required-asterisk `::after`.
+  defp radio_classes(assigns) do
+    build_classes(
+      "pa-radio",
+      [
+        {"pa-radio--#{assigns.size}", assigns.size != nil},
+        {"pa-radio--label-#{assigns.label_position}", assigns.label_position != nil}
+      ],
+      assigns.class
+    )
   end
 
   # ─── Form structure components ───
@@ -626,30 +661,46 @@ defmodule PureAdmin.Components.Form do
   end
 
   @doc """
-  Renders a checkbox group (vertical stack).
+  Renders a checkbox group (vertical stack by default).
   """
+  attr(:layout, :string,
+    default: nil,
+    values: [nil, "horizontal", "grid", "2col", "3col"],
+    doc:
+      "Group layout (emits `pa-checkbox-group--{layout}`). Default (nil) is a vertical stack; " <>
+        "`horizontal` inlines, `grid`/`2col`/`3col` arrange in columns."
+  )
+
   attr(:class, :string, default: nil)
   attr(:rest, :global)
   slot(:inner_block, required: true)
 
   def checkbox_group(assigns) do
     ~H"""
-    <div class={build_classes("pa-checkbox-group", [], @class)} {@rest}>
+    <div class={build_classes("pa-checkbox-group", [{"pa-checkbox-group--#{@layout}", @layout != nil}], @class)} {@rest}>
       <%= render_slot(@inner_block) %>
     </div>
     """
   end
 
   @doc """
-  Renders a radio button group (vertical stack).
+  Renders a radio button group (vertical stack by default).
   """
+  attr(:layout, :string,
+    default: nil,
+    values: [nil, "horizontal", "grid", "2col", "3col"],
+    doc:
+      "Group layout (emits `pa-radio-group--{layout}`). Default (nil) is a vertical stack; " <>
+        "`horizontal` inlines, `grid`/`2col`/`3col` arrange in columns."
+  )
+
   attr(:class, :string, default: nil)
   attr(:rest, :global)
   slot(:inner_block, required: true)
 
   def radio_group(assigns) do
     ~H"""
-    <div class={build_classes("pa-radio-group", [], @class)} {@rest}>
+    <div class={build_classes("pa-radio-group", [{"pa-radio-group--#{@layout}", @layout != nil}], @class)} {@rest}>
       <%= render_slot(@inner_block) %>
     </div>
     """

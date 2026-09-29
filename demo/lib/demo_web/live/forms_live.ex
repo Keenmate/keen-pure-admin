@@ -424,16 +424,16 @@ defmodule DemoWeb.Live.FormsLive do
           <.grid>
             <.column size="100" md="1-2">
               <.checkbox_group>
-                <.checkbox class="pa-checkbox--label-end" checked label={gettext("End · Option 1")} />
-                <.checkbox class="pa-checkbox--label-end" label={gettext("End · Option 2")} />
-                <.checkbox class="pa-checkbox--label-end" checked label={gettext("End · Option 3")} />
+                <.checkbox label_position="end" checked label={gettext("End · Option 1")} />
+                <.checkbox label_position="end" label={gettext("End · Option 2")} />
+                <.checkbox label_position="end" checked label={gettext("End · Option 3")} />
               </.checkbox_group>
             </.column>
             <.column size="100" md="1-2">
               <.checkbox_group>
-                <.checkbox class="pa-checkbox--label-start" checked label={gettext("Start · Option 1")} />
-                <.checkbox class="pa-checkbox--label-start" label={gettext("Start · Option 2")} />
-                <.checkbox class="pa-checkbox--label-start" checked label={gettext("Start · Option 3")} />
+                <.checkbox label_position="start" checked label={gettext("Start · Option 1")} />
+                <.checkbox label_position="start" label={gettext("Start · Option 2")} />
+                <.checkbox label_position="start" checked label={gettext("Start · Option 3")} />
               </.checkbox_group>
             </.column>
           </.grid>
@@ -441,13 +441,13 @@ defmodule DemoWeb.Live.FormsLive do
 
         <.form_group class="mb-2xl">
           <.form_label>{gettext("Checkbox · label top (auto-flow grid, 6 options)")}</.form_label>
-          <.checkbox_group class="pa-checkbox-group--grid">
-            <.checkbox class="pa-checkbox--label-top" checked label={gettext("Top · Option 1")} />
-            <.checkbox class="pa-checkbox--label-top" label={gettext("Top · Option 2")} />
-            <.checkbox class="pa-checkbox--label-top" checked label={gettext("Top · Option 3")} />
-            <.checkbox class="pa-checkbox--label-top" label={gettext("Top · Option 4")} />
-            <.checkbox class="pa-checkbox--label-top" checked label={gettext("Top · Option 5")} />
-            <.checkbox class="pa-checkbox--label-top" label={gettext("Top · Option 6")} />
+          <.checkbox_group layout="grid">
+            <.checkbox label_position="top" checked label={gettext("Top · Option 1")} />
+            <.checkbox label_position="top" label={gettext("Top · Option 2")} />
+            <.checkbox label_position="top" checked label={gettext("Top · Option 3")} />
+            <.checkbox label_position="top" label={gettext("Top · Option 4")} />
+            <.checkbox label_position="top" checked label={gettext("Top · Option 5")} />
+            <.checkbox label_position="top" label={gettext("Top · Option 6")} />
           </.checkbox_group>
         </.form_group>
 
@@ -455,32 +455,32 @@ defmodule DemoWeb.Live.FormsLive do
           <.form_label>{gettext("Radio · label end & start")}</.form_label>
           <.grid>
             <.column size="100" md="1-2">
-              <div class="pa-radio-group">
-                <label class="pa-radio pa-radio--label-end"><input type="radio" name="rl-end" checked /><span class="pa-radio__label">{gettext("End · Option 1")}</span></label>
-                <label class="pa-radio pa-radio--label-end"><input type="radio" name="rl-end" /><span class="pa-radio__label">{gettext("End · Option 2")}</span></label>
-                <label class="pa-radio pa-radio--label-end"><input type="radio" name="rl-end" /><span class="pa-radio__label">{gettext("End · Option 3")}</span></label>
-              </div>
+              <.radio_group>
+                <.radio name="rl-end" value="1" label_position="end" checked label={gettext("End · Option 1")} />
+                <.radio name="rl-end" value="2" label_position="end" label={gettext("End · Option 2")} />
+                <.radio name="rl-end" value="3" label_position="end" label={gettext("End · Option 3")} />
+              </.radio_group>
             </.column>
             <.column size="100" md="1-2">
-              <div class="pa-radio-group">
-                <label class="pa-radio pa-radio--label-start"><input type="radio" name="rl-start" checked /><span class="pa-radio__label">{gettext("Start · Option 1")}</span></label>
-                <label class="pa-radio pa-radio--label-start"><input type="radio" name="rl-start" /><span class="pa-radio__label">{gettext("Start · Option 2")}</span></label>
-                <label class="pa-radio pa-radio--label-start"><input type="radio" name="rl-start" /><span class="pa-radio__label">{gettext("Start · Option 3")}</span></label>
-              </div>
+              <.radio_group>
+                <.radio name="rl-start" value="1" label_position="start" checked label={gettext("Start · Option 1")} />
+                <.radio name="rl-start" value="2" label_position="start" label={gettext("Start · Option 2")} />
+                <.radio name="rl-start" value="3" label_position="start" label={gettext("Start · Option 3")} />
+              </.radio_group>
             </.column>
           </.grid>
         </.form_group>
 
         <.form_group>
           <.form_label>{gettext("Radio · label top (auto-flow grid, 6 options)")}</.form_label>
-          <div class="pa-radio-group pa-radio-group--grid">
-            <label class="pa-radio pa-radio--label-top"><input type="radio" name="rl-top" checked /><span class="pa-radio__label">{gettext("Top · Option 1")}</span></label>
-            <label class="pa-radio pa-radio--label-top"><input type="radio" name="rl-top" /><span class="pa-radio__label">{gettext("Top · Option 2")}</span></label>
-            <label class="pa-radio pa-radio--label-top"><input type="radio" name="rl-top" /><span class="pa-radio__label">{gettext("Top · Option 3")}</span></label>
-            <label class="pa-radio pa-radio--label-top"><input type="radio" name="rl-top" /><span class="pa-radio__label">{gettext("Top · Option 4")}</span></label>
-            <label class="pa-radio pa-radio--label-top"><input type="radio" name="rl-top" /><span class="pa-radio__label">{gettext("Top · Option 5")}</span></label>
-            <label class="pa-radio pa-radio--label-top"><input type="radio" name="rl-top" /><span class="pa-radio__label">{gettext("Top · Option 6")}</span></label>
-          </div>
+          <.radio_group layout="grid">
+            <.radio name="rl-top" value="1" label_position="top" checked label={gettext("Top · Option 1")} />
+            <.radio name="rl-top" value="2" label_position="top" label={gettext("Top · Option 2")} />
+            <.radio name="rl-top" value="3" label_position="top" label={gettext("Top · Option 3")} />
+            <.radio name="rl-top" value="4" label_position="top" label={gettext("Top · Option 4")} />
+            <.radio name="rl-top" value="5" label_position="top" label={gettext("Top · Option 5")} />
+            <.radio name="rl-top" value="6" label_position="top" label={gettext("Top · Option 6")} />
+          </.radio_group>
         </.form_group>
       </form>
     </.card>
@@ -502,12 +502,12 @@ defmodule DemoWeb.Live.FormsLive do
       <form class="pa-form">
         <.form_group>
           <.form_label>{gettext("Horizontal orientation")}</.form_label>
-          <.checkbox_group class="pa-checkbox-group--horizontal">
+          <.checkbox_group layout="horizontal">
             <.checkbox checked label={gettext("Red")} />
             <.checkbox label={gettext("Green")} />
             <.checkbox label={gettext("Blue")} />
           </.checkbox_group>
-          <.radio_group class="pa-radio-group--horizontal">
+          <.radio_group layout="horizontal">
             <.radio name="radio-horiz" value="low" checked label={gettext("Low")} />
             <.radio name="radio-horiz" value="medium" label={gettext("Medium")} />
             <.radio name="radio-horiz" value="high" label={gettext("High")} />
@@ -518,7 +518,7 @@ defmodule DemoWeb.Live.FormsLive do
              so the asterisk sits once on the GROUP HEADING — the options stay clean. --%>
         <.form_group>
           <.form_label>{gettext("Priority (required group)")}</.form_label>
-          <.radio_group class="pa-radio-group--horizontal">
+          <.radio_group layout="horizontal">
             <.radio name="req-priority" value="low" required label={gettext("Low")} />
             <.radio name="req-priority" value="medium" required label={gettext("Medium")} />
             <.radio name="req-priority" value="high" required label={gettext("High")} />
