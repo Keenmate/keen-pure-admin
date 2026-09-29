@@ -358,8 +358,13 @@ defmodule PureAdmin.Components.Form do
         "`end` (default look) puts the label after the box; `start` before; `top` above."
   )
 
+  attr(:disabled, :boolean,
+    default: false,
+    doc: "Disabled state — emits `pa-checkbox--disabled` on the label and `disabled` on the input."
+  )
+
   attr(:class, :string, default: nil)
-  attr(:rest, :global, include: ~w(disabled required form phx-change phx-click phx-debounce))
+  attr(:rest, :global, include: ~w(required form phx-change phx-click phx-debounce))
   slot(:label_content, doc: "Rich HTML label content (alternative to label attr)")
 
   def checkbox(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
@@ -385,7 +390,7 @@ defmodule PureAdmin.Components.Form do
       phx-hook={if @is_indeterminate, do: "PureAdminCheckbox"}
       data-indeterminate={to_string(@is_indeterminate)}
     >
-      <input type="checkbox" name={@name} id={@id} value={@value} checked={@checked} {@rest} />
+      <input type="checkbox" name={@name} id={@id} value={@value} checked={@checked} disabled={@disabled} {@rest} />
       <span class="pa-checkbox__box"></span>
       <span :if={@label && @label_content == []} class="pa-checkbox__label"><%= @label %></span>
       <span :if={@label_content != []} class="pa-checkbox__label"><%= render_slot(@label_content) %></span>
@@ -410,7 +415,7 @@ defmodule PureAdmin.Components.Form do
         {"pa-checkbox--#{assigns.size}", assigns.size != nil},
         {"pa-checkbox--label-#{assigns.label_position}", assigns.label_position != nil},
         {"pa-checkbox--x", assigns.is_x_mark},
-        {"pa-checkbox--disabled", Map.get(assigns, :disabled, false)}
+        {"pa-checkbox--disabled", assigns.disabled}
       ],
       assigns.class
     )

@@ -130,6 +130,12 @@ defmodule PureAdmin.Components.RangeGroup do
 
   attr(:aria_label_min, :string, default: nil, doc: "aria-label for the min thumb")
   attr(:aria_label_max, :string, default: nil, doc: "aria-label for the max thumb")
+
+  attr(:disabled, :boolean,
+    default: false,
+    doc: "Dim + non-interactive: emits `pa-range--disabled` on the root and `disabled` on both thumbs."
+  )
+
   attr(:class, :string, default: nil)
   attr(:rest, :global)
 
@@ -168,6 +174,7 @@ defmodule PureAdmin.Components.RangeGroup do
           data-range-thumb="min"
           aria-hidden={if @single, do: "true"}
           aria-label={unless @single, do: @aria_label_min || min_label(@label)}
+          disabled={@disabled}
         >
         </button>
         <button
@@ -175,6 +182,7 @@ defmodule PureAdmin.Components.RangeGroup do
           class="pa-range__thumb pa-range__thumb--max"
           data-range-thumb="max"
           aria-label={@aria_label_max || thumb_label(assigns)}
+          disabled={@disabled}
         >
         </button>
       </div>
@@ -291,7 +299,8 @@ defmodule PureAdmin.Components.RangeGroup do
       "pa-range",
       [
         {"pa-range--single", assigns.mode == "single"},
-        {"pa-range--handle-#{assigns.handle}", assigns.handle in @handle_shapes}
+        {"pa-range--handle-#{assigns.handle}", assigns.handle in @handle_shapes},
+        {"pa-range--disabled", assigns.disabled}
       ],
       assigns.class
     )

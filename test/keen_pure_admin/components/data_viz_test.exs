@@ -104,5 +104,16 @@ defmodule PureAdmin.Components.DataVizTest do
 
       refute_class(html, "pa-data-bar--primary")
     end
+
+    test "value_text renders the pa-data-bar__value label above the track" do
+      html = render_component(&DataViz.data_bar/1, %{value: 95, value_text: "95%"})
+      assert_class(html, "pa-data-bar__value")
+      assert html =~ "95%"
+    end
+
+    test "no value label when value_text omitted" do
+      html = render_component(&DataViz.data_bar/1, %{value: 95})
+      refute_class(html, "pa-data-bar__value")
+    end
   end
 end

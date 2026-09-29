@@ -221,7 +221,14 @@ Both JS-hook paths were rendering icon-less feedback (off-contract vs snippet + 
 **Deferred / needs review:** badge_group `--show-all` rework (see 🔴 entry above — partly-justified
 workaround for core's fixed limit; flagged for tomorrow).
 
-**Remaining P1 ergonomics (not yet done):** `pa_icon/1`-style semantic-name masked component (the
+### Batch 14 — small missing-option props (2026-09-30) ✅ DONE (uncommitted)
+- **checkbox/1** — `disabled` now a real attr (was dead: only in `:rest`, so the class never emitted).
+- **range/1** — new `disabled` → `pa-range--disabled` + `disabled` on both thumbs.
+- **data_bar/1** — new `value_text` → optional `pa-data-bar__value` label above the bar.
+- +6 tests (checkbox disabled; new range_group_test; data_bar value_text). Suite **234 tests + 16
+  doctests, 0 failures**.
+
+**Remaining P1 ergonomics (not yet done):** `bar_list` component (deferred, new build); `pa_icon/1`-style semantic-name masked component (the
 one thing keen's dispatcher still lacks vs svelte's `masked()` provider — name is set-specific in
 the FA fallback), table selection/responsive `data-label`, fit-to-size wrapper, profile
 favorites/tabs, kpi chart-svg, etc. Plus minor doc-overclaim tidies.
@@ -275,13 +282,16 @@ structurally verified in prior audit.
   use `<.radio>` at all before).
 - 🟠 **checkbox/radio label-position modifiers unexposed** — ✅ FIXED (Batch 6). Added `label_position`
   attr (`start/end/top` → `pa-{checkbox,radio}--label-{pos}`; dist=2 each) to both.
-- ⚪ **checkbox/1 `pa-checkbox--disabled` is dead** — `disabled` only in `:rest` include, so `Map.get(assigns,:disabled,false)` always false (form.ex:353,403). Dimming still works via core `:has(input:disabled)`. Fix: declare `attr(:disabled)` (as `checkbox_box/1` does) or drop the branch.
+- ⚪ **checkbox/1 `pa-checkbox--disabled` is dead** — ✅ FIXED (Batch 14). Declared `attr(:disabled)`
+  (removed from `:rest` include), passed `disabled={@disabled}` to the input, and `checkbox_classes`
+  now reads `assigns.disabled` → `pa-checkbox--disabled` emits correctly.
 - 🟡 **simple_form actions use `pc-row/pc-col-100 text-end`, not `.pa-form-actions`** — misses the blessed actions-row spacing contract (form.ex:693-697 vs forms.html:57-60). Fix: emit `<div class="pa-form-actions justify-content-end">`.
 - 🟡 **input_group fixes button addons after append** — leading/interleaved buttons (stepper −/input/+, forms.html:312-317) unreachable via slots. Fix: `:prepend_button`/`:append_button` positioned slots, or document composing inside inner_block.
 - ✅ Input sizes/validation, color-1..9, textarea (correctly no validation border), input-group sizes, input-wrapper `__clear` (`pa-icon--x`), form_group horizontal/validation/required, bare-`<label>` auto-styling — all aligned. Dropped-dead `pa-form--inline` correctly gone.
 
 ### range_group.ex — `range/1`, `range_group/1`
-- 🟠 **`pa-range--disabled` unexposed** — documented disabled slider (range-group.html:170-180). No `disabled` prop. Fix: add `disabled` → `pa-range--disabled` + `disabled` on both thumbs.
+- 🟠 **`pa-range--disabled` unexposed** — ✅ FIXED (Batch 14). Added `disabled` attr → `pa-range--disabled`
+  on the root + `disabled` on both thumb buttons (matches range-group.html:170-180).
 - ✅ Otherwise faithful: exact `__rail/__track/__fill/__thumb--min/--max` tree, `--single`, all 4 handle shapes, full `.pa-range-group` scaffold; ticks/summary correctly left to JS.
 
 ### checkbox_list.ex — `checkbox_list/1`, `checkbox_list_item/1`, `checkbox_box/1`
@@ -429,8 +439,11 @@ structurally verified in prior audit.
 - ✅ accent-grid correctly restricted to the 4 semantic accents (no phantom `--primary`/`--color-N`); desc-table/banded/prop-card/field layouts/field-group/dot-leaders all mapped; `value_variant` correctly excludes nonexistent `--secondary`.
 
 ### data_viz.ex — progress/stacked/ring/gauge/data-bar/heatmap/sparkline
-- 🟠 **`data_bar` never renders `pa-data-bar__value`** (SCSS:391-396). Fix: add optional `value_text`/slot.
-- 🟠 **no `bar_list` component** — full `pa-bar-list` family (SCSS `_data-viz.scss:541-616`) unimplemented in either data_viz or data_display. Fix: add `bar_list`/`bar_list_item`.
+- 🟠 **`data_bar` never renders `pa-data-bar__value`** — ✅ FIXED (Batch 14). Added optional `value_text`
+  attr → renders `pa-data-bar__value` label above the track (flex-column, per SCSS:391-396).
+- 🟠 **no `bar_list` component** — ⏸️ DEFERRED (new-component build). Full `pa-bar-list` family (16
+  selectors, `_data-viz.scss:541-616`) unimplemented. Non-trivial new component (`bar_list` +
+  `bar_list_item` + label/value/track sub-elements) — worth its own batch. TODO for tomorrow.
 - ✅ `--primary` correctly suppressed everywhere (fixes prior "dead --primary"); heatmap correctly restricted to success/danger; gauge structure/zones/`--pa-gauge-size`; stacked `--secondary` all correct.
 
 ### code.ex — `code/1`, `code_block/1`

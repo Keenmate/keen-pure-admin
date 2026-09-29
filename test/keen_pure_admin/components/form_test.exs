@@ -345,6 +345,19 @@ defmodule PureAdmin.Components.FormTest do
     end
   end
 
+  describe "checkbox/1 disabled" do
+    test "emits pa-checkbox--disabled on the label and disabled on the input" do
+      html = render(fn assigns -> ~H'<.checkbox name="c" label="X" disabled />' end, %{})
+      assert_class(html, "pa-checkbox--disabled")
+      assert html =~ ~r/<input[^>]*disabled/
+    end
+
+    test "not disabled by default" do
+      html = render(fn assigns -> ~H'<.checkbox name="c" label="X" />' end, %{})
+      refute_class(html, "pa-checkbox--disabled")
+    end
+  end
+
   describe "checkbox_group/1 + radio_group/1 layout" do
     test "checkbox_group layout emits pa-checkbox-group--{layout}" do
       for layout <- ~w(horizontal grid 2col 3col) do

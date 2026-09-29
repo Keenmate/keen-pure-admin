@@ -234,14 +234,22 @@ defmodule PureAdmin.Components.DataViz do
   ## Examples
 
       <.data_bar value={95} variant="success" />
+      <.data_bar value={95} value_text="95%" variant="success" />
   """
   attr(:value, :integer, required: true, doc: "Percentage (0-100)")
   attr(:variant, :string, default: nil, values: [nil, "primary", "success", "warning", "danger", "info", "negative"])
+
+  attr(:value_text, :string,
+    default: nil,
+    doc: "Optional value label rendered above the bar (`pa-data-bar__value`), e.g. \"95%\" or \"12 / 20\"."
+  )
+
   attr(:class, :string, default: nil)
 
   def data_bar(assigns) do
     ~H"""
     <div class={build_classes("pa-data-bar", [{"pa-data-bar--#{@variant}", @variant not in [nil, "primary"]}], @class)}>
+      <div :if={@value_text} class="pa-data-bar__value"><%= @value_text %></div>
       <div class="pa-data-bar__track">
         <div class="pa-data-bar__fill" style={"--value: #{@value}%"}></div>
       </div>
