@@ -236,7 +236,45 @@ workaround for core's fixed limit; flagged for tomorrow).
 - **demo** — `alerts_live.ex` System Update alert uses the `:list` slot instead of raw `pa-alert__list`.
 - +2 tests (simple_form actions; field copy shape). Suite **236 tests + 16 doctests, 0 failures**; demo clean.
 
-**Remaining P1 ergonomics (not yet done):** `bar_list` component (deferred, new build); `pa_icon/1`-style semantic-name masked component (the
+### Batch 16 — checkbox_list_item attr forwarding (2026-09-30) ✅ DONE (uncommitted)
+- **checkbox_list_item/1** — forwards `size` / `is_x_mark` / `is_indeterminate` to its inner
+  `checkbox_box` (was hardcoding id/checked/disabled only; sized/tri-state lists had to drop to raw markup).
+- +2 tests (new checkbox_list_test). Suite **238 tests + 16 doctests, 0 failures**.
+
+---
+
+## ⏸️ DEFERRED — bigger / stateful / new-build items to review tomorrow (2026-09-30)
+
+These are the remaining catalogued findings NOT done in this session's batches — each needs more than a
+mechanical fix (stateful event wiring, a whole new component/slot subtree, or a deprecation removal with
+demo-migration risk). None are blocking; all are flagged so nothing silently drops.
+
+- **command-palette token `__remove`** (329) — snippet token pills have a `pa-badge__remove` dismiss
+  button; keen renders label-only. NOT just markup: removing a token mid command-flow is **stateful**
+  (must pop the flow back to that step + fire a handled event in the palette LiveComponent). A bare button
+  would be dead. Needs a design pass on the command-step state machine.
+- **command-palette fullscreen bar** (328) — no `__fullscreen-bar`/`__fullscreen-title`/`__close` markup
+  (snippet 33-38); mobile users get no close affordance. New slot/markup + `--fullscreen` state.
+- **profile favorites** (334) — full `__favorites`/`__favorite-item`/`…-icon`/`…-label`/`…-remove`/
+  `__favorites-add` subtree unexposed; consumer hand-authors it. New `<:favorite>` list slot (a component
+  build).
+- **profile tabs** (335) — forces hand-authored `pa-tabs` internals + `data-profile-tab` wiring. New
+  structured `<:tab label icon>` slot that emits the tab shape + pairs panels.
+- **kpi hero/bento `__chart-svg`** — chart-svg render-form gap (per earlier audit). New markup.
+- **table `table_container --panel` removal** (282) — deprecated rc10 sub-tree still carried. Removal is
+  a breaking change; check no demo/app still passes `is_panel` before dropping. Low-pri cleanup.
+- **input_group positioned buttons** (207) — leading/interleaved button addons (stepper −/input/+)
+  unreachable via slots; needs `:prepend_button`/`:append_button` positioned slots (or documented
+  inner_block composition).
+- **list_item `__content` routing** (287) — 🟡 minor: `inner_block` placed as a bare `__item` child in the
+  structured+inner_block edge combo; route into `__content` or document.
+- **popconfirm trigger wrapper** (271) — left as-is intentionally (display:contents breaks Floating UI
+  anchoring; see the finding entry).
+- **badge_group `--show-all`** (347) — see the 🔴 entry: partly-justified workaround, options laid out.
+- **`bar_list` component** (319) — new `pa-bar-list` family (16 selectors); its own component build.
+- **comparison demo `data_label` sweep** (remaining ~31 cells) — mobile-cosmetic; the component API is done.
+
+**Remaining P1 ergonomics (not yet done):** `pa_icon/1`-style semantic-name masked component (the
 one thing keen's dispatcher still lacks vs svelte's `masked()` provider — name is set-specific in
 the FA fallback), table selection/responsive `data-label`, fit-to-size wrapper, profile
 favorites/tabs, kpi chart-svg, etc. Plus minor doc-overclaim tidies.
@@ -304,7 +342,8 @@ structurally verified in prior audit.
 - ✅ Otherwise faithful: exact `__rail/__track/__fill/__thumb--min/--max` tree, `--single`, all 4 handle shapes, full `.pa-range-group` scaffold; ticks/summary correctly left to JS.
 
 ### checkbox_list.ex — `checkbox_list/1`, `checkbox_list_item/1`, `checkbox_box/1`
-- 🔵 **checkbox_list_item can't forward size / is_x_mark / is_indeterminate to its checkbox** — hardcodes id/checked/disabled only (checkbox_list.ex:123). Sized/tri-state lists need dropping to raw markup. Fix: forward those attrs or accept a `:checkbox` slot.
+- 🔵 **checkbox_list_item can't forward size / is_x_mark / is_indeterminate to its checkbox** — ✅ FIXED
+  (Batch 16). Added `size` / `is_x_mark` / `is_indeterminate` attrs, forwarded to the inner `checkbox_box`.
 - ✅ `checkbox_box/1` clean (here `disabled` IS declared → `--disabled` works). variant (compact/bordered/striped) + layout (inline/grid/2col/3col) cover all 7 modifiers; `__text`/`__description`/`__actions` nesting correct.
 
 ## FEEDBACK

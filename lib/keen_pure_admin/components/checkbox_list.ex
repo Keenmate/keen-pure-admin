@@ -105,6 +105,9 @@ defmodule PureAdmin.Components.CheckboxList do
   attr(:state, :string, default: nil, values: [nil, "selected", "disabled", "locked"])
   attr(:checked, :boolean, default: false)
   attr(:disabled, :boolean, default: false)
+  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"], doc: "Forwarded to the item's checkbox_box.")
+  attr(:is_x_mark, :boolean, default: false, doc: "X mark instead of checkmark (forwarded to checkbox_box).")
+  attr(:is_indeterminate, :boolean, default: false, doc: "Indeterminate/partial state (forwarded to checkbox_box; needs its hook).")
   attr(:class, :string, default: nil)
   attr(:rest, :global, include: ~w(phx-click phx-change phx-value-id))
   slot(:actions, doc: "Action buttons for the item")
@@ -120,7 +123,7 @@ defmodule PureAdmin.Components.CheckboxList do
       {"pa-checkbox-list__item--locked", @state == "locked"}
     ], @class)}>
       <label class="pa-checkbox-list__label">
-        <.checkbox_box id={@id} checked={@checked} disabled={@is_disabled} {@rest} />
+        <.checkbox_box id={@id} checked={@checked} disabled={@is_disabled} size={@size} is_x_mark={@is_x_mark} is_indeterminate={@is_indeterminate} {@rest} />
         <span class="pa-checkbox-list__text">
           <%= @label_text %>
           <span :if={@description_text} class="pa-checkbox-list__description"><%= @description_text %></span>
