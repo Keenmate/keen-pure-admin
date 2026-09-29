@@ -42,8 +42,29 @@ defmodule PureAdmin.Components.Table do
   )
 
   attr(:is_compact, :boolean, default: false, doc: "Compact table (reduced padding)")
-  attr(:is_responsive, :boolean, default: false, doc: "Mobile row→card transform (pa-table--responsive)")
-  attr(:is_responsive_grid, :boolean, default: false, doc: "CSS Grid responsive collapse on mobile")
+
+  attr(:is_responsive, :boolean,
+    default: false,
+    doc:
+      "Mobile row→card transform (`pa-table--responsive`). Each value cell auto-emits " <>
+        "`data-label` from its `:col` `label`, so the mobile card labels render — no hand-authoring."
+  )
+
+  attr(:is_responsive_grid, :boolean,
+    default: false,
+    doc:
+      "Mobile CSS-Grid collapse (`pa-table--responsive-grid`). Each `<tr>` gets `data-grid` " <>
+        "(see `responsive_grid_cols`); cells auto-emit `data-label`, and a `:col` `span` emits `data-span`."
+  )
+
+  attr(:responsive_grid_cols, :string,
+    default: nil,
+    values: [nil, "2", "3"],
+    doc:
+      "With `is_responsive_grid`: the mobile grid column count, emitted as `data-grid` on each `<tr>` " <>
+        "(nil = auto-fit bare `data-grid`; \"2\"/\"3\" = preset column counts)."
+  )
+
   attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
   attr(:class, :string, default: nil)
   attr(:rest, :global)
@@ -53,6 +74,10 @@ defmodule PureAdmin.Components.Table do
     attr(:class, :string)
     attr(:col_class, :string, doc: "Class for th/td (e.g. col-auto)")
     attr(:align, :string, doc: "Text alignment (start, center, end)")
+
+    attr(:span, :string,
+      doc: "Responsive-grid cell span — \"2\", \"3\", or \"full\" (emits `data-span` on the `<td>`)."
+    )
   end
 
   slot :action, doc: "Action column" do
@@ -86,13 +111,27 @@ defmodule PureAdmin.Components.Table do
         </tr>
       </thead>
       <tbody id={@id && "#{@id}-body"} phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}>
-        <tr :for={row <- @rows} id={@row_id && @row_id.(row)} phx-click={@row_click && @row_click.(row)}>
-          <td :for={action <- @action} class={action[:class] || "col-auto"}>
+        <tr
+          :for={row <- @rows}
+          id={@row_id && @row_id.(row)}
+          phx-click={@row_click && @row_click.(row)}
+          data-grid={@is_responsive_grid && (@responsive_grid_cols || "")}
+        >
+          <td
+            :for={action <- @action}
+            class={action[:class] || "col-auto"}
+            data-label={(@is_responsive || @is_responsive_grid) && action[:label]}
+          >
             <div class="pa-btn-group">
               <%= render_slot(action, @row_id && @row_id.(row) && elem(row, 1) || row) %>
             </div>
           </td>
-          <td :for={col <- @col} class={col_cell_class(col)}>
+          <td
+            :for={col <- @col}
+            class={col_cell_class(col)}
+            data-label={(@is_responsive || @is_responsive_grid) && col[:label]}
+            data-span={col[:span]}
+          >
             <%= render_slot(col, @row_id && @row_id.(row) && elem(row, 1) || row) %>
           </td>
         </tr>

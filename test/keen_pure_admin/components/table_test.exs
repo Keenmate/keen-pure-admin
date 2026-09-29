@@ -90,6 +90,45 @@ defmodule PureAdmin.Components.TableTest do
     end
   end
 
+  defp render_resp(opts) do
+    base = %{
+      rows: [%{name: "A", email: "a@x"}],
+      is_responsive: false,
+      is_responsive_grid: false,
+      responsive_grid_cols: nil,
+      col: [
+        %{__slot__: :col, label: "Name", inner_block: fn _, r -> r.name end},
+        %{__slot__: :col, label: "Email", span: "full", inner_block: fn _, r -> r.email end}
+      ],
+      action: []
+    }
+
+    render_component(&Table.table/1, Map.merge(base, opts))
+  end
+
+  describe "table/1 responsive data-* attributes" do
+    test "is_responsive auto-emits data-label from each :col label" do
+      html = render_resp(%{is_responsive: true})
+      assert html =~ ~s(data-label="Name")
+      assert html =~ ~s(data-label="Email")
+    end
+
+    test "non-responsive tables emit no data-label" do
+      refute render_resp(%{}) =~ "data-label"
+    end
+
+    test "responsive-grid emits data-grid on rows + data-span from :col span + data-label" do
+      html = render_resp(%{is_responsive_grid: true, responsive_grid_cols: "2"})
+      assert html =~ ~s(data-grid="2")
+      assert html =~ ~s(data-span="full")
+      assert html =~ ~s(data-label="Name")
+    end
+
+    test "responsive-grid without responsive_grid_cols emits bare data-grid" do
+      assert render_resp(%{is_responsive_grid: true}) =~ ~s(data-grid="")
+    end
+  end
+
   describe "table_container/1" do
     test "bare container has no header (blessed card-less shape)" do
       html =

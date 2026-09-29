@@ -250,37 +250,20 @@ defmodule DemoWeb.Live.TablesResponsiveLive do
     <%!-- CSS Grid Custom Layouts --%>
     <.table_card title_text={gettext("CSS Grid Custom Layouts")}>
       <:subtitle>Use <.code>.pa-table--responsive-grid</.code> for custom multi-column mobile layouts</:subtitle>
-      <table class="pa-table pa-table--responsive-grid pa-table--striped">
-        <thead>
-          <tr>
-            <th class="col-auto">{gettext("Actions")}</th>
-            <th>{gettext("First Name")}</th>
-            <th>{gettext("Last Name")}</th>
-            <th>{gettext("Email")}</th>
-            <th>{gettext("Phone")}</th>
-            <th>{gettext("Department")}</th>
-            <th>{gettext("Status")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr :for={c <- @grid_contacts} data-grid="2">
-            <td data-label="Actions" class="col-auto">
-              <.button_group>
-                <.button size="xs" variant="primary" title="View">👁️</.button>
-                <.button size="xs" variant="secondary" title="Edit">✏️</.button>
-              </.button_group>
-            </td>
-            <td data-label="First Name">{c.first}</td>
-            <td data-label="Last Name">{c.last}</td>
-            <td data-label="Email" data-span="full">{c.email}</td>
-            <td data-label="Phone">{c.phone}</td>
-            <td data-label="Department">{c.department}</td>
-            <td data-label="Status" data-span="full">
-              <.badge variant={user_status_variant(c.status)} size="sm">{c.status}</.badge>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <.table rows={@grid_contacts} is_responsive_grid responsive_grid_cols="2" is_striped>
+        <:action label={gettext("Actions")}>
+          <.button size="xs" variant="primary" title="View">👁️</.button>
+          <.button size="xs" variant="secondary" title="Edit">✏️</.button>
+        </:action>
+        <:col :let={c} label={gettext("First Name")}>{c.first}</:col>
+        <:col :let={c} label={gettext("Last Name")}>{c.last}</:col>
+        <:col :let={c} label={gettext("Email")} span="full">{c.email}</:col>
+        <:col :let={c} label={gettext("Phone")}>{c.phone}</:col>
+        <:col :let={c} label={gettext("Department")}>{c.department}</:col>
+        <:col :let={c} label={gettext("Status")} span="full">
+          <.badge variant={user_status_variant(c.status)} size="sm">{c.status}</.badge>
+        </:col>
+      </.table>
       <:footer>
         <.alert variant="info">
           <:heading>On mobile:</:heading>

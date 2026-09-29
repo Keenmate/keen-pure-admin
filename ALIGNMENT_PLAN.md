@@ -173,7 +173,22 @@ and drop a knob core can't back.
 - +11 tests (new tooltip_test + popconfirm_test; list_test extended). Suite **214 tests + 16
   doctests, 0 failures**; demo compiles clean.
 
-**Remaining P1 ergonomics (not yet done):** `pa_icon/1`-style semantic-name masked component (the
+### Batch 10 — table responsive data-* (2026-09-30) ✅ DONE (uncommitted)
+Made `is_responsive` / `is_responsive_grid` actually work from the component (they were emitting no
+`data-label`, so mobile cards showed blank label gutters; grid couldn't emit at all — every grid demo
+hand-authored raw `<table>`). Contract verified against `_tables.scss` + `snippets/tables.html`.
+- **table.ex** — value cells auto-emit `data-label={col[:label]}` (action cells `action[:label]`) under
+  either responsive mode; new `responsive_grid_cols` attr → `data-grid` on each `<tr>` (nil = bare
+  auto-fit / "2" / "3"); new `:col` `span` attr → `data-span` ("2"/"3"/"full"). Non-responsive tables
+  emit no `data-*` (fidelity preserved).
+- **demo** — converted the hand-authored responsive-grid `<table>` in `tables_responsive_live.ex` to
+  `<.table is_responsive_grid responsive_grid_cols="2">` with `:col span=`.
+- +4 tests. Suite **218 tests + 16 doctests, 0 failures**; demo compiles clean (no warnings).
+
+Table selection API (finding 279) is the next table item — deferred to its own batch (needs the
+stateful multi-select demo rewired).
+
+**Remaining P1 ergonomics (not yet done):** table selection API (279); `pa_icon/1`-style semantic-name masked component (the
 one thing keen's dispatcher still lacks vs svelte's `masked()` provider — name is set-specific in
 the FA fallback), table selection/responsive `data-label`, fit-to-size wrapper, profile
 favorites/tabs, kpi chart-svg, etc. Plus minor doc-overclaim tidies.
@@ -315,10 +330,17 @@ structurally verified in prior audit.
 ## DATA-LISTS
 
 ### table.ex — `table/1`, `table_container/1`, `table_card/1`, `table_item/1`
-- 🟠🔵 **`is_responsive` / `is_responsive_grid` are effectively non-functional** — `:col` slot has no `data-label`/`data-grid`/`data-span` path (table.ex:51-56,95); responsive collapses to cards with blank labels, grid can't emit at all. Every working responsive-grid demo hand-authors raw `<table class="pa-table">` (tables_responsive_live.ex:118-122,266-278). Fix: auto-derive `data-label` from `col[:label]`; add row `data-grid` + `:col` `span`→`data-span`.
+- 🟠🔵 **`is_responsive` / `is_responsive_grid` are effectively non-functional** — ✅ FIXED (Batch 10).
+  Value cells now auto-emit `data-label` from `col[:label]` (and action cells from `action[:label]`)
+  whenever `is_responsive`/`is_responsive_grid`. New `responsive_grid_cols` attr → `data-grid` on each
+  `<tr>` (nil = bare auto-fit, "2"/"3" = presets). New `:col` `span` attr → `data-span` ("2"/"3"/"full").
+  Demo's hand-authored responsive-grid `<table>` (tables_responsive_live.ex) converted to `<.table>`.
 - 🔵 **no selection API** — row selection (`.pa-table__checkbox-col` + `tr.pa-table__row--selected`) has no component surface; the entire multi-select feature bypasses `.table` with hand-authored internals (table_multi_select_live.ex:228-270). Fix: add `selectable`/`selected` row predicate + checkbox-column affordance.
 - 🔴 **demo leaks `pa-table--hover`** (grep=0) — attr correctly dropped from component, but demo markup still writes it (table_multi_select_live.ex:229). Fix: drop from demo.
-- 🟠 **`:col` cells can't set colspan/data-*/title** (only `:foot` is a raw escape hatch). Fix: allow a `rest` global on `:col`.
+- 🟠 **`:col` cells can't set colspan/data-*/title** — PARTIAL (Batch 10): added `:col` `span`
+  (→ `data-span`), which covers the responsive-grid need. Arbitrary `data-*`/`title`/`colspan` remain
+  unexposed — Phoenix slots can't take a `:global`, so each pass-through attr must be declared; deferred
+  until a concrete need beyond `span`. *(partially open)*
 - 🟡 **`table_container` still carries deprecated `--panel` sub-tree** (table.ex:189-217; deprecated rc10). Fix: schedule removal.
 - ✅ Sizes, striped/bordered/plain, compact→xs, `table_card` variants/color-N/plain/scrollable/description/actions/footer, `table_item` all clean.
 
