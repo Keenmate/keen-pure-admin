@@ -27,3 +27,6 @@ keen_pure_admin-*.tar
 
 # Claude Code local settings
 .claude/
+
+# markup-fidelity harness dump artifacts (regenerable)
+fidelity/*.dump.json

@@ -1,0 +1,23 @@
+{
+  "//": "Capability manifest for card/1 — keen-pure-admin. See button.map.json for the model. `const` sets a fixed assign value from a neutral flag (keen has no is_stat — a stat card is variant=\"stat\"). `negate` inverts a bool (noPadding → has_padding=false).",
+  "component": "card",
+  "features": {
+    "variant":                   { "prop": "variant",              "kind": "enum",   "values": ["primary", "success", "warning", "danger", "color-1", "color-2", "color-3", "color-4", "color-5", "color-6", "color-7", "color-8", "color-9"] },
+    "stat":                      { "prop": "variant",              "kind": "const",  "value": "stat" },
+    "ghost":                     { "prop": "is_ghost",             "kind": "bool" },
+    "liveState":                 { "prop": "live_state",           "kind": "enum",   "values": ["up", "down", "neutral"] },
+    "noPadding":                 { "prop": "has_padding",          "kind": "bool",   "negate": true },
+    "headerUnderlined":          { "prop": "is_header_underlined", "kind": "bool" },
+    "headerUnderlineColor":      { "prop": "header_underline_color", "kind": "enum", "values": ["success", "warning", "danger", "info"] },
+    "headerUnderlineThemeColor": { "prop": "header_underline_theme_color", "kind": "enum", "values": ["1", "2", "3", "4", "5", "6", "7", "8", "9"], "nativeType": "string" },
+    "headerWrap":                { "prop": "header_wrap",          "kind": "bool" },
+    "title":                { "prop": "title_text",           "kind": "string" },
+    "titleIcon":            { "prop": "title_icon",           "kind": "slot" },
+    "description":          { "prop": "description_text",     "kind": "string" },
+    "subtitle":             { "prop": "subtitle_text",        "kind": "string" },
+    "body":                 { "prop": "inner_block",          "kind": "slot" },
+    "footer":               { "prop": "footer",               "kind": "slot" },
+    "footerActions":        { "prop": "actions",              "kind": "slot" },
+    "tools":                { "prop": "tools",                "kind": "slot" }
+  }
+}

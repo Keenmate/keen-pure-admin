@@ -1,0 +1,25 @@
+{
+  "//": "Capability manifest for button/1 — keen-pure-admin. Maps each NEUTRAL feature (core fixture vocabulary) to this wrapper's own assign, kind, and — for enums — the option set THIS component actually declares. Two consumers: (1) `mix pa.fidelity.dump` drives rendering generically from it; (2) core's capability.mjs diffs it against the oracle feature contract. `channel: rest` = the value rides in the :global :rest map (string key) rather than a declared attr. Keep `values` honest to the component's real attr `values:` list.",
+  "component": "button",
+  "features": {
+    "variant":          { "prop": "variant",              "kind": "enum",   "values": ["primary", "secondary", "success", "warning", "danger", "info", "light", "dark", "ghost"] },
+    "size":             { "prop": "size",                 "kind": "enum",   "values": ["xs", "sm", "lg", "xl"] },
+    "outline":          { "prop": "is_outline",           "kind": "bool" },
+    "block":            { "prop": "is_block",             "kind": "bool" },
+    "loading":          { "prop": "is_loading",           "kind": "bool" },
+    "iconOnly":         { "prop": "is_icon_only",         "kind": "bool" },
+    "ripple":           { "prop": "is_ripple",            "kind": "bool" },
+    "themeColor":       { "prop": "theme_color",          "kind": "enum",   "values": ["1", "2", "3", "4", "5", "6", "7", "8", "9"], "nativeType": "string" },
+    "align":            { "prop": "align",                "kind": "enum",   "values": ["start", "end", "center", "justify"] },
+    "iconPosition":     { "prop": "icon_position",        "kind": "enum",   "values": ["start", "end"] },
+    "disabled":         { "prop": "disabled",             "kind": "bool",   "channel": "rest" },
+    "truncate":         { "prop": "should_truncate_text", "kind": "bool" },
+    "inputGroupButton": { "prop": "is_input_group_button", "kind": "bool" },
+    "href":             { "prop": "href",                 "kind": "string" },
+    "target":           { "prop": "target",               "kind": "string" },
+    "title":            { "prop": "title",                "kind": "string", "channel": "rest" },
+    "extraClass":       { "prop": "class",                "kind": "string" },
+    "label":            { "prop": "inner_block",          "kind": "slot" },
+    "icon":             { "prop": "icon",                 "kind": "slot" }
+  }
+}
