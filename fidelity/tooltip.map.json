@@ -1,0 +1,13 @@
+{
+  "//": "Capability manifest for tooltip/1 — keen-pure-admin. See button.map.json for the model. The trigger's hardcoded pa-tooltip--floating is a goldenConvention (not an attr), so it has no map entry. `channel: rest` = value rides in the :global :rest map (string key).",
+  "component": "tooltip",
+  "features": {
+    "position":  { "prop": "position",   "kind": "enum",   "values": ["end", "bottom", "start"] },
+    "variant":   { "prop": "variant",    "kind": "enum",   "values": ["primary", "success", "warning", "danger", "color-1", "color-2", "color-3", "color-4", "color-5", "color-6", "color-7", "color-8", "color-9"] },
+    "multiline": { "prop": "multiline",  "kind": "bool" },
+    "help":      { "prop": "is_help",    "kind": "bool" },
+    "keyword":   { "prop": "is_keyword", "kind": "bool" },
+    "text":      { "prop": "text",       "kind": "string" },
+    "content":   { "prop": "inner_block", "kind": "slot" }
+  }
+}

@@ -78,6 +78,9 @@ defmodule PureAdmin.Components.AlertTest do
       assert html =~ ~s(<span class="pa-icon pa-icon--x")
       refute html =~ "&times;"
       assert html =~ ~s(id="my-alert")
+      # close button carries type="button" so it never implicitly submits a
+      # surrounding form (matches core golden + svelte convention).
+      assert html =~ ~s(<button type="button" class="pa-alert__close")
     end
 
     test "drops pa-alert__content wrapper when no icon is supplied" do

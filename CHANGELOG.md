@@ -121,6 +121,24 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Markup-fidelity sweep — badge / alert / stat corrected against core.** A new
+  cross-repo markup-fidelity harness (core renders the blessed golden markup per scenario;
+  keen renders the same component via `mix pa.fidelity.dump`; the two are normalized and
+  diffed — no browser) surfaced three places where keen emitted markup the core CSS no
+  longer blesses:
+  - **Badge:** a `theme_color` badge wrongly stacked `pa-badge--primary` on top of
+    `pa-badge--color-N` — the default `variant` class was emitted unconditionally. The
+    variant class is now suppressed when `theme_color` is set (mirrors `button/1`).
+  - **Alert:** the dismiss button (`pa-alert__close`) was missing `type="button"`,
+    risking an implicit submit inside a `<form>`.
+  - **Stat:** fit-mode square stats emitted `<div>` for the number/symbol where the
+    canonical shape is `<span>`; the change/context disclosure rows were also dead code
+    on the non-fit path and now live in the fit-only branch. Non-fit square keeps `<div>`.
+
+  Each fix is locked by a new or expanded unit test.
+- **Fidelity tooling (dev-only).** Added `fidelity/*.map.json` capability maps for
+  badge / alert / callout / stat / tooltip and the matching `mix pa.fidelity.dump`
+  clauses, so keen's emitted DOM is continuously checkable against core's golden markup.
 - **Command palette did nothing except on its own demo page — including `Ctrl+K`.** The
   palette component (and the JS hook that registers the global `Ctrl+K`/`⌘K` listener) was
   only rendered on `/components/command-palette`, so on every other page the navbar/sidebar

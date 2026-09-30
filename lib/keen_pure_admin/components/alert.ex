@@ -135,6 +135,7 @@ defmodule PureAdmin.Components.Alert do
       <% end %>
       <button
         :if={@is_dismissible}
+        type="button"
         class="pa-alert__close"
         phx-click={dismiss_alert(@id)}
         aria-label={t("pureAdmin.a11y.close")}

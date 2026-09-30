@@ -1,0 +1,13 @@
+{
+  "//": "Capability manifest for badge/1 — keen-pure-admin. See button.map.json/card.map.json for the model. Maps each NEUTRAL feature to this wrapper's own assign, kind, and — for enums — the option set THIS component actually declares. Two consumers: (1) `mix pa.fidelity.dump badge` drives rendering generically from it; (2) core's capability.mjs diffs it against the oracle feature contract. Keep `values` honest to the component's real attr `values:` list.",
+  "component": "badge",
+  "features": {
+    "variant":       { "prop": "variant",            "kind": "enum",   "values": ["primary", "secondary", "success", "warning", "danger", "info", "light", "dark"] },
+    "themeColor":    { "prop": "theme_color",         "kind": "enum",   "values": ["1", "2", "3", "4", "5", "6", "7", "8", "9"], "nativeType": "string" },
+    "size":          { "prop": "size",               "kind": "enum",   "values": ["xs", "sm", "lg", "xl"] },
+    "pill":          { "prop": "is_pill",            "kind": "bool" },
+    "ellipsisStart": { "prop": "is_ellipsis_start",  "kind": "bool" },
+    "icon":          { "prop": "icon",               "kind": "slot" },
+    "label":         { "prop": "inner_block",        "kind": "slot" }
+  }
+}

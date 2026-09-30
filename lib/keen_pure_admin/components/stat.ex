@@ -185,22 +185,33 @@ defmodule PureAdmin.Components.Stat do
               <%= @resolved_change %>
             </div>
 
+          <% @variant == "square" and @fit? -> %>
+            <%!-- Fit mode: pa-stat-fit.js wraps __number + __symbol into
+                 __slot > __group and the __label / __change / __context rows
+                 into a __meta column at runtime. The canonical snippet emits
+                 __number + __symbol as <span> in fit mode (inline flow inside
+                 the JS-built __group) — matches core snippets/statistics.html. --%>
+            <span :if={@symbol_text && @is_prefix_symbol} class="pa-stat__symbol"><%= @symbol_text %></span>
+            <span class="pa-stat__number"><%= @resolved_number %></span>
+            <span :if={@symbol_text && !@is_prefix_symbol} class="pa-stat__symbol"><%= @symbol_text %></span>
+            <div class="pa-stat__label"><%= @resolved_label %></div>
+            <%!-- Fit-mode disclosure rows (P3 change, P4 context). Rendered
+                 flat; the JS moves them into the __meta column. --%>
+            <div :if={@resolved_change} class={change_classes(@resolved_direction)}>
+              <%= @resolved_change %>
+            </div>
+            <div :if={@context_text || @context != []} class="pa-stat__context">
+              <%= if @context != [], do: render_slot(@context), else: @context_text %>
+            </div>
+
           <% @variant == "square" -> %>
-            <%!-- Authored-flat children. In fit mode pa-stat-fit.js wraps
-                 __number + __symbol into __slot > __group and the __label /
-                 __change / __context rows into a __meta column at runtime. --%>
+            <%!-- Non-fit square: static coloured tile. __number + __symbol as
+                 <div> per the canonical snippet's classic square shape. No
+                 disclosure rows (change/context are fit-mode only). --%>
             <div :if={@symbol_text && @is_prefix_symbol} class="pa-stat__symbol"><%= @symbol_text %></div>
             <div class="pa-stat__number"><%= @resolved_number %></div>
             <div :if={@symbol_text && !@is_prefix_symbol} class="pa-stat__symbol"><%= @symbol_text %></div>
             <div class="pa-stat__label"><%= @resolved_label %></div>
-            <%!-- Fit-mode disclosure rows (P3 change, P4 context). Rendered
-                 flat; the JS moves them into the __meta column. --%>
-            <div :if={@fit? && @resolved_change} class={change_classes(@resolved_direction)}>
-              <%= @resolved_change %>
-            </div>
-            <div :if={@fit? && (@context_text || @context != [])} class="pa-stat__context">
-              <%= if @context != [], do: render_slot(@context), else: @context_text %>
-            </div>
 
           <% @icon != [] -> %>
             <div class={"pa-stat__icon pa-stat__icon--#{@icon_variant}"}>

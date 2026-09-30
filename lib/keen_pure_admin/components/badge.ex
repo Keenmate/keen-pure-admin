@@ -57,7 +57,10 @@ defmodule PureAdmin.Components.Badge do
     build_classes(
       "pa-badge",
       [
-        {"pa-badge--#{assigns.variant}", true},
+        # theme_color paints pa-badge--color-N and is the sole colour class —
+        # it overrides `variant` (mirrors button/1), so the variant class is
+        # suppressed when a theme_color slot is set.
+        {"pa-badge--#{assigns.variant}", assigns.theme_color == nil},
         {"pa-badge--#{assigns.size}", assigns.size != nil},
         {"maxwr-#{assigns.max_width}", assigns.max_width != nil},
         {"text-truncate", assigns.max_width != nil},

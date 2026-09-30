@@ -1,0 +1,19 @@
+{
+  "//": "Capability manifest for alert/1 — keen-pure-admin. See button.map.json / card.map.json for the model. `channel: rest` = value rides in the :global :rest map. `headingLarge` → heading_size=\"lg\" via a const flag (keen models heading size as an enum attr, not a bool). The icon slot presence drives the pa-alert__content wrap.",
+  "component": "alert",
+  "features": {
+    "variant":      { "prop": "variant",        "kind": "enum",   "values": ["primary", "secondary", "success", "warning", "danger", "info", "light", "dark"] },
+    "outline":      { "prop": "is_outline",      "kind": "bool" },
+    "themeColor":   { "prop": "theme_color",     "kind": "enum",   "values": ["1", "2", "3", "4", "5", "6", "7", "8", "9"], "nativeType": "string" },
+    "size":         { "prop": "size",            "kind": "enum",   "values": ["sm", "lg"] },
+    "dismissible":  { "prop": "is_dismissible",  "kind": "bool" },
+    "multiline":    { "prop": "is_multiline",    "kind": "bool" },
+    "heading":      { "prop": "heading_text",    "kind": "string" },
+    "headingLarge": { "prop": "heading_size",    "kind": "const",  "value": "lg" },
+    "icon":         { "prop": "icon",            "kind": "slot" },
+    "body":         { "prop": "inner_block",     "kind": "slot" },
+    "list":         { "prop": "list",            "kind": "slot" },
+    "actions":      { "prop": "actions",         "kind": "slot" },
+    "extraClass":   { "prop": "class",           "kind": "string" }
+  }
+}

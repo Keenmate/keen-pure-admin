@@ -1,0 +1,19 @@
+{
+  "//": "Capability manifest for stat/1 — keen-pure-admin. See card.map.json for the model. changeDirection: keen's attr values use underscores (very_positive) but change_classes/1 normalizes _→- so passing the neutral dashed value renders the same class; values here are the dashed neutral forms the oracle exercises. icon is a named slot.",
+  "component": "stat",
+  "features": {
+    "variant":         { "prop": "variant",           "kind": "enum",   "values": ["hero", "hero-compact", "square"] },
+    "color":           { "prop": "color",             "kind": "enum",   "values": ["primary", "secondary", "success", "info", "warning", "danger"] },
+    "iconVariant":     { "prop": "icon_variant",      "kind": "enum",   "values": ["primary", "success", "warning", "info", "danger"] },
+    "changeDirection": { "prop": "change_direction",  "kind": "enum",   "values": ["very-positive", "positive", "neutral", "negative", "very-negative"] },
+    "isFit":           { "prop": "is_fit",            "kind": "bool" },
+    "isSymbolPrefix":  { "prop": "is_prefix_symbol",  "kind": "bool" },
+    "number":          { "prop": "number",            "kind": "string" },
+    "labelText":       { "prop": "label_text",        "kind": "string" },
+    "changeText":      { "prop": "change_text",       "kind": "string" },
+    "symbolText":      { "prop": "symbol_text",       "kind": "string" },
+    "contextText":     { "prop": "context_text",      "kind": "string" },
+    "icon":            { "prop": "icon",              "kind": "slot" },
+    "extraClass":      { "prop": "class",             "kind": "string" }
+  }
+}

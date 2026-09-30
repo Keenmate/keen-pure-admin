@@ -35,6 +35,23 @@ defmodule PureAdmin.Components.BadgeTest do
       assert_class(html, "pa-badge--sm")
       assert_class(html, "pa-badge--pill")
     end
+
+    test "theme_color emits pa-badge--color-N and suppresses the variant class" do
+      html =
+        render_component(&Badge.badge/1, %{
+          variant: "primary",
+          size: nil,
+          is_pill: false,
+          theme_color: "5",
+          class: nil,
+          icon: [],
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "Slot 5" end}]
+        })
+
+      assert_class(html, "pa-badge--color-5")
+      # theme_color is the sole colour class — the default variant must not co-exist.
+      refute_class(html, "pa-badge--primary")
+    end
   end
 
   describe "label/1" do

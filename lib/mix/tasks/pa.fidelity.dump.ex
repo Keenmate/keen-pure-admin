@@ -25,8 +25,13 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   # render_component/2 is a macro — import it so it expands around our runtime assigns.
   import Phoenix.LiveViewTest, only: [render_component: 2]
 
+  alias PureAdmin.Components.Alert
+  alias PureAdmin.Components.Badge
   alias PureAdmin.Components.Button
+  alias PureAdmin.Components.Callout
   alias PureAdmin.Components.Card
+  alias PureAdmin.Components.Stat
+  alias PureAdmin.Components.Tooltip
 
   @impl Mix.Task
   def run(args) do
@@ -62,9 +67,19 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   # handling), so dispatch per component with the literal capture.
   defp render(assigns, "button"), do: render_component(&Button.button/1, assigns)
   defp render(assigns, "card"), do: render_component(&Card.card/1, assigns)
+  defp render(assigns, "badge"), do: render_component(&Badge.badge/1, assigns)
+  defp render(assigns, "alert"), do: render_component(&Alert.alert/1, assigns)
+  defp render(assigns, "callout"), do: render_component(&Callout.callout/1, assigns)
+  defp render(assigns, "stat"), do: render_component(&Stat.stat/1, assigns)
+  defp render(assigns, "tooltip"), do: render_component(&Tooltip.tooltip/1, assigns)
 
   defp meta("button"), do: PureAdmin.Components.Button.__components__()[:button]
   defp meta("card"), do: PureAdmin.Components.Card.__components__()[:card]
+  defp meta("badge"), do: PureAdmin.Components.Badge.__components__()[:badge]
+  defp meta("alert"), do: PureAdmin.Components.Alert.__components__()[:alert]
+  defp meta("callout"), do: PureAdmin.Components.Callout.__components__()[:callout]
+  defp meta("stat"), do: PureAdmin.Components.Stat.__components__()[:stat]
+  defp meta("tooltip"), do: PureAdmin.Components.Tooltip.__components__()[:tooltip]
 
   # Base assigns from the component's own metadata: every attr that declares a
   # default gets it, every slot defaults to []. Fully generic — no per-component

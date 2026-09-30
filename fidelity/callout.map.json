@@ -1,0 +1,13 @@
+{
+  "//": "Capability manifest for callout/1 — keen-pure-admin. Maps each NEUTRAL callout feature (core fixture vocabulary) to this wrapper's own assign/kind/values. See button.map.json / card.map.json for the model. `channel: rest` = the value rides in the :global :rest map rather than a declared attr. Keep `values` honest to the component's real attr `values:` list.",
+  "component": "callout",
+  "features": {
+    "variant":    { "prop": "variant",      "kind": "enum",   "values": ["primary", "secondary", "success", "danger", "warning", "info"] },
+    "themeColor": { "prop": "theme_color",   "kind": "enum",   "values": ["1", "2", "3", "4", "5", "6", "7", "8", "9"], "nativeType": "string" },
+    "size":       { "prop": "size",          "kind": "enum",   "values": ["sm", "lg"] },
+    "heading":    { "prop": "heading_text",  "kind": "string" },
+    "icon":       { "prop": "icon",          "kind": "slot" },
+    "body":       { "prop": "inner_block",   "kind": "slot" },
+    "extraClass": { "prop": "class",         "kind": "string" }
+  }
+}
