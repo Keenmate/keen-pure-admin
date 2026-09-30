@@ -93,5 +93,20 @@ defmodule PureAdmin.Components.CardTest do
       assert html =~ "pa-card__header--underlined"
       assert html =~ "pa-card__header--underline-success"
     end
+
+    test "renders header underline with a theme colour slot" do
+      html =
+        render_component(
+          &Card.card/1,
+          default_assigns(%{
+            title_text: "Test",
+            is_header_underlined: true,
+            header_underline_theme_color: "3"
+          })
+        )
+
+      assert html =~ "pa-card__header--underlined"
+      assert html =~ "pa-card__header--underline-color-3"
+    end
   end
 end

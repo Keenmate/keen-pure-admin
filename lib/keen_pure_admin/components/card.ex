@@ -80,6 +80,15 @@ defmodule PureAdmin.Components.Card do
     doc: "Underline color variant"
   )
 
+  attr(:header_underline_theme_color, :string,
+    default: nil,
+    values: [nil, "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    doc:
+      "Theme-slot underline colour (1-9). Emits `pa-card__header--underline-color-{n}`; " <>
+        "requires `is_header_underlined`. Mirrors core's `pa-card__header--underline-color-*` " <>
+        "(2.9.0) and svelte-pure-admin's `headerUnderlineThemeColor`."
+  )
+
   attr(:has_inline_tabs, :boolean, default: false, doc: "Pill-style buttons in header")
   attr(:header_wrap, :boolean, default: false, doc: "Allow header description to wrap")
   attr(:header_class, :string, default: nil, doc: "Additional CSS classes for header element")
@@ -290,7 +299,8 @@ defmodule PureAdmin.Components.Card do
       [
         {"pa-card__header--wrap", assigns.header_wrap},
         {"pa-card__header--underlined", assigns.is_header_underlined},
-        {"pa-card__header--underline-#{assigns.header_underline_color}", assigns.header_underline_color != nil}
+        {"pa-card__header--underline-#{assigns.header_underline_color}", assigns.header_underline_color != nil},
+        {"pa-card__header--underline-color-#{assigns.header_underline_theme_color}", assigns.header_underline_theme_color != nil}
       ],
       assigns.header_class
     )
