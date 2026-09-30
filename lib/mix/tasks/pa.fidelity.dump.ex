@@ -30,8 +30,14 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   alias PureAdmin.Components.Button
   alias PureAdmin.Components.Callout
   alias PureAdmin.Components.Card
+  alias PureAdmin.Components.DataViz
+  alias PureAdmin.Components.Loader
   alias PureAdmin.Components.Stat
+  alias PureAdmin.Components.Timeline
   alias PureAdmin.Components.Tooltip
+  # NOTE: PureAdmin.Components.Code / .List are NOT aliased — they'd shadow the
+  # built-in Elixir `Code` / `List` modules (the task uses `List.first/1`).
+  # Their render/meta clauses use the fully-qualified module name instead.
 
   @impl Mix.Task
   def run(args) do
@@ -72,6 +78,11 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp render(assigns, "callout"), do: render_component(&Callout.callout/1, assigns)
   defp render(assigns, "stat"), do: render_component(&Stat.stat/1, assigns)
   defp render(assigns, "tooltip"), do: render_component(&Tooltip.tooltip/1, assigns)
+  defp render(assigns, "code"), do: render_component(&PureAdmin.Components.Code.code/1, assigns)
+  defp render(assigns, "progress"), do: render_component(&DataViz.progress/1, assigns)
+  defp render(assigns, "loader"), do: render_component(&Loader.loader/1, assigns)
+  defp render(assigns, "timeline"), do: render_component(&Timeline.timeline/1, assigns)
+  defp render(assigns, "list"), do: render_component(&PureAdmin.Components.List.list/1, assigns)
 
   defp meta("button"), do: PureAdmin.Components.Button.__components__()[:button]
   defp meta("card"), do: PureAdmin.Components.Card.__components__()[:card]
@@ -80,6 +91,11 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("callout"), do: PureAdmin.Components.Callout.__components__()[:callout]
   defp meta("stat"), do: PureAdmin.Components.Stat.__components__()[:stat]
   defp meta("tooltip"), do: PureAdmin.Components.Tooltip.__components__()[:tooltip]
+  defp meta("code"), do: PureAdmin.Components.Code.__components__()[:code]
+  defp meta("progress"), do: PureAdmin.Components.DataViz.__components__()[:progress]
+  defp meta("loader"), do: PureAdmin.Components.Loader.__components__()[:loader]
+  defp meta("timeline"), do: PureAdmin.Components.Timeline.__components__()[:timeline]
+  defp meta("list"), do: PureAdmin.Components.List.__components__()[:list]
 
   # Base assigns from the component's own metadata: every attr that declares a
   # default gets it, every slot defaults to []. Fully generic — no per-component

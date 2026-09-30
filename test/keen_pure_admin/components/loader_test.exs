@@ -26,10 +26,47 @@ defmodule PureAdmin.Components.LoaderTest do
       refute html =~ "color: var("
     end
 
+    test "no color → omits the style attribute entirely (no phantom style=\"\")" do
+      # HEEx renders `style={nil}` as `style=""`, a phantom attribute vs the core
+      # golden. Colour is routed through @rest so the attribute is dropped when
+      # absent. (Markup-fidelity harness: fidelity/fixtures/loader.json.)
+      html = render_component(&Loader.loader/1, %{type: "dots"})
+
+      refute html =~ ~s(style="")
+      refute html =~ "style="
+    end
+
     test "size still emits the real --lg modifier" do
       html = render_component(&Loader.loader/1, %{type: "bars", size: "lg"})
 
       assert_class(html, "pa-loader-bars--lg")
+    end
+  end
+
+  describe "loader/1 structure" do
+    test "dots emits exactly 3 child spans" do
+      html = render_component(&Loader.loader/1, %{type: "dots"})
+
+      assert_class(html, "pa-loader-dots")
+      assert length(String.split(html, "<span>")) - 1 == 3
+    end
+
+    test "bars and wave emit exactly 5 child spans" do
+      for type <- ["bars", "wave"] do
+        html = render_component(&Loader.loader/1, %{type: type})
+
+        assert_class(html, "pa-loader-#{type}")
+        assert length(String.split(html, "<span>")) - 1 == 5
+      end
+    end
+
+    test "pulse and ring are CSS-only — no child spans" do
+      for type <- ["pulse", "ring"] do
+        html = render_component(&Loader.loader/1, %{type: type})
+
+        assert_class(html, "pa-loader-#{type}")
+        refute html =~ "<span>"
+      end
     end
   end
 

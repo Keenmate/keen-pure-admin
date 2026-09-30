@@ -41,12 +41,13 @@ defmodule PureAdmin.Components.Timeline do
   slot(:inner_block, required: true)
 
   def timeline(assigns) do
-    tag = if assigns.variant == "alternating", do: "div", else: "ul"
-    assigns = assign(assigns, :tag, tag)
-
+    # Container tag is always <ul>. Core blesses the semantic list for every
+    # variant (snippet's canonical simple/feed/alternating all use <ul>/<li>);
+    # the SCSS keys off :nth-child, not the tag, so the alternating variant works
+    # identically as a <ul>. (Historically this emitted <div> for alternating —
+    # a container divergence from svelte, which always emits <ul>.)
     ~H"""
-    <.dynamic_tag
-      tag_name={@tag}
+    <ul
       class={build_classes("pa-timeline", [
         {"pa-timeline--#{@variant}", @variant != nil},
         {"pa-timeline--#{@align}", @align != nil},
@@ -56,7 +57,7 @@ defmodule PureAdmin.Components.Timeline do
       {@rest}
     >
       <%= render_slot(@inner_block) %>
-    </.dynamic_tag>
+    </ul>
     """
   end
 

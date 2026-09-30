@@ -139,6 +139,23 @@ so those runtime overrides resolve again (they had become silent no-ops).
 - **Fidelity tooling (dev-only).** Added `fidelity/*.map.json` capability maps for
   badge / alert / callout / stat / tooltip and the matching `mix pa.fidelity.dump`
   clauses, so keen's emitted DOM is continuously checkable against core's golden markup.
+- **Markup-fidelity sweep #2 — progress / loader / timeline corrected against core.**
+  Same cross-repo harness, three more markup bugs:
+  - **Progress:** the bar now carries its accessibility contract —
+    `role="progressbar"` + `aria-valuenow` + `aria-valuemin="0"` + `aria-valuemax="100"`
+    (svelte already emitted these; keen emitted none).
+  - **Loader:** `loader/1` emitted a phantom `style=""` attribute when no colour was
+    set (LiveView renders `style={nil}` as `style=""`); the colour now rides `@rest`
+    so the attribute is omitted entirely when absent.
+  - **Timeline:** the alternating variant emitted a `<div>`; it now always emits
+    `<ul>` (the canonical semantic list — the SCSS keys off `:nth-child`, not the tag),
+    matching svelte and the snippet.
+
+  Each fix is locked by a new or expanded unit test. `code` and `list` needed no
+  markup change.
+- **Fidelity tooling #2 (dev-only).** Added `fidelity/*.map.json` capability maps for
+  code / progress / loader / timeline / list and the matching `mix pa.fidelity.dump`
+  clauses.
 - **Command palette did nothing except on its own demo page — including `Ctrl+K`.** The
   palette component (and the JS hook that registers the global `Ctrl+K`/`⌘K` listener) was
   only rendered on `/components/command-palette`, so on every other page the navbar/sidebar

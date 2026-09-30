@@ -1,0 +1,13 @@
+{
+  "//": "Capability manifest for progress/1 — keen-pure-admin. See card.map.json for the model. Scope: the bare pa-progress bar (DataViz.progress/1). keen's labeled variant is a separate progress_group/1, out of this bar-scoped fixture.",
+  "component": "progress",
+  "features": {
+    "variant":    { "prop": "variant",     "kind": "enum", "values": ["success", "warning", "danger", "info"] },
+    "size":       { "prop": "size",         "kind": "enum", "values": ["xs", "sm", "lg"] },
+    "rounded":    { "prop": "is_rounded",   "kind": "bool" },
+    "striped":    { "prop": "is_striped",   "kind": "bool" },
+    "animated":   { "prop": "is_animated",  "kind": "bool" },
+    "value":      { "prop": "value",        "kind": "string", "nativeType": "integer" },
+    "extraClass": { "prop": "class",        "kind": "string" }
+  }
+}

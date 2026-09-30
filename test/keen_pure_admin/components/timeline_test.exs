@@ -19,7 +19,7 @@ defmodule PureAdmin.Components.TimelineTest do
       assert_class(html, "pa-timeline--simple")
     end
 
-    test "renders alternating variant as div" do
+    test "renders alternating variant as ul" do
       html =
         render_component(&Timeline.timeline/1, %{
           variant: "alternating",
@@ -29,7 +29,11 @@ defmodule PureAdmin.Components.TimelineTest do
           inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "items" end}]
         })
 
-      assert html =~ "<div"
+      # Container is always <ul> — the SCSS keys off :nth-child, not the tag, so
+      # the alternating variant works identically as a semantic list (matches
+      # svelte, which always emits <ul>).
+      assert html =~ "<ul"
+      refute html =~ "<div"
       assert_class(html, "pa-timeline--alternating")
     end
 
@@ -71,6 +75,20 @@ defmodule PureAdmin.Components.TimelineTest do
         })
 
       assert_class(html, "pa-timeline--keep-layout")
+    end
+
+    test "renders is_single_column" do
+      html =
+        render_component(&Timeline.timeline/1, %{
+          variant: "alternating",
+          align: nil,
+          is_keep_layout: false,
+          is_single_column: true,
+          class: nil,
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "items" end}]
+        })
+
+      assert_class(html, "pa-timeline--single-column")
     end
 
     test "renders align + keep_layout combo" do

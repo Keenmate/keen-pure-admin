@@ -1,0 +1,12 @@
+{
+  "//": "Capability manifest for timeline/1 CONTAINER — keen-pure-admin. See card.map.json for the model. Container-only slice: variant + alternating layout modifiers + item-area slot + class passthrough. Per-item structure (timeline_item/1) is the deferred sub-slice and is NOT mapped here.",
+  "component": "timeline",
+  "features": {
+    "variant":      { "prop": "variant",          "kind": "enum",   "values": ["simple", "alternating", "feed"] },
+    "alignment":    { "prop": "align",             "kind": "enum",   "values": ["start", "end"] },
+    "keepLayout":   { "prop": "is_keep_layout",    "kind": "bool" },
+    "singleColumn": { "prop": "is_single_column",  "kind": "bool" },
+    "body":         { "prop": "inner_block",       "kind": "slot" },
+    "extraClass":   { "prop": "class",             "kind": "string" }
+  }
+}

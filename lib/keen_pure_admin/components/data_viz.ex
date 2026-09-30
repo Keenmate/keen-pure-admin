@@ -36,7 +36,7 @@ defmodule PureAdmin.Components.DataViz do
       {"pa-progress--striped", @is_striped},
       {"pa-progress--animated", @is_animated},
       {"pa-progress--rounded", @is_rounded}
-    ], @class)} {@rest}>
+    ], @class)} role="progressbar" aria-valuenow={@value} aria-valuemin="0" aria-valuemax="100" {@rest}>
       <div class="pa-progress__fill" style={"--value: #{@value}%"}></div>
     </div>
     """

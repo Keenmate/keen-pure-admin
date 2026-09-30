@@ -114,6 +114,22 @@ defmodule PureAdmin.Components.ListTest do
       assert ul =~ ~r/<ul[^>]*class="pa-list"/
     end
 
+    test "list appends class passthrough after pa-list" do
+      html =
+        render_component(&List.list/1, %{
+          as: "div",
+          class: "mb-4",
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "Body" end}]
+        })
+
+      # Container-only contract (markup-fidelity `list` slice): the .pa-list block
+      # ships NO block modifiers, so the only container variability is the tag
+      # (as=) and the class passthrough. Both must land on the shell verbatim.
+      assert_class(html, "pa-list")
+      assert_class(html, "mb-4")
+      assert html =~ "Body"
+    end
+
     test "list_item as=\"li\" emits <li>" do
       li =
         render_component(&List.list_item/1, %{

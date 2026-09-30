@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for list/1 (the .pa-list container) — keen-pure-admin. See card.map.json for the model. CONTAINER-ONLY slice: list/1 renders <.dynamic_tag tag_name={@as}> with class pa-list + class passthrough and a `inner_block` slot. keen additionally offers `as` (div|ul) for the semantic form, but the shared scenarios exercise only the default <div> so both wrappers align; the as=\"ul\" form is verified in keen's own list_test.exs. Per-item structure (list_item/1) is the DEFERRED sub-slice — not mapped here.",
+  "component": "list",
+  "features": {
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

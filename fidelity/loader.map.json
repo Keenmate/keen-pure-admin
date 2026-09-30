@@ -1,0 +1,10 @@
+{
+  "//": "Capability manifest for loader/1 — keen-pure-admin. See card.map.json for the model. SCOPE: advanced loaders (dots|bars|pulse|ring|wave); the rotating spinner is a separate spinner/1. `class` is the extra-class passthrough.",
+  "component": "loader",
+  "features": {
+    "type":  { "prop": "type",  "kind": "enum",   "values": ["dots", "bars", "pulse", "ring", "wave"] },
+    "size":  { "prop": "size",  "kind": "enum",   "values": ["lg"] },
+    "color": { "prop": "color", "kind": "enum",   "values": ["primary", "secondary", "success", "danger", "warning", "info"] },
+    "class": { "prop": "class", "kind": "string" }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for code/1 (inline) — keen-pure-admin. See card.map.json for the model. SCOPE: inline <code> only — the dumper renders PureAdmin.Components.Code.code/1. The headered/block form is code_block/1 (out of scope, dumper not wired to it).",
+  "component": "code",
+  "features": {
+    "content":    { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

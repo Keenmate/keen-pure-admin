@@ -34,6 +34,25 @@ defmodule PureAdmin.Components.DataVizTest do
 
       assert_class(html, "pa-progress--success")
     end
+
+    test "bar carries the progressbar aria contract" do
+      html =
+        render_component(&DataViz.progress/1, %{
+          value: 65,
+          variant: nil,
+          size: nil,
+          is_striped: false,
+          is_animated: false,
+          is_rounded: false,
+          class: nil
+        })
+
+      assert html =~ ~s(role="progressbar")
+      assert html =~ ~s(aria-valuenow="65")
+      assert html =~ ~s(aria-valuemin="0")
+      assert html =~ ~s(aria-valuemax="100")
+      assert html =~ "--value: 65%"
+    end
   end
 
   describe "gauge/1 / sparkline/1 — primary suppressed" do

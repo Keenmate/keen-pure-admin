@@ -76,8 +76,14 @@ defmodule PureAdmin.Components.Loader do
   attr(:rest, :global)
 
   def loader(assigns) do
+    # Colour is an inline `color:` on the wrapper (currentColor), never a modifier
+    # class. Route it through @rest so the attribute is OMITTED when there is no
+    # colour — binding `style={nil}` directly still renders `style=""` in HEEx,
+    # which is a phantom attribute vs the core golden.
+    assigns = assign(assigns, :rest, maybe_put_style(assigns.rest, color_style(assigns.color)))
+
     ~H"""
-    <div class={loader_classes(assigns)} style={color_style(@color)} {@rest}>
+    <div class={loader_classes(assigns)} {@rest}>
       <%= cond do %>
         <% @type == "dots" -> %>
           <span></span><span></span><span></span>
@@ -88,6 +94,9 @@ defmodule PureAdmin.Components.Loader do
     </div>
     """
   end
+
+  defp maybe_put_style(rest, nil), do: rest
+  defp maybe_put_style(rest, style), do: Map.put(rest, :style, style)
 
   # Core themes loaders via `currentColor` on the wrapper, not a modifier class.
   # Map the semantic color name to the matching --pc-* custom property.
