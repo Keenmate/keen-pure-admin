@@ -36,10 +36,24 @@ defmodule PureAdmin.Components.KpiBento do
   slot(:footer)
 
   def kpi_bento(assigns) do
+    # Fold the computed row-height style into :rest only when present, so a nil
+    # row_height emits NO style attribute at all. A bare `style={nil}` renders
+    # as `style=""` in HEEx (unlike class), which drifts from the canonical
+    # snippet + the svelte wrapper (both omit the attribute by default).
+    rest =
+      case bento_style(assigns.row_height) do
+        nil -> assigns.rest
+        style -> Map.put(assigns.rest, :style, style)
+      end
+
+    assigns = assign(assigns, :rest, rest)
+
     ~H"""
-    <div class={build_classes("pa-card", ["pa-kpi-bento"], @class)} style={bento_style(@row_height)} {@rest}>
+    <div class={build_classes("pa-card pa-kpi-bento", [], @class)} {@rest}>
       <div :if={@title_text || @is_live} class="pa-card__header pa-kpi-header">
-        <h3 :if={@title_text}>{@title_text}</h3>
+        <div :if={@title_text} class="pa-card__title">
+          <h3 class="pa-card__title-text">{@title_text}</h3>
+        </div>
         <span :if={@is_live} class="pa-kpi-live">
           <span class="pa-kpi-live__dot"></span>{@live_text}
         </span>

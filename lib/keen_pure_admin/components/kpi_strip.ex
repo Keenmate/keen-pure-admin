@@ -77,7 +77,9 @@ defmodule PureAdmin.Components.KpiStrip do
     ~H"""
     <div class={strip_classes(@no_previous_value, @no_delta_percent, @no_target_bar, @class)} {@rest}>
       <div :if={@title_text || @is_live} class="pa-card__header pa-kpi-header">
-        <h3 :if={@title_text}>{@title_text}</h3>
+        <div :if={@title_text} class="pa-card__title">
+          <h3 class="pa-card__title-text">{@title_text}</h3>
+        </div>
         <span :if={@is_live} class="pa-kpi-live">
           <span class="pa-kpi-live__dot"></span>{@live_text}
         </span>

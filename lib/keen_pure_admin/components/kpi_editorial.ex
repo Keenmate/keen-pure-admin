@@ -47,19 +47,31 @@ defmodule PureAdmin.Components.KpiEditorial do
 
   def kpi_editorial(assigns) do
     layout = if assigns.is_2_columns, do: "2col", else: assigns.grid_layout
-    assigns = assign(assigns, :effective_layout, layout)
+
+    # Fold the cell-min override into the grid's attrs only when present. A bare
+    # `style={nil}` renders as `style=""` in HEEx (unlike class), which drifts
+    # from the svelte wrapper (it omits the attribute when there's no override).
+    # Mirrors range_group/desc_table/loader.
+    grid_attrs = if assigns.cell_min_width, do: [style: grid_style(assigns.cell_min_width)], else: []
+
+    assigns =
+      assigns
+      |> assign(:effective_layout, layout)
+      |> assign(:grid_attrs, grid_attrs)
 
     ~H"""
-    <div class={build_classes("pa-card", ["pa-kpi-edit"], @class)} {@rest}>
+    <div class={build_classes("pa-card", [{"pa-kpi-edit", true}], @class)} {@rest}>
       <div :if={@title_text || @is_live} class="pa-card__header pa-kpi-header">
-        <h3 :if={@title_text}>{@title_text}</h3>
+        <div :if={@title_text} class="pa-card__title">
+          <h3 class="pa-card__title-text">{@title_text}</h3>
+        </div>
         <span :if={@is_live} class="pa-kpi-live">
           <span class="pa-kpi-live__dot"></span>{@live_text}
         </span>
       </div>
 
       <div class="pa-card__body pa-kpi-edit__body">
-        <div class={grid_classes(@effective_layout)} style={grid_style(@cell_min_width)}>
+        <div class={grid_classes(@effective_layout)} {@grid_attrs}>
           {render_slot(@inner_block)}
         </div>
       </div>

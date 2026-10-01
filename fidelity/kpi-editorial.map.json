@@ -1,0 +1,13 @@
+{
+  "//": "Capability manifest for kpi_editorial/1 — keen-pure-admin. CONTAINER-ONLY slice (see accent-grid.map.json / stacked-bar.map.json). Tiles come from the sibling kpi_editorial_tile/1, fed through the required inner_block slot (the dumper renders slot content as plain text), so only the container features are mapped here. `live` → is_live (live_text defaults to 'LIVE', matching svelte's literal). gridLayout is the dash-cased column-cap enum (keen also has an is_2_columns shorthand → same '2col' class, not mapped as a feature). cellMinWidth is the inline --pa-kpi-edit-cell-min density override.",
+  "component": "kpi-editorial",
+  "features": {
+    "titleText":    { "prop": "title_text",     "kind": "string" },
+    "live":         { "prop": "is_live",        "kind": "bool" },
+    "footerText":   { "prop": "footer_text",    "kind": "string" },
+    "gridLayout":   { "prop": "grid_layout",    "kind": "enum", "values": ["2col", "max-2", "max-3", "max-4", "max-5", "max-6"] },
+    "cellMinWidth": { "prop": "cell_min_width", "kind": "string" },
+    "body":         { "prop": "inner_block",    "kind": "slot" },
+    "extraClass":   { "prop": "class",          "kind": "string" }
+  }
+}

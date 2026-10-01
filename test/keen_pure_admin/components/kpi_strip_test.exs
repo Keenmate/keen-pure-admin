@@ -45,4 +45,20 @@ defmodule PureAdmin.Components.KpiStripTest do
       assert_class(html, "pa-kpi-strip__head--num")
     end
   end
+
+  describe "header title uses the canonical card-title shape" do
+    test "title_text renders pa-card__title > h3.pa-card__title-text, not a bare <h3>" do
+      html = render_strip(%{title_text: "Key Performance Indicators"})
+
+      # Canonical card-header shape (matches core snippets/kpi.html + the
+      # card-header canonicalization rule): the title is wrapped in
+      # pa-card__title and the <h3> carries pa-card__title-text.
+      assert_class(html, "pa-card__title")
+      assert_class(html, "pa-card__title-text")
+      assert html =~ ~r{<div class="pa-card__title">\s*<h3 class="pa-card__title-text">Key Performance Indicators</h3>}
+
+      # The legacy bare-<h3> shape must not be emitted.
+      refute html =~ ~r{<h3>Key Performance Indicators</h3>}
+    end
+  end
 end

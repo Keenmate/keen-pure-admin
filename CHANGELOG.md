@@ -121,6 +121,28 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Markup-fidelity sweep #9 — KPI showcases (bento / editorial / strip / sparkline-list)
+  corrected against core.** Same cross-repo harness. Three recurring bugs across the KPI
+  container components: (1) the showcase namespace class (`pa-kpi-bento` / `pa-kpi-edit`) was
+  passed as a bare string into `build_classes/3`'s modifier list, which only keeps `{class, true}`
+  tuples — so the namespace class was **silently dropped and never rendered** (fixed in kpi_bento
+  + kpi_editorial by folding it into the base class). (2) A `style=""` artifact when the optional
+  density/row-height style was nil (HEEx renders `style={nil}` as an empty attribute) — folded into
+  `:rest` only when present (kpi_bento + kpi_editorial). (3) The header title rendered a bare `<h3>`
+  instead of the canonical `pa-card__title` > `h3.pa-card__title-text` card-header shape (fixed in
+  all four: kpi_bento / kpi_editorial / kpi_strip / kpi_sparkline_list). Locked by new/extended
+  unit tests (kpi_bento ×6, kpi_editorial ×5, kpi_strip ×3, kpi_sparkline_list ×3). NOTE: the same
+  dropped-namespace-class pattern likely remains in `kpi_gauge_list` / `kpi_hero` / `kpi_terminal`
+  (not touched this sweep — flagged for a follow-up).
+- **Fidelity tooling #9 (dev-only).** Added `fidelity/*.map.json` capability maps for
+  input / kpi-bento / kpi-strip / kpi-editorial / kpi-sparkline-list and the matching
+  `mix pa.fidelity.dump` clauses (+ `Form`/`KpiBento`/`KpiStrip`/`KpiEditorial`/`KpiSparklineList`
+  aliases). input (flat `pa-input`: size/state/theme-color modifiers + native type/placeholder/
+  disabled/… attrs; field-wrapper chrome deferred) is a full 31/31 compare; the four KPI showcases
+  are container contracts (the per-KPI tile/row blocks come from separate sub-components through a
+  text-only slot → deferred as prose), covering the card chrome + grid/layout modifiers each
+  container emits inline. input needed no keen change (already core-faithful). kpi-bento 9/9,
+  kpi-strip 10/10, kpi-editorial 15/15, kpi-sparkline-list 10/10 — all 0 capability hard failures.
 - **Markup-fidelity sweep #8 — profile aria-label corrected against core.** Same cross-repo
   harness. `profile_panel/1`'s close button carried `aria-label="Close profile"` (lowercase),
   diverging from the oracle snippet and the svelte wrapper, which use Title-Case

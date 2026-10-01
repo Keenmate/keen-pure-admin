@@ -1,0 +1,12 @@
+{
+  "//": "Capability manifest for kpi_bento/1 — keen-pure-admin. SCOPE = the pa-kpi-bento CONTAINER (card shell + header + body/grid + footer) the component emits; the per-KPI tiles come from the sibling kpi_bento_tile/1, fed through the required inner_block slot (dumper renders slot content as plain text), so only container features are mapped here — the .pa-kpi-bento-tile* block is deferred in the oracle fixture. The container has NO block-level modifiers; `layout` is an element modifier on __grid. NOTE: keen's `bento_layout` attr takes underscored values (hero_right/5_tile) but internally dasherizes (_->-), so the oracle's dashed value (hero-right/5-tile) passes through unchanged and produces the same `pa-kpi-bento__grid--{value}` class. `footer` maps to the plain-string `footer_text` attr (not the `footer` slot) so the harness exercises the <span>-wrapped caption shape. The LIVE pill label defaults to 'LIVE' (live_text, unset here). keen's extra `row_height` / `live_text` conveniences are NOT part of the shared oracle container contract and are intentionally omitted.",
+  "component": "kpi-bento",
+  "features": {
+    "title":      { "prop": "title_text",   "kind": "string" },
+    "live":       { "prop": "is_live",      "kind": "bool" },
+    "layout":     { "prop": "bento_layout", "kind": "enum",   "values": ["hero-right", "5-tile"] },
+    "body":       { "prop": "inner_block",  "kind": "slot" },
+    "footer":     { "prop": "footer_text",  "kind": "string" },
+    "extraClass": { "prop": "class",        "kind": "string" }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "//": "Capability manifest for kpi_strip/1 (the .pa-kpi-strip container) — keen-pure-admin (PureAdmin.Components.KpiStrip.kpi_strip/1). CONTAINER + AUTO-HEADER slice: kpi_strip/1 renders a pa-card SHELL (<div class=\"pa-card pa-kpi-strip [--no-*] {class}\" {@rest}>) with an optional header (title_text/is_live), an auto-generated head-row built from the visible columns, an optional footer (footer_text), and an `inner_block` slot for the rows. The DATA ROWS are a SEPARATE component (kpi_strip_row/1) fed through the slot — the dumper passes slot content as plain text, so the per-row __row/__metric/__now/… element classes are the DEFERRED row sub-slice, not mapped here. no_prev/no_delta/no_target are the three column toggles (no_* bools → pa-kpi-strip--no-*); title/live/footer/no_header toggle structural shell parts.",
+  "component": "kpi-strip",
+  "features": {
+    "noPrev":     { "prop": "no_previous_value", "kind": "bool" },
+    "noDelta":    { "prop": "no_delta_percent",  "kind": "bool" },
+    "noTarget":   { "prop": "no_target_bar",     "kind": "bool" },
+    "title":      { "prop": "title_text",        "kind": "string" },
+    "live":       { "prop": "is_live",           "kind": "bool" },
+    "footer":     { "prop": "footer_text",       "kind": "string" },
+    "noHeader":   { "prop": "no_header",         "kind": "bool" },
+    "body":       { "prop": "inner_block",       "kind": "slot" },
+    "extraClass": { "prop": "class",             "kind": "string" }
+  }
+}
