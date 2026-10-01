@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for loader_center/1 — keen-pure-admin. See list.map.json for the container model. CONTAINER-ONLY slice: a flex-centering wrapper with an inner_block slot + class passthrough.",
+  "component": "loader-center",
+  "features": {
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

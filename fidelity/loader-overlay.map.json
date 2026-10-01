@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for loader_overlay/1 — keen-pure-admin. See list.map.json for the container model. CONTAINER-ONLY slice: an absolutely-positioned backdrop overlay with an inner_block slot + class passthrough. keen falls back to a <.spinner /> when the slot is truly absent (verified in loader_test.exs); the harness always passes a slot so the fallback never fires in the shared goldens.",
+  "component": "loader-overlay",
+  "features": {
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

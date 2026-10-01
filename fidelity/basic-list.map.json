@@ -1,0 +1,15 @@
+{
+  "//": "Capability manifest for basic_list/1 — keen-pure-admin. See list.map.json for the container model. CONTAINER-ONLY slice of the styled <ul> pa-list-basic; item <li>s flow through the inner_block slot. iconVariant is coupled to has_icon (see the fixture).",
+  "component": "basic-list",
+  "features": {
+    "spacing":     { "prop": "spacing",      "kind": "enum",   "values": ["compact", "spacious"] },
+    "unstyled":    { "prop": "is_unstyled",  "kind": "bool" },
+    "inline":      { "prop": "is_inline",    "kind": "bool" },
+    "bordered":    { "prop": "is_bordered",  "kind": "bool" },
+    "striped":     { "prop": "is_striped",   "kind": "bool" },
+    "hasIcon":     { "prop": "has_icon",     "kind": "bool" },
+    "iconVariant": { "prop": "icon_variant", "kind": "enum",   "values": ["success", "danger", "info", "warning"] },
+    "body":        { "prop": "inner_block",  "kind": "slot" },
+    "extraClass":  { "prop": "class",        "kind": "string" }
+  }
+}

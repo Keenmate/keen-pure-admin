@@ -56,6 +56,71 @@ defmodule PureAdmin.Components.ListTest do
       assert_class(html, "pa-list-basic--bordered")
       assert_class(html, "pa-list-basic--striped")
     end
+
+    # Locks the harness fixture fidelity/fixtures/basic-list.json — the
+    # icon-variant coupling (emit pa-list-basic--{variant} only with has_icon
+    # AND variant != success; success is the default ✓ with NO class).
+    test "has_icon default success → only --icon, no phantom --success" do
+      html =
+        render_component(&List.basic_list/1, %{
+          has_icon: true,
+          icon_variant: "success",
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "<li>Item</li>" end}]
+        })
+
+      assert_class(html, "pa-list-basic--icon")
+      refute_class(html, "pa-list-basic--success")
+    end
+
+    test "has_icon + danger emits --icon AND --danger" do
+      html =
+        render_component(&List.basic_list/1, %{
+          has_icon: true,
+          icon_variant: "danger",
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "<li>Item</li>" end}]
+        })
+
+      assert_class(html, "pa-list-basic--icon")
+      assert_class(html, "pa-list-basic--danger")
+    end
+
+    test "icon_variant without has_icon emits NO variant class (pseudo needs --icon)" do
+      html =
+        render_component(&List.basic_list/1, %{
+          has_icon: false,
+          icon_variant: "danger",
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "<li>Item</li>" end}]
+        })
+
+      refute_class(html, "pa-list-basic--icon")
+      refute_class(html, "pa-list-basic--danger")
+    end
+  end
+
+  describe "ordered_list/1 — markup-fidelity contract (core = oracle)" do
+    # Locks the harness fixture fidelity/fixtures/ordered-list.json.
+    test "default numeric emits the bare <ol> with no style modifier" do
+      html =
+        render_component(&List.ordered_list/1, %{
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "<li>Step</li>" end}]
+        })
+
+      assert html =~ ~r/<ol[^>]*class="pa-list-ordered"/
+      refute_class(html, "pa-list-ordered--roman")
+      refute_class(html, "pa-list-ordered--alpha")
+    end
+
+    test "style=roman / style=alpha emit their modifier" do
+      for style <- ["roman", "alpha"] do
+        html =
+          render_component(&List.ordered_list/1, %{
+            style: style,
+            inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "<li>Step</li>" end}]
+          })
+
+        assert_class(html, "pa-list-ordered--#{style}")
+      end
+    end
   end
 
   describe "list_item/1" do

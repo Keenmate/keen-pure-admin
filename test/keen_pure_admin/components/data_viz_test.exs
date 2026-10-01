@@ -233,4 +233,86 @@ defmodule PureAdmin.Components.DataVizTest do
       assert_class(html, "pa-stacked-bar--lg")
     end
   end
+
+  describe "progress_ring/1 — markup-fidelity contract (core = oracle)" do
+    # Locks the harness fixture fidelity/fixtures/progress-ring.json.
+    test "variant=primary emits no --primary class (base ring fill is accent)" do
+      html = render_component(&DataViz.progress_ring/1, %{value: 65, variant: "primary", label: "CPU"})
+
+      assert_class(html, "pa-progress-ring")
+      refute_class(html, "pa-progress-ring--primary")
+    end
+
+    test "semantic variant still emits its class" do
+      html = render_component(&DataViz.progress_ring/1, %{value: 94, variant: "success"})
+
+      assert_class(html, "pa-progress-ring--success")
+    end
+
+    test "value sets a UNITLESS --value inline style (SCSS multiplies by 3.6deg)" do
+      html = render_component(&DataViz.progress_ring/1, %{value: 72})
+
+      # Unitless — NOT `--value: 72%` (that is pa-progress's fill convention).
+      assert html =~ "--value: 72"
+      refute html =~ "--value: 72%"
+    end
+
+    test "value auto-derives the __value text as N%; label fills __label" do
+      html = render_component(&DataViz.progress_ring/1, %{value: 43, label: "Net"})
+
+      assert html =~ ~r/pa-progress-ring__value[^>]*>43%/
+      assert html =~ ~r/pa-progress-ring__label[^>]*>Net/
+    end
+
+    test "no label → no __label span" do
+      html = render_component(&DataViz.progress_ring/1, %{value: 65})
+
+      refute_class(html, "pa-progress-ring__label")
+    end
+  end
+
+  describe "progress_group/1 — markup-fidelity contract (core = oracle)" do
+    # Locks the harness fixture fidelity/fixtures/progress-group.json and the
+    # slot-override behaviour that aligns keen with svelte's <ProgressGroup>.
+    test "auto-bar fallback: no slot → inlines a self-contained pa-progress bar" do
+      html = render_component(&DataViz.progress_group/1, %{label: "Storage", value: 65})
+
+      assert_class(html, "pa-progress-group")
+      assert html =~ ~r/pa-progress__label-value[^>]*>65%/
+      # Fallback builds the full bar from `value`.
+      assert_class(html, "pa-progress")
+      assert_class(html, "pa-progress__fill")
+      assert html =~ "--value: 65%"
+    end
+
+    test "slot override: a bar slot REPLACES the auto-built pa-progress bar" do
+      html =
+        render_component(&DataViz.progress_group/1, %{
+          label: "Breakdown",
+          value: 75,
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "<div class=\"pa-stacked-bar\"></div>" end}]
+        })
+
+      assert_class(html, "pa-progress-group")
+      # Label row still emitted…
+      assert html =~ ~r/pa-progress__label-value[^>]*>75%/
+      # …but the slotted bar wins — no auto pa-progress__fill.
+      assert html =~ "pa-stacked-bar"
+      refute_class(html, "pa-progress__fill")
+    end
+
+    test "empty-but-present slot suppresses the auto-bar, leaving the shell only" do
+      # This is the exact shape the fidelity harness diffs (shared shell golden).
+      html =
+        render_component(&DataViz.progress_group/1, %{
+          label: "CPU",
+          value: 42,
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "" end}]
+        })
+
+      assert_class(html, "pa-progress-group")
+      assert_class(html, "pa-progress__label")
+      refute_class(html, "pa-progress__fill")
+    end
+  end
 end

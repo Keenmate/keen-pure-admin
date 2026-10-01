@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for table_container/1 — keen-pure-admin. Maps each NEUTRAL feature to this wrapper's assign/kind. CONTAINER-ONLY (see table-container.json): scenarios set no is_panel/title/actions, so table_container/1 emits the bare card-less wrapper; the inner table rides inner_block. The deprecated panel form is out of scope.",
+  "component": "table-container",
+  "features": {
+    "content":    { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

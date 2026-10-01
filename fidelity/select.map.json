@@ -1,0 +1,15 @@
+{
+  "//": "Capability manifest for select/1 (the .pa-select control) — keen-pure-admin. select/1 renders <select name id class={select_classes} {@rest}> with a prompt option + options_for_select(@options, @value) inside. Size + state(→validation) + themeColor(→color) are the class axes. disabled/required/multiple ride in :global :rest with STRING keys (maybe_put drops nil/false). color is nativeType string. The option children (`options` list + `prompt`) are OUT OF SCOPE (API-divergent from svelte's children snippet) — not mapped, so options default [] and every scenario renders the empty select.",
+  "component": "select",
+  "features": {
+    "size":        { "prop": "size",   "kind": "enum", "values": ["xs", "sm", "lg", "xl"] },
+    "state":       { "prop": "validation", "kind": "enum", "values": ["success", "warning", "error"] },
+    "themeColor":  { "prop": "color",  "kind": "enum", "values": ["1","2","3","4","5","6","7","8","9"], "nativeType": "string" },
+    "name":        { "prop": "name",   "kind": "string" },
+    "id":          { "prop": "id",     "kind": "string" },
+    "disabled":    { "prop": "disabled", "kind": "bool", "channel": "rest" },
+    "required":    { "prop": "required", "kind": "bool", "channel": "rest" },
+    "multiple":    { "prop": "multiple", "kind": "bool", "channel": "rest" },
+    "extraClass":  { "prop": "class",  "kind": "string" }
+  }
+}

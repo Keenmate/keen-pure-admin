@@ -1,0 +1,11 @@
+{
+  "//": "Capability manifest for code_block/1 — keen-pure-admin. Maps each NEUTRAL feature to this wrapper's assign/kind. Scenarios set no filename/copy_text, so code_block/1 emits the bare <pre class=\"pa-code …\"> form (the headered pa-code-block form is deferred — see code-block.json). language passes through for the seven core-accented languages.",
+  "component": "code-block",
+  "features": {
+    "language":   { "prop": "language",    "kind": "enum", "values": ["javascript", "json", "html", "css", "bash", "sql", "python"] },
+    "compact":    { "prop": "is_compact",  "kind": "bool" },
+    "numbered":   { "prop": "is_numbered", "kind": "bool" },
+    "extraClass": { "prop": "class",       "kind": "string" },
+    "content":    { "prop": "inner_block", "kind": "slot" }
+  }
+}

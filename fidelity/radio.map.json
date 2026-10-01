@@ -1,0 +1,14 @@
+{
+  "//": "Capability manifest for radio/1 (the .pa-radio control) — keen-pure-admin. radio/1 renders <label class={radio_classes}><input type=radio name id value checked {@rest}/><span pa-radio__label>{@label}</span></label>. `value` is a REQUIRED attr — every scenario supplies it (else the generic dumper KeyErrors). size→--{size}, labelPosition→label_position(→--label-{pos}). label text prop is `label`. name is a declared attr; disabled/required ride in :global :rest (maybe_put drops nil/false). CHECKED not modeled (keen takes a boolean but svelte can't via single prop); id out of scope (svelte lacks it).",
+  "component": "radio",
+  "features": {
+    "size":          { "prop": "size",           "kind": "enum", "values": ["xs", "sm", "lg", "xl"] },
+    "labelPosition": { "prop": "label_position", "kind": "enum", "values": ["end", "start", "top"] },
+    "label":         { "prop": "label",           "kind": "string" },
+    "name":          { "prop": "name",            "kind": "string" },
+    "value":         { "prop": "value",           "kind": "string" },
+    "disabled":      { "prop": "disabled",         "kind": "bool", "channel": "rest" },
+    "required":      { "prop": "required",         "kind": "bool", "channel": "rest" },
+    "extraClass":    { "prop": "class",           "kind": "string" }
+  }
+}

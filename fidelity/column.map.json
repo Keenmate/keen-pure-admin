@@ -1,0 +1,17 @@
+{
+  "//": "Capability manifest for column/1 — keen-pure-admin. See grid.map.json for the sibling row. column/1 renders `<div class=\"pc-col-{size} …\">` (bare `pc-col` when no size/responsive is set) with responsive sm/md/lg/xl sizes, a base offset, three flex modifiers (is_no_padding/is_grow/is_shrink), a class passthrough, and an inner_block slot. `size` values are strings (percentages/fractions/auto).",
+  "component": "column",
+  "features": {
+    "size":       { "prop": "size",          "kind": "enum", "nativeType": "string", "values": ["auto", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100", "1-2", "1-3", "2-3", "1-4", "3-4", "1-5", "2-5", "3-5", "4-5", "1-6", "5-6", "1-12", "5-12", "7-12", "11-12"] },
+    "sm":         { "prop": "sm",            "kind": "enum", "nativeType": "string", "values": ["auto", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100", "1-2", "1-3", "2-3", "1-4", "3-4", "1-5", "2-5", "3-5", "4-5", "1-6", "5-6", "1-12", "5-12", "7-12", "11-12"] },
+    "md":         { "prop": "md",            "kind": "enum", "nativeType": "string", "values": ["auto", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100", "1-2", "1-3", "2-3", "1-4", "3-4", "1-5", "2-5", "3-5", "4-5", "1-6", "5-6", "1-12", "5-12", "7-12", "11-12"] },
+    "lg":         { "prop": "lg",            "kind": "enum", "nativeType": "string", "values": ["auto", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100", "1-2", "1-3", "2-3", "1-4", "3-4", "1-5", "2-5", "3-5", "4-5", "1-6", "5-6", "1-12", "5-12", "7-12", "11-12"] },
+    "xl":         { "prop": "xl",            "kind": "enum", "nativeType": "string", "values": ["auto", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100", "1-2", "1-3", "2-3", "1-4", "3-4", "1-5", "2-5", "3-5", "4-5", "1-6", "5-6", "1-12", "5-12", "7-12", "11-12"] },
+    "offset":     { "prop": "offset",        "kind": "enum", "nativeType": "string", "values": ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95"] },
+    "noPadding":  { "prop": "is_no_padding", "kind": "bool" },
+    "grow":       { "prop": "is_grow",       "kind": "bool" },
+    "shrink":     { "prop": "is_shrink",     "kind": "bool" },
+    "body":       { "prop": "inner_block",   "kind": "slot" },
+    "extraClass": { "prop": "class",         "kind": "string" }
+  }
+}

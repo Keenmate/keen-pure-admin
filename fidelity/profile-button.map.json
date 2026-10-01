@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for profile_button/1 (the .pc-navbar__profile-btn trigger) — keen-pure-admin. profile_button/1 renders <button class=\"pc-navbar__profile-btn {class}\" aria-label=\"User Profile\"> with a .pa-btn__icon wrapper (default .pa-icon.pa-icon--user, or the `:icon` slot) and a .pc-navbar__profile-name span when `name` is set. Shared SSR features: the name string (→ name span) + the root class passthrough. The custom `:icon` slot is a shared slot, defaulted in the goldens.",
+  "component": "profile-button",
+  "features": {
+    "name":       { "prop": "name",  "kind": "string" },
+    "extraClass": { "prop": "class", "kind": "string" }
+  }
+}

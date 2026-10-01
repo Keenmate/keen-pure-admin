@@ -1,0 +1,10 @@
+{
+  "//": "Capability manifest for pa_link/1 — keen-pure-admin. See button.map.json (href/target + channel:rest) for the model. pa_link/1 renders `<a class=\"pa-link …\" href>` with a children slot; `target` rides in the :global :rest map (pa_link's :rest declares include: ~w(navigate patch target)). `href` runs through safe_url and is always present (defaults to \"#\").",
+  "component": "link",
+  "features": {
+    "href":       { "prop": "href",        "kind": "string" },
+    "target":     { "prop": "target",      "kind": "enum",   "values": ["_blank", "_self", "_parent", "_top"], "channel": "rest" },
+    "content":    { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",        "kind": "string" }
+  }
+}

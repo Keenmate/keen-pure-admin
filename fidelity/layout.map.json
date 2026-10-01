@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for layout/1 (the .pc-layout wrapper) — keen-pure-admin. See footer.map.json / main.map.json for the model. layout/1 is a fixed <div class=\"pc-layout {class}\"> wrapper around its `inner_block`; the inner/content/sidebar/main/footer structure comes from SEPARATE sub-components fed through the slot (container-only). Width constraints (pc-container-*) and the pc-layout--sticky mode are BODY-level classes, not attrs of this component. Shared SSR features: the body slot + the root class passthrough.",
+  "component": "layout",
+  "features": {
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

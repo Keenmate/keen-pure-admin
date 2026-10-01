@@ -57,6 +57,9 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   alias PureAdmin.Components.Navigation
   alias PureAdmin.Components.KpiGaugeList
   alias PureAdmin.Components.KpiHero
+  alias PureAdmin.Components.Typography
+  alias PureAdmin.Components.Grid
+  alias PureAdmin.Components.Responsive
   # NOTE: PureAdmin.Components.Code / .List are NOT aliased — they'd shadow the
   # built-in Elixir `Code` / `List` modules (the task uses `List.first/1`).
   # Their render/meta clauses use the fully-qualified module name instead.
@@ -144,6 +147,50 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp render(assigns, "tabs"), do: render_component(&Navigation.tabs/1, assigns)
   defp render(assigns, "kpi-gauge-list"), do: render_component(&KpiGaugeList.kpi_gauge_list/1, assigns)
   defp render(assigns, "kpi-hero"), do: render_component(&KpiHero.kpi_hero_list/1, assigns)
+  # Batch 12 (finish) — form family
+  defp render(assigns, "textarea"), do: render_component(&Form.textarea/1, assigns)
+  defp render(assigns, "select"), do: render_component(&Form.select/1, assigns)
+  defp render(assigns, "checkbox"), do: render_component(&Form.checkbox/1, assigns)
+  defp render(assigns, "radio"), do: render_component(&Form.radio/1, assigns)
+  defp render(assigns, "form-group"), do: render_component(&Form.form_group/1, assigns)
+  defp render(assigns, "form-label"), do: render_component(&Form.form_label/1, assigns)
+  defp render(assigns, "form-help"), do: render_component(&Form.form_help/1, assigns)
+  defp render(assigns, "input-group"), do: render_component(&Form.input_group/1, assigns)
+  defp render(assigns, "checkbox-group"), do: render_component(&Form.checkbox_group/1, assigns)
+  defp render(assigns, "radio-group"), do: render_component(&Form.radio_group/1, assigns)
+  # Batch 12 — layout/shell family
+  defp render(assigns, "app-header"), do: render_component(&Layout.app_header/1, assigns)
+  defp render(assigns, "page-header"), do: render_component(&Layout.page_header/1, assigns)
+  defp render(assigns, "main"), do: render_component(&Layout.main/1, assigns)
+  defp render(assigns, "divider"), do: render_component(&Layout.divider/1, assigns)
+  defp render(assigns, "layout"), do: render_component(&Layout.layout/1, assigns)
+  defp render(assigns, "nav-menu"), do: render_component(&Layout.nav_menu/1, assigns)
+  defp render(assigns, "nav-dropdown"), do: render_component(&Layout.nav_dropdown/1, assigns)
+  defp render(assigns, "notifications"), do: render_component(&Layout.notifications/1, assigns)
+  defp render(assigns, "profile-button"), do: render_component(&Layout.profile_button/1, assigns)
+  defp render(assigns, "sidebar-search"), do: render_component(&Layout.sidebar_search/1, assigns)
+  # Batch 12 — grid / typography / list / loader / data-viz / misc
+  defp render(assigns, "grid"), do: render_component(&Grid.grid/1, assigns)
+  defp render(assigns, "column"), do: render_component(&Grid.column/1, assigns)
+  defp render(assigns, "heading"), do: render_component(&Typography.heading/1, assigns)
+  defp render(assigns, "paragraph"), do: render_component(&Typography.paragraph/1, assigns)
+  defp render(assigns, "text"), do: render_component(&Typography.text/1, assigns)
+  defp render(assigns, "link"), do: render_component(&Typography.pa_link/1, assigns)
+  defp render(assigns, "basic-list"), do: render_component(&PureAdmin.Components.List.basic_list/1, assigns)
+  defp render(assigns, "ordered-list"), do: render_component(&PureAdmin.Components.List.ordered_list/1, assigns)
+  defp render(assigns, "spinner"), do: render_component(&Loader.spinner/1, assigns)
+  defp render(assigns, "loader-center"), do: render_component(&Loader.loader_center/1, assigns)
+  defp render(assigns, "loader-overlay"), do: render_component(&Loader.loader_overlay/1, assigns)
+  defp render(assigns, "progress-group"), do: render_component(&DataViz.progress_group/1, assigns)
+  defp render(assigns, "progress-ring"), do: render_component(&DataViz.progress_ring/1, assigns)
+  defp render(assigns, "button-group"), do: render_component(&Button.button_group/1, assigns)
+  defp render(assigns, "split-button"), do: render_component(&Button.split_button/1, assigns)
+  defp render(assigns, "badge-group"), do: render_component(&Badge.badge_group/1, assigns)
+  defp render(assigns, "code-block"), do: render_component(&PureAdmin.Components.Code.code_block/1, assigns)
+  defp render(assigns, "load-more"), do: render_component(&Pager.load_more/1, assigns)
+  defp render(assigns, "table-container"), do: render_component(&Table.table_container/1, assigns)
+  defp render(assigns, "popover"), do: render_component(&Tooltip.popover/1, assigns)
+  defp render(assigns, "breakpoint-container"), do: render_component(&Responsive.breakpoint_container/1, assigns)
   # Fragment fixtures — sub-components tested in isolation. (keen has no
   # card_tab_content counterpart — that fragment is svelte-only.)
   defp render(assigns, "card-tab"), do: render_component(&Card.card_tab/1, assigns)
@@ -201,6 +248,47 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("tabs"), do: PureAdmin.Components.Navigation.__components__()[:tabs]
   defp meta("kpi-gauge-list"), do: PureAdmin.Components.KpiGaugeList.__components__()[:kpi_gauge_list]
   defp meta("kpi-hero"), do: PureAdmin.Components.KpiHero.__components__()[:kpi_hero_list]
+  defp meta("textarea"), do: PureAdmin.Components.Form.__components__()[:textarea]
+  defp meta("select"), do: PureAdmin.Components.Form.__components__()[:select]
+  defp meta("checkbox"), do: PureAdmin.Components.Form.__components__()[:checkbox]
+  defp meta("radio"), do: PureAdmin.Components.Form.__components__()[:radio]
+  defp meta("form-group"), do: PureAdmin.Components.Form.__components__()[:form_group]
+  defp meta("form-label"), do: PureAdmin.Components.Form.__components__()[:form_label]
+  defp meta("form-help"), do: PureAdmin.Components.Form.__components__()[:form_help]
+  defp meta("input-group"), do: PureAdmin.Components.Form.__components__()[:input_group]
+  defp meta("checkbox-group"), do: PureAdmin.Components.Form.__components__()[:checkbox_group]
+  defp meta("radio-group"), do: PureAdmin.Components.Form.__components__()[:radio_group]
+  defp meta("app-header"), do: PureAdmin.Components.Layout.__components__()[:app_header]
+  defp meta("page-header"), do: PureAdmin.Components.Layout.__components__()[:page_header]
+  defp meta("main"), do: PureAdmin.Components.Layout.__components__()[:main]
+  defp meta("divider"), do: PureAdmin.Components.Layout.__components__()[:divider]
+  defp meta("layout"), do: PureAdmin.Components.Layout.__components__()[:layout]
+  defp meta("nav-menu"), do: PureAdmin.Components.Layout.__components__()[:nav_menu]
+  defp meta("nav-dropdown"), do: PureAdmin.Components.Layout.__components__()[:nav_dropdown]
+  defp meta("notifications"), do: PureAdmin.Components.Layout.__components__()[:notifications]
+  defp meta("profile-button"), do: PureAdmin.Components.Layout.__components__()[:profile_button]
+  defp meta("sidebar-search"), do: PureAdmin.Components.Layout.__components__()[:sidebar_search]
+  defp meta("grid"), do: PureAdmin.Components.Grid.__components__()[:grid]
+  defp meta("column"), do: PureAdmin.Components.Grid.__components__()[:column]
+  defp meta("heading"), do: PureAdmin.Components.Typography.__components__()[:heading]
+  defp meta("paragraph"), do: PureAdmin.Components.Typography.__components__()[:paragraph]
+  defp meta("text"), do: PureAdmin.Components.Typography.__components__()[:text]
+  defp meta("link"), do: PureAdmin.Components.Typography.__components__()[:pa_link]
+  defp meta("basic-list"), do: PureAdmin.Components.List.__components__()[:basic_list]
+  defp meta("ordered-list"), do: PureAdmin.Components.List.__components__()[:ordered_list]
+  defp meta("spinner"), do: PureAdmin.Components.Loader.__components__()[:spinner]
+  defp meta("loader-center"), do: PureAdmin.Components.Loader.__components__()[:loader_center]
+  defp meta("loader-overlay"), do: PureAdmin.Components.Loader.__components__()[:loader_overlay]
+  defp meta("progress-group"), do: PureAdmin.Components.DataViz.__components__()[:progress_group]
+  defp meta("progress-ring"), do: PureAdmin.Components.DataViz.__components__()[:progress_ring]
+  defp meta("button-group"), do: PureAdmin.Components.Button.__components__()[:button_group]
+  defp meta("split-button"), do: PureAdmin.Components.Button.__components__()[:split_button]
+  defp meta("badge-group"), do: PureAdmin.Components.Badge.__components__()[:badge_group]
+  defp meta("code-block"), do: PureAdmin.Components.Code.__components__()[:code_block]
+  defp meta("load-more"), do: PureAdmin.Components.Pager.__components__()[:load_more]
+  defp meta("table-container"), do: PureAdmin.Components.Table.__components__()[:table_container]
+  defp meta("popover"), do: PureAdmin.Components.Tooltip.__components__()[:popover]
+  defp meta("breakpoint-container"), do: PureAdmin.Components.Responsive.__components__()[:breakpoint_container]
   defp meta("card-tab"), do: PureAdmin.Components.Card.__components__()[:card_tab]
   defp meta("list-item"), do: PureAdmin.Components.List.__components__()[:list_item]
   defp meta("timeline-item"), do: PureAdmin.Components.Timeline.__components__()[:timeline_item]

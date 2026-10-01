@@ -51,4 +51,36 @@ defmodule PureAdmin.Components.PagerTest do
       assert :binary.match(html, "pa-pager__controls") < :binary.match(html, "pa-pager__info")
     end
   end
+
+  describe "load_more/1 loading state" do
+    defp render_load_more(overrides) do
+      base = %{
+        is_loading: false,
+        count: nil,
+        align: nil,
+        class: nil,
+        rest: %{},
+        inner_block: [
+          %{__slot__: :inner_block, inner_block: fn _, _ -> "Load More" end}
+        ]
+      }
+
+      render_component(&Pager.load_more/1, Map.merge(base, overrides))
+    end
+
+    test "loading button carries the --loading modifier AND the native disabled attr" do
+      html = render_load_more(%{is_loading: true})
+      assert_class(html, "pa-load-more__button--loading")
+      assert_class(html, "pa-load-more__spinner")
+      # Markup-fidelity: a loading load-more button must be non-interactive
+      # (matches svelte-pure-admin + the button 'loading ⇒ disabled' convention).
+      assert html =~ ~r/<button[^>]*\sdisabled/
+    end
+
+    test "non-loading button is NOT disabled" do
+      html = render_load_more(%{is_loading: false})
+      refute html =~ ~r/<button[^>]*\sdisabled/
+      refute html =~ "pa-load-more__button--loading"
+    end
+  end
 end

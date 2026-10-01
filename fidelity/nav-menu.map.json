@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for nav_menu/1 (the .pc-navmenu container) — keen-pure-admin. See layout.map.json / footer.map.json for the model. nav_menu/1 renders <nav class=\"pc-navmenu {class}\"><ul>{inner_block}</ul></nav>; with `collapse` set it forces a generated id + the PureAdminNavFitCollapse hook + phx-update=ignore + data-pc-fit-nav*, so collapse is capability-only (not strict-compared — the generated id can't reconcile with svelte's id-free SSR). Items come from nav_item/nav_dropdown sub-components (container-only). Shared SSR features: the items slot, the collapse capability (menu|sidebar), the root class passthrough.",
+  "component": "nav-menu",
+  "features": {
+    "items":      { "prop": "inner_block", "kind": "slot" },
+    "collapse":   { "prop": "collapse",    "kind": "enum", "values": ["menu", "sidebar"] },
+    "extraClass": { "prop": "class",        "kind": "string" }
+  }
+}

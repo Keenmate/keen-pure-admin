@@ -388,7 +388,7 @@ defmodule PureAdmin.Components.Form do
       class={checkbox_classes(assigns)}
       id={@hook_id}
       phx-hook={if @is_indeterminate, do: "PureAdminCheckbox"}
-      data-indeterminate={to_string(@is_indeterminate)}
+      data-indeterminate={if @is_indeterminate, do: "true"}
     >
       <input type="checkbox" name={@name} id={@id} value={@value} checked={@checked} disabled={@disabled} {@rest} />
       <span class="pa-checkbox__box"></span>
@@ -521,8 +521,11 @@ defmodule PureAdmin.Components.Form do
   attr(:is_required, :boolean,
     default: false,
     doc:
-      "Deprecated no-op. Mark the control with the native `required` attribute instead — " <>
-        "core renders the required asterisk on the group's label automatically."
+      "Emits `pa-form-group--required` — the escape hatch for NON-native widgets " <>
+        "(custom selects, image browsers, web components) that have no `:required` " <>
+        "descendant for core's `:has(:required) > label::after` auto-asterisk. For a " <>
+        "native control, prefer the native `required` attribute on the input instead " <>
+        "(the marker then appears for free)."
   )
 
   attr(:is_horizontal, :boolean, default: false)
@@ -550,13 +553,16 @@ defmodule PureAdmin.Components.Form do
 
   defp form_group_classes(assigns) do
     # A <label> inside `.pa-form .pa-form-group` is auto-styled by core — there
-    # is NO `.pa-form-label` class (snippets/forms.html). And core defines no
-    # `.pa-form-group--required` rule; use the native `required` attr on the
-    # control instead. Only validation + horizontal are real modifiers.
+    # is NO `.pa-form-label` class (snippets/forms.html). `pa-form-group--required`
+    # IS a live core rule (the escape hatch for non-native widgets — forms.html:
+    # REQUIRED FIELDS §2); emit it when `is_required` is set. Native controls
+    # should still prefer the native `required` attr so the auto-asterisk fires
+    # without the class.
     build_classes(
       "pa-form-group",
       [
         {"pa-form-group--#{assigns.validation}", assigns.validation != nil},
+        {"pa-form-group--required", assigns.is_required},
         {"pa-form-group--horizontal", assigns.is_horizontal}
       ],
       assigns.class

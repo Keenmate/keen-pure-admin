@@ -27,7 +27,7 @@ defmodule PureAdmin.Components.Grid do
   attr(:is_no_gutter, :boolean, default: false)
   attr(:is_same_height, :boolean, default: false)
   attr(:align, :string, default: nil, values: [nil, "center", "end", "between", "around", "stretch"])
-  attr(:valign, :string, default: nil, values: [nil, "top", "middle", "bottom"])
+  attr(:valign, :string, default: nil, values: [nil, "top", "middle", "bottom", "stretch"])
   attr(:class, :string, default: nil)
   attr(:rest, :global)
   slot(:inner_block, required: true)
@@ -102,7 +102,10 @@ defmodule PureAdmin.Components.Grid do
         assigns.is_shrink && "pc-col--shrink",
         assigns.class
       ]
-      |> Enum.reject(&is_nil/1)
+      # Reject nil AND false — `cond && "class"` yields `false` when the flag is
+      # off, which would otherwise join into the class string as the literal
+      # "false".
+      |> Enum.filter(&is_binary/1)
       |> Enum.join(" ")
 
     if classes == "", do: "pc-col", else: classes

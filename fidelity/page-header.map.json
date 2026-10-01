@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for page_header/1 (the .pc-page-header title block) — keen-pure-admin. See section.map.json / app-header.map.json for the model. page_header/1 is a fixed <div class=\"pc-page-header {class}\"> wrapper around its `inner_block` (usually an <h2>). No modifiers, no fallback, no hook. Shared SSR features: the title slot + the root class passthrough.",
+  "component": "page-header",
+  "features": {
+    "title":      { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "//": "Capability manifest for divider/1 (a bare <hr>) — keen-pure-admin. divider/1 emits a bare <hr class={@class}> with NO base class — core defines none for a standalone rule (`.pa-divider` is a phantom, absent from main.css/snippets/themes; keen used to stamp it — dropped as a wrapper bug in this slice). The only feature is the class passthrough.",
+  "component": "divider",
+  "features": {
+    "extraClass": { "prop": "class", "kind": "string" }
+  }
+}

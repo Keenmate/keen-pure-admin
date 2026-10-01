@@ -77,5 +77,55 @@ defmodule PureAdmin.Components.LoaderTest do
       assert_class(html, "pa-spinner--xs")
       assert_class(html, "pa-spinner--success")
     end
+
+    # Locks the harness fixture fidelity/fixtures/spinner.json.
+    test "bare spinner is an empty pa-spinner <div> with no children" do
+      html = render_component(&Loader.spinner/1, %{})
+
+      assert_class(html, "pa-spinner")
+      refute html =~ "<span"
+    end
+
+    test "every colour variant emits its real pa-spinner--{variant} class" do
+      for v <- ["primary", "secondary", "success", "danger", "warning", "info"] do
+        html = render_component(&Loader.spinner/1, %{variant: v})
+        assert_class(html, "pa-spinner--#{v}")
+      end
+    end
+  end
+
+  describe "loader_center/1 — markup-fidelity contract (core = oracle)" do
+    # Locks the harness fixture fidelity/fixtures/loader-center.json.
+    test "renders the bare pa-loader-center container around its slot" do
+      html =
+        render_component(&Loader.loader_center/1, %{
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "X" end}]
+        })
+
+      assert html =~ ~r/<div[^>]*class="pa-loader-center"/
+      assert html =~ "X"
+    end
+  end
+
+  describe "loader_overlay/1 — markup-fidelity contract (core = oracle)" do
+    # Locks the harness fixture fidelity/fixtures/loader-overlay.json, incl. the
+    # keen-only spinner fallback when the slot is truly ABSENT (the harness always
+    # passes a slot, so the shared goldens never exercise the fallback).
+    test "renders the pa-loader-overlay container around its slot" do
+      html =
+        render_component(&Loader.loader_overlay/1, %{
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "X" end}]
+        })
+
+      assert html =~ ~r/<div[^>]*class="pa-loader-overlay"/
+      assert html =~ "X"
+    end
+
+    test "absent slot falls back to a <.spinner /> (keen-only convenience)" do
+      html = render_component(&Loader.loader_overlay/1, %{inner_block: []})
+
+      assert_class(html, "pa-loader-overlay")
+      assert_class(html, "pa-spinner")
+    end
   end
 end

@@ -1,0 +1,12 @@
+{
+  "//": "Capability manifest for breakpoint_container/1 — keen-pure-admin. Maps each NEUTRAL feature to this wrapper's assign/kind. CAPABILITY-ONLY fixture (see breakpoint-container.json): the component is class-less and the SSR shells are irreconcilable (keen configures the engine via data-attributes + inline FOUC style; svelte via a JS observer at mount), so only axis-2 completeness is enforced. steps + id are required by keen; the map declares the neutral features it exposes.",
+  "component": "breakpoint-container",
+  "features": {
+    "steps":      { "prop": "steps",   "kind": "map" },
+    "initial":    { "prop": "initial", "kind": "string" },
+    "unit":       { "prop": "unit",    "kind": "enum", "values": ["rem", "px"] },
+    "tag":        { "prop": "tag",     "kind": "string" },
+    "content":    { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",   "kind": "string" }
+  }
+}

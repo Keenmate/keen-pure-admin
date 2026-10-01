@@ -16,7 +16,7 @@ defmodule PureAdmin.Components.TypographyTest do
       assert html =~ "Title"
     end
 
-    test "renders all heading levels" do
+    test "renders all heading levels as bare semantic tags (no class)" do
       for level <- 1..6 do
         html =
           render_component(&Typography.heading/1, %{
@@ -26,22 +26,67 @@ defmodule PureAdmin.Components.TypographyTest do
           })
 
         assert html =~ "<h#{level}"
+        # Core blesses a class-less bare heading — no pa-heading block class.
+        refute html =~ "pa-heading"
       end
     end
 
-    test "accepts extra class" do
+    test "accepts extra class passthrough (e.g. a shared alignment utility)" do
       html =
         render_component(&Typography.heading/1, %{
           level: 4,
-          class: "mt-4",
+          class: "pa-text--center",
           inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "Title" end}]
         })
 
-      assert html =~ "mt-4"
+      assert html =~ "<h4"
+      assert_class(html, "pa-text--center")
     end
   end
 
-  describe "text/1 variant maps to real classes" do
+  describe "paragraph/1" do
+    defp render_paragraph(extra) do
+      render_component(
+        &Typography.paragraph/1,
+        Map.merge(
+          %{
+            size: nil,
+            color: nil,
+            align: nil,
+            semantic: nil,
+            class: nil,
+            rest: %{},
+            inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "body" end}]
+          },
+          extra
+        )
+      )
+    end
+
+    test "renders the base pa-text component with no modifier by default" do
+      html = render_paragraph(%{})
+      assert_class(html, "pa-text")
+      assert html =~ "body"
+    end
+
+    test "size/color/align/semantic emit real pa-text--* modifiers" do
+      assert_class(render_paragraph(%{size: "lg"}), "pa-text--lg")
+      assert_class(render_paragraph(%{color: "secondary"}), "pa-text--secondary")
+      assert_class(render_paragraph(%{color: "primary"}), "pa-text--primary")
+      assert_class(render_paragraph(%{align: "center"}), "pa-text--center")
+      assert_class(render_paragraph(%{semantic: "lead"}), "pa-text--lead")
+    end
+
+    test "stacks modifiers on the single pa-text base" do
+      html = render_paragraph(%{size: "sm", color: "secondary", align: "center"})
+      assert_class(html, "pa-text")
+      assert_class(html, "pa-text--sm")
+      assert_class(html, "pa-text--secondary")
+      assert_class(html, "pa-text--center")
+    end
+  end
+
+  describe "text/1 (inline coloured span)" do
     defp render_text(variant) do
       render_component(&Typography.text/1, %{
         variant: variant,
@@ -51,30 +96,36 @@ defmodule PureAdmin.Components.TypographyTest do
       })
     end
 
-    test "friendly names resolve to existing pa-text--*/.text-* classes" do
-      # muted/small are aliases; semantic colours route to .text-* utilities.
-      assert_class(render_text("muted"), "pa-text--secondary")
-      assert_class(render_text("small"), "pa-text--sm")
-      assert_class(render_text("primary"), "pa-text--primary")
-      assert_class(render_text("secondary"), "pa-text--secondary")
+    test "semantic colours resolve to the flat .text-* utilities" do
+      assert_class(render_text("primary"), "text-primary")
       assert_class(render_text("success"), "text-success")
       assert_class(render_text("danger"), "text-danger")
+      assert_class(render_text("warning"), "text-warning")
+      assert_class(render_text("info"), "text-info")
     end
 
-    test "never emits the invented pa-text--{muted,small,success,danger} modifiers" do
-      for {v, invented} <- [
-            {"muted", "pa-text--muted"},
-            {"small", "pa-text--small"},
-            {"success", "pa-text--success"},
-            {"danger", "pa-text--danger"}
-          ] do
-        refute_class(render_text(v), invented)
+    test "no variant → a bare span with no colour class (no pa-text base)" do
+      html = render_text(nil)
+      assert html =~ "<span"
+      # No variant → no `.text-*` colour utility and no pa-text component base.
+      # (HEEx may still emit an empty `class=""`, which the fidelity normalizer
+      # treats as class-less; what matters is that no real class token appears.)
+      refute html =~ "text-"
+      refute html =~ "pa-text"
+    end
+
+    test "never adds the pa-text paragraph base nor invented pa-text--colour modifiers" do
+      for v <- ["primary", "success", "danger", "warning", "info"] do
+        html = render_text(v)
+        # Inline text is the colour-only .text-* utility, NOT the pa-text component.
+        refute html =~ ~s(class="pa-text)
+        refute html =~ "pa-text--#{v}"
       end
     end
   end
 
   describe "pa_link/1" do
-    test "emits bare pa-link with no invented variant modifier" do
+    test "emits the pa-link base with no invented variant modifier" do
       html =
         render_component(&Typography.pa_link/1, %{
           href: "/x",

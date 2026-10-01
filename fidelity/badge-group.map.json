@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for badge_group/1 — keen-pure-admin. Maps each NEUTRAL feature to this wrapper's assign/kind. CONTAINER-ONLY (see badge-group.json): scenarios use manual mode (inner_block badges, no limit) so no id/toggle-badge injection runs. is_show_all drives pa-badge-group--show-all.",
+  "component": "badge-group",
+  "features": {
+    "showAll":    { "prop": "is_show_all", "kind": "bool" },
+    "extraClass": { "prop": "class",       "kind": "string" },
+    "content":    { "prop": "inner_block", "kind": "slot" }
+  }
+}

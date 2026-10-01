@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for heading/1 — keen-pure-admin. See section.map.json for the model. heading/1 renders a BARE <h1>..<h6> (via <.dynamic_tag> keyed off `level`) with NO block class — core styles the h1..h6 type selectors directly. Only the structural level + an optional class passthrough + the inner_block slot. `level` accepts numeric or string (keen normalizes to a string tag); scenarios pass numbers to match svelte's strict number compare.",
+  "component": "heading",
+  "features": {
+    "level":      { "prop": "level",       "kind": "enum",   "values": ["1", "2", "3", "4", "5", "6"], "nativeType": "number" },
+    "content":    { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

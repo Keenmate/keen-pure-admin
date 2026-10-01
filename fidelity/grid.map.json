@@ -1,0 +1,12 @@
+{
+  "//": "Capability manifest for grid/1 — keen-pure-admin. See accent-grid.map.json for the container model. grid/1 renders `<div class=\"pc-row …\">` with no-gutter/same-height/justify/valign modifiers + a class passthrough + inner_block slot. Neutral `justify` maps to keen's `align` prop (center|end|between|around); neutral `valign` maps to keen's `valign` prop (top|middle|bottom|stretch). Keen has no gap prop — gap is out of scope here.",
+  "component": "grid",
+  "features": {
+    "noGutter":   { "prop": "is_no_gutter",    "kind": "bool" },
+    "sameHeight": { "prop": "is_same_height",  "kind": "bool" },
+    "justify":    { "prop": "align",           "kind": "enum",   "values": ["center", "end", "between", "around"] },
+    "valign":     { "prop": "valign",          "kind": "enum",   "values": ["top", "middle", "bottom", "stretch"] },
+    "body":       { "prop": "inner_block",     "kind": "slot" },
+    "extraClass": { "prop": "class",           "kind": "string" }
+  }
+}

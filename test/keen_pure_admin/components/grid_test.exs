@@ -34,6 +34,20 @@ defmodule PureAdmin.Components.GridTest do
       assert_class(html, "pc-row--center")
       assert_class(html, "pc-row--middle")
     end
+
+    test "valign accepts stretch (the explicit default align-items)" do
+      html =
+        render_component(&Grid.grid/1, %{
+          is_no_gutter: false,
+          is_same_height: false,
+          align: nil,
+          valign: "stretch",
+          class: nil,
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "" end}]
+        })
+
+      assert_class(html, "pc-row--stretch")
+    end
   end
 
   describe "column/1" do
@@ -70,6 +84,52 @@ defmodule PureAdmin.Components.GridTest do
 
       assert_class(html, "pc-col-50")
       assert_class(html, "pc-offset-25")
+    end
+
+    test "a sizeless column is the bare pc-col" do
+      html =
+        render_component(&Grid.column/1, %{
+          class: nil,
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "content" end}]
+        })
+
+      assert_class(html, "pc-col")
+      assert html =~ "content"
+    end
+
+    test "off flex modifiers never leak the literal \"false\" into the class string" do
+      # `cond && \"class\"` yields `false` when off; it must be dropped, not joined.
+      html =
+        render_component(&Grid.column/1, %{
+          size: "50",
+          is_no_padding: false,
+          is_grow: false,
+          is_shrink: false,
+          class: nil,
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "content" end}]
+        })
+
+      assert_class(html, "pc-col-50")
+      refute html =~ "false"
+      refute_class(html, "pc-col--no-padding")
+      refute_class(html, "pc-col--grow")
+      refute_class(html, "pc-col--shrink")
+    end
+
+    test "flex modifiers emit their pc-col--* classes when on" do
+      html =
+        render_component(&Grid.column/1, %{
+          size: "auto",
+          is_no_padding: true,
+          is_grow: true,
+          is_shrink: true,
+          class: nil,
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "content" end}]
+        })
+
+      assert_class(html, "pc-col--no-padding")
+      assert_class(html, "pc-col--grow")
+      assert_class(html, "pc-col--shrink")
     end
   end
 end

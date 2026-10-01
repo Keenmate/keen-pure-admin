@@ -47,10 +47,23 @@ defmodule PureAdmin.Components.DataViz do
   @doc """
   Renders a labeled progress bar.
 
+  The label row (`pa-progress__label` + `pa-progress__label-value`) is always
+  emitted from `label` / `value`. The BAR underneath is, by default, a
+  self-contained `<.progress>` built from `value` + the bar modifiers — the
+  blessed self-contained shape (core demo). Pass an `inner_block` slot to supply
+  a custom bar instead (e.g. a `<.stacked_bar>` or a pre-styled `<.progress>`);
+  the slot then replaces the auto-bar. This mirrors svelte's `<ProgressGroup>`,
+  whose bar always comes from its children slot — so both wrappers can emit the
+  same composed markup.
+
   ## Examples
 
       <.progress_group label="Storage Used" value={65} />
       <.progress_group label="Upload" value={89} variant="success" />
+
+      <.progress_group label="Breakdown" value={75}>
+        <.stacked_bar>…</.stacked_bar>
+      </.progress_group>
   """
   attr(:label, :string, required: true)
   attr(:value, :integer, required: true)
@@ -61,6 +74,7 @@ defmodule PureAdmin.Components.DataViz do
   attr(:is_rounded, :boolean, default: false)
   attr(:class, :string, default: nil)
   attr(:rest, :global)
+  slot(:inner_block, doc: "Custom bar content; when given, replaces the auto-built <.progress> bar.")
 
   def progress_group(assigns) do
     ~H"""
@@ -69,7 +83,11 @@ defmodule PureAdmin.Components.DataViz do
         <span><%= @label %></span>
         <span class="pa-progress__label-value"><%= @value %>%</span>
       </div>
-      <.progress value={@value} variant={@variant} size={@size} is_striped={@is_striped} is_animated={@is_animated} is_rounded={@is_rounded} />
+      <%= if @inner_block != [] do %>
+        <%= render_slot(@inner_block) %>
+      <% else %>
+        <.progress value={@value} variant={@variant} size={@size} is_striped={@is_striped} is_animated={@is_animated} is_rounded={@is_rounded} />
+      <% end %>
     </div>
     """
   end

@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for radio_group/1 (the .pa-radio-group container) — keen-pure-admin. radio_group/1 renders <div class={build_classes(\"pa-radio-group\", layout, class)} {@rest}>{inner_block}</div>. layout→--{layout}, plus class passthrough + inner_block slot. Per-option pa-radio children are the separate radio component.",
+  "component": "radio-group",
+  "features": {
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "layout":     { "prop": "layout",      "kind": "enum", "values": ["horizontal", "grid", "2col", "3col"] },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

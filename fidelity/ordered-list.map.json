@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for ordered_list/1 — keen-pure-admin. See list.map.json for the container model. CONTAINER-ONLY slice of the styled <ol> pa-list-ordered; item <li>s flow through the inner_block slot.",
+  "component": "ordered-list",
+  "features": {
+    "style":      { "prop": "style",       "kind": "enum",   "values": ["roman", "alpha"] },
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

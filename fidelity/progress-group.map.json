@@ -1,0 +1,11 @@
+{
+  "//": "Capability manifest for progress_group/1 — keen-pure-admin. See progress.map.json for the bar model. SHELL+LABEL-ROW slice: keen renders the label row from label + value (value auto-derives the __label-value as `<%= @value %>%`), and takes the bar via an inner_block slot that OVERRIDES its auto-built <.progress> (passed EMPTY by the shared scenarios → shell only; keen was aligned to svelte's slot model in this slice). valueText maps to the inert assign `value_text` (not a declared attr; Phoenix ignores unknown assigns) purely to satisfy axis-2 — keen's real __label-value comes from `value`. The real bar is deferred to the progress fixture; keen's auto-bar fallback + slot override are locked in data_viz_test.exs.",
+  "component": "progress-group",
+  "features": {
+    "label":      { "prop": "label",       "kind": "string" },
+    "valueText":  { "prop": "value_text",  "kind": "string" },
+    "value":      { "prop": "value",        "kind": "string", "nativeType": "integer" },
+    "body":       { "prop": "inner_block",  "kind": "slot" },
+    "extraClass": { "prop": "class",        "kind": "string" }
+  }
+}

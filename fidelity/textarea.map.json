@@ -1,0 +1,16 @@
+{
+  "//": "Capability manifest for textarea/1 (the .pa-textarea control) — keen-pure-admin. textarea/1 renders <textarea name id class={textarea_classes} {@rest}><%= @value %></textarea>. Size + themeColor(→color) are the only class axes (core has NO textarea validation-state border — keen's textarea_classes drops `validation`, so it is NOT mapped). value is the text content; placeholder/disabled/readonly/required ride in :global :rest with STRING keys so they only emit when present (maybe_put drops nil/false). color is nativeType string. `rows` is NOT mapped (keen routes it via rest — only appears when supplied; the oracle golden carries none).",
+  "component": "textarea",
+  "features": {
+    "size":        { "prop": "size",   "kind": "enum", "values": ["xs", "sm", "lg", "xl"] },
+    "themeColor":  { "prop": "color",  "kind": "enum", "values": ["1","2","3","4","5","6","7","8","9"], "nativeType": "string" },
+    "value":       { "prop": "value",  "kind": "string" },
+    "placeholder": { "prop": "placeholder", "kind": "string", "channel": "rest" },
+    "name":        { "prop": "name",   "kind": "string" },
+    "id":          { "prop": "id",     "kind": "string" },
+    "disabled":    { "prop": "disabled", "kind": "bool", "channel": "rest" },
+    "readonly":    { "prop": "readonly", "kind": "bool", "channel": "rest" },
+    "required":    { "prop": "required", "kind": "bool", "channel": "rest" },
+    "extraClass":  { "prop": "class",  "kind": "string" }
+  }
+}

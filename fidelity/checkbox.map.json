@@ -1,0 +1,17 @@
+{
+  "//": "Capability manifest for checkbox/1 (the .pa-checkbox tri-state checkbox) — keen-pure-admin. checkbox/1 renders <label class={checkbox_classes} ...><input type=checkbox name id value checked disabled {@rest}/><span pa-checkbox__box/><span pa-checkbox__label>{@label}</span></label>. isXMark→is_x_mark(→--x), labelPosition→label_position(→--label-{pos}), disabled→--disabled label class + native disabled attr (a declared attr, default false). label text prop is `label`. checked/value/name/id are declared attrs; required rides in :global :rest (maybe_put drops nil/false). Indeterminate is JS-only (not modeled).",
+  "component": "checkbox",
+  "features": {
+    "size":          { "prop": "size",           "kind": "enum", "values": ["xs", "sm", "lg", "xl"] },
+    "labelPosition": { "prop": "label_position", "kind": "enum", "values": ["end", "start", "top"] },
+    "isXMark":       { "prop": "is_x_mark",       "kind": "bool" },
+    "disabled":      { "prop": "disabled",        "kind": "bool" },
+    "label":         { "prop": "label",           "kind": "string" },
+    "name":          { "prop": "name",            "kind": "string" },
+    "id":            { "prop": "id",              "kind": "string" },
+    "value":         { "prop": "value",           "kind": "string" },
+    "checked":       { "prop": "checked",         "kind": "bool" },
+    "required":      { "prop": "required",         "kind": "bool", "channel": "rest" },
+    "extraClass":    { "prop": "class",           "kind": "string" }
+  }
+}

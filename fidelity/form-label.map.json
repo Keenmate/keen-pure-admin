@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for form_label/1 (the class-less field label) — keen-pure-admin. form_label/1 renders <label for={@for} class={@class} {@rest}>{inner_block}</label>. No base class (core has no .pa-form-label). forAttr→for, class passthrough, inner_block slot. keen's `is_required` is a no-op (requiredness is attribute-driven on the control) — not modeled.",
+  "component": "form-label",
+  "features": {
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "forAttr":    { "prop": "for",         "kind": "string" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

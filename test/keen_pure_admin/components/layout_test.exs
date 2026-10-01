@@ -161,6 +161,23 @@ defmodule PureAdmin.Components.LayoutTest do
       assert html =~ "John Doe"
       refute html =~ "pa-header__"
     end
+
+    test "aria-label matches the oracle snippet casing (\"User Profile\")" do
+      # snippets/profile.html + snippets/layout.html both bless aria-label="User
+      # Profile" (capital P); svelte resolves the i18n key to the same literal. The
+      # old lowercase "User profile" diverged from both.
+      html = render_component(&Layout.profile_button/1, %{name: "John Doe"})
+
+      assert html =~ ~s(aria-label="User Profile")
+      refute html =~ ~s(aria-label="User profile")
+    end
+
+    test "no name → no .pc-navbar__profile-name span (icon-only trigger)" do
+      html = render_component(&Layout.profile_button/1, %{})
+
+      assert_class(html, "pc-navbar__profile-btn")
+      refute html =~ "pc-navbar__profile-name"
+    end
   end
 
   describe "navbar/1 fit container + zones (rc13/rc14)" do
@@ -239,6 +256,21 @@ defmodule PureAdmin.Components.LayoutTest do
       html = render_component(&Layout.sidebar_search/1, %{})
       assert html =~ ~s(class="pc-sidebar__search")
       assert html =~ "pc-sidebar__label"
+    end
+
+    test "sidebar_search trigger carries NO aria-label (the visible label is the name)" do
+      # Oracle snippet (snippets/layout.html) blesses a bare trigger button — the
+      # visible .pc-sidebar__label is the accessible name; svelte's trigger matches.
+      html = render_component(&Layout.sidebar_search/1, %{})
+      refute html =~ "aria-label"
+    end
+
+    test "sidebar_search --input form controls carry aria-label=\"Search\" (oracle casing)" do
+      html = render_component(&Layout.sidebar_search/1, %{action: "/search"})
+      # Both the submit magnifier and the input use aria-label="Search", matching
+      # the oracle snippet + svelte. No empty value attribute on an empty query.
+      assert html =~ ~s(aria-label="Search")
+      refute html =~ ~s(value=")
     end
   end
 
@@ -411,6 +443,28 @@ defmodule PureAdmin.Components.LayoutTest do
 
       assert_class(html, "pa-section")
       assert_class(html, "mb-4")
+    end
+  end
+
+  describe "divider/1" do
+    test "renders a BARE <hr> with no class (pa-divider was a phantom base class)" do
+      # Core defines no class for a standalone rule — `.pa-divider` is absent from
+      # main.css, snippets, and every theme, and svelte's <Divider> emits a bare
+      # <hr>. Emitting `pa-divider` would be a phantom class; the rule carries none.
+      html = render_component(&Layout.divider/1, %{})
+
+      assert html =~ "<hr"
+      refute html =~ "pa-divider"
+      # No meaningful class — HEEx may emit a harmless empty class="" (which the
+      # fidelity normalizer strips), but never a non-empty class token.
+      refute html =~ ~r/class="[^"]+"/
+    end
+
+    test "class passthrough is the only way to class the rule" do
+      html = render_component(&Layout.divider/1, %{class: "my-4"})
+
+      assert_class(html, "my-4")
+      refute html =~ "pa-divider"
     end
   end
 end

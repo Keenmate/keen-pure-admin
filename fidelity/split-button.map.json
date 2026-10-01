@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for split_button/1 — keen-pure-admin. Maps each NEUTRAL feature (core fixture vocabulary) to this wrapper's own assign, kind, and — for enums — the option set THIS component declares. SSR SHELL ONLY: the dropdown menu's items (pa-btn-split__item*) are built from the :item slot but the open menu is a JS-hook concern; the fixture scopes to the trigger + main button + empty menu container. `label` is required by the component; supplied via the slot. keen's split_button hardcodes id (auto-generated) and phx-hook — framework wiring the normalizer strips (id only when generated-looking is NOT stripped, so the fixture gives no id scenario and both sides emit none / only generated — see fixture note).",
+  "component": "split-button",
+  "features": {
+    "variant": { "prop": "variant", "kind": "enum", "values": ["primary", "secondary", "success", "warning", "danger", "info", "light", "dark"] },
+    "size":    { "prop": "size",    "kind": "enum", "values": ["xs", "sm", "lg", "xl"] },
+    "label":   { "prop": "label",   "kind": "string" }
+  }
+}

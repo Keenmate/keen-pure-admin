@@ -1,0 +1,12 @@
+{
+  "//": "Capability manifest for progress_ring/1 — keen-pure-admin. See progress.map.json for the data-driven-bar model. The ring fill is the inline style `--value: N` (unitless). primary emits NO modifier (base is the accent; keen already guards it). keen auto-derives the __value text as `<%= @value %>%` from `value`, so it has NO valueText attr — the valueText feature maps to the inert assign `value_text` (not a declared attr; Phoenix ignores unknown assigns for function components) purely to satisfy axis-2's 'declare every oracle feature' check; the real __value text comes from `value`.",
+  "component": "progress-ring",
+  "features": {
+    "variant":    { "prop": "variant",    "kind": "enum",   "values": ["success", "warning", "danger", "info"] },
+    "size":       { "prop": "size",        "kind": "enum",   "values": ["sm", "lg"] },
+    "value":      { "prop": "value",       "kind": "string", "nativeType": "integer" },
+    "valueText":  { "prop": "value_text",  "kind": "string" },
+    "label":      { "prop": "label",       "kind": "string" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

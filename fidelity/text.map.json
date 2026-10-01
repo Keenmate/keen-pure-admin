@@ -1,0 +1,10 @@
+{
+  "//": "Capability manifest for text/1 — keen-pure-admin. See label.map.json for the variant model + button.map.json for the channel:rest convention. text/1 renders a bare inline <span> carrying a `.text-{variant}` colour utility (primary|success|danger|warning|info), an optional `title` tooltip (via the :global :rest map), a class passthrough, and the inner_block slot. No variant → class-less <span>.",
+  "component": "text",
+  "features": {
+    "variant":    { "prop": "variant",     "kind": "enum",   "values": ["primary", "success", "danger", "warning", "info"] },
+    "title":      { "prop": "title",        "kind": "string", "channel": "rest" },
+    "content":    { "prop": "inner_block",  "kind": "slot" },
+    "extraClass": { "prop": "class",        "kind": "string" }
+  }
+}

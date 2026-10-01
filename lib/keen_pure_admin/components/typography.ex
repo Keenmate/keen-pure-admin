@@ -31,25 +31,68 @@ defmodule PureAdmin.Components.Typography do
     """
   end
 
-  @doc "Renders a paragraph."
+  @doc """
+  Renders a paragraph.
+
+  Core's canonical paragraph is the `.pa-text` BEM typography component. The
+  base carries 14px + primary colour; the optional modifiers tune size,
+  colour, logical alignment, and compound semantic styles — all real
+  `pa-text--*` classes from core's `_utilities.scss` (see
+  `snippets/typography.html`).
+  """
+  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"], doc: "Size modifier (pa-text--{size}).")
+  attr(:color, :string, default: nil, values: [nil, "primary", "secondary"], doc: "Colour modifier (pa-text--{color}).")
+
+  attr(:align, :string,
+    default: nil,
+    values: [nil, "start", "center", "end"],
+    doc: "Logical text alignment (pa-text--{align}); RTL-aware."
+  )
+
+  attr(:semantic, :string,
+    default: nil,
+    values: [nil, "caption", "lead"],
+    doc: "Compound semantic style (pa-text--{semantic})."
+  )
+
   attr(:class, :string, default: nil)
   attr(:rest, :global)
   slot(:inner_block, required: true)
 
   def paragraph(assigns) do
-    # Core's canonical paragraph is `<p class="pa-text">` (core defines no
-    # `pa-paragraph`). Matches keen's own `text/1`, which also uses `pa-text`.
     ~H"""
-    <p class={build_classes("pa-text", [], @class)} {@rest}>
+    <p class={paragraph_classes(assigns)} {@rest}>
       <%= render_slot(@inner_block) %>
     </p>
     """
   end
 
-  @doc "Renders a text span."
+  defp paragraph_classes(assigns) do
+    build_classes(
+      "pa-text",
+      [
+        {"pa-text--#{assigns.size}", assigns.size != nil},
+        {"pa-text--#{assigns.color}", assigns.color != nil},
+        {"pa-text--#{assigns.align}", assigns.align != nil},
+        {"pa-text--#{assigns.semantic}", assigns.semantic != nil}
+      ],
+      assigns.class
+    )
+  end
+
+  @doc """
+  Renders an inline coloured-text span.
+
+  Core's blessed inline-colour shape is a bare `<span>` carrying a semantic
+  `.text-{variant}` colour utility (see `snippets/typography.html`). Core ships
+  exactly five: `primary`, `success`, `danger`, `warning`, `info`. With no
+  variant the span is class-less. (For sized/aligned paragraph text use
+  `paragraph/1`, the `.pa-text` component.)
+  """
   attr(:variant, :string,
     default: nil,
-    values: [nil, "muted", "small", "primary", "secondary", "success", "danger", "warning", "info"]
+    values: [nil, "primary", "success", "danger", "warning", "info"],
+    doc: "Semantic colour → `.text-{variant}`."
   )
 
   attr(:class, :string, default: nil)
@@ -60,22 +103,29 @@ defmodule PureAdmin.Components.Typography do
     assigns = assign(assigns, :variant_class, text_variant_class(assigns.variant))
 
     ~H"""
-    <span class={build_classes("pa-text", [{@variant_class, @variant_class != nil}], @class)} {@rest}>
+    <span class={text_classes(@variant_class, @class)} {@rest}>
       <%= render_slot(@inner_block) %>
     </span>
     """
   end
 
-  # Core ships only `pa-text--primary/--secondary` (+ size/align/style) — there is
-  # no `pa-text--muted/--small/--success/--danger/--warning/--info`. Semantic
-  # colours live in the `.text-*` utilities. Map keen's friendly variant names to
-  # the real classes rather than emitting invented modifiers.
+  # Semantic colours live in the flat `.text-*` utilities (not pa-text--*).
   defp text_variant_class(nil), do: nil
-  defp text_variant_class("muted"), do: "pa-text--secondary"
-  defp text_variant_class("small"), do: "pa-text--sm"
-  defp text_variant_class("primary"), do: "pa-text--primary"
-  defp text_variant_class("secondary"), do: "pa-text--secondary"
   defp text_variant_class(color), do: "text-#{color}"
+
+  # No variant and no extra class → a class-less bare <span> (nil, not "").
+  defp text_classes(nil, nil), do: nil
+  defp text_classes(nil, ""), do: nil
+
+  defp text_classes(variant_class, extra) do
+    [variant_class, extra]
+    |> Enum.reject(&(&1 in [nil, ""]))
+    |> Enum.join(" ")
+    |> case do
+      "" -> nil
+      s -> s
+    end
+  end
 
   @doc """
   Renders a styled link.

@@ -1,0 +1,12 @@
+{
+  "//": "Capability manifest for paragraph/1 — keen-pure-admin. See label.map.json for the flat-element-with-modifiers model. paragraph/1 renders `<p class=\"pa-text ...\">` with size/color/align/semantic modifiers (all real pa-text--* classes) + a class passthrough + inner_block slot.",
+  "component": "paragraph",
+  "features": {
+    "size":       { "prop": "size",        "kind": "enum",   "values": ["xs", "sm", "lg", "xl"] },
+    "color":      { "prop": "color",       "kind": "enum",   "values": ["primary", "secondary"] },
+    "align":      { "prop": "align",       "kind": "enum",   "values": ["start", "center", "end"] },
+    "semantic":   { "prop": "semantic",    "kind": "enum",   "values": ["caption", "lead"] },
+    "content":    { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

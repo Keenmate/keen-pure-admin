@@ -1,0 +1,11 @@
+{
+  "//": "Capability manifest for load_more/1 — keen-pure-admin. Maps each NEUTRAL feature to this wrapper's assign/kind. `text` rides keen's inner_block slot (rendered INSIDE the pa-load-more__text span). count is a string shown in pa-load-more__count when present. align enum drives pa-load-more--{align}.",
+  "component": "load-more",
+  "features": {
+    "align":     { "prop": "align",      "kind": "enum", "values": ["start", "center", "end"] },
+    "loading":   { "prop": "is_loading", "kind": "bool" },
+    "count":     { "prop": "count",      "kind": "string" },
+    "text":      { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",     "kind": "string" }
+  }
+}

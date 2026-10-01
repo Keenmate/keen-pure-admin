@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for input_group/1 (the .pa-input-group container) — keen-pure-admin. input_group/1 renders <div class={build_classes(\"pa-input-group\", size, class)} {@rest}>{prepend}{inner_block}{append}{button}</div>. size→--{size}, plus class passthrough + inner_block slot. The :prepend/:append/:button named slots (the __prepend/__append/__button addons) are left empty here (prose-deferred sub-slice); only the inner_block text body is fed.",
+  "component": "input-group",
+  "features": {
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "size":       { "prop": "size",        "kind": "enum", "values": ["xs", "sm", "lg", "xl"] },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

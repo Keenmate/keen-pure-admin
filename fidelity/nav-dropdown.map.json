@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for nav_dropdown/1 (the .pc-navmenu__dropdown <ul>) — keen-pure-admin. See nav-dropdown fixture / nav-menu.map.json for the model. nav_dropdown/1 renders <ul class=\"pc-navmenu__dropdown {--level2?} {class}\">{inner_block}</ul>. Items come from nav_item sub-components (slot). Shared SSR features: the level2 modifier (keen `is_level2`), the items slot, the root class passthrough.",
+  "component": "nav-dropdown",
+  "features": {
+    "level2":     { "prop": "is_level2",   "kind": "bool" },
+    "items":      { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",        "kind": "string" }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "//": "Capability manifest for button_group/1 — keen-pure-admin. Maps each NEUTRAL feature (core fixture vocabulary) to this wrapper's own assign, kind, and — for enums — the option set THIS component actually declares. Consumed by `mix pa.fidelity.dump` (drives rendering) and core's capability.mjs (diffs against the oracle feature contract).",
+  "component": "button-group",
+  "features": {
+    "vertical":   { "prop": "is_vertical", "kind": "bool" },
+    "align":      { "prop": "align",       "kind": "enum", "values": ["center", "end", "stretch"] },
+    "nowrap":     { "prop": "is_nowrap",   "kind": "bool" },
+    "responsive": { "prop": "responsive",  "kind": "enum", "values": ["sm-vertical", "sm-horizontal", "md-vertical", "md-horizontal", "lg-vertical", "lg-horizontal", "xl-vertical", "xl-horizontal"] },
+    "extraClass": { "prop": "class",       "kind": "string" },
+    "content":    { "prop": "inner_block", "kind": "slot" }
+  }
+}

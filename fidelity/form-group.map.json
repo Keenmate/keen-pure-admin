@@ -1,0 +1,11 @@
+{
+  "//": "Capability manifest for form_group/1 (the .pa-form-group container) — keen-pure-admin. form_group/1 renders <div class={form_group_classes} {@rest}>{optional <label>}{inner_block}</div>. state→validation(→--{state}), required→is_required(→--required), horizontal→is_horizontal(→--horizontal), plus class passthrough + inner_block slot. keen's `label` attr is left unset (container content, prose-deferred) so no leading <label> is emitted — matching svelte's label-less shell.",
+  "component": "form-group",
+  "features": {
+    "body":       { "prop": "inner_block",   "kind": "slot" },
+    "state":      { "prop": "validation",    "kind": "enum", "values": ["success", "warning", "error"] },
+    "required":   { "prop": "is_required",   "kind": "bool" },
+    "horizontal": { "prop": "is_horizontal", "kind": "bool" },
+    "extraClass": { "prop": "class",         "kind": "string" }
+  }
+}

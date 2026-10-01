@@ -141,7 +141,7 @@ defmodule PureAdmin.Components.Pager do
   def load_more(assigns) do
     ~H"""
     <div class={build_classes("pa-load-more", [{"pa-load-more--#{@align}", @align != nil}], @class)}>
-      <button class={build_classes("pa-load-more__button", [{"pa-load-more__button--loading", @is_loading}])} {@rest}>
+      <button class={build_classes("pa-load-more__button", [{"pa-load-more__button--loading", @is_loading}])} disabled={@is_loading} {@rest}>
         <span :if={@is_loading} class="pa-load-more__spinner"></span>
         <span class="pa-load-more__text">
           <%= if @inner_block != [], do: render_slot(@inner_block), else: t("pureAdmin.pagination.loadMore") %>

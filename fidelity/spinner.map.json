@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for spinner/1 — keen-pure-admin. See loader.map.json for the model. SCOPE: the flat pa-spinner rotating spinner (sibling of the advanced loader/1 family). `class` is the extra-class passthrough.",
+  "component": "spinner",
+  "features": {
+    "size":    { "prop": "size",    "kind": "enum",   "values": ["xs"] },
+    "variant": { "prop": "variant", "kind": "enum",   "values": ["primary", "secondary", "success", "danger", "warning", "info"] },
+    "class":   { "prop": "class",   "kind": "string" }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "//": "Capability manifest for popover/1 — keen-pure-admin. Maps each NEUTRAL feature to this wrapper's assign/kind. CAPABILITY-ONLY fixture (see popover.json): the two wrappers' pre-JS SSR shells are irreconcilable (keen renders the full content inline; svelte renders a trigger-only shell and portals the content via a global PopoverContainer), so only axis-1/axis-2 completeness is enforced. title_text is required by keen; supplied here. placement carries the enum.",
+  "component": "popover",
+  "features": {
+    "placement": { "prop": "placement",    "kind": "enum",   "values": ["top", "end", "bottom", "start"] },
+    "size":      { "prop": "size",          "kind": "enum",   "values": ["sm", "lg"] },
+    "alignment": { "prop": "alignment",     "kind": "enum",   "values": ["center", "end"] },
+    "triggerText": { "prop": "trigger_text", "kind": "string" },
+    "title":     { "prop": "title_text",    "kind": "string" },
+    "content":   { "prop": "inner_block",   "kind": "slot" }
+  }
+}

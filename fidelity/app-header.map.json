@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for app_header/1 (the .pc-app-header brand block) — keen-pure-admin. See section.map.json / footer.map.json for the model. app_header/1 renders <div class=\"pc-app-header {class}\"> around its `inner_block`; with no inner_block it falls back to the config logo (pc-app-header__logo img) + app name <h1> (divergent from svelte, so the fixture always supplies children). The .pc-app-header__version fit-ladder element is composed by the consumer inside inner_block via fit_slot, not this container — deferred in the fixture, not a feature here. Shared SSR features: the brand slot + the root class passthrough.",
+  "component": "app-header",
+  "features": {
+    "brand":      { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

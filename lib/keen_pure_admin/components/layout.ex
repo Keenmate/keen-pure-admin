@@ -662,7 +662,7 @@ defmodule PureAdmin.Components.Layout do
     ~H"""
     <button
       class={build_classes("pc-navbar__profile-btn", [], @class)}
-      aria-label="User profile"
+      aria-label="User Profile"
       {@rest}
     >
       <span :if={@icon != []} class="pa-btn__icon">
@@ -1361,14 +1361,21 @@ defmodule PureAdmin.Components.Layout do
   end
 
   @doc """
-  Renders a visual divider/separator.
+  Renders a visual divider/separator — a bare `<hr>`.
+
+  Core blesses NO class for a standalone horizontal rule (the old `pa-divider`
+  had zero SCSS rules — no `.pa-divider` in main.css, no snippet, no theme — so
+  it was a phantom base class; svelte's `<Divider>` emits a bare `<hr>` too). Pass
+  `class` to style it yourself (e.g. spacing utilities). Distinct from
+  `sidebar_divider/1`, which is an `<li class="pc-sidebar__divider">` in the
+  sidebar flow.
   """
   attr(:class, :string, default: nil)
   attr(:rest, :global)
 
   def divider(assigns) do
     ~H"""
-    <hr class={build_classes("pa-divider", [], @class)} {@rest} />
+    <hr class={@class} {@rest} />
     """
   end
 

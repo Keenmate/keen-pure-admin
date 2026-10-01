@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for sidebar_search/1 (the .pc-sidebar__search entry point) — keen-pure-admin. sidebar_search/1 renders <li class=\"pc-sidebar__item\"> wrapping EITHER a trigger <button class=\"pc-sidebar__search\"> (default clause) OR, when `action` is set, a type-and-go <form class=\"pc-sidebar__search pc-sidebar__search--input\"> (submit magnifier .pc-sidebar__search-icon + .pc-sidebar__search-field input). Shared SSR features: the trigger label, the action string (→ form mode), the root class passthrough.",
+  "component": "sidebar-search",
+  "features": {
+    "label":      { "prop": "label",  "kind": "string" },
+    "action":     { "prop": "action", "kind": "string" },
+    "extraClass": { "prop": "class",  "kind": "string" }
+  }
+}

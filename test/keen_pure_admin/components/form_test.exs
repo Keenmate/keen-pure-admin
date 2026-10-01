@@ -26,7 +26,10 @@ defmodule PureAdmin.Components.FormTest do
       assert html =~ "<label>Email</label>"
     end
 
-    test "is_required does not emit pa-form-group--required (no core rule)" do
+    test "is_required emits pa-form-group--required (live core escape-hatch rule)" do
+      # pa-form-group--required IS a live core rule (forms.html REQUIRED FIELDS
+      # §2 — the escape hatch for non-native widgets). Earlier keen treated
+      # is_required as a dead no-op, diverging from svelte which emits the class.
       html =
         render(
           fn assigns ->
@@ -36,6 +39,18 @@ defmodule PureAdmin.Components.FormTest do
         )
 
       assert_class(html, "pa-form-group")
+      assert_class(html, "pa-form-group--required")
+    end
+
+    test "no pa-form-group--required when is_required is not set" do
+      html =
+        render(
+          fn assigns ->
+            ~H'<.form_group><input /></.form_group>'
+          end,
+          %{}
+        )
+
       refute_class(html, "pa-form-group--required")
     end
 
@@ -355,6 +370,23 @@ defmodule PureAdmin.Components.FormTest do
     test "not disabled by default" do
       html = render(fn assigns -> ~H'<.checkbox name="c" label="X" />' end, %{})
       refute_class(html, "pa-checkbox--disabled")
+    end
+  end
+
+  describe "checkbox/1 indeterminate marker" do
+    # Markup-fidelity guard: the label must NOT carry a phantom
+    # data-indeterminate="false" when the box is not indeterminate — the attr
+    # is only meaningful to the PureAdminCheckbox hook, which only mounts when
+    # is_indeterminate is set. (A false value leaked into the blessed SSR shape
+    # and diverged from svelte, which emits nothing.)
+    test "no data-indeterminate attr when not indeterminate" do
+      html = render(fn assigns -> ~H'<.checkbox name="c" label="X" />' end, %{})
+      refute html =~ "data-indeterminate"
+    end
+
+    test "emits data-indeterminate=\"true\" only when indeterminate" do
+      html = render(fn assigns -> ~H'<.checkbox name="c" label="X" is_indeterminate />' end, %{})
+      assert html =~ ~s(data-indeterminate="true")
     end
   end
 

@@ -121,6 +121,35 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Markup-fidelity sweep #11 (FINISH) — form family, shell, typography, grid, list/loader/data-viz
+  variants, and misc singletons corrected against core.** The closing sweep brings every remaining
+  both-wrapper component into the harness (41 components across form/layout/typography/grid/loader/
+  data_viz/list/button/badge/code/pager/table/tooltip/responsive). Real keen markup fixes:
+  - **checkbox:** always emitted a phantom `data-indeterminate="false"` → now only `="true"` when set.
+  - **form-group:** `is_required` was a dead no-op → now emits the live `pa-form-group--required`
+    escape-hatch class (matches core + svelte).
+  - **divider:** emitted a phantom `pa-divider` base class (absent from main.css/snippets/themes) →
+    now a bare `<hr>` (class via passthrough only).
+  - **profile-button:** `aria-label="User profile"` → `"User Profile"` (oracle casing).
+  - **typography `text/1`:** emitted the wrong base (`pa-text` paragraph component) + off-canonical
+    variant mapping → rewritten to the canonical inline coloured span (`text-{variant}`, class-less
+    when none). `paragraph/1` brought to parity (size/color/align/semantic modifiers + base `pa-text`).
+  - **grid:** `valign` gained the missing `stretch` → `pc-row--stretch`; **column:** `col_classes`
+    leaked a literal `"false"` token into the class string when a flex modifier was off → filtered.
+  - **load-more:** the loading button lacked the native `disabled` attr → added.
+  - **progress-group:** added an `inner_block` bar-override slot (auto-bar preserved as fallback) so
+    the composed shape reconciles with the slot-based svelte wrapper.
+  Locked by new/extended unit tests across form/layout/typography/grid/loader/data_viz/list/pager
+  test files (317 keen component tests total, 0 failures). Several components are **capability-only**
+  where the two wrappers' pre-JS SSR shells diverge by design (notifications, split-button, popover,
+  breakpoint-container, nav-menu `collapse` — keen inline/LiveView-hook'd + generated ids vs svelte
+  client-portaled/`onMount`-configured); their class contracts are asserted via the maps.
+- **Fidelity tooling #11 (dev-only).** Added `fidelity/*.map.json` capability maps for all 41
+  finish-sweep components + the matching `mix pa.fidelity.dump` clauses (+ `Typography`/`Grid`/
+  `Responsive` aliases). This completes both-wrapper markup-fidelity coverage; the only components
+  left uncovered are single-wrapper (comparison, document, bar-list, detail-panel), the experimental
+  sheet, candidacy-uncertain file-selector/search-results, provider-bridge icon, and `kpi_terminal`
+  (its svelte counterpart is dumper-blocked by an init-time `setContext`).
 - **Markup-fidelity sweep #10 — KPI gauge-list / hero corrected against core.** Same cross-repo
   harness, closing out the KPI namespace/title bug class flagged in sweep #9. Both `kpi_gauge_list/1`
   and `kpi_hero_list/1` had the **silently-dropped namespace class** (`pa-kpi-gauge-list` /
