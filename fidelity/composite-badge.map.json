@@ -1,0 +1,13 @@
+{
+  "//": "Capability manifest for composite_badge/1 — keen-pure-admin. See badge.map.json for the model. Maps each NEUTRAL feature to this wrapper's own assign, kind, and — for enums — the option set THIS component actually declares. Two consumers: (1) `mix pa.fidelity.dump composite-badge` drives rendering generically from it; (2) core's capability.mjs diffs it against the oracle feature contract. The three sections render inline: icon via the `icon_content` slot (the text_slot the dumper feeds it emits the same __icon span as the `icon` string attr), label via the required `label` attr, button via `button_text`. The four variant axes are block modifiers on the outer div (variant / label_variant / button_variant / icon_variant). Keep `values` honest to the component's real attr `values:` list.",
+  "component": "composite-badge",
+  "features": {
+    "variant":       { "prop": "variant",        "kind": "enum",   "values": ["primary", "secondary", "success", "warning", "danger", "info", "light", "dark"] },
+    "labelVariant":  { "prop": "label_variant",  "kind": "enum",   "values": ["primary", "secondary", "success", "warning", "danger", "info", "light", "dark"] },
+    "buttonVariant": { "prop": "button_variant", "kind": "enum",   "values": ["primary", "secondary", "success", "warning", "danger", "info", "light", "dark"] },
+    "iconVariant":   { "prop": "icon_variant",   "kind": "enum",   "values": ["primary", "secondary", "success", "warning", "danger", "info", "light", "dark"] },
+    "icon":          { "prop": "icon_content",   "kind": "slot" },
+    "label":         { "prop": "label",          "kind": "string" },
+    "buttonText":    { "prop": "button_text",    "kind": "string" }
+  }
+}

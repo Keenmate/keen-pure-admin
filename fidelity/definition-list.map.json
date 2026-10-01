@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for definition_list/1 (the .pa-list-definition container) — keen-pure-admin. See list.map.json for the model. CONTAINER-ONLY slice: definition_list/1 renders <dl class={build_classes(\"pa-list-definition\", [{\"pa-list-definition--inline\", @is_inline}], @class)} {@rest}> with an `inner_block` slot. dt/dd pairs are native elements written inside the slot by the consumer — no sub-component, nothing deferred.",
+  "component": "definition-list",
+  "features": {
+    "inline":     { "prop": "is_inline",   "kind": "bool" },
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

@@ -86,6 +86,42 @@ defmodule PureAdmin.Components.DataVizTest do
     end
   end
 
+  describe "gauge/1 — markup-fidelity contract (core = oracle)" do
+    defp gauge_html(overrides) do
+      base = %{
+        value: 72,
+        value_text: "72%",
+        label: "CPU",
+        variant: nil,
+        is_zones: false,
+        size: nil,
+        min: "0",
+        max: "100",
+        class: nil
+      }
+
+      render_component(&DataViz.gauge/1, Map.merge(base, overrides))
+    end
+
+    test "emits the bare pa-gauge block — no text-center layout wrapper" do
+      # text-center is a demo grid cell, not part of pa-gauge. The wrapper must
+      # not leak it (no other DataViz component does).
+      refute gauge_html(%{}) =~ ~s(class="text-center")
+    end
+
+    test "size appends --pa-gauge-size with NO trailing semicolon" do
+      html = gauge_html(%{size: "16rem"})
+      assert html =~ "--value: 72; --pa-gauge-size: 16rem"
+      refute html =~ "16rem;"
+    end
+
+    test "zones suppresses the colour variant class (zones wins the fill)" do
+      html = gauge_html(%{is_zones: true, variant: "success"})
+      assert_class(html, "pa-gauge--zones")
+      refute_class(html, "pa-gauge--success")
+    end
+  end
+
   describe "heatmap/1 — core-real variants + compact" do
     test "is_compact emits pa-heatmap--compact" do
       html =

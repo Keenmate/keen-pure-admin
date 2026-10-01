@@ -121,6 +121,29 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Markup-fidelity sweep #6 — label / composite-badge / gauge corrected against core.**
+  Same cross-repo harness, three real markup bugs. (1) `label/1` declared `variant` values
+  including `"light"`/`"dark"`, but core emits no `pa-label--light`/`--dark` — narrowed to
+  the six core colours so those phantom classes can't be produced. (2) `composite_badge/1`
+  emitted invented element modifiers `pa-composite-badge__label--{v}` / `__button--{v}`;
+  core's SCSS `@each` generates only the **block** modifiers `pa-composite-badge--label-{v}`
+  / `--btn-{v}` — fixed to emit those on the wrapper, added the missing `icon_variant` attr
+  (`--icon-{v}`), and dropped a dead inline `style=""` the conditional `cursor:pointer`
+  produced. (3) `gauge/1` leaked a `text-center` layout wrapper into the component, emitted a
+  trailing `;` in its inline size style, and stacked a colour `variant` class on top of
+  `is_zones` (zones replaces the whole fill) — all three corrected against the snippet.
+  Locked by five new unit tests (`badge_test` ×2, `data_viz_test` ×3). `accent-grid` and
+  `definition-list` needed no keen markup change (already core-faithful).
+- **Fidelity tooling #6 (dev-only).** Added `fidelity/*.map.json` capability maps for
+  accent-grid / label / composite-badge / definition-list / gauge and the matching
+  `mix pa.fidelity.dump` clauses. accent-grid (container-only: its `__item*` variants/copy
+  states live in the separate item sub-component the generic dumper can't compose — deferred)
+  and definition-list (container-only `pa-list-definition` `<dl>` shell; `dt`/`dd` are native
+  consumer markup, no `__element` classes) are container contracts; label (flat, self-
+  contained), composite-badge (renders its `__icon`/`__label`/`__button` parts inline — in
+  scope) and gauge (CSS `conic-gradient` driven by an inline `--value`, fully SSR) are full.
+  accent-grid 3/3, label 15/15, composite-badge 34/34, definition-list 5/5, gauge 11/11 —
+  all 0 capability hard failures.
 - **Markup-fidelity sweep #5 — desc-table corrected against core.** Same cross-repo
   harness, one markup bug: `desc_table/1` rendered `style={@computed_style}` directly, so a
   nil `label_width` emitted a stray `style=""` (HEEx renders `style={nil}` as an empty

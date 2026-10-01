@@ -207,24 +207,22 @@ defmodule PureAdmin.Components.DataViz do
     assigns = assign(assigns, :display_value, value_text)
 
     ~H"""
-    <div class="text-center">
-      <div class={build_classes("pa-gauge", [
-        {"pa-gauge--#{@variant}", @variant not in [nil, "primary"]},
-        {"pa-gauge--zones", @is_zones}
-      ], @class)} style={gauge_style(@value, @size)} {@rest}>
-        <div class="pa-gauge__inner">
-          <span class="pa-gauge__value"><%= @display_value %></span>
-        </div>
-        <span class="pa-gauge__min"><%= @min %></span>
-        <span :if={@label} class="pa-gauge__label"><%= @label %></span>
-        <span class="pa-gauge__max"><%= @max %></span>
+    <div class={build_classes("pa-gauge", [
+      {"pa-gauge--#{@variant}", not @is_zones and @variant not in [nil, "primary"]},
+      {"pa-gauge--zones", @is_zones}
+    ], @class)} style={gauge_style(@value, @size)} {@rest}>
+      <div class="pa-gauge__inner">
+        <span class="pa-gauge__value"><%= @display_value %></span>
       </div>
+      <span class="pa-gauge__min"><%= @min %></span>
+      <span :if={@label} class="pa-gauge__label"><%= @label %></span>
+      <span class="pa-gauge__max"><%= @max %></span>
     </div>
     """
   end
 
   defp gauge_style(value, nil), do: "--value: #{value}"
-  defp gauge_style(value, size), do: "--value: #{value}; --pa-gauge-size: #{size};"
+  defp gauge_style(value, size), do: "--value: #{value}; --pa-gauge-size: #{size}"
 
   # -- data_bar/1 --
 

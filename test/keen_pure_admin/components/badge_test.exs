@@ -67,6 +67,22 @@ defmodule PureAdmin.Components.BadgeTest do
       assert_class(html, "pa-label")
       assert_class(html, "pa-label--danger")
     end
+
+    test "renders outline label with size (no light/dark variant — matches core)" do
+      html =
+        render_component(&Badge.label/1, %{
+          variant: "info",
+          size: "lg",
+          is_outline: true,
+          class: nil,
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "Featured" end}]
+        })
+
+      assert_class(html, "pa-label")
+      assert_class(html, "pa-label--info")
+      assert_class(html, "pa-label--lg")
+      assert_class(html, "pa-label--outline")
+    end
   end
 
   describe "composite_badge/1" do
@@ -101,6 +117,34 @@ defmodule PureAdmin.Components.BadgeTest do
         })
 
       refute_class(html, "pa-composite-badge--interactive")
+    end
+
+    test "section variants are BLOCK modifiers on the wrapper, not element modifiers" do
+      html =
+        render_component(&Badge.composite_badge/1, %{
+          variant: "primary",
+          label_variant: "info",
+          button_variant: "danger",
+          icon_variant: "success",
+          icon: "📧",
+          label: "New messages",
+          button_text: "×",
+          class: nil
+        })
+
+      # Correct core contract: --label-{v} / --btn-{v} / --icon-{v} on the block.
+      assert_class(html, "pa-composite-badge--label-info")
+      assert_class(html, "pa-composite-badge--btn-danger")
+      assert_class(html, "pa-composite-badge--icon-success")
+
+      # The old (invented) element-modifier classes must NOT appear — they do not
+      # exist in the core SCSS (@each generates block modifiers only).
+      refute html =~ "pa-composite-badge__label--info"
+      refute html =~ "pa-composite-badge__button--danger"
+
+      # The section spans stay plain BEM elements.
+      assert html =~ ~s(class="pa-composite-badge__label")
+      assert html =~ ~s(class="pa-composite-badge__button")
     end
   end
 

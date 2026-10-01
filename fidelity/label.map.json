@@ -1,0 +1,10 @@
+{
+  "//": "Capability manifest for label/1 — keen-pure-admin. See badge.map.json for the model. Maps each NEUTRAL feature to this wrapper's own assign, kind, and — for enums — the option set THIS component actually declares. Two consumers: (1) `mix pa.fidelity.dump label` drives rendering generically from it; (2) core's capability.mjs diffs it against the oracle feature contract. Keep `values` honest to the component's real attr `values:` list. Label's variant is the 6 core colours (no light/dark, unlike badge) — label/1's attr values: was narrowed to match core, which has no pa-label--light/--dark.",
+  "component": "label",
+  "features": {
+    "variant": { "prop": "variant",    "kind": "enum", "values": ["primary", "secondary", "success", "warning", "danger", "info"] },
+    "size":    { "prop": "size",       "kind": "enum", "values": ["xs", "sm", "lg", "xl"] },
+    "outline": { "prop": "is_outline", "kind": "bool" },
+    "label":   { "prop": "inner_block","kind": "slot" }
+  }
+}

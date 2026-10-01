@@ -106,6 +106,11 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp render(assigns, "dot-leaders"), do: render_component(&DataDisplay.dot_leaders/1, assigns)
   defp render(assigns, "fields"), do: render_component(&DataDisplay.fields/1, assigns)
   defp render(assigns, "prop-card"), do: render_component(&DataDisplay.prop_card/1, assigns)
+  defp render(assigns, "accent-grid"), do: render_component(&DataDisplay.accent_grid/1, assigns)
+  defp render(assigns, "label"), do: render_component(&Badge.label/1, assigns)
+  defp render(assigns, "composite-badge"), do: render_component(&Badge.composite_badge/1, assigns)
+  defp render(assigns, "definition-list"), do: render_component(&PureAdmin.Components.List.definition_list/1, assigns)
+  defp render(assigns, "gauge"), do: render_component(&DataViz.gauge/1, assigns)
   # Fragment fixtures — sub-components tested in isolation. (keen has no
   # card_tab_content counterpart — that fragment is svelte-only.)
   defp render(assigns, "card-tab"), do: render_component(&Card.card_tab/1, assigns)
@@ -139,6 +144,11 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("dot-leaders"), do: PureAdmin.Components.DataDisplay.__components__()[:dot_leaders]
   defp meta("fields"), do: PureAdmin.Components.DataDisplay.__components__()[:fields]
   defp meta("prop-card"), do: PureAdmin.Components.DataDisplay.__components__()[:prop_card]
+  defp meta("accent-grid"), do: PureAdmin.Components.DataDisplay.__components__()[:accent_grid]
+  defp meta("label"), do: PureAdmin.Components.Badge.__components__()[:label]
+  defp meta("composite-badge"), do: PureAdmin.Components.Badge.__components__()[:composite_badge]
+  defp meta("definition-list"), do: PureAdmin.Components.List.__components__()[:definition_list]
+  defp meta("gauge"), do: PureAdmin.Components.DataViz.__components__()[:gauge]
   defp meta("card-tab"), do: PureAdmin.Components.Card.__components__()[:card_tab]
   defp meta("list-item"), do: PureAdmin.Components.List.__components__()[:list_item]
   defp meta("timeline-item"), do: PureAdmin.Components.Timeline.__components__()[:timeline_item]

@@ -1,0 +1,15 @@
+{
+  "//": "Capability manifest for gauge/1 — keen-pure-admin (DataViz.gauge/1). See progress.map.json for the model. Scope: the pa-gauge block (ring + value + label/min/max endpoints). value is a unitless integer driving the inline --value style; size overrides --pa-gauge-size (attr size). min/max default to \"0\"/\"100\" in the component; the fixture passes them explicitly.",
+  "component": "gauge",
+  "features": {
+    "variant":    { "prop": "variant",     "kind": "enum", "values": ["success", "warning", "danger", "info"] },
+    "zones":      { "prop": "is_zones",     "kind": "bool" },
+    "value":      { "prop": "value",        "kind": "string", "nativeType": "integer" },
+    "valueText":  { "prop": "value_text",   "kind": "string" },
+    "label":      { "prop": "label",        "kind": "string" },
+    "min":        { "prop": "min",          "kind": "string" },
+    "max":        { "prop": "max",          "kind": "string" },
+    "size":       { "prop": "size",         "kind": "string" },
+    "extraClass": { "prop": "class",        "kind": "string" }
+  }
+}

@@ -83,8 +83,8 @@ defmodule PureAdmin.Components.Badge do
   """
   attr(:variant, :string,
     default: nil,
-    values: [nil, "primary", "secondary", "success", "warning", "danger", "info", "light", "dark"],
-    doc: "Color variant"
+    values: [nil, "primary", "secondary", "success", "warning", "danger", "info"],
+    doc: "Color variant — label has no light/dark (core emits no pa-label--light/--dark)"
   )
 
   attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
@@ -147,6 +147,12 @@ defmodule PureAdmin.Components.Badge do
     doc: "Button section color (overrides variant)"
   )
 
+  attr(:icon_variant, :string,
+    default: nil,
+    values: [nil, "primary", "secondary", "success", "warning", "danger", "info", "light", "dark"],
+    doc: "Icon section color (overrides variant)"
+  )
+
   attr(:icon, :string, default: nil, doc: "Icon text or emoji")
   attr(:label, :string, required: true, doc: "Label text")
   attr(:count, :string, default: nil, doc: "Count/button text (legacy alias for button_text)")
@@ -166,41 +172,28 @@ defmodule PureAdmin.Components.Badge do
   def composite_badge(assigns) do
     btn_text = assigns.button_text || assigns.count
 
-    label_class =
-      if assigns.label_variant,
-        do: "pa-composite-badge__label pa-composite-badge__label--#{assigns.label_variant}",
-        else: "pa-composite-badge__label"
-
-    button_class =
-      if assigns.button_variant,
-        do: "pa-composite-badge__button pa-composite-badge__button--#{assigns.button_variant}",
-        else: "pa-composite-badge__button"
-
-    assigns =
-      assigns
-      |> assign(:btn_text, btn_text)
-      |> assign(:label_class, label_class)
-      |> assign(:button_class, button_class)
+    assigns = assign(assigns, :btn_text, btn_text)
 
     ~H"""
     <div class={build_classes("pa-composite-badge", [
-      {"pa-composite-badge--#{@variant}", true}
+      {"pa-composite-badge--#{@variant}", true},
+      {"pa-composite-badge--label-#{@label_variant}", @label_variant != nil},
+      {"pa-composite-badge--btn-#{@button_variant}", @button_variant != nil},
+      {"pa-composite-badge--icon-#{@icon_variant}", @icon_variant != nil}
     ], @class)} {@rest}>
       <span :if={@icon && @icon_content == []} class="pa-composite-badge__icon"><%= @icon %></span>
       <span :for={ic <- @icon_content} class="pa-composite-badge__icon"><%= render_slot(ic) %></span>
       <span
-        class={@label_class}
+        class="pa-composite-badge__label"
         phx-click={@on_label_click}
         phx-value-label={if @on_label_click, do: @label}
-        style={if @on_label_click, do: "cursor:pointer;"}
       ><%= @label %></span>
       <span
         :if={@btn_text}
-        class={@button_class}
+        class="pa-composite-badge__button"
         phx-click={@on_button_click}
         phx-value-label={if @on_button_click, do: @label}
         phx-value-action={if @on_button_click, do: @btn_text}
-        style={if @on_button_click, do: "cursor:pointer;"}
       ><%= @btn_text %></span>
     </div>
     """
