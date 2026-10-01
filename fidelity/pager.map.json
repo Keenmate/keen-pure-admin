@@ -1,0 +1,18 @@
+{
+  "//": "Capability manifest for pager/1 — keen-pure-admin. Maps each NEUTRAL feature to this wrapper's own assign/kind/values. Two consumers: (1) `mix pa.fidelity.dump pager` drives rendering from it; (2) core's capability.mjs diffs it against the oracle contract. Notes: showFirst/showLast map to the on_first/on_last EVENT-NAME strings — the button renders `:if={@on_first}`, so a truthy string makes it render. firstLabel..lastLabel map to the icon_* attrs (plain text, HTML-escaped) so button content matches the svelte side exactly. align's values list must mirror the attr's `values:` (nil default = no modifier; 'center' emits pa-pager--center). See badge.map.json for the model.",
+  "component": "pager",
+  "features": {
+    "align":         { "prop": "align",            "kind": "enum",   "values": ["start", "center", "end"] },
+    "showFirst":     { "prop": "on_first",         "kind": "string" },
+    "showLast":      { "prop": "on_last",          "kind": "string" },
+    "firstLabel":    { "prop": "icon_first",       "kind": "string" },
+    "previousLabel": { "prop": "icon_previous",    "kind": "string" },
+    "nextLabel":     { "prop": "icon_next",        "kind": "string" },
+    "lastLabel":     { "prop": "icon_last",        "kind": "string" },
+    "showInfo":      { "prop": "show_info",        "kind": "bool" },
+    "showPageInput": { "prop": "show_page_input",  "kind": "bool" },
+    "page":          { "prop": "page",             "kind": "string", "nativeType": "integer" },
+    "totalPages":    { "prop": "total_pages",      "kind": "string", "nativeType": "integer" },
+    "extraClass":    { "prop": "class",            "kind": "string" }
+  }
+}

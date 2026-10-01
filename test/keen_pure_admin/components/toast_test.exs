@@ -99,6 +99,22 @@ defmodule PureAdmin.Components.ToastTest do
       assert_class(html, "pa-toast--filled-color-3")
     end
 
+    test "renders the :actions slot inside pa-toast__content" do
+      html =
+        render_component(&Toast.toast/1, %{
+          id: "t6",
+          variant: "info",
+          title_text: "Entry removed",
+          message_text: "The record was deleted.",
+          icon: [],
+          inner_block: [],
+          actions: [%{__slot__: :actions, inner_block: fn _, _ -> "Undo" end}]
+        })
+
+      assert_class(html, "pa-toast__actions")
+      assert html =~ "Undo"
+    end
+
     test "hidden when not visible" do
       html =
         render_component(&Toast.toast/1, %{

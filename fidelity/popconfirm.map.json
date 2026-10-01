@@ -1,0 +1,14 @@
+{
+  "//": "Capability manifest for popconfirm/1 — keen-pure-admin. See badge.map.json/button.map.json for the model. Maps each NEUTRAL feature to this wrapper's own assign, kind, and — for enums — the option set THIS component actually declares. Two consumers: (1) `mix pa.fidelity.dump popconfirm` drives rendering generically from it; (2) core's capability.mjs diffs it against the oracle feature contract. NOTE: keen's popconfirm/1 wraps the trigger slot in an anchor <div data-pa-popconfirm-trigger> (it can't attach the trigger data-attr to arbitrary slot content) and carries data-placement + data-pa-popconfirm-close JS-contract attrs on the overlay/buttons — all keen-specific interactivity scaffolding the svelte wrapper expresses via callback props instead. The fidelity dump seeds an empty inner_block slot, so the trigger wrapper renders empty; the overlay subtree is the comparable part. keen's icon_variant additionally accepts \"default\" (bare __icon) — an extra capability beyond the oracle enum, not declared here.",
+  "component": "popconfirm",
+  "features": {
+    "placement":      { "prop": "placement",       "kind": "enum",   "values": ["top", "bottom", "start", "end"] },
+    "compact":        { "prop": "is_compact",       "kind": "bool" },
+    "icon":           { "prop": "icon_variant",     "kind": "enum",   "values": ["danger", "warning", "info"] },
+    "message":        { "prop": "message",          "kind": "string" },
+    "confirmVariant": { "prop": "confirm_variant",  "kind": "string" },
+    "confirmText":    { "prop": "confirm_text",     "kind": "string" },
+    "cancelText":     { "prop": "cancel_text",      "kind": "string" },
+    "class":          { "prop": "class",            "kind": "string" }
+  }
+}

@@ -95,6 +95,7 @@ defmodule PureAdmin.Components.Toast do
   attr(:class, :string, default: nil)
   attr(:rest, :global, include: ~w(phx-click phx-value-id))
   slot(:icon, doc: "Custom icon content")
+  slot(:actions, doc: "Action-button row rendered inside pa-toast__content, under a separator")
   slot(:inner_block, doc: "Custom body content (overrides title_text/message_text)")
 
   def toast(assigns) do
@@ -123,6 +124,7 @@ defmodule PureAdmin.Components.Toast do
         <div class="pa-toast__content">
           <div :if={@title_text} class="pa-toast__title"><%= @title_text %></div>
           <div :if={@message_text} class="pa-toast__message"><%= @message_text %></div>
+          <div :if={@actions != []} class="pa-toast__actions"><%= render_slot(@actions) %></div>
         </div>
       <% end %>
       <button

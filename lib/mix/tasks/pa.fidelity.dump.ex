@@ -32,8 +32,12 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   alias PureAdmin.Components.Card
   alias PureAdmin.Components.DataViz
   alias PureAdmin.Components.Loader
+  alias PureAdmin.Components.Modal
+  alias PureAdmin.Components.Pager
+  alias PureAdmin.Components.Popconfirm
   alias PureAdmin.Components.Stat
   alias PureAdmin.Components.Timeline
+  alias PureAdmin.Components.Toast
   alias PureAdmin.Components.Tooltip
   # NOTE: PureAdmin.Components.Code / .List are NOT aliased — they'd shadow the
   # built-in Elixir `Code` / `List` modules (the task uses `List.first/1`).
@@ -83,6 +87,11 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp render(assigns, "loader"), do: render_component(&Loader.loader/1, assigns)
   defp render(assigns, "timeline"), do: render_component(&Timeline.timeline/1, assigns)
   defp render(assigns, "list"), do: render_component(&PureAdmin.Components.List.list/1, assigns)
+  defp render(assigns, "modal"), do: render_component(&Modal.modal/1, assigns)
+  defp render(assigns, "popconfirm"), do: render_component(&Popconfirm.popconfirm/1, assigns)
+  defp render(assigns, "pager"), do: render_component(&Pager.pager/1, assigns)
+  defp render(assigns, "toast"), do: render_component(&Toast.toast/1, assigns)
+  defp render(assigns, "data-bar"), do: render_component(&DataViz.data_bar/1, assigns)
   # Fragment fixtures — sub-components tested in isolation. (keen has no
   # card_tab_content counterpart — that fragment is svelte-only.)
   defp render(assigns, "card-tab"), do: render_component(&Card.card_tab/1, assigns)
@@ -101,6 +110,11 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("loader"), do: PureAdmin.Components.Loader.__components__()[:loader]
   defp meta("timeline"), do: PureAdmin.Components.Timeline.__components__()[:timeline]
   defp meta("list"), do: PureAdmin.Components.List.__components__()[:list]
+  defp meta("modal"), do: PureAdmin.Components.Modal.__components__()[:modal]
+  defp meta("popconfirm"), do: PureAdmin.Components.Popconfirm.__components__()[:popconfirm]
+  defp meta("pager"), do: PureAdmin.Components.Pager.__components__()[:pager]
+  defp meta("toast"), do: PureAdmin.Components.Toast.__components__()[:toast]
+  defp meta("data-bar"), do: PureAdmin.Components.DataViz.__components__()[:data_bar]
   defp meta("card-tab"), do: PureAdmin.Components.Card.__components__()[:card_tab]
   defp meta("list-item"), do: PureAdmin.Components.List.__components__()[:list_item]
   defp meta("timeline-item"), do: PureAdmin.Components.Timeline.__components__()[:timeline_item]

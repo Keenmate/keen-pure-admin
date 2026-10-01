@@ -1,0 +1,11 @@
+{
+  "//": "Capability manifest for data_bar/1 — keen-pure-admin (DataViz.data_bar/1). See progress.map.json / card.map.json for the model. Scope: the pa-data-bar block (optional __value label + __track + __fill). keen folds negative INTO the variant enum (variant=\"negative\"), so the neutral `negative` bool is bound via kind:const → variant=\"negative\" when truthy.",
+  "component": "data-bar",
+  "features": {
+    "variant":    { "prop": "variant",    "kind": "enum",  "values": ["success", "warning", "danger", "info"] },
+    "negative":   { "prop": "variant",    "kind": "const", "value": "negative" },
+    "valueText":  { "prop": "value_text", "kind": "string" },
+    "value":      { "prop": "value",      "kind": "string", "nativeType": "integer" },
+    "extraClass": { "prop": "class",      "kind": "string" }
+  }
+}

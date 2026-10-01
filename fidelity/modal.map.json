@@ -1,0 +1,18 @@
+{
+  "//": "Capability manifest for modal/1 — keen-pure-admin. Maps each NEUTRAL modal feature to this wrapper's assign/kind. `static` maps to is_static: keen DOES emit pa-modal--static (a behavioural JS-hook class with no CSS rule), unlike svelte — so the fixture declares the feature but never exercises it in a golden (see fixture `static` note). `show` is intentionally NOT mapped: keen adds pa-modal--show via phx-mounted at runtime, never in SSR, so it stays out of every golden. See card.map.json for the model.",
+  "component": "modal",
+  "features": {
+    "id":         { "prop": "id",                 "kind": "string" },
+    "variant":    { "prop": "variant",           "kind": "enum",   "values": ["primary", "success", "warning", "danger", "info"] },
+    "banded":     { "prop": "is_banded",          "kind": "bool" },
+    "top":        { "prop": "is_top",             "kind": "bool" },
+    "size":       { "prop": "size",               "kind": "enum",   "values": ["sm", "lg", "xl", "xxl", "fw"] },
+    "scrollable": { "prop": "is_scrollable",      "kind": "bool" },
+    "static":     { "prop": "is_static",          "kind": "bool" },
+    "showClose":  { "prop": "should_show_close",  "kind": "bool" },
+    "title":      { "prop": "title_text",         "kind": "string" },
+    "titleIcon":  { "prop": "title_icon",         "kind": "string" },
+    "body":       { "prop": "inner_block",        "kind": "slot" },
+    "footer":     { "prop": "footer",             "kind": "slot" }
+  }
+}

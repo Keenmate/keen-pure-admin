@@ -121,6 +121,24 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Markup-fidelity sweep #3 — pager / toast corrected against core.** Same cross-repo
+  harness, two more markup bugs:
+  - **Pager:** the First/Prev/Next/Last nav buttons carried a hardcoded `title={…}`
+    attribute that neither the blessed snippet (`snippets/tables.html`) nor the svelte
+    wrapper emits — a second markup shape for one slot, against the one-canonical-shape
+    rule. Removed; the `pureAdmin.pagination.*Page` translation keys remain defined for
+    consumers.
+  - **Toast:** `toast/1` had no actions affordance despite the snippet showing
+    `pa-toast__actions`. Added a `:actions` slot rendered as
+    `<div class="pa-toast__actions">` inside `pa-toast__content`.
+
+  Each fix is locked by a new or expanded unit test. `modal` and `data-bar` needed no
+  keen markup change (already core-faithful).
+- **Fidelity tooling #3 (dev-only).** Added `fidelity/*.map.json` capability maps for
+  modal / popconfirm / pager / toast / data-bar and the matching `mix pa.fidelity.dump`
+  clauses. (`popconfirm` is capability-mapped but not render-compared: its LiveView
+  trigger-wrapper + required `id` / `data-*` / `phx-*` scaffolding can't reconcile to a
+  shared static SSR golden — an acknowledged, flagged divergence.)
 - **Card tabs now sit INSIDE the header, next to the title.** `card/1` previously
   rendered non-inline tabs in a `<div class="pa-card__tabs">` *outside* the header; the
   canonical placement (snippets/cards.html) is inside `pa-card__header`, after the title

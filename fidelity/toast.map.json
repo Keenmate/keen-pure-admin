@@ -1,0 +1,16 @@
+{
+  "//": "Capability manifest for toast/1 — keen-pure-admin. See alert.map.json / badge.map.json for the model. Maps each NEUTRAL toast feature to this wrapper's assign, kind, and (for enums) the option set THIS component declares. keen's toast has only the 5 severity variants (no secondary/light/dark). `filled` → is_filled; `show` → is_visible (drives pa-toast--show AND the :if that renders the toast); `close` → on_close (the dismiss event name — keen renders .pa-toast__close only when on_close is wired, so scenarios pass it). keen's toast/1 auto-derives the icon glyph from the variant but renders the :icon slot content when given. An :actions slot was added to toast/1 to match the blessed snippet (see fixture wrapper-bug note).",
+  "component": "toast",
+  "features": {
+    "variant":    { "prop": "variant",      "kind": "enum",   "values": ["primary", "success", "danger", "warning", "info"] },
+    "themeColor": { "prop": "theme_color",   "kind": "enum",   "values": ["1", "2", "3", "4", "5", "6", "7", "8", "9"], "nativeType": "string" },
+    "filled":     { "prop": "is_filled",     "kind": "bool" },
+    "show":       { "prop": "is_visible",    "kind": "bool" },
+    "icon":       { "prop": "icon",          "kind": "slot" },
+    "title":      { "prop": "title_text",    "kind": "string" },
+    "message":    { "prop": "message_text",  "kind": "string" },
+    "actions":    { "prop": "actions",       "kind": "slot" },
+    "close":      { "prop": "on_close",      "kind": "string" },
+    "extraClass": { "prop": "class",         "kind": "string" }
+  }
+}
