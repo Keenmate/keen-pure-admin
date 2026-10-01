@@ -121,6 +121,32 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Markup-fidelity sweep #7 — table / section / sparkline / range-group corrected against core.**
+  Same cross-repo harness, four real markup fixes. (1) `table/1` was data-driven only (required
+  `rows` + `:col`, always injected a `<thead><tr></tr></thead><tbody></tbody>` skeleton) —
+  structurally incompatible with the core-blessed "consumer hand-authors the rows" shape and with
+  the svelte container. Added a backward-compatible **container-only path**: with no `:col` slots
+  it renders a bare `<table class="pa-table …">{inner_block}</table>` (new optional `inner_block`
+  slot; `rows` defaults to `[]`; `:col` no longer required). The data-driven path and its tests are
+  untouched. (2) `section/1` emitted its title as `<h3 class="pa-section-title">` — injecting the
+  *standalone* heading component's class inside the container; core + svelte emit a bare `<h3>`
+  (styled by `.pa-section > h3`). Fixed to a bare `<h3>`. (3) `sparkline/1`'s `size` attr allowed
+  only `[nil, "lg"]` though core ships `pa-sparkline--sm` — added `"sm"`. (4) `range_group/1`
+  emitted a phantom `style=""` on `__panel` (HEEx renders `style={nil}` as an empty attribute) —
+  folded the panel style into the attrs only when present. Locked by 13 new unit tests
+  (`table` ×3, `layout`/section ×3, `data_viz`/sparkline ×3, `range_group` ×4).
+- **Fidelity tooling #7 (dev-only).** Added `fidelity/*.map.json` capability maps for
+  settings-panel / sparkline / table / section / range-group and the matching
+  `mix pa.fidelity.dump` clauses (+ `SettingsPanel`/`Table`/`Layout`/`RangeGroup` aliases).
+  table (container-only `<table>` shell; native thead/tbody, element classes deferred) and
+  range-group (container-only control shell; `__panel`/`__row*`/`__seg*` are JS-built → cssState*
+  / deferred) are container contracts; section (inline, zero modifiers) and sparkline (data-driven
+  bars via inline `--value:N%`, fully SSR) are full compares. settings-panel is capability-only —
+  it's a fixed-chrome leaf whose two wrappers' internals diverge by design (keen loads theme
+  manifests via a phx-hook; svelte has a static mode fallback), so no shared full-tree golden
+  exists; its class contract (`--open` state + 9 `__*` elements) is still asserted via the map.
+  sparkline 9/9, table 13/13, section 3/3, range-group keen 5/5 (svelte dumper-blocked by an
+  init-time lifecycle hook, capability-only) — all 0 capability hard failures.
 - **Markup-fidelity sweep #6 — label / composite-badge / gauge corrected against core.**
   Same cross-repo harness, three real markup bugs. (1) `label/1` declared `variant` values
   including `"light"`/`"dark"`, but core emits no `pa-label--light`/`--dark` — narrowed to

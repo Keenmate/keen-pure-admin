@@ -380,4 +380,37 @@ defmodule PureAdmin.Components.LayoutTest do
       refute html =~ "Three"
     end
   end
+
+  describe "section/1" do
+    test "title renders as a BARE <h3>, not .pa-section-title" do
+      # .pa-section-title is a SEPARATE standalone heading component; the title
+      # INSIDE a .pa-section is a bare child <h3> styled via `.pa-section > h3`.
+      html =
+        render_component(&Layout.section/1, %{
+          title_text: "Section Title",
+          inner_block: inner("Body")
+        })
+
+      assert_class(html, "pa-section")
+      assert html =~ ~r{<h3>\s*Section Title\s*</h3>}
+      refute html =~ "pa-section-title"
+      refute html =~ "pa-section__title"
+    end
+
+    test "no title → no <h3> at all" do
+      html = render_component(&Layout.section/1, %{inner_block: inner("Body")})
+
+      assert_class(html, "pa-section")
+      refute html =~ "<h3"
+      assert html =~ "Body"
+    end
+
+    test "class passthrough is appended after pa-section" do
+      html =
+        render_component(&Layout.section/1, %{class: "mb-4", inner_block: inner("Body")})
+
+      assert_class(html, "pa-section")
+      assert_class(html, "mb-4")
+    end
+  end
 end

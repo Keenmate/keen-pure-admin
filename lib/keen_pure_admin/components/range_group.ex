@@ -245,6 +245,13 @@ defmodule PureAdmin.Components.RangeGroup do
   end
 
   def range_group(assigns) do
+    # Fold panel_style into the panel's attrs only when present. A bare
+    # `style={nil}` renders as `style=""` in HEEx (unlike class), which drifts
+    # from the canonical snippet + the svelte wrapper (both omit the attribute
+    # when there's no per-instance token override). Mirrors desc_table/loader.
+    assigns =
+      assign(assigns, :panel_attrs, if(assigns.panel_style, do: [style: assigns.panel_style], else: []))
+
     ~H"""
     <div
       id={@id}
@@ -269,7 +276,7 @@ defmodule PureAdmin.Components.RangeGroup do
         data-range-group-panel
         role="dialog"
         aria-label={@panel_aria_label}
-        style={@panel_style}
+        {@panel_attrs}
       >
         <div :for={row <- @range} class="pa-range-group__row">
           <div class="pa-range-group__row-head">

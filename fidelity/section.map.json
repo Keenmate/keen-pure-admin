@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for section/1 (the .pa-section container) — keen-pure-admin. See card.map.json / list.map.json for the model. section/1 renders <div class=\"pa-section {class}\"> with an OPTIONAL bare <h3>{title_text}</h3> (styled via `.pa-section > h3`) before the `inner_block` slot. The sibling standalone .pa-section-title heading is NOT this component — out of scope.",
+  "component": "section",
+  "features": {
+    "title":      { "prop": "title_text",  "kind": "string" },
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

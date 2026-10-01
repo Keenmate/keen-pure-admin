@@ -1,0 +1,14 @@
+{
+  "//": "Capability manifest for range_group/1 (the .pa-range-group compact control) — keen-pure-admin. CONTAINER-ONLY slice (see the oracle fixture's top note): the per-row .pa-range-group__row + the .pa-range slider primitive are built from the required `:range` SLOT the generic dumper can't feed, so they are prose-deferred in the oracle and NOT mapped here. range_group/1 renders <div id={@id} class=\"pa-range-group {class}\" {@rest}> > __toggle(summary+caret) + __panel(role=dialog, aria-label={panel_aria_label}) > __actions(Reset/Apply). All group-level props are structural (produce no class). `id` is REQUIRED by keen (the LiveView hook anchor). panelStyle is folded into the panel attrs only when present (nil emits no style attribute — the desc-table/loader phantom-style fix).",
+  "component": "range-group",
+  "features": {
+    "groupId":    { "prop": "id",               "kind": "string" },
+    "ariaLabel":  { "prop": "panel_aria_label", "kind": "string" },
+    "resetText":  { "prop": "reset_text",       "kind": "string" },
+    "applyText":  { "prop": "apply_text",        "kind": "string" },
+    "hasActions": { "prop": "has_actions",       "kind": "bool" },
+    "panelStyle": { "prop": "panel_style",       "kind": "string" },
+    "body":       { "prop": "range",             "kind": "slot" },
+    "extraClass": { "prop": "class",             "kind": "string" }
+  }
+}

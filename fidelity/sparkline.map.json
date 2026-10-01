@@ -1,0 +1,10 @@
+{
+  "//": "Capability manifest for sparkline/1 — keen-pure-admin (DataViz.sparkline/1). See heatmap.map.json for the model. Scope: the pa-sparkline block (inline-flex row + data-driven pa-sparkline__bar children). `values` is a required data list rendered as pa-sparkline__bar divs, each carrying the inline style --value: N%. variant is success|warning|danger|info (primary/default emits no modifier — suppressed in the component). size is sm|lg.",
+  "component": "sparkline",
+  "features": {
+    "variant":    { "prop": "variant", "kind": "enum", "values": ["success", "warning", "danger", "info"] },
+    "size":       { "prop": "size",    "kind": "enum", "values": ["sm", "lg"] },
+    "values":     { "prop": "values",  "kind": "string" },
+    "extraClass": { "prop": "class",   "kind": "string" }
+  }
+}

@@ -28,7 +28,14 @@ defmodule PureAdmin.Components.Table do
       </.table>
   """
   attr(:id, :string, default: nil)
-  attr(:rows, :list, required: true, doc: "List of row data")
+
+  attr(:rows, :list,
+    default: [],
+    doc:
+      "List of row data. Omit (with no `:col` slots) to use the container-only shape — " <>
+        "a bare `<table class=\"pa-table\">` whose `<thead>`/`<tbody>` you hand-author in " <>
+        "`inner_block`, exactly as core's `snippets/tables.html` blesses."
+  )
   attr(:row_id, :any, default: nil, doc: "Function to generate row id from row data")
   attr(:row_click, :any, default: nil, doc: "JS command for row click")
   attr(:is_striped, :boolean, default: false, doc: "Alternating row colors")
@@ -102,7 +109,15 @@ defmodule PureAdmin.Components.Table do
   attr(:class, :string, default: nil)
   attr(:rest, :global)
 
-  slot :col, required: true, doc: "Column definitions" do
+  slot(:inner_block,
+    doc:
+      "Container-only body: hand-authored `<thead>`/`<tbody>` markup. Used ONLY when no " <>
+        "`:col` slots are given — then `table/1` renders a bare `<table class=\"pa-table\">` " <>
+        "around this slot (the core-blessed shape where the consumer writes the rows). When " <>
+        "`:col` slots ARE present, the data-driven thead/tbody is generated and this is ignored."
+  )
+
+  slot :col, doc: "Column definitions" do
     attr(:label, :string, required: true)
     attr(:class, :string)
     attr(:col_class, :string, doc: "Class for th/td (e.g. col-auto)")
@@ -129,8 +144,22 @@ defmodule PureAdmin.Components.Table do
     # `is_responsive` is expressed entirely by the `pa-table--responsive`
     # modifier on the <table> (the mobile row→card transform). No wrapper is
     # needed — the old `.pa-table-responsive` div had no upstream CSS.
+    #
+    # Two shapes share the one `pa-table` block:
+    #   • data-driven (the default) — `:col` slots generate thead/tbody.
+    #   • container-only — NO `:col` slots: render a bare `<table class="pa-table">`
+    #     around `inner_block`, where the consumer hand-authors thead/tbody (the
+    #     shape core's `snippets/tables.html` leads with). Same class contract, so
+    #     every `pa-table--*` modifier still applies.
     ~H"""
-    <.table_inner {assigns} />
+    <.table_container_only :if={@col == []} {assigns} />
+    <.table_inner :if={@col != []} {assigns} />
+    """
+  end
+
+  defp table_container_only(assigns) do
+    ~H"""
+    <table id={@id} class={table_classes(assigns)} {@rest}>{render_slot(@inner_block)}</table>
     """
   end
 

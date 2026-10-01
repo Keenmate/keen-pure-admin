@@ -312,7 +312,7 @@ defmodule PureAdmin.Components.DataViz do
   """
   attr(:values, :list, required: true, doc: "List of percentage values (0-100)")
   attr(:variant, :string, default: nil, values: [nil, "primary", "success", "warning", "danger", "info"])
-  attr(:size, :string, default: nil, values: [nil, "lg"])
+  attr(:size, :string, default: nil, values: [nil, "sm", "lg"])
   attr(:class, :string, default: nil)
   attr(:rest, :global)
 

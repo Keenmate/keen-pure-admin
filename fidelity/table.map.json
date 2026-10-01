@@ -1,0 +1,14 @@
+{
+  "//": "Capability manifest for table/1 — keen-pure-admin. See definition-list.map.json / list.map.json for the container-only model. SCOPE = the `pa-table` CONTAINER: the `<table class=\"pa-table ...\">` shell + its block modifiers. keen's table/1 has TWO shapes on the one `pa-table` block — a data-driven form (`:col` slots generate thead/tbody) and a CONTAINER-ONLY form (no `:col` slots → a bare `<table class=\"pa-table\">` around `inner_block`, where the consumer hand-authors thead/tbody, the shape core's snippets/tables.html leads with). The harness exercises the container-only form (the dumper passes slots as plain text, so real thead/tbody can't flow through) — body maps to the inner_block slot. Every `pa-table--*` modifier applies to BOTH shapes. keen's `is_compact` (= the xs SIZE) emits pa-table--xs, the same class as size=\"xs\", so it's covered by the `size` enum; the dedicated is_compact bool is keen-only sugar verified in table_test.exs, not a separate oracle feature. The `pa-table__item-title`/`__item-desc` two-line-cell + `pa-table__checkbox-col`/`__row--selected` element classes are NATIVE cell content / data-driven sub-features, deferred in the oracle fixture (prose) — not container markup.",
+  "component": "table",
+  "features": {
+    "striped":        { "prop": "is_striped",         "kind": "bool" },
+    "bordered":       { "prop": "is_bordered",        "kind": "bool" },
+    "plain":          { "prop": "is_plain",           "kind": "bool" },
+    "responsive":     { "prop": "is_responsive",      "kind": "bool" },
+    "responsiveGrid": { "prop": "is_responsive_grid", "kind": "bool" },
+    "size":           { "prop": "size",               "kind": "enum", "values": ["xs", "sm", "lg", "xl"] },
+    "body":           { "prop": "inner_block",        "kind": "slot" },
+    "extraClass":     { "prop": "class",              "kind": "string" }
+  }
+}

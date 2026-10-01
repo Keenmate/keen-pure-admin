@@ -67,6 +67,59 @@ defmodule PureAdmin.Components.TableTest do
     end
   end
 
+  describe "table/1 container-only (no :col)" do
+    # With NO `:col` slots, table/1 renders the core-blessed container shape:
+    # a bare <table class="pa-table ..."> around inner_block (the consumer
+    # hand-authors thead/tbody), instead of the data-driven thead/tbody. Same
+    # pa-table class contract, so every pa-table--* modifier still applies.
+    test "renders a bare <table class=\"pa-table\"> around inner_block, no generated thead/tbody" do
+      html =
+        render_component(&Table.table/1, %{
+          inner_block: [
+            %{__slot__: :inner_block, inner_block: fn _, _ -> "<tbody><tr><td>cell</td></tr></tbody>" end}
+          ]
+        })
+
+      assert_class(html, "pa-table")
+      # The consumer-authored body passes straight through…
+      assert html =~ "cell"
+      # …and table/1 does NOT inject its own empty data-driven skeleton.
+      refute html =~ ~r{<thead>\s*<tr>\s*</tr>\s*</thead>}
+    end
+
+    test "pa-table--* modifiers still apply on the container-only path" do
+      html =
+        render_component(&Table.table/1, %{
+          is_striped: true,
+          is_bordered: true,
+          is_plain: true,
+          is_responsive: true,
+          is_responsive_grid: true,
+          size: "lg",
+          class: "mb-4",
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "" end}]
+        })
+
+      assert_class(html, "pa-table--striped")
+      assert_class(html, "pa-table--bordered")
+      assert_class(html, "pa-table--plain")
+      assert_class(html, "pa-table--responsive")
+      assert_class(html, "pa-table--responsive-grid")
+      assert_class(html, "pa-table--lg")
+      assert_class(html, "mb-4")
+    end
+
+    test "rows now defaults to [] — container-only needs no rows attr" do
+      html =
+        render_component(&Table.table/1, %{
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "body" end}]
+        })
+
+      assert_class(html, "pa-table")
+      assert html =~ "body"
+    end
+  end
+
   describe "table/1 is_responsive" do
     test "emits the pa-table--responsive modifier and no phantom wrapper" do
       html =

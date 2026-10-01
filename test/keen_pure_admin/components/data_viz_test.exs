@@ -86,6 +86,46 @@ defmodule PureAdmin.Components.DataVizTest do
     end
   end
 
+  describe "sparkline/1 — markup-fidelity contract (core = oracle)" do
+    test "size=sm emits pa-sparkline--sm (core ships the --sm height)" do
+      html =
+        render_component(&DataViz.sparkline/1, %{
+          values: [40, 65, 55],
+          variant: nil,
+          size: "sm",
+          class: nil
+        })
+
+      assert_class(html, "pa-sparkline--sm")
+    end
+
+    test "size=lg emits pa-sparkline--lg" do
+      html =
+        render_component(&DataViz.sparkline/1, %{
+          values: [40, 65, 55],
+          variant: nil,
+          size: "lg",
+          class: nil
+        })
+
+      assert_class(html, "pa-sparkline--lg")
+    end
+
+    test "each value renders a pa-sparkline__bar carrying the inline --value style" do
+      html =
+        render_component(&DataViz.sparkline/1, %{
+          values: [40, 65],
+          variant: nil,
+          size: nil,
+          class: nil
+        })
+
+      assert_class(html, "pa-sparkline__bar")
+      assert html =~ "--value: 40%"
+      assert html =~ "--value: 65%"
+    end
+  end
+
   describe "gauge/1 — markup-fidelity contract (core = oracle)" do
     defp gauge_html(overrides) do
       base = %{

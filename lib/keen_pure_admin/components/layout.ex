@@ -1354,7 +1354,7 @@ defmodule PureAdmin.Components.Layout do
   def section(assigns) do
     ~H"""
     <div class={build_classes("pa-section", [], @class)} {@rest}>
-      <h3 :if={@title_text} class="pa-section-title"><%= @title_text %></h3>
+      <h3 :if={@title_text}><%= @title_text %></h3>
       <%= render_slot(@inner_block) %>
     </div>
     """

@@ -1,0 +1,5 @@
+{
+  "//": "Capability manifest for settings_panel/1 — keen-pure-admin. See the core fixture's leading note: settings-panel is a fixed-chrome, slot-less LEAF whose inner tree is framework-divergent by design, so the fixture carries ZERO shared oracle features and ZERO strict-compare scenarios. This map therefore declares no features. settings_panel/1's attrs (id / default_theme / class / rest) drive the id, the phx-hook data + a keen-only class passthrough, not a shared CSS-class contract. With no scenarios, the dumper renders the component once with default assigns to produce the dump; nothing is diffed.",
+  "component": "settings-panel",
+  "features": {}
+}
