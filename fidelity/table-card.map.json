@@ -1,0 +1,16 @@
+{
+  "//": "Capability manifest for table_card/1 — keen-pure-admin. See card.map.json for the model. SCOPE = the pa-table-card chrome (header/body/footer) the component emits; the inner <table class=\"pa-table\"> is a native child the consumer writes inside the inner_block slot (deferred in the oracle fixture). The title is a BARE <h3> (blessed shape, not __title/__title-text). keen names the subtitle `subtitle_text` and the header-actions slot `actions`.",
+  "component": "table-card",
+  "features": {
+    "variant":     { "prop": "variant",       "kind": "enum",   "values": ["primary", "success", "warning", "danger"] },
+    "color":       { "prop": "color",         "kind": "enum",   "values": ["1", "2", "3", "4", "5", "6", "7", "8", "9"] },
+    "plain":       { "prop": "is_plain",      "kind": "bool" },
+    "scrollable":  { "prop": "is_scrollable", "kind": "bool" },
+    "title":       { "prop": "title_text",    "kind": "string" },
+    "description": { "prop": "subtitle_text", "kind": "string" },
+    "actions":     { "prop": "actions",       "kind": "slot" },
+    "body":        { "prop": "inner_block",   "kind": "slot" },
+    "footer":      { "prop": "footer",        "kind": "slot" },
+    "extraClass":  { "prop": "class",         "kind": "string" }
+  }
+}

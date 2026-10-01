@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for command_palette/1 — keen-pure-admin (PureAdmin.Components.CommandPalette). The command-palette fixture is CAPABILITY-ONLY (zero strict scenarios): the two wrappers' pre-JS-hook SSR shells are irreconcilable by design (keen stamps a required driver `id` (default \"command-palette\") + data-mode/data-display/data-locked-length SSR-state attrs + phx-hook on the root; svelte emits a bare root), so there is no shared golden — correctness is carried by this map (axis-2) + the fixture's cssStateClasses / cssStateElements / deferred inventory. Only the two shared, SSR-structural features are modeled: `size` (the one block modifier keen SSR-emits, via `size` → pa-command-palette--{size}) and `display` (keen `display`; structural, writes data-display, no class). `is_open` is NOT mapped (it toggles the --active state class, flipped by the PureAdminCommandPalette hook at runtime — a cssStateClass); the many runtime-state attrs keen also accepts (mode/results/active_index/is_loading/current_step/selections/page/…) drive the JS-built result/wizard DOM, not the SSR class contract, so they are not oracle features. See modal.map.json / settings-panel.json for the model.",
+  "component": "command-palette",
+  "features": {
+    "size":    { "prop": "size",    "kind": "enum", "values": ["sm", "lg", "xl"] },
+    "display": { "prop": "display", "kind": "enum", "values": ["inline", "tokens"] }
+  }
+}

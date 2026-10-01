@@ -121,6 +121,23 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Markup-fidelity sweep #8 — profile aria-label corrected against core.** Same cross-repo
+  harness. `profile_panel/1`'s close button carried `aria-label="Close profile"` (lowercase),
+  diverging from the oracle snippet and the svelte wrapper, which use Title-Case
+  `"Close Profile"`. Corrected and locked by a new `test/keen_pure_admin/components/profile_test.exs`
+  (11 tests). `table_card/1` and `command_palette/1` needed no keen markup change (already
+  core-faithful — both emit only real, SCSS-blessed classes).
+- **Fidelity tooling #8 (dev-only).** Added `fidelity/*.map.json` capability maps for
+  table-card / command-palette / profile and the matching `mix pa.fidelity.dump` clauses
+  (+ `CommandPalette`/`Profile` aliases; `Table` already aliased). table-card (in-scope card
+  chrome header/body/footer; the inner `<table>` is a deferred slot region) 15/15 and profile
+  (`pa-profile-panel`; inline header avatar/name/email in scope, nav/favorites item classes
+  deferred, `--open` is cssStateClasses) 8/8 are full compares. command-palette is capability-only
+  — its pre-JS SSR shells are irreconcilable by design (keen stamps a driver `id` +
+  `data-mode`/`data-display`/`data-locked-length` and always renders the context/home/tokens
+  regions; svelte emits a bare reactive `<div>`), so no shared full-tree golden exists; its class
+  contract (5 modifiers + 31 `__*` elements, split across cssStateClasses / cssStateElements /
+  deferred) is asserted via the maps. All 0 capability hard failures both wrappers.
 - **Markup-fidelity sweep #7 — table / section / sparkline / range-group corrected against core.**
   Same cross-repo harness, four real markup fixes. (1) `table/1` was data-driven only (required
   `rows` + `:col`, always injected a `<thead><tr></tr></thead><tbody></tbody>` skeleton) —

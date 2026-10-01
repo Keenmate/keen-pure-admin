@@ -1,0 +1,16 @@
+{
+  "//": "Capability manifest for profile_panel/1 — keen-pure-admin. See card.map.json / modal.map.json for the model. `name`/`email` are REQUIRED string attrs (profile_panel/1 KeyErrors without them) supplied via the map so they flow through scenario props into the inline header assigns (the modal `id` precedent). `noAvatar` maps to has_avatar with `negate` (has_avatar=false → __header--no-avatar). The footer region is keen's `footer_` slot (trailing underscore). The item-level nav/favorites classes are the deferred sub-component (profile_nav_item/1 + author-supplied favorites markup), not covered by this container+header slice.",
+  "component": "profile",
+  "features": {
+    "id":           { "prop": "id",                  "kind": "string" },
+    "name":         { "prop": "name",                "kind": "string" },
+    "email":        { "prop": "email",               "kind": "string" },
+    "role":         { "prop": "role",                "kind": "string" },
+    "noAvatar":     { "prop": "has_avatar",          "kind": "bool", "negate": true },
+    "iconOnlyTabs": { "prop": "has_icon_only_tabs",  "kind": "bool" },
+    "tabs":         { "prop": "tabs",                "kind": "slot" },
+    "nav":          { "prop": "nav",                 "kind": "slot" },
+    "actions":      { "prop": "actions",             "kind": "slot" },
+    "footer":       { "prop": "footer_",             "kind": "slot" }
+  }
+}
