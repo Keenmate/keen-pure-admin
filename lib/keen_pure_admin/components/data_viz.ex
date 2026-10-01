@@ -86,7 +86,7 @@ defmodule PureAdmin.Components.DataViz do
         <.stacked_segment value={25} variant="success" />
       </.stacked_bar>
   """
-  attr(:size, :string, default: nil, values: [nil, "lg"])
+  attr(:size, :string, default: nil, values: [nil, "sm", "lg"])
   attr(:is_rounded, :boolean, default: false)
   attr(:class, :string, default: nil)
   attr(:rest, :global)

@@ -121,6 +121,23 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Markup-fidelity sweep #4 — stacked-bar / filter-card corrected against core.** Same
+  cross-repo harness, two more markup bugs:
+  - **Stacked bar:** `stacked_bar/1` declared `size` values `[nil, "lg"]`, omitting `"sm"`
+    though core ships `pa-stacked-bar--sm` and svelte supports it. Added `"sm"` to the
+    allowed values.
+  - **Filter card:** the clear-all button used `pa-icon--x`; the blessed snippet
+    (`snippets/filter-card.html`) uses `pa-icon--clear`. Corrected.
+
+  stacked-bar fix locked by two new unit tests; `heatmap` / `splitter` / `checkbox-list`
+  needed no keen markup change (already core-faithful).
+- **Fidelity tooling #4 (dev-only).** Added `fidelity/*.map.json` capability maps for
+  stacked-bar / heatmap / splitter / checkbox-list / filter-card and the matching
+  `mix pa.fidelity.dump` clauses. (`stacked-bar` / `checkbox-list` are scoped container-only
+  — their segment/legend/row children come from separate sub-components the generic dumper
+  can't compose, so those element classes are acknowledged-deferred. `splitter` renders
+  root + attrs faithfully; its repeated-pane slot composition is an acknowledged divergence
+  a single static golden can't reconcile.)
 - **Markup-fidelity sweep #3 — pager / toast corrected against core.** Same cross-repo
   harness, two more markup bugs:
   - **Pager:** the First/Prev/Next/Last nav buttons carried a hardcoded `title={…}`

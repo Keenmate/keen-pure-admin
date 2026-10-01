@@ -1,0 +1,16 @@
+{
+  "//": "Capability manifest for filter_card/1 — keen-pure-admin. See card.map.json for the model. keen names the built-in-button flags has_* (default true) and the states is_loading / is_disabled / is_expanded. The filters slot is required: true, so every scenario supplies it.",
+  "component": "filter-card",
+  "features": {
+    "loading":             { "prop": "is_loading",          "kind": "bool" },
+    "disabled":            { "prop": "is_disabled",         "kind": "bool" },
+    "expanded":            { "prop": "is_expanded",         "kind": "bool" },
+    "showToggle":          { "prop": "has_toggle",          "kind": "bool" },
+    "showClear":           { "prop": "has_clear",           "kind": "bool" },
+    "showRefresh":         { "prop": "has_refresh",         "kind": "bool" },
+    "showAdvancedActions": { "prop": "has_advanced_actions","kind": "bool" },
+    "filters":             { "prop": "filters",             "kind": "slot" },
+    "advancedFilters":     { "prop": "advanced_filters",    "kind": "slot" },
+    "actions":             { "prop": "actions",             "kind": "slot" }
+  }
+}

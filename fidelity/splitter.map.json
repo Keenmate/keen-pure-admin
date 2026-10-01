@@ -1,0 +1,13 @@
+{
+  "//": "Capability manifest for splitter/1 — keen-pure-admin. Maps each NEUTRAL splitter feature to this wrapper's assign/kind. SCOPE = CONTAINER (ROOT) ONLY — the generic dumper seeds a single text `:pane` slot and can't compose the N-pane/gutter interleave, so panes/gutters are deferred in the fixture. `splitterId` → `id` is declared for axis-2 completeness but exercised in no golden: keen stamps a bare `id` + phx-hook=\"PureAdminSplitter\" off it that svelte omits — an acknowledged API divergence (see fixture). `body` maps to the required `:pane` slot (the dumper fills it with one text pane; goldens assert only the root, so the inner text pane is harmless). step/rail_size take numeric literals verbatim; minimize_threshold is a string. See modal.map.json for the model.",
+  "component": "splitter",
+  "features": {
+    "orientation":       { "prop": "orientation",        "kind": "enum", "values": ["horizontal", "vertical"] },
+    "minimizeMirror":    { "prop": "is_minimize_mirror", "kind": "bool" },
+    "splitterId":        { "prop": "id",                 "kind": "string" },
+    "step":              { "prop": "step",               "kind": "string" },
+    "railSize":          { "prop": "rail_size",          "kind": "string" },
+    "minimizeThreshold": { "prop": "minimize_threshold", "kind": "string" },
+    "body":              { "prop": "pane",               "kind": "slot" }
+  }
+}

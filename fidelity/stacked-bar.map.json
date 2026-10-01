@@ -1,0 +1,10 @@
+{
+  "//": "Capability manifest for stacked_bar/1 (the .pa-stacked-bar container) — keen-pure-admin (DataViz.stacked_bar/1). See list.map.json / data-bar.map.json for the model. CONTAINER-ONLY slice: stacked_bar/1 renders <div class=\"pa-stacked-bar [--size] [--rounded] {class}\" {@rest}> with an `inner_block` slot. The segments + legend are SEPARATE components (stacked_segment / stacked_bar_legend / stacked_legend_item) fed through the slot — the dumper can't materialize them (slot content arrives as plain text), so the __segment / __legend* element classes are the DEFERRED child-component sub-slice, not mapped here. size is sm|lg; rounded is the is_rounded bool.",
+  "component": "stacked-bar",
+  "features": {
+    "size":       { "prop": "size",       "kind": "enum", "values": ["sm", "lg"] },
+    "rounded":    { "prop": "is_rounded", "kind": "bool" },
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

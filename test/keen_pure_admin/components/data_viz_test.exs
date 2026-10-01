@@ -135,4 +135,26 @@ defmodule PureAdmin.Components.DataVizTest do
       refute_class(html, "pa-data-bar__value")
     end
   end
+
+  describe "stacked_bar/1 — size modifiers core blesses" do
+    test "size=sm emits pa-stacked-bar--sm (core ships the --sm height)" do
+      html =
+        render_component(&DataViz.stacked_bar/1, %{
+          size: "sm",
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "" end}]
+        })
+
+      assert_class(html, "pa-stacked-bar--sm")
+    end
+
+    test "size=lg emits pa-stacked-bar--lg" do
+      html =
+        render_component(&DataViz.stacked_bar/1, %{
+          size: "lg",
+          inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "" end}]
+        })
+
+      assert_class(html, "pa-stacked-bar--lg")
+    end
+  end
 end

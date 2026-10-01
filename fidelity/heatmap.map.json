@@ -1,0 +1,10 @@
+{
+  "component": "heatmap",
+  "features": {
+    "variant":    { "prop": "variant",    "kind": "enum", "values": ["success", "danger"] },
+    "compact":    { "prop": "is_compact",  "kind": "bool" },
+    "columns":    { "prop": "columns",     "kind": "string", "nativeType": "integer" },
+    "levels":     { "prop": "levels",      "kind": "string" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

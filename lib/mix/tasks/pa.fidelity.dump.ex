@@ -30,11 +30,14 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   alias PureAdmin.Components.Button
   alias PureAdmin.Components.Callout
   alias PureAdmin.Components.Card
+  alias PureAdmin.Components.CheckboxList
   alias PureAdmin.Components.DataViz
+  alias PureAdmin.Components.FilterCard
   alias PureAdmin.Components.Loader
   alias PureAdmin.Components.Modal
   alias PureAdmin.Components.Pager
   alias PureAdmin.Components.Popconfirm
+  alias PureAdmin.Components.Splitter
   alias PureAdmin.Components.Stat
   alias PureAdmin.Components.Timeline
   alias PureAdmin.Components.Toast
@@ -92,6 +95,11 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp render(assigns, "pager"), do: render_component(&Pager.pager/1, assigns)
   defp render(assigns, "toast"), do: render_component(&Toast.toast/1, assigns)
   defp render(assigns, "data-bar"), do: render_component(&DataViz.data_bar/1, assigns)
+  defp render(assigns, "stacked-bar"), do: render_component(&DataViz.stacked_bar/1, assigns)
+  defp render(assigns, "heatmap"), do: render_component(&DataViz.heatmap/1, assigns)
+  defp render(assigns, "splitter"), do: render_component(&Splitter.splitter/1, assigns)
+  defp render(assigns, "checkbox-list"), do: render_component(&CheckboxList.checkbox_list/1, assigns)
+  defp render(assigns, "filter-card"), do: render_component(&FilterCard.filter_card/1, assigns)
   # Fragment fixtures — sub-components tested in isolation. (keen has no
   # card_tab_content counterpart — that fragment is svelte-only.)
   defp render(assigns, "card-tab"), do: render_component(&Card.card_tab/1, assigns)
@@ -115,6 +123,11 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("pager"), do: PureAdmin.Components.Pager.__components__()[:pager]
   defp meta("toast"), do: PureAdmin.Components.Toast.__components__()[:toast]
   defp meta("data-bar"), do: PureAdmin.Components.DataViz.__components__()[:data_bar]
+  defp meta("stacked-bar"), do: PureAdmin.Components.DataViz.__components__()[:stacked_bar]
+  defp meta("heatmap"), do: PureAdmin.Components.DataViz.__components__()[:heatmap]
+  defp meta("splitter"), do: PureAdmin.Components.Splitter.__components__()[:splitter]
+  defp meta("checkbox-list"), do: PureAdmin.Components.CheckboxList.__components__()[:checkbox_list]
+  defp meta("filter-card"), do: PureAdmin.Components.FilterCard.__components__()[:filter_card]
   defp meta("card-tab"), do: PureAdmin.Components.Card.__components__()[:card_tab]
   defp meta("list-item"), do: PureAdmin.Components.List.__components__()[:list_item]
   defp meta("timeline-item"), do: PureAdmin.Components.Timeline.__components__()[:timeline_item]
