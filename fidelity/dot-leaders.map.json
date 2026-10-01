@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for dot_leaders/1 (the .pa-dot-leaders container) — keen-pure-admin. See list.map.json for the model. CONTAINER-ONLY slice: dot_leaders/1 renders <div class=pa-dot-leaders + class passthrough> {@rest} with an `inner_block` slot. The per-ROW structure (dot_leader/1: __item / __label / __leader / __value / __item--total) is the DEFERRED sub-slice — not mapped here (both dumpers pass slots as plain text, so item children can't flow through). NOTE: keen's dot_leader/1 adds <strong> around label/value on is_total, a divergence from the core snippet + svelte (which rely on the __item--total CSS alone) — out of scope for this container-only slice.",
+  "component": "dot-leaders",
+  "features": {
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

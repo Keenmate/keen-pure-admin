@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for prop_card/1 — keen-pure-admin. See list.map.json for the container-only model. Rows come from the sibling prop_card_row/1, fed through the required inner_block slot (dumper renders slot content as plain text), so only the container features are mapped here.",
+  "component": "prop-card",
+  "features": {
+    "header":     { "prop": "header",      "kind": "string" },
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

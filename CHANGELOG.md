@@ -121,6 +121,21 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Markup-fidelity sweep #5 — desc-table corrected against core.** Same cross-repo
+  harness, one markup bug: `desc_table/1` rendered `style={@computed_style}` directly, so a
+  nil `label_width` emitted a stray `style=""` (HEEx renders `style={nil}` as an empty
+  attribute, unlike `class`), diverging from the blessed snippet and the svelte wrapper
+  (both omit the attribute). Fixed by folding the computed style into `@rest` only when
+  present. Locked by three new `desc_table/1` unit tests. `banded` / `dot-leaders` / `fields`
+  / `prop-card` needed no keen markup change (already core-faithful).
+- **Fidelity tooling #5 (dev-only).** Added `fidelity/*.map.json` capability maps for
+  banded / desc-table / dot-leaders / fields / prop-card and the matching
+  `mix pa.fidelity.dump` clauses (the data-display family). All scoped container-only —
+  their row/label/value/field children come from separate sub-components the generic dumper
+  can't compose, so those element classes are acknowledged-deferred; the valuable coverage is
+  the container contract + its modifiers (`fields` exercises 23 scenarios across its full
+  modifier set via a `blocks: […]` family fixture). banded 12/12, desc-table 13/13,
+  dot-leaders 3/3, fields 23/23, prop-card 4/4 — all 0 capability hard failures.
 - **Markup-fidelity sweep #4 — stacked-bar / filter-card corrected against core.** Same
   cross-repo harness, two more markup bugs:
   - **Stacked bar:** `stacked_bar/1` declared `size` values `[nil, "lg"]`, omitting `"sm"`

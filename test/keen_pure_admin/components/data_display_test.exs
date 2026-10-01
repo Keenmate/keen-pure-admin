@@ -29,6 +29,39 @@ defmodule PureAdmin.Components.DataDisplayTest do
     end
   end
 
+  describe "desc_table/1 label_width → --label-width style" do
+    defp desc_table(assigns) do
+      base = %{
+        inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "Body" end}],
+        rest: %{}
+      }
+
+      render_component(&DataDisplay.desc_table/1, Map.merge(base, assigns))
+    end
+
+    test "no label_width emits NO style attribute (not style=\"\")" do
+      html = desc_table(%{})
+
+      assert_class(html, "pa-desc-table")
+      # A bare style={nil} renders as style="" in HEEx (unlike class) — the
+      # wrapper must omit the attribute entirely to match the canonical snippet
+      # and the svelte wrapper.
+      refute html =~ ~s(style=")
+    end
+
+    test "a valid label_width emits the --label-width custom property" do
+      html = desc_table(%{label_width: "16rem"})
+
+      assert html =~ ~s(style="--label-width: 16rem")
+    end
+
+    test "an invalid label_width is dropped and emits no style attribute" do
+      html = desc_table(%{label_width: "16rem; color: red"})
+
+      refute html =~ ~s(style=")
+    end
+  end
+
   describe "field_group/1" do
     test "title is an <h3>, matching the blessed snippet shape" do
       html =

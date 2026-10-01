@@ -1,0 +1,16 @@
+{
+  "//": "Capability manifest for banded/1 — keen-pure-admin (container-only slice). See list.map.json for the container-only model. keen exposes the label-band WIDTH as two mutually-exclusive is_narrow / is_wide bools (no width enum), so the neutral narrow/wide bool features map straight through. The other seven layout modifiers are plain bool props. body → the inner_block slot; extraClass → the class passthrough. Per-ROW structure (pa-banded__row/__label/__value/__copy) is the banded_row/1 sub-component, deferred in the fixture.",
+  "component": "banded",
+  "features": {
+    "narrow":      { "prop": "is_narrow",       "kind": "bool" },
+    "wide":        { "prop": "is_wide",         "kind": "bool" },
+    "middle":      { "prop": "is_middle",       "kind": "bool" },
+    "truncate":    { "prop": "is_truncate",     "kind": "bool" },
+    "labelEnd":    { "prop": "is_label_end",    "kind": "bool" },
+    "labelCenter": { "prop": "is_label_center", "kind": "bool" },
+    "valueEnd":    { "prop": "is_value_end",    "kind": "bool" },
+    "valueCenter": { "prop": "is_value_center", "kind": "bool" },
+    "body":        { "prop": "inner_block", "kind": "slot" },
+    "extraClass":  { "prop": "class",       "kind": "string" }
+  }
+}

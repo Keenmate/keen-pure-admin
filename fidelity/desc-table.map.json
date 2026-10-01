@@ -1,0 +1,17 @@
+{
+  "//": "Capability manifest for desc_table/1 — keen-pure-admin. See list.map.json / banded.map.json for the container-only model. CONTAINER ONLY: the label/value cells come from desc_label/1 + desc_value/1 fed through inner_block — the harness passes slot content as plain text, so only the container is exercised. cols2 maps to the string `cols` attr via a const (keen sets pa-desc-table--cols-2 only when cols==\"2\"). keen's desc_table ALWAYS emits the outer pa-desc-container, so there is NO hasContainerQuery mapping (the oracle scenarios carry it for svelte only; keen's dumper warns-and-skips it harmlessly).",
+  "component": "desc-table",
+  "features": {
+    "cols2":       { "prop": "cols",            "kind": "const", "value": "2" },
+    "fixed":       { "prop": "is_fixed",        "kind": "bool" },
+    "middle":      { "prop": "is_middle",       "kind": "bool" },
+    "labelEnd":    { "prop": "is_label_end",    "kind": "bool" },
+    "labelCenter": { "prop": "is_label_center", "kind": "bool" },
+    "valueEnd":    { "prop": "is_value_end",    "kind": "bool" },
+    "valueCenter": { "prop": "is_value_center", "kind": "bool" },
+    "truncate":    { "prop": "is_truncate",     "kind": "bool" },
+    "labelWidth":  { "prop": "label_width",     "kind": "string" },
+    "body":        { "prop": "inner_block",     "kind": "slot" },
+    "extraClass":  { "prop": "class",           "kind": "string" }
+  }
+}

@@ -226,7 +226,12 @@ defmodule PureAdmin.Components.DataDisplay do
         value -> if Regex.match?(@css_length_regex, value), do: "--label-width: #{value}", else: nil
       end
 
-    assigns = assign(assigns, :computed_style, style)
+    # Fold the computed style into :rest only when present, so a nil label_width
+    # emits NO style attribute at all. A bare `style={nil}` renders as `style=""`
+    # in HEEx (unlike class), which drifts from the canonical snippet + the svelte
+    # wrapper (both omit the attribute when there's no custom width).
+    rest = if style, do: Map.put(assigns.rest, :style, style), else: assigns.rest
+    assigns = assign(assigns, :rest, rest)
 
     ~H"""
     <div class="pa-desc-container">
@@ -241,7 +246,6 @@ defmodule PureAdmin.Components.DataDisplay do
           {"pa-desc-table--value-end", @is_value_end},
           {"pa-desc-table--value-center", @is_value_center}
         ], @class)}
-        style={@computed_style}
         {@rest}
       >
         <%= render_slot(@inner_block) %>

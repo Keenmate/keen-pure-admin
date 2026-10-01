@@ -1,0 +1,22 @@
+{
+  "//": "Capability manifest for fields/1 — keen-pure-admin. See filter-card.map.json for the model. CONTAINER-ONLY slice: the pa-field items / pa-field-group title come from the separate field/1 + field_group/1 functions and flow through this container's inner_block slot as plain text, so only the pa-fields container's own attrs are mapped. keen names the layout flags is_* and noBorder is is_no_border (default false). cols/color are string attrs ('2'..'4', '1'..'9'). extraClass -> class merged via build_classes.",
+  "component": "fields",
+  "features": {
+    "cols":       { "prop": "cols",         "kind": "enum", "values": ["2", "3", "4"] },
+    "horizontal": { "prop": "is_horizontal", "kind": "bool" },
+    "table":      { "prop": "is_table",     "kind": "bool" },
+    "bordered":   { "prop": "is_bordered",  "kind": "bool" },
+    "striped":    { "prop": "is_striped",   "kind": "bool" },
+    "compact":    { "prop": "is_compact",   "kind": "bool" },
+    "relaxed":    { "prop": "is_relaxed",   "kind": "bool" },
+    "inline":     { "prop": "is_inline",    "kind": "bool" },
+    "row":        { "prop": "is_row",       "kind": "bool" },
+    "linear":     { "prop": "is_linear",    "kind": "bool" },
+    "chips":      { "prop": "is_chips",     "kind": "bool" },
+    "filled":     { "prop": "is_filled",    "kind": "bool" },
+    "color":      { "prop": "color",        "kind": "enum", "values": ["1", "2", "3", "4", "5", "6", "7", "8", "9"] },
+    "noBorder":   { "prop": "is_no_border", "kind": "bool" },
+    "body":       { "prop": "inner_block",  "kind": "slot" },
+    "extraClass": { "prop": "class",        "kind": "string" }
+  }
+}
