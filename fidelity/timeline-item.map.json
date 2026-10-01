@@ -1,0 +1,11 @@
+{
+  "//": "Capability manifest for keen timeline_item/1 (fragment of Timeline). See card.map.json for the model.",
+  "component": "timeline-item",
+  "features": {
+    "variant":    { "prop": "variant",        "kind": "enum", "values": ["primary", "secondary", "success", "warning", "danger", "info"] },
+    "filled":     { "prop": "is_filled",      "kind": "bool" },
+    "dateHeader": { "prop": "is_date_header", "kind": "bool" },
+    "time":       { "prop": "time_text",      "kind": "string" },
+    "content":    { "prop": "inner_block",    "kind": "slot" }
+  }
+}

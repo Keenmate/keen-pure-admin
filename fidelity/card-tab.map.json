@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for keen card_tab/1 (fragment of Card). See card.map.json for the model.",
+  "component": "card-tab",
+  "features": {
+    "active":     { "prop": "is_active",   "kind": "bool" },
+    "label":      { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

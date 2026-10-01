@@ -108,5 +108,36 @@ defmodule PureAdmin.Components.CardTest do
       assert html =~ "pa-card__header--underlined"
       assert html =~ "pa-card__header--underline-color-3"
     end
+
+    test "renders tabs INSIDE the header, coexisting with the title" do
+      # Canonical placement (snippets/cards.html): the tab strip lives inside
+      # pa-card__header, after the title — NOT outside the header, and the title
+      # is not dropped. Covers both default and inline tabs.
+      for inline <- [false, true] do
+        html =
+          render_component(
+            &Card.card/1,
+            default_assigns(%{
+              title_text: "Sales",
+              has_inline_tabs: inline,
+              tabs: [%{__slot__: :tabs, inner_block: fn _, _ -> "Overview" end}]
+            })
+          )
+
+        {:ok, doc} = Floki.parse_fragment(html)
+
+        # tab strip nested within the header (not a sibling after it)
+        assert Floki.find(doc, ".pa-card__header .pa-card__tabs") != []
+        # title still present alongside the tabs
+        assert Floki.find(doc, ".pa-card__header .pa-card__title") != []
+        assert html =~ "Overview"
+        # no stray tab strip outside the header
+        assert Floki.find(doc, ".pa-card > .pa-card__tabs") == []
+
+        if inline,
+          do: assert(html =~ "pa-card__tabs--inline"),
+          else: refute(html =~ "pa-card__tabs--inline")
+      end
+    end
   end
 end

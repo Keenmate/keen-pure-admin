@@ -83,6 +83,11 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp render(assigns, "loader"), do: render_component(&Loader.loader/1, assigns)
   defp render(assigns, "timeline"), do: render_component(&Timeline.timeline/1, assigns)
   defp render(assigns, "list"), do: render_component(&PureAdmin.Components.List.list/1, assigns)
+  # Fragment fixtures — sub-components tested in isolation. (keen has no
+  # card_tab_content counterpart — that fragment is svelte-only.)
+  defp render(assigns, "card-tab"), do: render_component(&Card.card_tab/1, assigns)
+  defp render(assigns, "list-item"), do: render_component(&PureAdmin.Components.List.list_item/1, assigns)
+  defp render(assigns, "timeline-item"), do: render_component(&Timeline.timeline_item/1, assigns)
 
   defp meta("button"), do: PureAdmin.Components.Button.__components__()[:button]
   defp meta("card"), do: PureAdmin.Components.Card.__components__()[:card]
@@ -96,6 +101,9 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("loader"), do: PureAdmin.Components.Loader.__components__()[:loader]
   defp meta("timeline"), do: PureAdmin.Components.Timeline.__components__()[:timeline]
   defp meta("list"), do: PureAdmin.Components.List.__components__()[:list]
+  defp meta("card-tab"), do: PureAdmin.Components.Card.__components__()[:card_tab]
+  defp meta("list-item"), do: PureAdmin.Components.List.__components__()[:list_item]
+  defp meta("timeline-item"), do: PureAdmin.Components.Timeline.__components__()[:timeline_item]
 
   # Base assigns from the component's own metadata: every attr that declares a
   # default gets it, every slot defaults to []. Fully generic — no per-component

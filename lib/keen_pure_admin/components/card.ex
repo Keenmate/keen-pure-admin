@@ -189,8 +189,10 @@ defmodule PureAdmin.Components.Card do
           <h3 class="pa-card__title-text"><%= @title_display_text %></h3>
         </div>
 
-        <%!-- Inline tabs (after title) --%>
-        <div :if={@tabs != [] && @has_inline_tabs} class="pa-card__tabs pa-card__tabs--inline">
+        <%!-- Tabs — canonical placement is INSIDE the header, after the title
+             (snippets/cards.html). --inline only toggles the compact pill style;
+             both default and inline tabs live in the header. --%>
+        <div :if={@tabs != []} class={build_classes("pa-card__tabs", [{"pa-card__tabs--inline", @has_inline_tabs}], nil)}>
           <%= for tabs <- @tabs do %>
             <%= render_slot(tabs) %>
           <% end %>
@@ -235,12 +237,6 @@ defmodule PureAdmin.Components.Card do
           ><%= render_slot(tools) %></div>
         <% end %>
 
-      </div>
-      <%!-- Tabs (non-inline, outside header) --%>
-      <div :if={@has_header && @header == [] && @tabs != [] && !@has_inline_tabs} class="pa-card__tabs">
-        <%= for tabs <- @tabs do %>
-          <%= render_slot(tabs) %>
-        <% end %>
       </div>
 
       <div class={body_classes(assigns)}>

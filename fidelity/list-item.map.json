@@ -1,0 +1,11 @@
+{
+  "//": "Capability manifest for keen list_item/1 (fragment of List). See card.map.json for the model.",
+  "component": "list-item",
+  "features": {
+    "avatar":     { "prop": "avatar",        "kind": "slot" },
+    "title":      { "prop": "title_text",    "kind": "string" },
+    "subtitle":   { "prop": "subtitle_text", "kind": "string" },
+    "meta":       { "prop": "meta_text",     "kind": "string" },
+    "extraClass": { "prop": "class",         "kind": "string" }
+  }
+}

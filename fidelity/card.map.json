@@ -18,6 +18,8 @@
     "body":                 { "prop": "inner_block",          "kind": "slot" },
     "footer":               { "prop": "footer",               "kind": "slot" },
     "footerActions":        { "prop": "actions",              "kind": "slot" },
-    "tools":                { "prop": "tools",                "kind": "slot" }
+    "tools":                { "prop": "tools",                "kind": "slot" },
+    "tabs":                 { "prop": "tabs",                 "kind": "slot" },
+    "inlineTabs":           { "prop": "has_inline_tabs",      "kind": "bool" }
   }
 }

@@ -121,6 +121,17 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Card tabs now sit INSIDE the header, next to the title.** `card/1` previously
+  rendered non-inline tabs in a `<div class="pa-card__tabs">` *outside* the header; the
+  canonical placement (snippets/cards.html) is inside `pa-card__header`, after the title
+  (the `pa-card__tabs--inline` negative-margin CSS assumes it). Unified the inline and
+  default tab strips into one header-level block (`pa-card__tabs`, plus `--inline` for the
+  pill style) and removed the outside-header block. Surfaced by the markup-fidelity harness
+  (svelte had the mirror bug — it *dropped the title* when tabs were present). Locked by a
+  new Floki test asserting the tab strip nests in the header.
+- **Fidelity fragment tooling (dev-only).** Added `mix pa.fidelity.dump` clauses +
+  `fidelity/*.map.json` for the sub-component fragments card-tab / list-item / timeline-item
+  (tested in isolation; parent fixtures defer to them, verified).
 - **Markup-fidelity sweep — badge / alert / stat corrected against core.** A new
   cross-repo markup-fidelity harness (core renders the blessed golden markup per scenario;
   keen renders the same component via `mix pa.fidelity.dump`; the two are normalized and
