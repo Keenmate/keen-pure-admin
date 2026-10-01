@@ -1,0 +1,15 @@
+{
+  "//": "Capability manifest for kpi_sparkline_row/1 (the .pa-kpi-spark-row block) — keen-pure-admin. The row kpi_sparkline_list/1 feeds through its inner_block slot and defers to this fixture. variant is the trend sentiment (chart tint via currentColor); delta_variant is the SEPARATE Δ% tint scale. Both attr `values` lists are underscored, but render_component/2 does not enforce them at runtime and keen's dasherize passes the oracle's dashed values (up-strong / very-positive) through to the blessed class suffixes unchanged. chart is a slot (the author SVG); here fed a plain-text token so the keen __chart div wraps the same content the svelte shell does. See kpi-tile.map.json for the KPI dashed-enum model.",
+  "component": "kpi-sparkline-row",
+  "features": {
+    "variant":      { "prop": "variant",       "kind": "enum", "values": ["up-strong", "up", "flat", "down", "down-strong"] },
+    "label":        { "prop": "label_text",    "kind": "string" },
+    "chart":        { "prop": "chart",         "kind": "slot" },
+    "value":        { "prop": "value_text",    "kind": "string" },
+    "unit":         { "prop": "unit_text",     "kind": "string" },
+    "prefix":       { "prop": "prefix_text",   "kind": "string" },
+    "delta":        { "prop": "delta_text",    "kind": "string" },
+    "deltaVariant": { "prop": "delta_variant", "kind": "enum", "values": ["very-positive", "positive", "neutral", "negative", "very-negative"] },
+    "extraClass":   { "prop": "class",         "kind": "string" }
+  }
+}

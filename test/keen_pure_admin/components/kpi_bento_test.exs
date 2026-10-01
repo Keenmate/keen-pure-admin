@@ -77,4 +77,85 @@ defmodule PureAdmin.Components.KpiBentoTest do
       refute html =~ "pa-kpi-bento__grid--"
     end
   end
+
+  # --------------------------------------------------------------------------
+  # kpi_bento_tile/1 — the per-KPI bento cell (fidelity fragment kpi-bento-tile)
+  # --------------------------------------------------------------------------
+
+  alias PureAdmin.Components.KpiBento, as: Bento
+
+  defp render_tile(overrides) do
+    base = %{
+      id: nil,
+      variant: nil,
+      is_hero: false,
+      label_text: nil,
+      value_text: nil,
+      unit_text: nil,
+      prefix_text: nil,
+      delta_text: nil,
+      detail_title_text: nil,
+      previous_value_text: nil,
+      target_text: nil,
+      delta_absolute_text: nil,
+      delta_absolute_sentiment: nil,
+      detail_rows: nil,
+      class: nil,
+      label: [],
+      value: [],
+      delta: [],
+      chart: [],
+      detail: []
+    }
+
+    render_component(&Bento.kpi_bento_tile/1, Map.merge(base, overrides))
+  end
+
+  describe "tile block + default sentiment" do
+    test "the bare tile carries pa-kpi-bento-tile and NO sentiment modifier" do
+      html = render_tile(%{label_text: "Active Users", value_text: "12.4"})
+
+      assert_class(html, "pa-kpi-bento-tile")
+      assert_class(html, "pa-kpi-bento-tile__label")
+      assert_class(html, "pa-kpi-bento-tile__value")
+      assert_class(html, "pa-kpi-bento-tile__num")
+
+      # Default sentiment seeds --pa-positive via SCSS on the bare tile — the
+      # wrapper must NOT emit a phantom --positive modifier class.
+      refute html =~ "pa-kpi-bento-tile--"
+    end
+  end
+
+  describe "tile modifiers (tuple list — no namespace-drop)" do
+    test "variant + is_hero emit both modifier classes" do
+      # build_classes/3 keeps only {class, true} tuples; a bare-string modifier
+      # is silently dropped. The sentiment + hero modifiers must survive.
+      html = render_tile(%{variant: "positive", is_hero: true, label_text: "Rev", value_text: "849"})
+
+      assert_class(html, "pa-kpi-bento-tile--positive")
+      assert_class(html, "pa-kpi-bento-tile--hero")
+    end
+
+    test "each sentiment variant produces the matching modifier (dashed pass-through)" do
+      for v <- ~w(positive negative neutral up-strong down-strong) do
+        html = render_tile(%{variant: v, label_text: "L", value_text: "1"})
+        assert_class(html, "pa-kpi-bento-tile--#{v}")
+      end
+    end
+  end
+
+  describe "tile cells" do
+    test "prefix + unit render as __unit spans around __num, delta only when set" do
+      html = render_tile(%{prefix_text: "$", value_text: "849", unit_text: "K", delta_text: "+12.8%"})
+
+      assert_class(html, "pa-kpi-bento-tile__unit")
+      assert_class(html, "pa-kpi-bento-tile__delta")
+      assert html =~ "+12.8%"
+    end
+
+    test "no delta cell when delta_text is unset" do
+      html = render_tile(%{label_text: "L", value_text: "1"})
+      refute html =~ "pa-kpi-bento-tile__delta"
+    end
+  end
 end

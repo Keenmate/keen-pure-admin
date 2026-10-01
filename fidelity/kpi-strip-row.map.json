@@ -1,0 +1,16 @@
+{
+  "//": "Capability manifest for kpi_strip_row/1 (the .pa-kpi-strip__row fragment) — keen-pure-admin. The row kpi_strip/1 feeds through its inner_block slot and defers to this fixture. Flat-sibling cells under pa-kpi-strip__ (metric/now/num/unit/prev/delta/target/bar/fill/bar-pct). delta_variant has an attr `values` list with UNDERSCORED names, but render_component/2 does NOT enforce attr values at runtime and keen's dasherize turns the oracle's dashed values (up-strong) into the blessed class suffixes unchanged — so dashed values pass straight through. target_bar_percent is an :integer attr (the fixture feeds it a JSON number so keen's `n |> max(0) |> min(100)` clamp compares numbers, not strings); target_percent_text is the label below the bar. See list-item.map.json for the flat-sibling fragment model.",
+  "component": "kpi-strip-row",
+  "features": {
+    "metric":           { "prop": "metric_text",          "kind": "string" },
+    "value":            { "prop": "value_text",           "kind": "string" },
+    "unit":             { "prop": "unit_text",            "kind": "string" },
+    "prefix":           { "prop": "prefix_text",          "kind": "string" },
+    "prev":             { "prop": "previous_value_text",  "kind": "string" },
+    "delta":            { "prop": "delta_text",           "kind": "string" },
+    "deltaVariant":     { "prop": "delta_variant",        "kind": "enum", "values": ["positive", "negative", "neutral", "up-strong", "down-strong"] },
+    "targetBarPercent": { "prop": "target_bar_percent",   "kind": "string" },
+    "targetPercent":    { "prop": "target_percent_text",  "kind": "string" },
+    "extraClass":       { "prop": "class",                "kind": "string" }
+  }
+}

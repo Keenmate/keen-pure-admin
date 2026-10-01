@@ -1,0 +1,14 @@
+{
+  "//": "Capability manifest for kpi_editorial_tile/1 — keen-pure-admin. FRAGMENT of kpi_editorial (the per-KPI editorial cell the container defers). Flat-sibling block pa-kpi-edit__tile; its cells are flat pa-kpi-edit__* siblings. `deltaVariant` is the delta sentiment-tint enum — the dashed oracle values (up-strong/down-strong) pass through dasherize/1 unchanged and produce the matching __delta--{value} tint; the default (nil) emits no tint (guarded by `v != nil`). prefix/unit share the __unit class around __num; target_text renders after a literal <em>tgt</em>. The detail popover is out of this slice (its own fragment).",
+  "component": "kpi-editorial-tile",
+  "features": {
+    "labelText":    { "prop": "label_text",    "kind": "string" },
+    "valueText":    { "prop": "value_text",    "kind": "string" },
+    "unit":         { "prop": "unit_text",     "kind": "string" },
+    "prefix":       { "prop": "prefix_text",   "kind": "string" },
+    "deltaText":    { "prop": "delta_text",    "kind": "string" },
+    "deltaVariant": { "prop": "delta_variant", "kind": "enum", "values": ["positive", "negative", "neutral", "up-strong", "down-strong"] },
+    "targetText":   { "prop": "target_text",   "kind": "string" },
+    "extraClass":   { "prop": "class",         "kind": "string" }
+  }
+}

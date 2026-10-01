@@ -60,6 +60,8 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   alias PureAdmin.Components.Typography
   alias PureAdmin.Components.Grid
   alias PureAdmin.Components.Responsive
+  alias PureAdmin.Components.Kpi
+  alias PureAdmin.Components.KpiTerminal
   # NOTE: PureAdmin.Components.Code / .List are NOT aliased — they'd shadow the
   # built-in Elixir `Code` / `List` modules (the task uses `List.first/1`).
   # Their render/meta clauses use the fully-qualified module name instead.
@@ -197,6 +199,41 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp render(assigns, "list-item"), do: render_component(&PureAdmin.Components.List.list_item/1, assigns)
   defp render(assigns, "timeline-item"), do: render_component(&Timeline.timeline_item/1, assigns)
 
+  # KPI fragment fixtures — the per-tile / per-row sub-components the KPI
+  # showcase containers defer, plus the terminal container itself.
+  defp render(assigns, "kpi-tile"), do: render_component(&Kpi.kpi_tile/1, assigns)
+  defp render(assigns, "kpi-detail"), do: render_component(&Kpi.kpi_detail/1, assigns)
+  defp render(assigns, "kpi-sparkline"), do: render_component(&Kpi.kpi_sparkline/1, assigns)
+  defp render(assigns, "kpi-bento-tile"), do: render_component(&KpiBento.kpi_bento_tile/1, assigns)
+  defp render(assigns, "kpi-editorial-tile"), do: render_component(&KpiEditorial.kpi_editorial_tile/1, assigns)
+  defp render(assigns, "kpi-strip-row"), do: render_component(&KpiStrip.kpi_strip_row/1, assigns)
+  defp render(assigns, "kpi-sparkline-row"), do: render_component(&KpiSparklineList.kpi_sparkline_row/1, assigns)
+  defp render(assigns, "kpi-hero-main"), do: render_component(&KpiHero.kpi_hero_main/1, assigns)
+  defp render(assigns, "kpi-hero-side"), do: render_component(&KpiHero.kpi_hero_side/1, assigns)
+  defp render(assigns, "kpi-gauge"), do: render_component(&KpiGaugeList.kpi_gauge/1, assigns)
+
+  # kpi-terminal's :pane slot carries required attrs (id / label_text /
+  # is_active) the generic text-slot path can't express. A `tabs` neutral
+  # feature maps (keen side) to the throwaway bool assign `pane_demo`; when set,
+  # we swap in two attributed demo panes so the tabs/tab/pane markup renders.
+  defp render(assigns, "kpi-terminal") do
+    assigns =
+      if Map.get(assigns, :pane_demo) do
+        assigns |> Map.delete(:pane_demo) |> Map.put(:pane, demo_panes())
+      else
+        Map.delete(assigns, :pane_demo)
+      end
+
+    render_component(&KpiTerminal.kpi_terminal/1, assigns)
+  end
+
+  defp demo_panes do
+    [
+      %{__slot__: :pane, id: "overview", label_text: "OVERVIEW", is_active: true, inner_block: fn _, _ -> "TILES" end},
+      %{__slot__: :pane, id: "finance", label_text: "FINANCE", is_active: false, inner_block: fn _, _ -> "TILES" end}
+    ]
+  end
+
   defp meta("button"), do: PureAdmin.Components.Button.__components__()[:button]
   defp meta("card"), do: PureAdmin.Components.Card.__components__()[:card]
   defp meta("badge"), do: PureAdmin.Components.Badge.__components__()[:badge]
@@ -292,6 +329,17 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("card-tab"), do: PureAdmin.Components.Card.__components__()[:card_tab]
   defp meta("list-item"), do: PureAdmin.Components.List.__components__()[:list_item]
   defp meta("timeline-item"), do: PureAdmin.Components.Timeline.__components__()[:timeline_item]
+  defp meta("kpi-terminal"), do: PureAdmin.Components.KpiTerminal.__components__()[:kpi_terminal]
+  defp meta("kpi-tile"), do: PureAdmin.Components.Kpi.__components__()[:kpi_tile]
+  defp meta("kpi-detail"), do: PureAdmin.Components.Kpi.__components__()[:kpi_detail]
+  defp meta("kpi-sparkline"), do: PureAdmin.Components.Kpi.__components__()[:kpi_sparkline]
+  defp meta("kpi-bento-tile"), do: PureAdmin.Components.KpiBento.__components__()[:kpi_bento_tile]
+  defp meta("kpi-editorial-tile"), do: PureAdmin.Components.KpiEditorial.__components__()[:kpi_editorial_tile]
+  defp meta("kpi-strip-row"), do: PureAdmin.Components.KpiStrip.__components__()[:kpi_strip_row]
+  defp meta("kpi-sparkline-row"), do: PureAdmin.Components.KpiSparklineList.__components__()[:kpi_sparkline_row]
+  defp meta("kpi-hero-main"), do: PureAdmin.Components.KpiHero.__components__()[:kpi_hero_main]
+  defp meta("kpi-hero-side"), do: PureAdmin.Components.KpiHero.__components__()[:kpi_hero_side]
+  defp meta("kpi-gauge"), do: PureAdmin.Components.KpiGaugeList.__components__()[:kpi_gauge]
 
   # Base assigns from the component's own metadata: every attr that declares a
   # default gets it, every slot defaults to []. Fully generic — no per-component

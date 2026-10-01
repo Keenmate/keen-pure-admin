@@ -121,6 +121,33 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Markup-fidelity sweep #12 — KPI fragment family (terminal + per-tile/row sub-components)
+  corrected against core.** Extends the harness below the KPI showcase *containers* (swept in
+  #9/#10) down to the terminal chrome and every deferred per-tile / per-row sub-component:
+  `kpi_terminal`, the base `kpi_tile` / `kpi_detail` / `kpi_sparkline` primitives, and the
+  design tiles/rows `kpi_bento_tile` / `kpi_editorial_tile` / `kpi_strip_row` /
+  `kpi_sparkline_row` / `kpi_hero_main` / `kpi_hero_side` / `kpi_gauge`. Real keen markup fixes:
+  - **kpi_terminal:** `build_classes("pa-card", ["pa-kpi-terminal"], …)` passed the namespace as a
+    bare-string "modifier", which `build_classes/3` silently drops (keeps only `{class, true}`
+    tuples) → the `pa-kpi-terminal` class never rendered; folded into the base. The header title
+    was a bare `<h3>` → now the canonical `.pa-card__title > h3.pa-card__title-text` shape. Tab
+    `aria-selected={bool}` rendered as a bare/omitted HEEx boolean attr → `to_string/1` so it emits
+    explicit `"true"`/`"false"` (matches the snippet).
+  - **kpi_gauge:** the `__bar` inlined `style={bar_style(nil, nil)}` → HEEx renders `style={nil}` as
+    an empty `style=""` artifact; routed through conditional attrs (the same guard the gauge-list
+    grid already uses).
+  `kpi_tile` / `kpi_detail` / `kpi_sparkline` and the bento/editorial/strip/sparkline-row tiles were
+  already core-faithful (tuple-guarded modifiers, no phantom defaults, no `style=""`) — locked with
+  regression tests anyway. `kpi_terminal` is **capability-only** on the svelte side (its svelte
+  counterpart is dumper-blocked by an init-time `setContext`); `kpi_sparkline` is **keen-only** (the
+  svelte chart slot takes any SVG). Locked by new `kpi_test.exs` + `kpi_terminal_test.exs` and
+  extended bento/editorial/strip/sparkline-list/gauge-list/hero test files (419 keen tests +
+  16 doctests, 0 failures).
+- **Fidelity tooling #12 (dev-only).** Added `fidelity/*.map.json` capability maps for all 11 KPI
+  fragment components + the matching `mix pa.fidelity.dump` clauses (+ `Kpi` / `KpiTerminal` aliases
+  and a bespoke `kpi-terminal` render clause that feeds attributed `:pane` demo slots so the
+  tabs/tab/pane markup renders). The core container fixtures now fixture-ref these fragments (their
+  per-tile/row `__*` classes are verified against the fragment goldens instead of acknowledged prose).
 - **Markup-fidelity sweep #11 (FINISH) — form family, shell, typography, grid, list/loader/data-viz
   variants, and misc singletons corrected against core.** The closing sweep brings every remaining
   both-wrapper component into the harness (41 components across form/layout/typography/grid/loader/

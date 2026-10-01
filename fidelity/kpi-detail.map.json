@@ -1,0 +1,7 @@
+{
+  "//": "Capability manifest for kpi_detail/1 — keen-pure-admin. SCOPE = the title-driven popover shape (`<div class=\"pa-kpi-detail\" role=\"tooltip\">` + `.pa-kpi-detail__title`). The auto-row `<dl>` body is driven by a typed `rows` list (atom-key maps via KpiDetail.build_auto_rows/1) the generic dumper can't express, so it is deferred as acknowledged prose in the oracle fixture — the <dl>/<dt>/<dd> are native tags with no pa-* class (dd tint is a bare pos/neg/warn string), so leaving them unexercised creates no pa-kpi-detail__* blind spot (the block's only element class is __title).",
+  "component": "kpi-detail",
+  "features": {
+    "title": { "prop": "title_text", "kind": "string" }
+  }
+}

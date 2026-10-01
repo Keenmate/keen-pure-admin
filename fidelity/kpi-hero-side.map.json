@@ -1,0 +1,13 @@
+{
+  "//": "Capability manifest for keen kpi_hero_side/1 (fragment of KpiHeroList — one supporting rail tile). SCOPE = the .pa-kpi-hero-side block (label · value · delta in a 2×2 grid). The __label and __value cells always render (fixed grid areas); __delta is conditional. The opt-in detail popover is deferred in the oracle fixture. Default variant (nil) emits NO modifier. `variant` values are the dashed oracle values (dasherize/1 leaves them unchanged). See timeline-item.map.json for the fragment model.",
+  "component": "kpi-hero-side",
+  "features": {
+    "variant":    { "prop": "variant",      "kind": "enum",   "values": ["positive", "negative", "neutral", "up-strong"] },
+    "label":      { "prop": "label_text",   "kind": "string" },
+    "value":      { "prop": "value_text",   "kind": "string" },
+    "prefix":     { "prop": "prefix_text",  "kind": "string" },
+    "unit":       { "prop": "unit_text",    "kind": "string" },
+    "delta":      { "prop": "delta_text",   "kind": "string" },
+    "extraClass": { "prop": "class",        "kind": "string" }
+  }
+}

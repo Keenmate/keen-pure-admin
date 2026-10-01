@@ -1,0 +1,8 @@
+{
+  "//": "Capability manifest for kpi_sparkline/1 — keen-pure-admin. KEEN-ONLY (svelte has no sparkline component; its chart slot takes any SVG). SCOPE = the simple polyline sparkline <svg class=\"pa-kpi-tile__spark\">. The trailing-dot path (dot_at tuple → <circle>) is deferred as acknowledged prose in the oracle fixture — a {cx,cy} tuple the generic dumper can't express, and <circle> is native with no pa-* class.",
+  "component": "kpi-sparkline",
+  "features": {
+    "points":  { "prop": "points",   "kind": "string" },
+    "viewBox": { "prop": "view_box", "kind": "string" }
+  }
+}

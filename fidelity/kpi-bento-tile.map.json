@@ -1,0 +1,14 @@
+{
+  "//": "Capability manifest for kpi_bento_tile/1 — keen-pure-admin. FRAGMENT of kpi_bento (the per-KPI bento cell the container defers). Clean block pa-kpi-bento-tile. `variant` is the sentiment enum — the dashed oracle values (up-strong/down-strong) pass through dasherize/1 unchanged and produce the matching --{value} modifier; the default (nil) emits no modifier (guarded by `v != nil`). `isHero` → is_hero bool (--hero). prefix/unit share the __unit class around __num. The sparkline chart slot + detail popover are out of this slice (deferred prose in the oracle fixture / their own fragment). keen's detail-popover conveniences (detail_title_text, detail_rows, …) are not part of the shared tile contract and are omitted.",
+  "component": "kpi-bento-tile",
+  "features": {
+    "variant":    { "prop": "variant",    "kind": "enum", "values": ["positive", "negative", "neutral", "up-strong", "down-strong"] },
+    "isHero":     { "prop": "is_hero",    "kind": "bool" },
+    "labelText":  { "prop": "label_text", "kind": "string" },
+    "deltaText":  { "prop": "delta_text", "kind": "string" },
+    "valueText":  { "prop": "value_text", "kind": "string" },
+    "unit":       { "prop": "unit_text",  "kind": "string" },
+    "prefix":     { "prop": "prefix_text","kind": "string" },
+    "extraClass": { "prop": "class",      "kind": "string" }
+  }
+}

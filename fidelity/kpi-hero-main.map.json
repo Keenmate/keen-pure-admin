@@ -1,0 +1,15 @@
+{
+  "//": "Capability manifest for keen kpi_hero_main/1 (fragment of KpiHeroList — the headline hero panel). SCOPE = the .pa-kpi-hero-main block (label · value · meta row). The sparkline (__chart/__chart-svg) and the opt-in detail popover are deferred in the oracle fixture. Default variant (nil) emits NO modifier. `variant` values are the dashed oracle values; keen's attr also accepts underscored forms but dasherize/1 leaves the dashed value unchanged, so these produce the same pa-kpi-hero-main--{value} class. The three meta cells (delta/period/target) are <span>s. See timeline-item.map.json for the fragment model.",
+  "component": "kpi-hero-main",
+  "features": {
+    "variant":    { "prop": "variant",      "kind": "enum",   "values": ["positive", "negative", "neutral", "up-strong"] },
+    "label":      { "prop": "label_text",   "kind": "string" },
+    "value":      { "prop": "value_text",   "kind": "string" },
+    "prefix":     { "prop": "prefix_text",  "kind": "string" },
+    "unit":       { "prop": "unit_text",    "kind": "string" },
+    "delta":      { "prop": "delta_text",   "kind": "string" },
+    "period":     { "prop": "period_text",  "kind": "string" },
+    "target":     { "prop": "target_text",  "kind": "string" },
+    "extraClass": { "prop": "class",        "kind": "string" }
+  }
+}

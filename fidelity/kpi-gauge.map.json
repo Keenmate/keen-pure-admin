@@ -1,0 +1,14 @@
+{
+  "//": "Capability manifest for kpi_gauge/1 — keen-pure-admin. FRAGMENT slice: one gauge tile (pa-kpi-gauge) of the comparison-gauges design, the sub-component kpi_gauge_list/1 defers through its inner_block slot. Maps the tile's own features: the sentiment variant (→ pa-kpi-gauge--*, dasherized idempotently), the head label/value text (label_text / value_text → __num), the prefix/unit affixes (prefix_text / unit_text → __unit spans), the inline bar fill width (bar_percent → style=\"width: N%\" on __fill, :integer), the optional target-tick position (tick_position → inline --pa-kpi-gauge-tick-pos on __bar, folded into bar_style only when present so no empty style attribute), and the right scale label (scale_end_text; scale_start_text keeps its 'LIVE'-free default '0'). The detail popover (Kpi.kpi_detail) is a separate sub-component (kpi-detail fixture) only rendered when detail props are set — none here.",
+  "component": "kpi-gauge",
+  "features": {
+    "variant":      { "prop": "variant",        "kind": "enum", "values": ["positive", "warning", "negative", "neutral"] },
+    "labelText":    { "prop": "label_text",      "kind": "string" },
+    "valueText":    { "prop": "value_text",      "kind": "string" },
+    "unit":         { "prop": "unit_text",       "kind": "string" },
+    "prefix":       { "prop": "prefix_text",     "kind": "string" },
+    "barPercent":   { "prop": "bar_percent",     "kind": "string" },
+    "tickPosition": { "prop": "tick_position",   "kind": "string" },
+    "scaleEndText": { "prop": "scale_end_text",  "kind": "string" }
+  }
+}

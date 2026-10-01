@@ -71,12 +71,14 @@ defmodule PureAdmin.Components.KpiTerminal do
     ~H"""
     <div
       id={@id}
-      class={build_classes("pa-card", ["pa-kpi-terminal"], @class)}
+      class={build_classes("pa-card pa-kpi-terminal", [], @class)}
       phx-hook={if @has_tabs?, do: "PureAdminKpiTerminalTabs"}
       {@rest}
     >
       <div :if={@title_text || @is_live || @header_controls != [] || @has_tabs?} class="pa-card__header pa-kpi-header">
-        <h3 :if={@title_text}>{@title_text}</h3>
+        <div :if={@title_text} class="pa-card__title">
+          <h3 class="pa-card__title-text">{@title_text}</h3>
+        </div>
         <div class="pa-kpi-terminal__controls">
           <%= for c <- @header_controls do %>
             {render_slot(c)}
@@ -88,7 +90,7 @@ defmodule PureAdmin.Components.KpiTerminal do
                 class={tab_classes(p, @active_pane_id)}
                 data-tab={p.id}
                 role="tab"
-                aria-selected={@active_pane_id == p.id}
+                aria-selected={to_string(@active_pane_id == p.id)}
               >
                 {p.label_text}
               </button>

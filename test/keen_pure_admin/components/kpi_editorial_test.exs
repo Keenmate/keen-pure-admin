@@ -75,4 +75,79 @@ defmodule PureAdmin.Components.KpiEditorialTest do
       assert_class(html, "pa-kpi-edit__grid--max-3")
     end
   end
+
+  # --------------------------------------------------------------------------
+  # kpi_editorial_tile/1 — the per-KPI editorial cell (fidelity fragment
+  # kpi-editorial-tile). Flat-sibling block pa-kpi-edit__tile.
+  # --------------------------------------------------------------------------
+
+  defp render_tile(overrides) do
+    base = %{
+      id: nil,
+      label_text: nil,
+      value_text: nil,
+      unit_text: nil,
+      prefix_text: nil,
+      delta_text: nil,
+      delta_variant: nil,
+      target_text: nil,
+      detail_title_text: nil,
+      previous_value_text: nil,
+      delta_absolute_text: nil,
+      delta_absolute_sentiment: nil,
+      detail_rows: nil,
+      class: nil,
+      label: [],
+      value: [],
+      meta: [],
+      detail: []
+    }
+
+    render_component(&KpiEditorial.kpi_editorial_tile/1, Map.merge(base, overrides))
+  end
+
+  describe "tile block + cells" do
+    test "the tile carries pa-kpi-edit__tile and its flat-sibling cells" do
+      html = render_tile(%{label_text: "Active Users", value_text: "12.4"})
+
+      assert_class(html, "pa-kpi-edit__tile")
+      assert_class(html, "pa-kpi-edit__label")
+      assert_class(html, "pa-kpi-edit__value")
+      assert_class(html, "pa-kpi-edit__num")
+
+      # No delta/target → no meta row.
+      refute html =~ "pa-kpi-edit__meta"
+    end
+
+    test "prefix + unit render as __unit spans around __num" do
+      html = render_tile(%{prefix_text: "$", value_text: "849", unit_text: "K"})
+
+      assert_class(html, "pa-kpi-edit__unit")
+      assert html =~ "849"
+    end
+  end
+
+  describe "tile meta row (delta + target)" do
+    test "bare delta opens the meta row with NO tint modifier (default --pa-positive)" do
+      html = render_tile(%{value_text: "87.1", delta_text: "+3.4%"})
+
+      assert_class(html, "pa-kpi-edit__meta")
+      assert_class(html, "pa-kpi-edit__delta")
+      refute html =~ "pa-kpi-edit__delta--"
+    end
+
+    test "delta_variant produces the matching __delta--<value> tint (dashed pass-through)" do
+      for v <- ~w(positive negative neutral up-strong down-strong) do
+        html = render_tile(%{value_text: "1", delta_text: "+1%", delta_variant: v})
+        assert_class(html, "pa-kpi-edit__delta--#{v}")
+      end
+    end
+
+    test "target renders __target with a literal <em>tgt</em> before the value" do
+      html = render_tile(%{value_text: "87.1", target_text: "90.0%"})
+
+      assert_class(html, "pa-kpi-edit__target")
+      assert html =~ ~r{<span class="pa-kpi-edit__target"><em>tgt</em>90.0%</span>}
+    end
+  end
 end

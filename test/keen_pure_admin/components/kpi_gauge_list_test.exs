@@ -87,4 +87,120 @@ defmodule PureAdmin.Components.KpiGaugeListTest do
       refute html =~ "pa-kpi-gauge-list__grid--"
     end
   end
+
+  # --------------------------------------------------------------------
+  # kpi_gauge/1 — the per-tile sub-component (fidelity fragment slice)
+  # --------------------------------------------------------------------
+  defp render_gauge(overrides \\ %{}) do
+    base = %{
+      id: nil,
+      variant: nil,
+      label_text: nil,
+      value_text: nil,
+      unit_text: nil,
+      prefix_text: nil,
+      bar_percent: nil,
+      tick_position: nil,
+      tick_color: nil,
+      scale_start_text: "0",
+      scale_end_text: nil,
+      detail_title_text: nil,
+      previous_value_text: nil,
+      target_text: nil,
+      delta_text: nil,
+      delta_absolute_text: nil,
+      delta_absolute_sentiment: nil,
+      detail_rows: nil,
+      class: nil,
+      label: [],
+      value: [],
+      scale: [],
+      detail: []
+    }
+
+    render_component(&KpiGaugeList.kpi_gauge/1, Map.merge(base, overrides))
+  end
+
+  describe "gauge tile sentiment modifier" do
+    test "variant emits the pa-kpi-gauge--* modifier via a {class, bool} tuple" do
+      html = render_gauge(%{variant: "positive"})
+
+      # Regression: build_classes/3's modifier list must use {class, bool}
+      # tuples — a bare string modifier is silently dropped. tile_classes/2
+      # guards nil with `v != nil`, so a set variant produces the class.
+      assert_class(html, "pa-kpi-gauge")
+      assert_class(html, "pa-kpi-gauge--positive")
+    end
+
+    test "no variant emits the bare block, no sentiment modifier" do
+      html = render_gauge()
+
+      assert_class(html, "pa-kpi-gauge")
+      refute html =~ "pa-kpi-gauge--"
+    end
+  end
+
+  describe "gauge tile value head" do
+    test "prefix/value/unit render as __unit · __num · __unit inside __value" do
+      html = render_gauge(%{prefix_text: "$", value_text: "859", unit_text: "K"})
+
+      assert html =~
+               ~r{<div class="pa-kpi-gauge__value">\s*<span class="pa-kpi-gauge__unit">\$</span>\s*<span class="pa-kpi-gauge__num">859</span>\s*<span class="pa-kpi-gauge__unit">K</span>}
+    end
+
+    test "omits the __num span entirely when no value_text is given" do
+      html = render_gauge(%{label_text: "Open Tickets"})
+
+      # keen's __num span is conditional on value_text — absence omits it
+      # (the fidelity goldens therefore only cover the value-present shape,
+      # where keen and svelte agree).
+      refute html =~ ~s(class="pa-kpi-gauge__num")
+    end
+  end
+
+  describe "gauge tile bar fill + target tick" do
+    test "the fill width is an inline style, defaulting to 0% with no bar_percent" do
+      html = render_gauge()
+
+      assert html =~ ~s(<div class="pa-kpi-gauge__fill" style="width: 0%">)
+    end
+
+    test "bar_percent sets the inline fill width" do
+      html = render_gauge(%{bar_percent: 95})
+
+      assert html =~ ~s(<div class="pa-kpi-gauge__fill" style="width: 95%">)
+    end
+
+    test "negative bar_percent is floored at 0%" do
+      html = render_gauge(%{bar_percent: -10})
+
+      assert html =~ ~s(style="width: 0%")
+    end
+
+    test "omits the bar style attribute entirely when no tick override is given" do
+      html = render_gauge()
+
+      # Regression: `style={nil}` renders as `style=""` in HEEx. bar_style/2
+      # returns nil when neither tick_position nor tick_color is set, so the
+      # __bar must carry NO empty style attribute (drifts from svelte, which
+      # now also omits the attribute entirely).
+      assert html =~ ~s(<div class="pa-kpi-gauge__bar">)
+      refute html =~ ~s(style="")
+    end
+
+    test "tick_position emits --pa-kpi-gauge-tick-pos inline on the bar" do
+      html = render_gauge(%{tick_position: "80%"})
+
+      assert html =~ ~s(<div class="pa-kpi-gauge__bar" style="--pa-kpi-gauge-tick-pos: 80%;">)
+    end
+  end
+
+  describe "gauge tile scale row" do
+    test "the scale row is always emitted with left/right spans" do
+      html = render_gauge(%{scale_end_text: "tgt $900K"})
+
+      assert html =~
+               ~r{<div class="pa-kpi-gauge__scale">\s*<span>0</span>\s*<span>tgt \$900K</span>}
+    end
+  end
 end

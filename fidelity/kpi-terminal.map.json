@@ -1,0 +1,12 @@
+{
+  "//": "Capability manifest for kpi_terminal/1 — keen-pure-admin. SCOPE = the pa-kpi-terminal CONTAINER (the `.pa-card.pa-kpi-terminal` shell + header chrome + __body/__grid + optional tab strip + __pane panes + footer). The per-KPI tiles come from the sibling kpi_tile/1 fed through the body / pane slots (dumper renders slot content as plain text), so the .pa-kpi-tile* block is deferred (fixture-ref kpi-tile) in the oracle fixture. `tabs` is a NEUTRAL bool feature that maps (keen side) to the throwaway `pane_demo` assign — the dumper's bespoke kpi-terminal clause swaps in two attributed demo panes (ids overview/finance, labels OVERVIEW/FINANCE, first is_active, each inner_block = text \"TILES\") so the __tabs/__tab/__pane markup renders without needing per-attr :pane slot wiring the generic text-slot path can't express. `footer` maps to the plain-string footer_text attr (not the footer slot) so the harness exercises the <span>-wrapped caption shape. The LIVE pill label defaults to 'LIVE' (live_text, unset here). keen's extra header_controls slot is NOT part of the shared oracle contract and is intentionally omitted.",
+  "component": "kpi-terminal",
+  "features": {
+    "title":      { "prop": "title_text",  "kind": "string" },
+    "live":       { "prop": "is_live",     "kind": "bool" },
+    "tabs":       { "prop": "pane_demo",   "kind": "bool" },
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "footer":     { "prop": "footer_text", "kind": "string" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

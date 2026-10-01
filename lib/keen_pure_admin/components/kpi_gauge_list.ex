@@ -139,10 +139,21 @@ defmodule PureAdmin.Components.KpiGaugeList do
     has_detail? = assigns.detail != [] or assigns.detail_title_text != nil
     fill_width = if assigns.bar_percent, do: max(0, assigns.bar_percent), else: 0
 
+    # Fold the tick-position/colour override into the bar's attrs only when
+    # present. A bare `style={nil}` renders as `style=""` in HEEx (unlike
+    # class), which drifts from the svelte wrapper (it omits the attribute when
+    # there's no override). Mirrors the grid's cell-min handling above.
+    bar_attrs =
+      case bar_style(assigns.tick_position, assigns.tick_color) do
+        nil -> []
+        style -> [style: style]
+      end
+
     assigns =
       assigns
       |> assign(:has_detail?, has_detail?)
       |> assign(:fill_width, fill_width)
+      |> assign(:bar_attrs, bar_attrs)
 
     ~H"""
     <div
@@ -169,7 +180,7 @@ defmodule PureAdmin.Components.KpiGaugeList do
         <% end %>
       </div>
 
-      <div class="pa-kpi-gauge__bar" style={bar_style(@tick_position, @tick_color)}>
+      <div class="pa-kpi-gauge__bar" {@bar_attrs}>
         <div class="pa-kpi-gauge__fill" style={"width: #{@fill_width}%"}></div>
       </div>
 

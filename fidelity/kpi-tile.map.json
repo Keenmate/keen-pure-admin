@@ -1,0 +1,20 @@
+{
+  "//": "Capability manifest for kpi_tile/1 — keen-pure-admin. SCOPE = the pa-kpi-tile fragment (head / label / value group / prev+delta row). The sparkline SVG (`.pa-kpi-tile__spark`) and the hover popover (`.pa-kpi-detail*`) are deferred in the oracle fixture (fixture-ref kpi-sparkline / kpi-detail) — no scenario sets the chart slot or detailTitleText, avoiding the two acknowledged wrapper divergences (svelte wraps the chart in a display:contents host; svelte always emits __label/__values). keen dasherizes variant (up_strong->up-strong) and the status/value/delta variants internally, so the oracle's dashed values pass through unchanged. keen's detail/auto-row conveniences are NOT part of the shared tile contract and are intentionally omitted.",
+  "component": "kpi-tile",
+  "features": {
+    "variant":        { "prop": "variant",             "kind": "enum",   "values": ["up-strong", "up", "flat", "down", "down-strong"] },
+    "standalone":     { "prop": "is_standalone",        "kind": "bool" },
+    "idText":         { "prop": "id_text",              "kind": "string" },
+    "statusText":     { "prop": "status_text",          "kind": "string" },
+    "statusVariant":  { "prop": "status_variant",       "kind": "enum",   "values": ["good", "warn", "neutral"] },
+    "labelText":      { "prop": "label_text",           "kind": "string" },
+    "valuePrefix":    { "prop": "prefix_text",          "kind": "string" },
+    "valueText":      { "prop": "value_text",           "kind": "string" },
+    "valueUnit":      { "prop": "unit_text",            "kind": "string" },
+    "valueVariant":   { "prop": "value_variant",        "kind": "enum",   "values": ["very-positive", "positive", "neutral", "negative", "very-negative"] },
+    "previousValueText": { "prop": "previous_value_text", "kind": "string" },
+    "deltaText":      { "prop": "delta_text",           "kind": "string" },
+    "deltaVariant":   { "prop": "delta_variant",        "kind": "enum",   "values": ["very-positive", "positive", "neutral", "negative", "very-negative"] },
+    "extraClass":     { "prop": "class",                "kind": "string" }
+  }
+}
