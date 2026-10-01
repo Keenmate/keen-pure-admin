@@ -1,0 +1,13 @@
+{
+  "//": "Capability manifest for kpi_gauge_list/1 — keen-pure-admin. CONTAINER-ONLY slice (see kpi-editorial.map.json / kpi-bento.map.json). Gauge tiles come from the sibling kpi_gauge/1, fed through the required inner_block slot (the dumper renders slot content as plain text), so only the container features are mapped here — the .pa-kpi-gauge* block is deferred in the oracle fixture. `live` → is_live (live_text defaults to 'LIVE', matching svelte's literal). gridLayout is the dash-cased column/2col enum (the dumper passes the dashed value verbatim; keen's grid_classes dasherizes idempotently, so max-3 → pa-kpi-gauge-list__grid--max-3; 2col passes through). cellMinWidth is the inline --pa-kpi-gauge-cell-min density override (folded into attrs only when present, so no style=\"\" artifact).",
+  "component": "kpi-gauge-list",
+  "features": {
+    "titleText":    { "prop": "title_text",     "kind": "string" },
+    "live":         { "prop": "is_live",        "kind": "bool" },
+    "footerText":   { "prop": "footer_text",    "kind": "string" },
+    "gridLayout":   { "prop": "grid_layout",    "kind": "enum", "values": ["2col", "max-2", "max-3", "max-4", "max-5", "max-6"] },
+    "cellMinWidth": { "prop": "cell_min_width", "kind": "string" },
+    "body":         { "prop": "inner_block",    "kind": "slot" },
+    "extraClass":   { "prop": "class",          "kind": "string" }
+  }
+}

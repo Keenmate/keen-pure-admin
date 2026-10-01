@@ -1,0 +1,10 @@
+{
+  "//": "Capability manifest for footer/1 (the .pc-layout__footer shell container) — keen-pure-admin. See section.map.json / card.map.json for the model. footer/1 renders <footer class=\"pc-layout__footer {class}\"> with three optional section slots (start / center / end_) each → pc-footer__start/__center/__end; a section div is OMITTED when its slot is empty AND no config fallback fires. keen's end slot is named `end_` (Elixir reserves `end`). No endVertical / pc-footer__end--vertical counterpart. No required attrs/slots. Shared SSR features: the three section slots + the root class passthrough.",
+  "component": "footer",
+  "features": {
+    "start":      { "prop": "start",  "kind": "slot" },
+    "center":     { "prop": "center", "kind": "slot" },
+    "end":        { "prop": "end_",   "kind": "slot" },
+    "extraClass": { "prop": "class",  "kind": "string" }
+  }
+}

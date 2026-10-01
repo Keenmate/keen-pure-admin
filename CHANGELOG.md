@@ -121,6 +121,25 @@ so those runtime overrides resolve again (they had become silent no-ops).
 
 #### Fixed
 
+- **Markup-fidelity sweep #10 — KPI gauge-list / hero corrected against core.** Same cross-repo
+  harness, closing out the KPI namespace/title bug class flagged in sweep #9. Both `kpi_gauge_list/1`
+  and `kpi_hero_list/1` had the **silently-dropped namespace class** (`pa-kpi-gauge-list` /
+  `pa-kpi-hero-list` passed as a bare string into `build_classes/3`'s tuple-only modifier list →
+  never rendered); both had the **bare `<h3>` title** instead of the canonical `pa-card__title` >
+  `h3.pa-card__title-text`; `kpi_gauge_list/1` additionally had the **`style=""` artifact** on its
+  grid when the cell-min width was nil. All fixed and locked by new unit tests (kpi_gauge_list ×7,
+  kpi_hero ×4). (The third KPI module flagged in #9, `kpi_terminal`, is not yet swept — its svelte
+  counterpart is dumper-blocked, so it's deferred to a dedicated pass.)
+- **Fidelity tooling #10 (dev-only).** Added `fidelity/*.map.json` capability maps for
+  navbar / sidebar / footer / tabs / kpi-gauge-list / kpi-hero and the matching
+  `mix pa.fidelity.dump` clauses (+ `Navigation`/`KpiGaugeList`/`KpiHero` aliases; `Layout` already
+  aliased). **App-shell coverage begins:** footer (`pc-layout__footer` + `pc-footer` sections) is a
+  full 2/2 strict compare; navbar (`pc-navbar`) and sidebar (`pc-layout__sidebar`) land
+  capability-only — their roots carry a `phx-hook` + a driver/generated `id` (NavFit, sidebar
+  toggle/resize anchors) that the svelte wrappers attach at runtime, so the pre-JS SSR shells can't
+  share a golden; their class contracts are asserted via the maps. tabs (`pa-tabs`, 12 modifiers;
+  the JS scrollable scaffold deferred to cssStateElements) is a full 14/14 strict compare — no keen
+  change needed. kpi-gauge-list 15/15, kpi-hero 9/9. All 0 capability hard failures both wrappers.
 - **Markup-fidelity sweep #9 — KPI showcases (bento / editorial / strip / sparkline-list)
   corrected against core.** Same cross-repo harness. Three recurring bugs across the KPI
   container components: (1) the showcase namespace class (`pa-kpi-bento` / `pa-kpi-edit`) was

@@ -1,0 +1,12 @@
+{
+  "//": "Capability manifest for kpi_hero_list/1 — keen-pure-admin. SCOPE = the pa-kpi-hero-list CONTAINER (card shell + header + body/layout-grid + footer) the component emits; the hero panel comes from the sibling kpi_hero_main/1 (required inner_block slot) and the supporting tiles from kpi_hero_side/1 (the `rail` slot) — the dumper renders slot content as plain text, so only container features are mapped here, and the .pa-kpi-hero-main*/.pa-kpi-hero-side* blocks (plus __rail) are deferred in the oracle fixture. The container has NO block-level modifiers; `layout` is an element modifier on __layout. NOTE: keen's `hero_split` attr takes underscored values (2_3/3_4) but internally dasherizes (_->-), so the oracle's dashed value (2-3/3-4) passes through unchanged and produces the same `pa-kpi-hero-list__layout--hero-{value}` class. `footer` maps to the plain-string `footer_text` attr (not the `footer` slot) so the harness exercises the <span>-wrapped caption shape. The LIVE pill label defaults to 'LIVE' (live_text, unset here) and is intentionally omitted from the shared oracle contract.",
+  "component": "kpi-hero",
+  "features": {
+    "title":      { "prop": "title_text",  "kind": "string" },
+    "live":       { "prop": "is_live",     "kind": "bool" },
+    "layout":     { "prop": "hero_split",  "kind": "enum",   "values": ["2-3", "3-4"] },
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "footer":     { "prop": "footer_text", "kind": "string" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

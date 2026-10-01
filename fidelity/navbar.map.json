@@ -1,0 +1,7 @@
+{
+  "//": "Capability manifest for navbar/1 (the .pc-navbar shell container) — keen-pure-admin. See settings-panel.map.json / command-palette.map.json for the capability-only model. navbar/1 renders <nav class=\"pc-navbar {class}\"> > <div id=\"pc-navbar-inner-{unique_integer}\" class=\"pc-navbar__inner\" phx-hook=\"PureAdminNavFit\"> with conditional start/center/end zones. The NavFit hook needs a stable DOM id, so keen stamps a non-deterministic generated id on __inner that svelte attaches at runtime instead — the reason this fixture is capability-only (see navbar.json). The one shared SSR feature is the root class passthrough.",
+  "component": "navbar",
+  "features": {
+    "extraClass": { "prop": "class", "kind": "string" }
+  }
+}

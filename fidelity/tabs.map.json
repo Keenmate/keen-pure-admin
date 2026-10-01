@@ -1,0 +1,14 @@
+{
+  "//": "Capability manifest for tabs/1 (the .pa-tabs container) — keen-pure-admin. See card.map.json / list.map.json for the model. CONTAINER-ONLY slice: tabs/1 renders <div id={@id} class=\"pa-tabs {...modifiers} {class}\" ...> with a required `inner_block` slot (supplied via the `body` slot feature). keen folds border-top into its `style` enum (style=\"border-top\"); the oracle models it as the `borderTop` bool, so keen uses a `const` that sets style=\"border-top\" when the flag is on (card `stat` precedent). wrap-labels is the is_wrap_labels bool. scrollable is declared for axis-2 completeness; keen's scrollable SSR shell wraps the slot in __scroll-container + __scroll-btn arrows (divergent from svelte's flat shell), so it has no strict shared scenario. Per-item/panel/layout-wrapper structure (tab_item/tab_panel/tabs_content/tabs_container/tabs_vertical_layout) is the DEFERRED sub-slice — not mapped here.",
+  "component": "tabs",
+  "features": {
+    "style":      { "prop": "style",          "kind": "enum",   "values": ["pills", "boxed", "vertical"] },
+    "size":       { "prop": "size",           "kind": "enum",   "values": ["sm", "lg"] },
+    "align":      { "prop": "align",          "kind": "enum",   "values": ["centered", "full"] },
+    "overflow":   { "prop": "overflow",       "kind": "enum",   "values": ["nowrap", "scrollable", "collapse"] },
+    "borderTop":  { "prop": "style",          "kind": "const",  "value": "border-top" },
+    "wrapLabels": { "prop": "is_wrap_labels", "kind": "bool" },
+    "body":       { "prop": "inner_block",    "kind": "slot" },
+    "extraClass": { "prop": "class",          "kind": "string" }
+  }
+}

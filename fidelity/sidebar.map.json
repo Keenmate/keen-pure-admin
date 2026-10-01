@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for sidebar/1 (the .pc-layout__sidebar shell container) — keen-pure-admin. See navbar.map.json / command-palette.map.json for the capability-only model. sidebar/1 renders <aside id=\"sidebar\" class=\"pc-layout__sidebar {--icon-collapse} {--resizable} {class}\" phx-hook=\"PureAdminSidebar\"> > <nav class=\"pc-sidebar__nav\"><ul>{inner_block}</ul></nav>. The PureAdminSidebar hook needs the default `id=\"sidebar\"` anchor (toggle_sidebar/resize target), which svelte doesn't emit — the reason this fixture is capability-only (see sidebar.json). `inner_block` is a required slot but with 0 scenarios the dumper never renders it. Shared SSR features: the two block modifiers + the root class passthrough.",
+  "component": "sidebar",
+  "features": {
+    "iconCollapse": { "prop": "is_icon_collapse", "kind": "bool" },
+    "resizable":    { "prop": "is_resizable",     "kind": "bool" },
+    "extraClass":   { "prop": "class",            "kind": "string" }
+  }
+}

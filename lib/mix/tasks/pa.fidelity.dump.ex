@@ -54,6 +54,9 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   alias PureAdmin.Components.KpiStrip
   alias PureAdmin.Components.KpiEditorial
   alias PureAdmin.Components.KpiSparklineList
+  alias PureAdmin.Components.Navigation
+  alias PureAdmin.Components.KpiGaugeList
+  alias PureAdmin.Components.KpiHero
   # NOTE: PureAdmin.Components.Code / .List are NOT aliased — they'd shadow the
   # built-in Elixir `Code` / `List` modules (the task uses `List.first/1`).
   # Their render/meta clauses use the fully-qualified module name instead.
@@ -135,6 +138,12 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp render(assigns, "kpi-strip"), do: render_component(&KpiStrip.kpi_strip/1, assigns)
   defp render(assigns, "kpi-editorial"), do: render_component(&KpiEditorial.kpi_editorial/1, assigns)
   defp render(assigns, "kpi-sparkline-list"), do: render_component(&KpiSparklineList.kpi_sparkline_list/1, assigns)
+  defp render(assigns, "navbar"), do: render_component(&Layout.navbar/1, assigns)
+  defp render(assigns, "sidebar"), do: render_component(&Layout.sidebar/1, assigns)
+  defp render(assigns, "footer"), do: render_component(&Layout.footer/1, assigns)
+  defp render(assigns, "tabs"), do: render_component(&Navigation.tabs/1, assigns)
+  defp render(assigns, "kpi-gauge-list"), do: render_component(&KpiGaugeList.kpi_gauge_list/1, assigns)
+  defp render(assigns, "kpi-hero"), do: render_component(&KpiHero.kpi_hero_list/1, assigns)
   # Fragment fixtures — sub-components tested in isolation. (keen has no
   # card_tab_content counterpart — that fragment is svelte-only.)
   defp render(assigns, "card-tab"), do: render_component(&Card.card_tab/1, assigns)
@@ -186,6 +195,12 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("kpi-strip"), do: PureAdmin.Components.KpiStrip.__components__()[:kpi_strip]
   defp meta("kpi-editorial"), do: PureAdmin.Components.KpiEditorial.__components__()[:kpi_editorial]
   defp meta("kpi-sparkline-list"), do: PureAdmin.Components.KpiSparklineList.__components__()[:kpi_sparkline_list]
+  defp meta("navbar"), do: PureAdmin.Components.Layout.__components__()[:navbar]
+  defp meta("sidebar"), do: PureAdmin.Components.Layout.__components__()[:sidebar]
+  defp meta("footer"), do: PureAdmin.Components.Layout.__components__()[:footer]
+  defp meta("tabs"), do: PureAdmin.Components.Navigation.__components__()[:tabs]
+  defp meta("kpi-gauge-list"), do: PureAdmin.Components.KpiGaugeList.__components__()[:kpi_gauge_list]
+  defp meta("kpi-hero"), do: PureAdmin.Components.KpiHero.__components__()[:kpi_hero_list]
   defp meta("card-tab"), do: PureAdmin.Components.Card.__components__()[:card_tab]
   defp meta("list-item"), do: PureAdmin.Components.List.__components__()[:list_item]
   defp meta("timeline-item"), do: PureAdmin.Components.Timeline.__components__()[:timeline_item]
