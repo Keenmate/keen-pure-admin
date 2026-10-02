@@ -69,10 +69,48 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   @impl Mix.Task
   def run(args) do
     {opts, positional, _} =
-      OptionParser.parse(args, strict: [fixture: :string, map: :string, out: :string])
+      OptionParser.parse(args, strict: [fixture: :string, map: :string, out: :string, all: :boolean])
 
-    component = List.first(positional) || "button"
+    if opts[:all] do
+      run_all()
+    else
+      component = List.first(positional) || "button"
+      {n, out} = dump_one(component, opts)
+      Mix.shell().info("wrote #{n} scenarios -> #{out}")
+    end
+  end
 
+  # Dump every component with BOTH a local map AND a core fixture (child-only
+  # maps like tab-item have no fixture → skipped). One BEAM boot for the lot.
+  defp run_all do
+    fixtures_dir = "../pure-admin/packages/core/fidelity/fixtures"
+
+    components =
+      "fidelity/*.map.json"
+      |> Path.wildcard()
+      |> Enum.map(&Path.basename(&1, ".map.json"))
+      |> Enum.filter(&File.exists?("#{fixtures_dir}/#{&1}.json"))
+      |> Enum.sort()
+
+    {ok, failed} =
+      Enum.reduce(components, {0, 0}, fn component, {ok, failed} ->
+        try do
+          {n, _out} = dump_one(component, [])
+          Mix.shell().info("  + #{component} (#{n})")
+          {ok + 1, failed}
+        rescue
+          e ->
+            msg = Exception.message(e) |> String.split("\n") |> List.first()
+            Mix.shell().info("  x #{component} — #{msg}")
+            {ok, failed + 1}
+        end
+      end)
+
+    suffix = if failed > 0, do: " (#{failed} failed)", else: ""
+    Mix.shell().info("\n#{ok}/#{length(components)} dumped -> fidelity/keen-*.dump.json#{suffix}")
+  end
+
+  defp dump_one(component, opts) do
     fixture_path = opts[:fixture] || "../pure-admin/packages/core/fidelity/fixtures/#{component}.json"
     map_path = opts[:map] || "fidelity/#{component}.map.json"
     out_path = opts[:out] || "fidelity/keen-#{component}.dump.json"
@@ -114,7 +152,7 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
 
     out_path |> Path.dirname() |> File.mkdir_p!()
     File.write!(out_path, Jason.encode!(dump, pretty: true))
-    Mix.shell().info("wrote #{length(dump)} scenarios -> #{out_path}")
+    {length(dump), out_path}
   end
 
   # render_component/2 needs a literal &Mod.fun/1 (for its attr/slot default
