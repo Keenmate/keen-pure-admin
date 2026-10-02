@@ -166,11 +166,11 @@ defmodule PureAdmin.Components.Splitter do
       <%= for {pane, idx} <- Enum.with_index(@pane) do %>
         <div
           class={["pa-splitter__pane", pane[:class]]}
-          style={pane[:style]}
           data-pa-splitter-size={pane[:size]}
           data-pa-splitter-min={pane[:min]}
           data-pa-splitter-max={pane[:max]}
           data-pa-splitter-minimize={pane[:is_minimizable] && "" || nil}
+          {pane_style(pane[:style])}
         ><%= render_slot(pane) %></div>
         <div
           :if={idx < @pane_count - 1}
@@ -186,4 +186,10 @@ defmodule PureAdmin.Components.Splitter do
 
   defp gutter_aria("horizontal"), do: "vertical"
   defp gutter_aria("vertical"), do: "horizontal"
+
+  # HEEx renders style={nil} as an empty style="" (unlike class / data-* which
+  # omit on nil), leaving a useless style="" on every pane without an inline
+  # style. Spread the attr only when the pane actually carries one.
+  defp pane_style(nil), do: []
+  defp pane_style(style), do: [style: style]
 end

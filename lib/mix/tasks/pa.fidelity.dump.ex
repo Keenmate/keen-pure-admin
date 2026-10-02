@@ -419,13 +419,15 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("kpi-hero-side"), do: PureAdmin.Components.KpiHero.__components__()[:kpi_hero_side]
   defp meta("kpi-gauge"), do: PureAdmin.Components.KpiGaugeList.__components__()[:kpi_gauge]
 
-  # Base assigns from the component's own metadata: every attr that declares a
-  # default gets it, every slot defaults to []. Fully generic — no per-component
-  # seed list to drift.
+  # Base assigns from the component's own metadata: every attr gets its declared
+  # default, or nil when it has none (incl. required attrs the scenario/map does
+  # not set — e.g. popconfirm's required `id`). nil matches `default: nil`: HEEx
+  # omits `id={nil}` / `data-*={nil}`, so an unset attr just drops out instead of
+  # raising KeyError at render. Every slot defaults to []. Fully generic.
   defp base_assigns(meta) do
     attrs =
-      for a <- meta.attrs, a.name != :rest, Keyword.has_key?(a.opts, :default), into: %{} do
-        {a.name, a.opts[:default]}
+      for a <- meta.attrs, a.name != :rest, into: %{} do
+        {a.name, Keyword.get(a.opts, :default)}
       end
 
     slots = for s <- meta.slots, into: %{}, do: {s.name, []}
