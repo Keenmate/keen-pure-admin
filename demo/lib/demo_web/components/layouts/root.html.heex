@@ -7,7 +7,24 @@
     <.live_title default="Pure Admin Demo" suffix=" · PureAdmin">
       {assigns[:page_title]}
     </.live_title>
-    <link rel="stylesheet" id="pa-theme-css" href="/themes/audi/dist/audi.css" />
+    <%!-- Theme CSS: build the <link> in the head with the correct theme href so
+         it is render-blocking BEFORE first paint (no post-paint href swap, which
+         is non-blocking and flashes unstyled content). Reads ?theme= query param
+         (persisting it) → localStorage → default. Mirrors svelte's app.html. --%>
+    <script>
+      (function() {
+        var m = location.search.match(/[?&]theme=([^&]+)/);
+        if (m) { try { localStorage.setItem("theme", decodeURIComponent(m[1])); } catch (e) {} }
+        var t;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (!t) t = "audi";
+        var link = document.createElement("link");
+        link.id = "pa-theme-css";
+        link.rel = "stylesheet";
+        link.href = "/themes/" + t + "/dist/" + t + ".css";
+        document.currentScript.parentNode.insertBefore(link, document.currentScript);
+      })();
+    </script>
     <link rel="stylesheet" href={~p"/assets/css/app.css"} />
     <link
       rel="stylesheet"
@@ -169,18 +186,8 @@
     </script>
     <.page_context />
     <.fouc_prevention_script />
-    <script>
-      // Apply theme from ?theme= query param or localStorage before paint
-      (function() {
-        var m = location.search.match(/[?&]theme=([^&]+)/);
-        if (m) localStorage.setItem("theme", decodeURIComponent(m[1]));
-        var t = localStorage.getItem("theme");
-        if (t) {
-          var link = document.getElementById("pa-theme-css");
-          if (link) link.href = "/themes/" + t + "/dist/" + t + ".css";
-        }
-      })();
-    </script>
+    <%!-- Theme <link> is now built render-blocking in the <head> (see above);
+         no post-paint href swap, which caused the flash of unstyled content. --%>
     {@inner_content}
   </body>
 </html>
