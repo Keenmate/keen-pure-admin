@@ -1,0 +1,8 @@
+{
+  "//": "Composite (tree) map — keen PARENT (tabs). The body slot is replaced by the composed tab-item children, so only the container's own modifiers are mapped here. Children map via tab-item.map.json.",
+  "component": "tabs-composed",
+  "features": {
+    "style": { "prop": "style", "kind": "enum", "values": ["pills", "boxed", "vertical"] },
+    "size":  { "prop": "size",  "kind": "enum", "values": ["sm", "lg"] }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "//": "Composite (tree) map — keen. Maps the PARENT's neutral props (button-group vocabulary) to button_group/1's assigns. Children are mapped separately via button.map.json (the fixture's childComponent). mix pa.fidelity.dump composite path renders button_group/1 with the real Button.button/1 outputs injected into its slot.",
+  "component": "button-group-composed",
+  "features": {
+    "vertical": { "prop": "is_vertical", "kind": "bool" },
+    "align":    { "prop": "align",       "kind": "enum", "values": ["center", "end", "stretch"] }
+  }
+}

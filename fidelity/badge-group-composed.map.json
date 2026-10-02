@@ -1,0 +1,5 @@
+{
+  "//": "Composite (tree) map — keen. badge-group exposes no layout modifiers used here; scenarios pass no parent props, so features is empty. Children map via badge.map.json.",
+  "component": "badge-group-composed",
+  "features": {}
+}

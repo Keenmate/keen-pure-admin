@@ -1,0 +1,7 @@
+{
+  "//": "Composite (tree) map — keen. list exposes only a body slot (replaced by the composed children) + class passthrough. Children map via list-item.map.json.",
+  "component": "list-composed",
+  "features": {
+    "extraClass": { "prop": "class", "kind": "string" }
+  }
+}

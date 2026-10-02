@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for tab_item/1 (fragment of Tabs) — keen-pure-admin. The tab button's active state is an EXPLICIT `is_active` attr the author sets. keen REQUIRES `target` (no default) — it is the server-side switching handle: tab_item/1 emits id=\"tab-btn-{target}\", data-tab-target=\"{target}\", and phx-click={switch_tab(target,...)}. The id + data-tab-target are extra DOM the core oracle (snippets/tabs.html bare buttons) doesn't bless; they're the id/data siblings of phx-click and are trimmed as wiring by tabs-composed.json's PER-COMPONENT `normalize` block, so keen composes clean against the class contract. See fixtures/tabs-composed.json.",
+  "component": "tab-item",
+  "features": {
+    "label":  { "prop": "inner_block", "kind": "slot" },
+    "active": { "prop": "is_active",   "kind": "bool" },
+    "target": { "prop": "target",      "kind": "string" }
+  }
+}

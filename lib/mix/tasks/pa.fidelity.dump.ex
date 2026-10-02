@@ -79,16 +79,37 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
 
     fixture = fixture_path |> File.read!() |> Jason.decode!()
     features = (map_path |> File.read!() |> Jason.decode!())["features"]
-    meta = meta(component)
 
     dump =
-      for scenario <- fixture["scenarios"] do
-        html =
-          scenario["props"]
-          |> build_assigns(features, meta)
-          |> render(component)
+      if fixture["composite"] do
+        # Composite (tree) fixture: render the PARENT with its REAL child
+        # components composed in. GENERIC — no per-composite code: the fixture
+        # names `parentComponent` + `childComponent` (both existing dumper keys),
+        # the parent's props map via `features`/parent meta, each child in
+        # `scenario["children"]` maps via the CHILD component's map + meta, and
+        # render_composite/4 injects the rendered children into the parent's slot.
+        parent_key = fixture["parentComponent"]
+        child_key = fixture["childComponent"]
+        parent_meta = meta(parent_key)
+        child_features = ("fidelity/#{child_key}.map.json" |> File.read!() |> Jason.decode!())["features"]
+        child_meta = meta(child_key)
 
-        %{name: scenario["name"], html: html}
+        for scenario <- fixture["scenarios"] do
+          parent = build_assigns(scenario["props"] || %{}, features, parent_meta)
+          kids = for c <- scenario["children"] || [], do: build_assigns(c, child_features, child_meta)
+          %{name: scenario["name"], html: render_composite(parent_key, child_key, parent, kids)}
+        end
+      else
+        meta = meta(component)
+
+        for scenario <- fixture["scenarios"] do
+          html =
+            scenario["props"]
+            |> build_assigns(features, meta)
+            |> render(component)
+
+          %{name: scenario["name"], html: html}
+        end
       end
 
     out_path |> Path.dirname() |> File.mkdir_p!()
@@ -198,6 +219,7 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp render(assigns, "card-tab"), do: render_component(&Card.card_tab/1, assigns)
   defp render(assigns, "list-item"), do: render_component(&PureAdmin.Components.List.list_item/1, assigns)
   defp render(assigns, "timeline-item"), do: render_component(&Timeline.timeline_item/1, assigns)
+  defp render(assigns, "tab-item"), do: render_component(&Navigation.tab_item/1, assigns)
 
   # KPI fragment fixtures — the per-tile / per-row sub-components the KPI
   # showcase containers defer, plus the terminal container itself.
@@ -225,6 +247,23 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
       end
 
     render_component(&KpiTerminal.kpi_terminal/1, assigns)
+  end
+
+  # Composite (tree) render — GENERIC. Render each REAL child (via its existing
+  # render/2 clause) and inject the concatenated markup into the REAL parent's
+  # inner_block slot (also via render/2). Works for any parent whose children go
+  # in its default slot. Context-free children (the common case) render identically
+  # whether injected here or nested one-pass; a context-COUPLED child (one that
+  # reads parent context) would need a true one-pass nest instead.
+  defp render_composite(parent_key, child_key, parent, kids) do
+    kids_html = Enum.map_join(kids, "", fn ca -> render(ca, child_key) end)
+
+    parent =
+      Map.put(parent, :inner_block, [
+        %{__slot__: :inner_block, inner_block: fn _, _ -> {:safe, kids_html} end}
+      ])
+
+    render(parent, parent_key)
   end
 
   defp demo_panes do
@@ -329,6 +368,7 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("card-tab"), do: PureAdmin.Components.Card.__components__()[:card_tab]
   defp meta("list-item"), do: PureAdmin.Components.List.__components__()[:list_item]
   defp meta("timeline-item"), do: PureAdmin.Components.Timeline.__components__()[:timeline_item]
+  defp meta("tab-item"), do: PureAdmin.Components.Navigation.__components__()[:tab_item]
   defp meta("kpi-terminal"), do: PureAdmin.Components.KpiTerminal.__components__()[:kpi_terminal]
   defp meta("kpi-tile"), do: PureAdmin.Components.Kpi.__components__()[:kpi_tile]
   defp meta("kpi-detail"), do: PureAdmin.Components.Kpi.__components__()[:kpi_detail]
