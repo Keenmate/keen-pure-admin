@@ -40,19 +40,19 @@ defmodule DemoWeb.Live.DataVisualizationLive do
       <.heading level={4} class="mt-lg mb-sm">{gettext("Sizes")}</.heading>
       <div class="d-flex flex-column gap-sm">
         <div>
-          <span class="pa-text--secondary font-xs">XS</span>
+          <.text variant="secondary" class="font-xs">XS</.text>
           <.progress value={60} size="xs" />
         </div>
         <div>
-          <span class="pa-text--secondary font-xs">SM</span>
+          <.text variant="secondary" class="font-xs">SM</.text>
           <.progress value={60} size="sm" />
         </div>
         <div>
-          <span class="pa-text--secondary font-xs">Default</span>
+          <.text variant="secondary" class="font-xs">Default</.text>
           <.progress value={60} />
         </div>
         <div>
-          <span class="pa-text--secondary font-xs">LG</span>
+          <.text variant="secondary" class="font-xs">LG</.text>
           <.progress value={60} size="lg" />
         </div>
       </div>
@@ -156,9 +156,9 @@ defmodule DemoWeb.Live.DataVisualizationLive do
       </div>
 
       <.heading level={4} class="mt-6">{gettext("Size override · v2.7.0 :size attr")}</.heading>
-      <p class="pa-text--secondary mb-2">
+      <.paragraph color="secondary" class="mb-2">
         New <code>:size</code> attr emits <code>--pa-gauge-size</code> inline (default upstream <code>12rem</code>). Width and height (always half the width) both derive from this token. Text inside the donut doesn't auto-scale — set <code>font-size</code> on <code>.pa-gauge__value</code> in your stylesheet for proportional resizing.
-      </p>
+      </.paragraph>
 
       <div class="d-flex gap-xl flex-wrap align-items-end">
         <.gauge value={68} label="8rem" variant="info" size="8rem" />
@@ -254,25 +254,25 @@ defmodule DemoWeb.Live.DataVisualizationLive do
       <div class="d-flex gap-xl flex-wrap align-items-end">
         <%!-- Default --%>
         <div>
-          <span class="pa-text--secondary font-xs d-block mb-xs">Revenue (7d)</span>
+          <.text variant="secondary" class="font-xs d-block mb-xs">Revenue (7d)</.text>
           <.sparkline values={[40, 65, 55, 80, 70, 90, 85]} />
         </div>
 
         <%!-- Success --%>
         <div>
-          <span class="pa-text--secondary font-xs d-block mb-xs">Orders (7d)</span>
+          <.text variant="secondary" class="font-xs d-block mb-xs">Orders (7d)</.text>
           <.sparkline values={[30, 45, 60, 50, 75, 85, 95]} variant="success" />
         </div>
 
         <%!-- Warning --%>
         <div>
-          <span class="pa-text--secondary font-xs d-block mb-xs">Errors (7d)</span>
+          <.text variant="secondary" class="font-xs d-block mb-xs">Errors (7d)</.text>
           <.sparkline values={[90, 70, 50, 60, 40, 25, 15]} variant="warning" />
         </div>
 
         <%!-- Large --%>
         <div>
-          <span class="pa-text--secondary font-xs d-block mb-xs">Traffic (14d)</span>
+          <.text variant="secondary" class="font-xs d-block mb-xs">Traffic (14d)</.text>
           <.sparkline values={[50, 60, 45, 70, 80, 65, 75, 90, 85, 60, 55, 70, 95, 80]} variant="info" size="lg" />
         </div>
       </div>
@@ -290,7 +290,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
           <.card>
             <div class="d-flex justify-content-between align-items-start">
               <div>
-                <div class="pa-text--secondary font-xs text-upper mb-xs">Total Revenue</div>
+                <div class="text-secondary font-xs text-upper mb-xs">Total Revenue</div>
                 <div class="font-2xl font-bold">$284,520</div>
                 <div class="font-xs mt-xs" style="color: #28a745">+12.5% vs last month</div>
               </div>
@@ -302,7 +302,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
           <.card>
             <div class="d-flex justify-content-between align-items-start">
               <div>
-                <div class="pa-text--secondary font-xs text-upper mb-xs">Active Users</div>
+                <div class="text-secondary font-xs text-upper mb-xs">Active Users</div>
                 <div class="font-2xl font-bold">8,429</div>
                 <div class="font-xs mt-xs" style="color: #28a745">+3.2% vs last week</div>
               </div>
@@ -314,7 +314,7 @@ defmodule DemoWeb.Live.DataVisualizationLive do
           <.card>
             <div class="d-flex justify-content-between align-items-start">
               <div>
-                <div class="pa-text--secondary font-xs text-upper mb-xs">Error Rate</div>
+                <div class="text-secondary font-xs text-upper mb-xs">Error Rate</div>
                 <div class="font-2xl font-bold">0.24%</div>
                 <div class="font-xs mt-xs" style="color: #dc3545">+0.02% vs yesterday</div>
               </div>
@@ -329,19 +329,19 @@ defmodule DemoWeb.Live.DataVisualizationLive do
       <div class="d-flex gap-xl flex-wrap justify-content-center">
         <div class="text-center">
           <.progress_ring value={72} size="sm" />
-          <div class="font-xs pa-text--secondary mt-sm">CPU</div>
+          <div class="font-xs text-secondary mt-sm">CPU</div>
         </div>
         <div class="text-center">
           <.progress_ring value={58} size="sm" variant="warning" />
-          <div class="font-xs pa-text--secondary mt-sm">Memory</div>
+          <div class="font-xs text-secondary mt-sm">Memory</div>
         </div>
         <div class="text-center">
           <.progress_ring value={87} size="sm" variant="danger" />
-          <div class="font-xs pa-text--secondary mt-sm">Disk</div>
+          <div class="font-xs text-secondary mt-sm">Disk</div>
         </div>
         <div class="text-center">
           <.progress_ring value={99} size="sm" variant="success" />
-          <div class="font-xs pa-text--secondary mt-sm">Uptime</div>
+          <div class="font-xs text-secondary mt-sm">Uptime</div>
         </div>
       </div>
 

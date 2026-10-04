@@ -107,29 +107,29 @@ defmodule DemoWeb.Live.DashboardLive do
 
   def render(assigns) do
     ~H"""
-    <p class="pa-text--secondary">{gettext("Real-time overview of key performance metrics")}</p>
+    <.paragraph color="secondary">{gettext("Real-time overview of key performance metrics")}</.paragraph>
 
     <%!-- KPI Metric Cards --%>
     <.grid>
-      <.column size="25">
+      <.column size="100" md="25">
         <.card>
           <.stat variant="hero" number="$847,392" label_text={gettext("Total Revenue")}
             change_text="▲ 12.5% vs last month" change_direction="positive" />
         </.card>
       </.column>
-      <.column size="25">
+      <.column size="100" md="25">
         <.card>
           <.stat variant="hero" number="24,583" label_text={gettext("Active Users")}
             change_text="▲ 8.3% vs last month" change_direction="positive" />
         </.card>
       </.column>
-      <.column size="25">
+      <.column size="100" md="25">
         <.card>
           <.stat variant="hero" number="3.47%" label_text={gettext("Conversion Rate")}
             change_text="▼ 2.1% vs last month" change_direction="negative" />
         </.card>
       </.column>
-      <.column size="25">
+      <.column size="100" md="25">
         <.card>
           <.stat variant="hero" number="$134.52" label_text={gettext("Avg Order Value")}
             change_text="▲ 5.7% vs last month" change_direction="positive" />
@@ -139,7 +139,7 @@ defmodule DemoWeb.Live.DashboardLive do
 
     <%!-- Top Sales Products + Revenue Trend (LEFT 2/3) — KPI squares + Traffic Sources (RIGHT 1/3) --%>
     <.grid>
-      <.column size="2-3">
+      <.column size="100" md="2-3">
         <.kpi_sparkline_list title_text={gettext("Top Sales Products")} is_live>
           <.kpi_sparkline_row
             :for={row <- @top_sales}
@@ -238,7 +238,7 @@ defmodule DemoWeb.Live.DashboardLive do
         </.kpi_hero_list>
       </.column>
 
-      <.column size="1-3">
+      <.column size="100" md="1-3">
         <.card title_text={gettext("Key Performance Indicators")}>
           <.grid class="pa-kpi-grid">
             <.column size="100" xl="50">
@@ -273,7 +273,7 @@ defmodule DemoWeb.Live.DashboardLive do
 
     <%!-- Activity Feed & Recent Orders --%>
     <.grid>
-      <.column size="50">
+      <.column size="100" md="50">
         <.card title_text={gettext("Recent Activity")}>
           <.timeline variant="simple">
             <.timeline_item variant="primary" is_filled time_text="2 min ago">
@@ -297,7 +297,7 @@ defmodule DemoWeb.Live.DashboardLive do
           </:footer>
         </.card>
       </.column>
-      <.column size="50">
+      <.column size="100" md="50">
         <.table_card title_text={gettext("Recent Orders")}>
           <.table rows={@orders} size="sm" is_compact>
             <:col :let={order} label={gettext("Order ID")}>{order.id}</:col>
@@ -316,7 +316,7 @@ defmodule DemoWeb.Live.DashboardLive do
 
     <%!-- Bottom Row - Performance Metrics --%>
     <.grid>
-      <.column size="1-3">
+      <.column size="100" md="1-3">
         <.table_card title_text={gettext("Top Products")}>
           <.table rows={@top_products} size="sm" is_compact>
             <:col :let={row} label={gettext("Product")}>{row.name}</:col>
@@ -324,7 +324,7 @@ defmodule DemoWeb.Live.DashboardLive do
           </.table>
         </.table_card>
       </.column>
-      <.column size="1-3">
+      <.column size="100" md="1-3">
         <.card has_padding={false} title_text={gettext("System Status")}>
           <.list>
             <.list_item title_text={gettext("API Services")}>
@@ -342,7 +342,7 @@ defmodule DemoWeb.Live.DashboardLive do
           </.list>
         </.card>
       </.column>
-      <.column size="1-3">
+      <.column size="100" md="1-3">
         <.card title_text={gettext("Quick Actions")}>
           <.button_group is_vertical>
             <.button variant="primary" is_block>{gettext("New Order")}</.button>

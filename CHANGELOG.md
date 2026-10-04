@@ -14,6 +14,23 @@ palette, navbar/sidebar/footer shell) are `--pc-*`. **Component** tokens are `--
 chart, detail-panel, icons…). `--base-*` is unchanged. Apps migrate their own overrides
 accordingly (shell/foundation → `--pc-`, components → `--pa-`).
 
+### Typography — flat `text-*` consolidation
+
+- **`paragraph/1` and `text/1` now emit the flat `text-*` utilities** instead of the
+  removed `.pa-text` BEM component (core dropped `.pa-text` entirely). The muted
+  colour is `text-secondary` (`color="secondary"` / `variant="secondary"`), matching
+  the component `--secondary` role vocabulary. `paragraph`'s `size` prop maps
+  **directly** to the same-named utility (`sm`→`text-sm`=14, `lg`→`text-lg`=18, …) and
+  **no `size` renders a plain `<p>` at the body default (16px)** — so a default
+  paragraph matches a bare `<p>` and the reference. `align`/`semantic` →
+  `text-{start,center,end}` / `text-{caption,lead}`.
+- **New Typography showcase** (`/components/typography`, Design → Typography) —
+  rebuilt entirely from the typography components (Headings, Paragraph sizes/colours/
+  alignment/semantic, inline `text/1` variants, links, class reference), mirroring the
+  pure-admin reference and the svelte docs page.
+- Swept the demo's remaining raw `pa-text--secondary` / dead `pa-text-secondary`
+  usages to `text-secondary` (component props where the element is a paragraph/text).
+
 ### Demo — Spanish localization (i18n)
 
 - **The demo now ships English + Spanish, switchable at runtime.** Added Phoenix **Gettext**

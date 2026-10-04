@@ -208,8 +208,8 @@ defmodule PureAdmin.Components.Card do
         <%!-- Subtitle (legacy alias for the muted header byline). The canonical
              element is `.pa-card__meta` — a real card sub-element that
              participates in the header slot layout (styled --pc-text-color-2 +
-             font-size-sm). Core defines NO `.pa-card__subtitle`, and the old
-             `pa-text pa-text--secondary` was a generic utility off-contract.
+             font-size-sm). Core defines NO `.pa-card__subtitle`, and a bare
+             muted-text utility (`text-secondary`) would be off-contract here.
              Matches the `:meta` slot below and svelte-pure-admin's card fix. --%>
         <span :if={@subtitle_text != nil && @subtitle == []} class="pa-card__meta"><%= @subtitle_text %></span>
         <%= for subtitle <- @subtitle do %>

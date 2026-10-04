@@ -229,7 +229,7 @@ defmodule DemoWeb.Live.ToastsLive do
           </.button>
         </.column>
       </.grid>
-      <.paragraph class="pa-text--secondary mt-4">
+      <.paragraph color="secondary" class="mt-4">
         These toasts stay visible until manually dismissed by clicking the close button (duration=0)
       </.paragraph>
     </.card>
@@ -266,7 +266,7 @@ defmodule DemoWeb.Live.ToastsLive do
       <.button variant="primary" phx-click="show_multiple">
         {gettext("Show 3 Toasts")}
       </.button>
-      <.paragraph class="pa-text--secondary mt-4">
+      <.paragraph color="secondary" class="mt-4">
         Toasts automatically stack vertically in the container
       </.paragraph>
     </.card>

@@ -164,14 +164,14 @@ defmodule DemoWeb.Live.CalloutsLive do
       <.grid>
         <.column size="100" md="50">
           <.heading level={4}>{gettext("Callout")}</.heading>
-          <.paragraph class="pa-text-secondary">Documentation-style, left border accent, for static content</.paragraph>
+          <.paragraph color="secondary">Documentation-style, left border accent, for static content</.paragraph>
           <.callout variant="info">
             <strong>Callouts</strong> are best for documentation, tips, and static informational content that doesn't require user action.
           </.callout>
         </.column>
         <.column size="100" md="50">
           <.heading level={4}>{gettext("Alert")}</.heading>
-          <.paragraph class="pa-text-secondary">Full background, dismissible, for dynamic feedback</.paragraph>
+          <.paragraph color="secondary">Full background, dismissible, for dynamic feedback</.paragraph>
           <.alert variant="info">
             <strong>Alerts</strong> are best for dynamic feedback, notifications, and messages that may require user action or dismissal.
           </.alert>

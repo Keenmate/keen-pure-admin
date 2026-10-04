@@ -635,12 +635,12 @@ defmodule DemoWeb.Live.FormsLive do
         </.grid>
       </form>
       <:footer>
-        <p class="pa-text pa-text--sm pa-text--secondary m-0">
+        <.paragraph size="sm" color="secondary" class="m-0">
           <strong>Layout pattern:</strong> Each field uses <code>.pa-form-group--horizontal</code> (label left, input right) inside <code>pc-col-*</code> columns.
           Line 1: equal widths (1/3 each).
           Line 2: varying sizes (1/4 + 5/12 + 1/3).
           Line 3: very different sizes (1/2 + 1/3 + 1/6).
-        </p>
+        </.paragraph>
       </:footer>
     </.card>
     """

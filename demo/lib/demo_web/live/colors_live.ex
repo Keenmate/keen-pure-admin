@@ -50,7 +50,7 @@ defmodule DemoWeb.Live.ColorsLive do
             <li><span class="text-warning"><strong>text-warning</strong> - Warning yellow/orange</span></li>
             <li><span class="text-danger"><strong>text-danger</strong> - Danger/error red</span></li>
             <li><span class="text-info"><strong>text-info</strong> - Informational blue</span></li>
-            <li><span class="pa-text--secondary"><strong>pa-text--secondary</strong> - Muted/subtle text</span></li>
+            <li><.text variant="secondary"><strong>text-secondary</strong> - Muted/subtle text</.text></li>
           </.basic_list>
         </.column>
         <.column size="50">

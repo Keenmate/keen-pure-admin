@@ -35,9 +35,13 @@
           </.fit_slot><.fit_slot strategy="hide" priority={10} class="pc-app-header__version">v2.9.0-rc14</.fit_slot>
         </h1>
       </.app_header>
-      <.nav_menu>
-        <.nav_item href="/">{gettext("Dashboard")}</.nav_item>
-        <.nav_item href="/components/buttons" has_dropdown>
+      <%!-- collapse="sidebar" hands this menu to the Fit engine's nav path: as the
+            header narrows, lowest-priority items fold into the sidebar under a "Menu"
+            heading, restoring as it widens. Dashboard is pinned (priority 10); the
+            active item auto-pins. Mirrors pure-admin's demo navbar. --%>
+      <.nav_menu collapse="sidebar" collapse_label={gettext("Menu")}>
+        <.nav_item href="/" priority={10} icon="📊">{gettext("Dashboard")}</.nav_item>
+        <.nav_item href="/components/buttons" has_dropdown icon="🧩">
           {gettext("Components")}
           <:dropdown>
             <.nav_dropdown>
@@ -69,7 +73,7 @@
             </.nav_dropdown>
           </:dropdown>
         </.nav_item>
-        <.nav_item href="/forms">{gettext("Forms")}</.nav_item>
+        <.nav_item href="/forms" icon="📝">{gettext("Forms")}</.nav_item>
       </.nav_menu>
     </:start>
     <:center>

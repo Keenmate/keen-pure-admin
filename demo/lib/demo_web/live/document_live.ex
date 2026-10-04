@@ -77,7 +77,7 @@ defmodule DemoWeb.Live.DocumentLive do
 
     <%!-- Manual numbering --%>
     <.card title_text={gettext("Manual numbering (appendix scheme)")}>
-      <.paragraph class="pa-text-secondary">
+      <.paragraph color="secondary">
         Set <code>is_manual</code> on the container and write each number via the
         <code>number</code> attr — for appendices or non-decimal schemes the auto engine can't produce.
       </.paragraph>
@@ -96,7 +96,7 @@ defmodule DemoWeb.Live.DocumentLive do
 
     <%!-- Worked example: content mid-chapter --%>
     <.card title_text={gettext("Non-section content mid-chapter")}>
-      <.paragraph class="pa-text-secondary">
+      <.paragraph color="secondary">
         A table (or any non-section content) between the heading and the nested sections does
         NOT disturb the numbering — only sections increment the counters.
       </.paragraph>

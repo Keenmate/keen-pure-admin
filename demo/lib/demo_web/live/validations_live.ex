@@ -241,7 +241,7 @@ defmodule DemoWeb.Live.ValidationsLive do
               <.input_group>
                 <.input type="text" value="" validation="error" />
                 <:append>
-                  <span class="pa-text--danger" title={gettext("This field is required")}>!</span>
+                  <span class="text-danger" title={gettext("This field is required")}>!</span>
                 </:append>
               </.input_group>
             </.form_group>
@@ -252,7 +252,7 @@ defmodule DemoWeb.Live.ValidationsLive do
               <.input_group>
                 <.input type="email" value="bad@" validation="error" />
                 <:append>
-                  <span class="pa-text--danger" title={gettext("Invalid email format")}>!</span>
+                  <span class="text-danger" title={gettext("Invalid email format")}>!</span>
                 </:append>
               </.input_group>
             </.form_group>
@@ -263,7 +263,7 @@ defmodule DemoWeb.Live.ValidationsLive do
               <.input_group>
                 <.input type="password" value="securepass123" validation="success" />
                 <:append>
-                  <span class="pa-text--success">&#10003;</span>
+                  <span class="text-success">&#10003;</span>
                 </:append>
               </.input_group>
             </.form_group>
@@ -357,7 +357,7 @@ defmodule DemoWeb.Live.ValidationsLive do
 
       <%!-- Simulated toast preview --%>
       <.card class="mt-4" has_padding>
-        <.paragraph class="pa-text--secondary mb-2"><em>Toast preview (normally appears in corner):</em></.paragraph>
+        <.paragraph color="secondary" class="mb-2"><em>Toast preview (normally appears in corner):</em></.paragraph>
         <.alert variant="danger">
           <strong>{gettext("Validation Failed")}</strong> — {gettext("Invalid credentials. Please check your email and password.")}
         </.alert>
@@ -394,7 +394,7 @@ defmodule DemoWeb.Live.ValidationsLive do
                 <.form_help :if={!@realtime_touched}>{gettext("Type to see validation")}</.form_help>
               </.form_group>
             </form>
-            <small class="mt-2 pa-text--secondary">Validates as user types. Can feel aggressive.</small>
+            <small class="mt-2 text-secondary">Validates as user types. Can feel aggressive.</small>
           </.card>
         </.column>
 
@@ -416,7 +416,7 @@ defmodule DemoWeb.Live.ValidationsLive do
               <.form_help :if={@blur_touched && valid_email?(@blur_email)} variant="success">{gettext("Valid email")}</.form_help>
               <.form_help :if={!@blur_touched}>{gettext("Click away to validate")}</.form_help>
             </.form_group>
-            <small class="mt-2 pa-text--secondary">Validates when field loses focus. Good balance.</small>
+            <small class="mt-2 text-secondary">Validates when field loses focus. Good balance.</small>
           </.card>
         </.column>
 
@@ -441,7 +441,7 @@ defmodule DemoWeb.Live.ValidationsLive do
               </.form_group>
               <.button variant="info" size="sm" type="submit" class="mt-2">{gettext("Validate")}</.button>
             </form>
-            <small class="mt-2 pa-text--secondary">All errors shown at once on submit. Traditional approach.</small>
+            <small class="mt-2 text-secondary">All errors shown at once on submit. Traditional approach.</small>
           </.card>
         </.column>
       </.grid>
@@ -536,7 +536,7 @@ defmodule DemoWeb.Live.ValidationsLive do
         </.column>
         <.column size="1-3" class="text-center">
           <.badge size="lg" class="pa-badge--default">3</.badge>
-          <.paragraph class="mt-2 pa-text--secondary">{gettext("Confirm")}</.paragraph>
+          <.paragraph color="secondary" class="mt-2">{gettext("Confirm")}</.paragraph>
         </.column>
       </.grid>
 
@@ -605,7 +605,7 @@ defmodule DemoWeb.Live.ValidationsLive do
         <li><code>text-danger</code> - Red text color</li>
         <li><code>text-warning</code> - Yellow/orange text color</li>
         <li><code>text-success</code> - Green text color</li>
-        <li><code>pa-text--secondary</code> - Muted/gray text color</li>
+        <li><code>text-secondary</code> - Muted/gray text color</li>
       </.basic_list>
     </.card>
     """

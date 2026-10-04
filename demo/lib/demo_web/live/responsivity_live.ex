@@ -149,7 +149,7 @@ defmodule DemoWeb.Live.ResponsivityLive do
 
     <div class="pa-page-content">
       <.heading level={1} class="mb-2">{gettext("Responsivity — how it works")}</.heading>
-      <.paragraph class="pa-text--secondary mb-4">
+      <.paragraph color="secondary" class="mb-4">
         Two small JavaScript engines let a component react to <strong>the space it is
         actually given</strong> — not the size of the window. That is the difference
         between a media query (asks the viewport) and a <em>container</em> query (asks
@@ -186,7 +186,7 @@ defmodule DemoWeb.Live.ResponsivityLive do
 
       <.code_block language="html" class="mb-3">{@code_fit}</.code_block>
 
-      <ul class="pa-text--secondary mb-4">
+      <ul class="text-secondary mb-4">
         <li><code>data-pc-fit="hide"</code> — remove the slot when it must yield.</li>
         <li><code>data-pc-fit="steps"</code> — show the largest ranked variant that fits (logo → wordmark → monogram).</li>
         <li><code>data-pc-fit="relocate"</code> — move the slot somewhere else entirely (next section).</li>
@@ -202,13 +202,13 @@ defmodule DemoWeb.Live.ResponsivityLive do
         goes is a pluggable <strong>sink</strong> named by
         <code>data-pc-fit-target</code>. Two sinks ship built-in:
       </.paragraph>
-      <ul class="pa-text--secondary mb-3">
+      <ul class="text-secondary mb-3">
         <li><code>target="floating-menu"</code> — folds into a "•••" flyout panel. Self-contained; needs no sidebar.</li>
         <li><code>target="sidebar"</code> — rebuilds the slot as a sidebar list item.</li>
         <li><em>your own</em> — <code>pureAdmin.components.fit.registerSink("name", &#123; out, in &#125;)</code>.</li>
       </ul>
 
-      <.paragraph class="pa-text--secondary">
+      <.paragraph color="secondary">
         <strong>Live — drag to narrow the bar.</strong>
         The badge cluster is one <code>relocate</code> slot targeting
         <code>floating-menu</code>; when the bar runs out of room it folds into the
@@ -292,7 +292,7 @@ defmodule DemoWeb.Live.ResponsivityLive do
 
       <.code_block language="html" class="mb-3">{@code_cb}</.code_block>
 
-      <ul class="pa-text--secondary mb-3">
+      <ul class="text-secondary mb-3">
         <li>Thresholds are <strong>rem</strong> by default (root font is 10px, so <code>34</code> = 340px, <code>64</code> = 640px); add <code>data-pc-breakpoint-unit="px"</code> for pixels.</li>
         <li>The engine reflects the band to <code>[data-mode]</code> (CSS can key off it) and toggles <code>.d-none</code> on <code>data-pc-show</code> pieces.</li>
         <li>It fires <code>pc:breakpoint</code> only on a flip — the hook for "mount on demand" (build the chart in <code>grid</code>, destroy it otherwise).</li>
@@ -320,7 +320,7 @@ defmodule DemoWeb.Live.ResponsivityLive do
         on demand.
       </.callout>
 
-      <.paragraph class="pa-text--secondary">
+      <.paragraph color="secondary">
         Ready to see Fit degrade real cards and toolbars across several strategies?
         Head to <.link navigate="/components/fit-to-size">Fit to Size</.link> for the
         worked, slider-driven examples.

@@ -31,7 +31,7 @@ defmodule DemoWeb.Live.ResponsiveFormLive do
 
     <div class="pa-page-content">
       <.heading level={1} class="mb-2">{gettext("Responsive form")}</.heading>
-      <.paragraph class="pa-text--secondary mb-3">
+      <.paragraph color="secondary" class="mb-3">
         The form <em>is</em> the breakpoint container; each field group is a
         <code>&lt;.breaker&gt;</code> that declares the modes it survives in. As the
         card narrows it sheds optional fields down to the essentials. Notice the call

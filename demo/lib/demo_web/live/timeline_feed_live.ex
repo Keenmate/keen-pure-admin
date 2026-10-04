@@ -185,9 +185,9 @@ defmodule DemoWeb.Live.TimelineFeedLive do
               <.loader_center :if={@is_loading}>
                 <.loader />
               </.loader_center>
-              <p :if={not @is_has_more} class="text-center pa-text--secondary pa-py-4">
+              <.paragraph :if={not @is_has_more} color="secondary" class="text-center pa-py-4">
                 {gettext("All entries loaded.")}
-              </p>
+              </.paragraph>
             </div>
           </div>
         </.card>

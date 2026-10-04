@@ -34,9 +34,9 @@ defmodule DemoWeb.Live.ModalsLive do
       <.grid class="mt-4">
         <.column size="100">
           <.heading level={4}>Banded Modals · v2.7.0</.heading>
-          <p class="pa-text--secondary mb-2">
+          <.paragraph color="secondary" class="mb-2">
             <code>is_banded</code> emits <code>pa-modal--banded</code> alongside the role variant. Both header AND footer get filled bands using the alert tokens (15% role-mix in light mode, 45% in dark). Buttons inside the bands auto-invert via <code>--pc-text-color-1</code> for cross-theme contrast.
-          </p>
+          </.paragraph>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <.button variant="success" phx-click={show_modal("modal-banded-success")}>{gettext("Banded Success")}</.button>
             <.button variant="warning" phx-click={show_modal("modal-banded-warning")}>{gettext("Banded Warning")}</.button>

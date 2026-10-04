@@ -202,7 +202,7 @@ defmodule DemoWeb.Live.InputsLive do
         </.column>
 
         <.column size="100" class="mt-3">
-          <small class="pa-text--secondary"><strong>Tip:</strong> Use width utilities (<code>wr-*</code> for rem-based, <code>wp-*</code> for percentage-based) on prepend/append elements to control their width.</small>
+          <small class="text-secondary"><strong>Tip:</strong> Use width utilities (<code>wr-*</code> for rem-based, <code>wp-*</code> for percentage-based) on prepend/append elements to control their width.</small>
         </.column>
       </.grid>
     </.card>

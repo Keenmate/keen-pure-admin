@@ -174,42 +174,42 @@ defmodule DemoWeb.Live.ButtonsLive do
       <.column size="100" lg="1-2">
         <.card title_text={gettext("Button Groups - Gap Sizes")}>
           <.heading level={4}>{gettext("Semantic Gap Classes")}</.heading>
-          <.paragraph class="pa-text--secondary mb-1"><code>gap-xs</code> (4px)</.paragraph>
+          <.paragraph color="secondary" class="mb-1"><code>gap-xs</code> (4px)</.paragraph>
           <.button_group class="gap-xs mb-1">
             <.button variant="primary">A</.button>
             <.button variant="primary">B</.button>
             <.button variant="primary">C</.button>
             <.button variant="primary">D</.button>
           </.button_group>
-          <.paragraph class="pa-text--secondary mb-1"><code>gap-sm</code> (8px)</.paragraph>
+          <.paragraph color="secondary" class="mb-1"><code>gap-sm</code> (8px)</.paragraph>
           <.button_group class="gap-sm mb-1">
             <.button variant="secondary">A</.button>
             <.button variant="secondary">B</.button>
             <.button variant="secondary">C</.button>
             <.button variant="secondary">D</.button>
           </.button_group>
-          <.paragraph class="pa-text--secondary mb-1"><code>gap-md</code> (12px)</.paragraph>
+          <.paragraph color="secondary" class="mb-1"><code>gap-md</code> (12px)</.paragraph>
           <.button_group class="gap-md mb-1">
             <.button variant="success">A</.button>
             <.button variant="success">B</.button>
             <.button variant="success">C</.button>
             <.button variant="success">D</.button>
           </.button_group>
-          <.paragraph class="pa-text--secondary mb-1"><code>gap-base</code> (16px)</.paragraph>
+          <.paragraph color="secondary" class="mb-1"><code>gap-base</code> (16px)</.paragraph>
           <.button_group class="gap-base mb-1">
             <.button variant="info">A</.button>
             <.button variant="info">B</.button>
             <.button variant="info">C</.button>
             <.button variant="info">D</.button>
           </.button_group>
-          <.paragraph class="pa-text--secondary mb-1"><code>gap-lg</code> (24px)</.paragraph>
+          <.paragraph color="secondary" class="mb-1"><code>gap-lg</code> (24px)</.paragraph>
           <.button_group class="gap-lg mb-1">
             <.button variant="warning">A</.button>
             <.button variant="warning">B</.button>
             <.button variant="warning">C</.button>
             <.button variant="warning">D</.button>
           </.button_group>
-          <.paragraph class="pa-text--secondary mb-1"><code>gap-xl</code> (32px)</.paragraph>
+          <.paragraph color="secondary" class="mb-1"><code>gap-xl</code> (32px)</.paragraph>
           <.button_group class="gap-xl">
             <.button variant="danger">A</.button>
             <.button variant="danger">B</.button>
@@ -224,7 +224,7 @@ defmodule DemoWeb.Live.ButtonsLive do
     <.grid>
       <.column size="100" lg="1-2">
         <.card title_text={gettext("Vertical Alignment")}>
-          <.paragraph class="pa-text--secondary mb-md">
+          <.paragraph color="secondary" class="mb-md">
             Use semantic gap classes (<code>gap-sm</code>, <code>gap-md</code>, <code>gap-lg</code>, <code>gap-xl</code>) to control vertical spacing between buttons.
           </.paragraph>
           <.grid>
@@ -267,7 +267,7 @@ defmodule DemoWeb.Live.ButtonsLive do
       <.column size="100" lg="1-2">
         <.card title_text={gettext("Responsive Direction")}>
           <.heading level={4}>Horizontal → Vertical at md (768px)</.heading>
-          <.paragraph class="pa-text--secondary mb-1">Resize window to see change</.paragraph>
+          <.paragraph color="secondary" class="mb-1">Resize window to see change</.paragraph>
           <.button_group responsive="md-vertical">
             <.button variant="primary">Save</.button>
             <.button variant="secondary">Cancel</.button>
@@ -275,7 +275,7 @@ defmodule DemoWeb.Live.ButtonsLive do
           </.button_group>
 
           <.heading level={4} class="mt-2">Vertical → Horizontal at lg (992px)</.heading>
-          <.paragraph class="pa-text--secondary mb-1">
+          <.paragraph color="secondary" class="mb-1">
             Starts vertical, becomes horizontal on large screens
           </.paragraph>
           <.button_group is_vertical responsive="lg-horizontal">
@@ -516,7 +516,7 @@ defmodule DemoWeb.Live.ButtonsLive do
       title_text={gettext("Overflow Toolbar")}
       subtitle_text={gettext("Buttons collapse into a dedicated [⋮] more menu when the row runs out of horizontal space, and pop back out as room returns")}
     >
-      <.paragraph class="pa-text--secondary mb-1">
+      <.paragraph color="secondary" class="mb-1">
         Drag the resize handle in the bottom-right of the box below to shrink the bar. Lowest
         <code>data-pa-actions-priority</code>
         (default <code>0</code>) drops into the <code>[⋮]</code>
@@ -607,7 +607,7 @@ defmodule DemoWeb.Live.ButtonsLive do
       </div>
 
       <.heading level="4" class="mt-4">{gettext("Drop direction & ghost trigger")}</.heading>
-      <.paragraph class="pa-text--secondary mb-1">
+      <.paragraph color="secondary" class="mb-1">
         Default drops the child nearest the end first. Set <code>overflow_from="start"</code> to drop
         the leftmost child first instead. This bar also uses <code>trigger="ghost"</code> for the
         chromeless <code>[⋮]</code> look.
@@ -650,7 +650,7 @@ defmodule DemoWeb.Live.ButtonsLive do
       </div>
 
       <.heading level="4" class="mt-4">{gettext("In card headers")}</.heading>
-      <.paragraph class="pa-text--secondary mb-1">
+      <.paragraph color="secondary" class="mb-1">
         In a card header, set <code>actions_variant="overflow"</code>
         on the <code>&lt;.card&gt;</code>
         —
@@ -726,7 +726,7 @@ defmodule DemoWeb.Live.ButtonsLive do
                 </:item>
               </.split_button>
             </:tools>
-            <.paragraph class="pa-text--secondary">
+            <.paragraph color="secondary">
               The actions bar in the header carries the overflow behavior — narrow the window to watch
               Configure, Filter, and Refresh fold into the <code>[⋮]</code> more-menu in that order
               (lowest priority first; Export is pinned, and the Add-widget split button survives longest).
@@ -777,7 +777,7 @@ defmodule DemoWeb.Live.ButtonsLive do
                 </:item>
               </.split_button>
             </:tools>
-            <.paragraph class="pa-text--secondary">
+            <.paragraph color="secondary">
               No pinning here — siblings collapse in default order (rightmost first: Rollback → Backup →
               Validate). The Deploy split button survives longest, dropping into the <code>[⋮]</code>
               more-menu as an atomic labeled group.
@@ -851,7 +851,7 @@ defmodule DemoWeb.Live.ButtonsLive do
                 </:item>
               </.split_button>
             </:tools>
-            <.paragraph class="pa-text--secondary">
+            <.paragraph color="secondary">
               Six siblings — Invite is pinned with priority 5, so it survives the first wave of collapses
               but still folds away before Add user. The title yields first (truncating to a min-width
               floor) so the action bar keeps its buttons; only when the header is genuinely tiny does the
@@ -865,7 +865,7 @@ defmodule DemoWeb.Live.ButtonsLive do
 
     <%!-- Text Truncation --%>
     <.card title_text={gettext("Text Truncation")}>
-      <.paragraph class="pa-text--secondary mb-1">
+      <.paragraph color="secondary" class="mb-1">
         Use <code>.text-truncate</code>
         with a fixed width (<code>.wr-*</code>) to truncate long text with ellipsis
       </.paragraph>

@@ -138,9 +138,9 @@ defmodule DemoWeb.Live.TablesComparisonLive do
     <.table_card title_text={gettext("Version Detail (Solid Background Variant)")}>
       <:header>
         <h3>{gettext("Version Detail (Solid Background Variant)")}</h3>
-        <p class="pa-text pa-text--sm pa-text--secondary mt-2">
+        <.paragraph size="sm" color="secondary" class="mt-2">
           Using <code>pa-comparison-table__changed--solid</code> for uniform background highlighting without left border accent
-        </p>
+        </.paragraph>
       </:header>
 
       <.comparison_table>

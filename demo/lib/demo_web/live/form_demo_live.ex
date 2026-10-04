@@ -424,20 +424,20 @@ defmodule DemoWeb.Live.FormDemoLive do
         </:col>
         <:col :let={e} label={gettext("Department")}>
           <.badge :if={e.department != ""} variant="info">{e.department}</.badge>
-          <span :if={e.department == ""} class="pa-text--secondary">—</span>
+          <.text :if={e.department == ""} variant="secondary">—</.text>
         </:col>
         <:col :let={e} label={gettext("Start Date")}>
-          <span :if={e.start_date == ""} class="pa-text--secondary">—</span>
+          <.text :if={e.start_date == ""} variant="secondary">—</.text>
           <span :if={e.start_date != ""}>{e.start_date}</span>
         </:col>
         <:col :let={e} label={gettext("Bio")} class="col-auto">
-          <span :if={e.bio == ""} class="pa-text--secondary">—</span>
+          <.text :if={e.bio == ""} variant="secondary">—</.text>
           <span :if={e.bio != ""} title={e.bio}>{truncate(e.bio, 60)}</span>
         </:col>
         <:col :let={e} label={gettext("Submitted")}>
-          <span class="pa-text--secondary" title={PureAdmin.DateTime.format(e.inserted_at, :long_date_time)}>
+          <.text variant="secondary" title={PureAdmin.DateTime.format(e.inserted_at, :long_date_time)}>
             {PureAdmin.DateTime.relative(e.inserted_at)}
-          </span>
+          </.text>
         </:col>
         <:action :let={e}>
           <.button

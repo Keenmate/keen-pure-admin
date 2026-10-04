@@ -23,7 +23,7 @@ defmodule PureAdmin.Components.Typography do
 
     # Core headings are bare semantic tags (`<h1>`..`<h6>`) with NO class — core
     # defines no `pa-heading` (see snippets/typography.html). Emit the tag
-    # unclassed; callers add utilities via `class` (e.g. `pa-text--center`).
+    # unclassed; callers add utilities via `class` (e.g. `text-center`).
     ~H"""
     <.dynamic_tag tag_name={@tag} class={@class} {@rest}>
       <%= render_slot(@inner_block) %>
@@ -34,25 +34,30 @@ defmodule PureAdmin.Components.Typography do
   @doc """
   Renders a paragraph.
 
-  Core's canonical paragraph is the `.pa-text` BEM typography component. The
-  base carries 14px + primary colour; the optional modifiers tune size,
-  colour, logical alignment, and compound semantic styles — all real
-  `pa-text--*` classes from core's `_utilities.scss` (see
-  `snippets/typography.html`).
+  Emits the flat `text-*` typography utilities (core's `_utilities.scss`). With
+  no `size`, a paragraph is a plain `<p>` at the body default (16px = `text-base`,
+  matching a bare `<p>`). The `size` prop maps DIRECTLY to the same-named flat
+  utility: `xs`→`text-xs` (12), `sm`→`text-sm` (14), `lg`→`text-lg` (18),
+  `xl`→`text-xl` (20). Colour / alignment / semantic props tune it further.
   """
-  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"], doc: "Size modifier (pa-text--{size}).")
-  attr(:color, :string, default: nil, values: [nil, "primary", "secondary"], doc: "Colour modifier (pa-text--{color}).")
+  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"], doc: "Size → the same-named flat text-* utility; omit for the body default (16px).")
+
+  attr(:color, :string,
+    default: nil,
+    values: [nil, "primary", "secondary"],
+    doc: "Colour: \"secondary\" → text-secondary (muted/subdued); \"primary\" → text-body (= default)."
+  )
 
   attr(:align, :string,
     default: nil,
     values: [nil, "start", "center", "end"],
-    doc: "Logical text alignment (pa-text--{align}); RTL-aware."
+    doc: "Logical text alignment (text-{align}); RTL-aware."
   )
 
   attr(:semantic, :string,
     default: nil,
     values: [nil, "caption", "lead"],
-    doc: "Compound semantic style (pa-text--{semantic})."
+    doc: "Compound semantic style (text-{semantic})."
   )
 
   attr(:class, :string, default: nil)
@@ -68,17 +73,32 @@ defmodule PureAdmin.Components.Typography do
   end
 
   defp paragraph_classes(assigns) do
-    build_classes(
-      "pa-text",
-      [
-        {"pa-text--#{assigns.size}", assigns.size != nil},
-        {"pa-text--#{assigns.color}", assigns.color != nil},
-        {"pa-text--#{assigns.align}", assigns.align != nil},
-        {"pa-text--#{assigns.semantic}", assigns.semantic != nil}
-      ],
+    # No size → a plain <p> at the body default (16px); don't force a size class.
+    [
+      paragraph_size_class(assigns.size),
+      paragraph_color_class(assigns.color),
+      assigns.align && "text-#{assigns.align}",
+      assigns.semantic && "text-#{assigns.semantic}",
       assigns.class
-    )
+    ]
+    |> Enum.reject(&(&1 in [nil, false, ""]))
+    |> Enum.join(" ")
+    |> case do
+      "" -> nil
+      s -> s
+    end
   end
+
+  # Direct map to the same-named flat text-* utility; no size → plain <p> (body 16px).
+  defp paragraph_size_class(nil), do: nil
+  defp paragraph_size_class("xs"), do: "text-xs"
+  defp paragraph_size_class("sm"), do: "text-sm"
+  defp paragraph_size_class("lg"), do: "text-lg"
+  defp paragraph_size_class("xl"), do: "text-xl"
+
+  defp paragraph_color_class("secondary"), do: "text-secondary"
+  defp paragraph_color_class("primary"), do: "text-body"
+  defp paragraph_color_class(_), do: nil
 
   @doc """
   Renders an inline coloured-text span.
@@ -91,8 +111,10 @@ defmodule PureAdmin.Components.Typography do
   """
   attr(:variant, :string,
     default: nil,
-    values: [nil, "primary", "success", "danger", "warning", "info"],
-    doc: "Semantic colour → `.text-{variant}`."
+    values: [nil, "primary", "secondary", "success", "danger", "warning", "info"],
+    doc:
+      "Semantic colour → `.text-{variant}`. \"secondary\" → `.text-secondary` is the " <>
+        "muted/subdued text colour."
   )
 
   attr(:class, :string, default: nil)
@@ -109,7 +131,8 @@ defmodule PureAdmin.Components.Typography do
     """
   end
 
-  # Semantic colours live in the flat `.text-*` utilities (not pa-text--*).
+  # All semantic colours are flat `.text-*` utilities; "secondary" →
+  # `.text-secondary` is the muted/subdued colour (colour-only, so inline-safe).
   defp text_variant_class(nil), do: nil
   defp text_variant_class(color), do: "text-#{color}"
 
@@ -132,7 +155,7 @@ defmodule PureAdmin.Components.Typography do
 
   Core's `.pa-link` has no colour modifiers — it inherits the accent colour.
   For a dimmed or semantic link, add a `.text-*` utility via `class`
-  (e.g. `class="text-color-2"` for muted, or `text-danger`/`text-success`/etc.).
+  (e.g. `class="text-secondary"` for muted, or `text-danger`/`text-success`/etc.).
   """
   attr(:href, :string, default: "#")
   attr(:class, :string, default: nil)

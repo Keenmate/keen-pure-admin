@@ -157,7 +157,7 @@ defmodule DemoWeb.Live.FitToSizeLive do
               <:icon>🗑️</:icon> {gettext("Delete")}
             </.button>
           </div>
-          <.paragraph class="mt-3 mb-0 pa-text--secondary">
+          <.paragraph color="secondary" class="mt-3 mb-0">
             Drag left: Delete drops → Export shrinks to its icon, then drops →
             Duplicate shrinks → only Save remains, always full.
           </.paragraph>
@@ -185,13 +185,13 @@ defmodule DemoWeb.Live.FitToSizeLive do
           <.product_head_beverages chart_id="ex2-chart" />
         </.card>
       </div>
-      <.paragraph class="mt-2 pa-text--secondary">
+      <.paragraph color="secondary" class="mt-2">
         Drag left (or view on a phone): past <code>45rem</code> the chart gives way to
         the KPI stat — same data, denser. Drag right to bring the chart back.
       </.paragraph>
 
       <.heading level={4} class="mt-4 mb-2">Same card, no slider — resize your browser window</.heading>
-      <.paragraph class="pa-text--secondary">
+      <.paragraph color="secondary">
         Identical card, but with <strong>no <code>.fit-stage</code> wrapper and no
         slider</strong> — full-width in the page. The container query reads the card's
         <em>real</em> width, so drag your browser window narrower and the chart becomes
@@ -254,7 +254,7 @@ defmodule DemoWeb.Live.FitToSizeLive do
           </div>
         </.card>
       </div>
-      <.paragraph class="mt-2 pa-text--secondary">
+      <.paragraph color="secondary" class="mt-2">
         Three levels, one query. <strong>≥640px</strong> → the 3-panel grid;
         <strong>340–640px</strong> → tabbed with labels; <strong>&lt;340px</strong> →
         icon-only tabs. Nothing is re-fetched or re-rendered — the same markup re-flows.
@@ -362,7 +362,7 @@ defmodule DemoWeb.Live.FitToSizeLive do
       <div class="flex-1" style="min-width: 0">
         <.badge theme_color="3">Beverages</.badge>
         <h4 class="mt-2 mb-1">Arabica Cold Brew</h4>
-        <div class="pa-text--secondary" style="font-size: var(--pc-font-size-sm, 1.4rem)">
+        <div class="text-secondary" style="font-size: var(--pc-font-size-sm, 1.4rem)">
           <code>SKU-4471</code> · 1 L bottle
         </div>
       </div>
