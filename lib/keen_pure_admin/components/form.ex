@@ -9,6 +9,28 @@ defmodule PureAdmin.Components.Form do
   use Phoenix.Component
 
   import PureAdmin.Helpers
+  # form_error_summary/1 reuses the canonical pa-alert markup (mirrors svelte's
+  # FormErrorSummary, which composes its <Alert>). Only alert/1 is imported to
+  # avoid pulling in the module's other helpers.
+  import PureAdmin.Components.Alert, only: [alert: 1]
+
+  # ─── Prop vocabulary (aligned with svelte-pure-admin) ───
+  #
+  # The canonical validation-state prop is `state` and the canonical theme-colour
+  # prop is `theme_color` — matching svelte's `state` / `themeColor` (keen stays
+  # snake_case; that's the sensible cross-stack translation). The older
+  # `validation` / `color` props are kept as DEPRECATED ALIASES so existing
+  # call-sites keep working; `resolve_state/1` and `resolve_theme_color/1`
+  # coalesce old→new. Prefer `state` / `theme_color` in new markup.
+
+  # Validation state: `state` wins; `validation` is the deprecated alias.
+  defp resolve_state(assigns),
+    do: Map.get(assigns, :state) || Map.get(assigns, :validation)
+
+  # Theme colour (1-9): `theme_color` wins; `color` is the deprecated alias.
+  # Accepts an integer or string and renders to the class as-is.
+  defp resolve_theme_color(assigns),
+    do: Map.get(assigns, :theme_color) || Map.get(assigns, :color)
 
   # ─── Phoenix.HTML.FormField integration ───
 
@@ -48,7 +70,13 @@ defmodule PureAdmin.Components.Form do
   # ─── Low-level components ───
 
   @doc """
-  Renders a text input with Pure Admin BEM classes.
+  Renders a **text-like** input (`text`, `email`, `password`, `tel`, `url`,
+  `search`) with Pure Admin BEM classes. Mirrors svelte's `<Input>`.
+
+  For other HTML input types use the dedicated typed components —
+  `number_input/1`, `date_input/1`, `color_input/1`, `file_input/1`,
+  `range_input/1` — each of which declares only the native attributes relevant to
+  its type (so this component no longer carries the union of every type's attrs).
 
   Accepts either manual `name`/`value` attrs or a Phoenix `:field` for automatic
   binding. When `field` is given, `name`, `id`, and `value` are derived from it
@@ -58,7 +86,7 @@ defmodule PureAdmin.Components.Form do
   ## Examples
 
       <.input type="text" name="username" placeholder="Enter username" />
-      <.input type="email" size="lg" validation="error" />
+      <.input type="email" size="lg" state="error" />
       <.input field={@form[:email]} type="email" />
   """
   attr(:field, Phoenix.HTML.FormField,
@@ -66,7 +94,12 @@ defmodule PureAdmin.Components.Form do
     doc: "A Phoenix form field, e.g. `@form[:email]`. When set, derives name/id/value and errors."
   )
 
-  attr(:type, :string, default: "text")
+  attr(:type, :string,
+    default: "text",
+    values: ~w(text email password tel url search),
+    doc: "Text-like input type. Other types have dedicated components (number_input/1, date_input/1, …)."
+  )
+
   attr(:name, :string, default: nil)
   attr(:id, :string, default: nil)
   attr(:value, :any, default: nil)
@@ -81,20 +114,40 @@ defmodule PureAdmin.Components.Form do
     doc: "Render field errors as a form_help below the input. No effect without `:field`."
   )
 
-  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
-  attr(:validation, :string, default: nil, values: [nil, "success", "warning", "error"])
-  attr(:is_error, :boolean, default: false, doc: "Shorthand for validation=\"error\"")
-  attr(:is_success, :boolean, default: false, doc: "Shorthand for validation=\"success\"")
-
-  attr(:color, :string,
-    default: nil,
-    values: [nil, "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    doc: "Theme color (1-9)"
+  attr(:touched, :boolean,
+    default: true,
+    doc:
+      "When false, suppresses the error state + inline help even if errors are present " <>
+        "(mirrors svelte's `touched` gate). The `:field` path derives this from `used_input?/1`."
   )
+
+  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
+
+  attr(:state, :string,
+    default: nil,
+    values: [nil, "success", "warning", "error"],
+    doc: "Validation state (canonical; aligns with svelte `state`)."
+  )
+
+  attr(:validation, :string,
+    default: nil,
+    values: [nil, "success", "warning", "error"],
+    doc: "Deprecated alias for `state`."
+  )
+
+  attr(:is_error, :boolean, default: false, doc: "Shorthand for state=\"error\"")
+  attr(:is_success, :boolean, default: false, doc: "Shorthand for state=\"success\"")
+
+  attr(:theme_color, :any,
+    default: nil,
+    doc: "Theme color 1-9 (int or string). Canonical; aligns with svelte `themeColor`."
+  )
+
+  attr(:color, :any, default: nil, doc: "Deprecated alias for `theme_color`.")
 
   attr(:class, :string, default: nil)
   attr(:rest, :global, include: ~w(placeholder disabled readonly required autocomplete autofocus
-    min max step pattern maxlength minlength form phx-change phx-blur phx-focus phx-debounce))
+    pattern maxlength minlength form phx-change phx-blur phx-focus phx-debounce))
 
   def input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     errors = assigns.errors || field_errors(field)
@@ -106,13 +159,16 @@ defmodule PureAdmin.Components.Form do
       id: assigns.id || field.id,
       name: assigns.name || field.name,
       value: if(is_nil(assigns.value), do: field.value, else: assigns.value),
-      validation: assigns.validation || if(errors != [], do: "error")
+      state: assigns.state || assigns.validation || if(errors != [], do: "error")
     )
     |> input()
   end
 
   def input(assigns) do
-    assigns = assign_new(assigns, :errors, fn -> nil end)
+    assigns =
+      assigns
+      |> assign_new(:errors, fn -> nil end)
+      |> assign(:resolved_state, input_state(assigns))
 
     ~H"""
     <input
@@ -121,12 +177,24 @@ defmodule PureAdmin.Components.Form do
       id={@id}
       value={@value}
       class={input_classes(assigns)}
+      aria-invalid={if @resolved_state == "error", do: "true"}
       {@rest}
     />
-    <.form_help :if={@show_errors and has_errors?(@errors)} variant="error">
+    <.form_help :if={@show_errors and @touched and has_errors?(@errors)} variant="error">
       {error_messages(@errors)}
     </.form_help>
     """
+  end
+
+  # Resolved validation state for input: explicit shorthands win, then
+  # `state`/`validation`. `touched=false` cannot clear an explicitly-set state
+  # (manual override), it only gates the error-from-errors derivation done above.
+  defp input_state(assigns) do
+    cond do
+      assigns.is_error -> "error"
+      assigns.is_success -> "success"
+      true -> resolve_state(assigns)
+    end
   end
 
   # -- error helpers shared by input/textarea/select --
@@ -145,22 +213,296 @@ defmodule PureAdmin.Components.Form do
   end
 
   defp input_classes(assigns) do
-    validation =
-      cond do
-        assigns.is_error -> "error"
-        assigns.is_success -> "success"
-        true -> assigns.validation
-      end
+    state = Map.get(assigns, :resolved_state) || input_state(assigns)
+    pa_input_classes(assigns.size, state, resolve_theme_color(assigns), assigns.class)
+  end
 
+  # Shared `.pa-input` class builder for every native-input component
+  # (input/number_input/date_input/color_input/file_input/range_input). Keeps the
+  # size/state/theme-colour modifier logic in one place now that the inputs are split.
+  defp pa_input_classes(size, state, theme_color, extra) do
     build_classes(
       "pa-input",
       [
-        {"pa-input--#{assigns.size}", assigns.size != nil},
-        {"pa-input--#{validation}", validation != nil},
-        {"pa-input--color-#{assigns.color}", assigns.color != nil}
+        {"pa-input--#{size}", size != nil},
+        {"pa-input--#{state}", state != nil},
+        {"pa-input--color-#{theme_color}", theme_color != nil}
       ],
-      assigns.class
+      extra
     )
+  end
+
+  # Inline error help shared by the typed inputs that carry `errors`.
+  attr(:errors, :list, default: nil)
+  attr(:show_errors, :boolean, default: true)
+  attr(:touched, :boolean, default: true)
+
+  defp input_error(assigns) do
+    ~H"""
+    <.form_help :if={@show_errors and @touched and has_errors?(@errors)} variant="error">
+      {error_messages(@errors)}
+    </.form_help>
+    """
+  end
+
+  @doc """
+  Renders a numeric input (`type="number"`). Mirrors svelte's `<NumberInput>` —
+  declares only the numeric native attrs (`min`/`max`/`step`). Accepts a Phoenix
+  `:field` for automatic binding, same as `input/1`.
+
+  ## Examples
+
+      <.number_input name="qty" value={1} min="0" step="1" />
+      <.number_input field={@form[:age]} min="0" max="120" />
+  """
+  attr(:field, Phoenix.HTML.FormField, default: nil, doc: "A Phoenix form field; derives name/id/value and errors.")
+  attr(:name, :string, default: nil)
+  attr(:id, :string, default: nil)
+  attr(:value, :any, default: nil, doc: "Numeric value.")
+  attr(:errors, :list, default: nil)
+  attr(:show_errors, :boolean, default: true)
+  attr(:touched, :boolean, default: true, doc: "When false, suppresses the error state + inline help.")
+  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
+  attr(:state, :string, default: nil, values: [nil, "success", "warning", "error"], doc: "Validation state.")
+  attr(:theme_color, :any, default: nil, doc: "Theme color 1-9 (int or string).")
+  attr(:class, :string, default: nil)
+  attr(:rest, :global,
+    include: ~w(min max step placeholder disabled readonly required autofocus
+      form phx-change phx-blur phx-focus phx-debounce)
+  )
+
+  def number_input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
+    errors = assigns.errors || field_errors(field)
+
+    assigns
+    |> assign(
+      field: nil,
+      errors: errors,
+      id: assigns.id || field.id,
+      name: assigns.name || field.name,
+      value: if(is_nil(assigns.value), do: field.value, else: assigns.value),
+      state: assigns.state || if(errors != [], do: "error")
+    )
+    |> number_input()
+  end
+
+  def number_input(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:errors, fn -> nil end)
+      |> assign(resolved_state: assigns.state, resolved_theme_color: assigns.theme_color)
+
+    ~H"""
+    <input
+      type="number"
+      name={@name}
+      id={@id}
+      value={@value}
+      class={pa_input_classes(@size, @resolved_state, @resolved_theme_color, @class)}
+      aria-invalid={if @resolved_state == "error", do: "true"}
+      {@rest}
+    />
+    <.input_error errors={@errors} show_errors={@show_errors} touched={@touched} />
+    """
+  end
+
+  @doc """
+  Renders a date/time input. Mirrors svelte's `<DateInput>` — `type` selects the
+  flavour (`date`, `time`, `datetime-local`, `month`, `week`) and only the
+  date/time native attrs (`min`/`max`/`step`) are declared. Accepts a Phoenix
+  `:field`, same as `input/1`.
+
+  ## Examples
+
+      <.date_input name="due" value="2026-01-01" />
+      <.date_input type="time" name="at" />
+      <.date_input field={@form[:start_date]} />
+  """
+  attr(:field, Phoenix.HTML.FormField, default: nil, doc: "A Phoenix form field; derives name/id/value and errors.")
+
+  attr(:type, :string,
+    default: "date",
+    values: ~w(date time datetime-local month week),
+    doc: "Date/time flavour."
+  )
+
+  attr(:name, :string, default: nil)
+  attr(:id, :string, default: nil)
+  attr(:value, :any, default: nil, doc: "Date/time value as a string (format depends on `type`).")
+  attr(:errors, :list, default: nil)
+  attr(:show_errors, :boolean, default: true)
+  attr(:touched, :boolean, default: true, doc: "When false, suppresses the error state + inline help.")
+  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
+  attr(:state, :string, default: nil, values: [nil, "success", "warning", "error"], doc: "Validation state.")
+  attr(:theme_color, :any, default: nil, doc: "Theme color 1-9 (int or string).")
+  attr(:class, :string, default: nil)
+  attr(:rest, :global,
+    include: ~w(min max step disabled readonly required autofocus
+      form phx-change phx-blur phx-focus phx-debounce)
+  )
+
+  def date_input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
+    errors = assigns.errors || field_errors(field)
+
+    assigns
+    |> assign(
+      field: nil,
+      errors: errors,
+      id: assigns.id || field.id,
+      name: assigns.name || field.name,
+      value: if(is_nil(assigns.value), do: field.value, else: assigns.value),
+      state: assigns.state || if(errors != [], do: "error")
+    )
+    |> date_input()
+  end
+
+  def date_input(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:errors, fn -> nil end)
+      |> assign(resolved_state: assigns.state, resolved_theme_color: assigns.theme_color)
+
+    ~H"""
+    <input
+      type={@type}
+      name={@name}
+      id={@id}
+      value={@value}
+      class={pa_input_classes(@size, @resolved_state, @resolved_theme_color, @class)}
+      aria-invalid={if @resolved_state == "error", do: "true"}
+      {@rest}
+    />
+    <.input_error errors={@errors} show_errors={@show_errors} touched={@touched} />
+    """
+  end
+
+  @doc """
+  Renders a range slider (`type="range"`). Mirrors svelte's `<RangeInput>` —
+  declares the slider native attrs (`min`/`max`/`step`) and an optional value
+  readout. No Phoenix `:field` binding (sliders bind their value directly).
+
+  ## Examples
+
+      <.range_input name="volume" value={50} min="0" max="100" />
+      <.range_input value={30} show_value />
+  """
+  attr(:name, :string, default: nil)
+  attr(:id, :string, default: nil)
+  attr(:value, :any, default: nil, doc: "Numeric value.")
+  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
+  attr(:state, :string, default: nil, values: [nil, "success", "warning", "error"], doc: "Validation state.")
+  attr(:theme_color, :any, default: nil, doc: "Theme color 1-9 (int or string).")
+  attr(:show_value, :boolean, default: false, doc: "Append the current value as an input-group addon.")
+  attr(:class, :string, default: nil)
+  attr(:rest, :global, include: ~w(min max step disabled form phx-change phx-blur phx-debounce))
+
+  def range_input(assigns) do
+    assigns = assign(assigns, resolved_state: assigns.state, resolved_theme_color: assigns.theme_color)
+
+    ~H"""
+    <%= if @show_value do %>
+      <div class="pa-input-group">
+        <input
+          type="range"
+          name={@name}
+          id={@id}
+          value={@value}
+          class={pa_input_classes(@size, @resolved_state, @resolved_theme_color, @class)}
+          aria-invalid={if @resolved_state == "error", do: "true"}
+          {@rest}
+        />
+        <span class="pa-input-group__append"><%= @value %></span>
+      </div>
+    <% else %>
+      <input
+        type="range"
+        name={@name}
+        id={@id}
+        value={@value}
+        class={pa_input_classes(@size, @resolved_state, @resolved_theme_color, @class)}
+        aria-invalid={if @resolved_state == "error", do: "true"}
+        {@rest}
+      />
+    <% end %>
+    """
+  end
+
+  @doc """
+  Renders a file input (`type="file"`). Mirrors svelte's `<FileInput>` — declares
+  the file-specific native attrs (`accept`/`multiple`/`capture`). The browser owns
+  the selected files, so there is no `value`/`:field` binding.
+
+  ## Examples
+
+      <.file_input name="avatar" accept="image/*" />
+      <.file_input name="docs" accept=".pdf,.doc" multiple />
+  """
+  attr(:name, :string, default: nil)
+  attr(:id, :string, default: nil)
+  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
+  attr(:state, :string, default: nil, values: [nil, "success", "warning", "error"], doc: "Validation state.")
+  attr(:theme_color, :any, default: nil, doc: "Theme color 1-9 (int or string).")
+  attr(:class, :string, default: nil)
+  attr(:rest, :global, include: ~w(accept multiple capture disabled required form phx-change))
+
+  def file_input(assigns) do
+    assigns = assign(assigns, resolved_state: assigns.state, resolved_theme_color: assigns.theme_color)
+
+    ~H"""
+    <input
+      type="file"
+      name={@name}
+      id={@id}
+      class={pa_input_classes(@size, @resolved_state, @resolved_theme_color, @class)}
+      aria-invalid={if @resolved_state == "error", do: "true"}
+      {@rest}
+    />
+    """
+  end
+
+  @doc """
+  Renders a colour picker (`type="color"`). Mirrors svelte's `<ColorInput>` —
+  the native colour input is styled by the base `.pa-input` (no state/theme-colour
+  modifiers apply to it), with an optional hex readout.
+
+  ## Examples
+
+      <.color_input name="brand" value="#3b82f6" />
+      <.color_input value="#ff0000" show_value />
+  """
+  attr(:name, :string, default: nil)
+  attr(:id, :string, default: nil)
+  attr(:value, :string, default: "#000000", doc: "Colour value as a hex string.")
+  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
+  attr(:show_value, :boolean, default: false, doc: "Append the hex value as an input-group addon.")
+  attr(:class, :string, default: nil)
+  attr(:rest, :global, include: ~w(disabled form phx-change phx-blur))
+
+  def color_input(assigns) do
+    ~H"""
+    <%= if @show_value do %>
+      <div class="pa-input-group">
+        <input
+          type="color"
+          name={@name}
+          id={@id}
+          value={@value}
+          class={pa_input_classes(@size, nil, nil, @class)}
+          {@rest}
+        />
+        <span class="pa-input-group__append"><%= @value %></span>
+      </div>
+    <% else %>
+      <input
+        type="color"
+        name={@name}
+        id={@id}
+        value={@value}
+        class={pa_input_classes(@size, nil, nil, @class)}
+        {@rest}
+      />
+    <% end %>
+    """
   end
 
   @doc """
@@ -183,13 +525,32 @@ defmodule PureAdmin.Components.Form do
   attr(:value, :any, default: nil)
   attr(:errors, :list, default: nil)
   attr(:show_errors, :boolean, default: true)
-  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
-  attr(:validation, :string, default: nil, values: [nil, "success", "warning", "error"])
 
-  attr(:color, :string,
-    default: nil,
-    values: [nil, "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+  attr(:touched, :boolean,
+    default: true,
+    doc: "When false, suppresses error state + inline help (mirrors svelte's `touched` gate)."
   )
+
+  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
+
+  attr(:state, :string,
+    default: nil,
+    values: [nil, "success", "warning", "error"],
+    doc: "Validation state (canonical; aligns with svelte `state`)."
+  )
+
+  attr(:validation, :string,
+    default: nil,
+    values: [nil, "success", "warning", "error"],
+    doc: "Deprecated alias for `state`."
+  )
+
+  attr(:theme_color, :any,
+    default: nil,
+    doc: "Theme color 1-9 (int or string). Canonical; aligns with svelte `themeColor`."
+  )
+
+  attr(:color, :any, default: nil, doc: "Deprecated alias for `theme_color`.")
 
   attr(:class, :string, default: nil)
   attr(:rest, :global, include: ~w(placeholder disabled readonly required rows cols
@@ -205,22 +566,26 @@ defmodule PureAdmin.Components.Form do
       id: assigns.id || field.id,
       name: assigns.name || field.name,
       value: if(is_nil(assigns.value), do: field.value, else: assigns.value),
-      validation: assigns.validation || if(errors != [], do: "error")
+      state: assigns.state || assigns.validation || if(errors != [], do: "error")
     )
     |> textarea()
   end
 
   def textarea(assigns) do
-    assigns = assign_new(assigns, :errors, fn -> nil end)
+    assigns =
+      assigns
+      |> assign_new(:errors, fn -> nil end)
+      |> assign(:resolved_state, resolve_state(assigns))
 
     ~H"""
     <textarea
       name={@name}
       id={@id}
       class={textarea_classes(assigns)}
+      aria-invalid={if @resolved_state == "error", do: "true"}
       {@rest}
     ><%= @value %></textarea>
-    <.form_help :if={@show_errors and has_errors?(@errors)} variant="error">
+    <.form_help :if={@show_errors and @touched and has_errors?(@errors)} variant="error">
       {error_messages(@errors)}
     </.form_help>
     """
@@ -229,14 +594,16 @@ defmodule PureAdmin.Components.Form do
   defp textarea_classes(assigns) do
     # Core has NO `.pa-textarea--success/--warning/--error` border styling
     # (unlike .pa-input/.pa-select). Textarea errors surface through the
-    # `pa-form-help--error` rendered below, not a border modifier
-    # (snippets/forms.html). `validation` stays declared for the shared
+    # `pa-form-help--error` rendered below (and `aria-invalid`), not a border
+    # modifier (snippets/forms.html). `state` stays declared for the shared
     # field-binding path but emits no textarea class.
+    theme_color = resolve_theme_color(assigns)
+
     build_classes(
       "pa-textarea",
       [
         {"pa-textarea--#{assigns.size}", assigns.size != nil},
-        {"pa-textarea--color-#{assigns.color}", assigns.color != nil}
+        {"pa-textarea--color-#{theme_color}", theme_color != nil}
       ],
       assigns.class
     )
@@ -262,15 +629,33 @@ defmodule PureAdmin.Components.Form do
   attr(:value, :any, default: nil)
   attr(:errors, :list, default: nil)
   attr(:show_errors, :boolean, default: true)
+  attr(:touched, :boolean,
+    default: true,
+    doc: "When false, suppresses error state + inline help (mirrors svelte's `touched` gate)."
+  )
+
   attr(:options, :list, default: [], doc: "List of {value, label} tuples or strings")
   attr(:prompt, :string, default: nil, doc: "Placeholder option")
   attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
-  attr(:validation, :string, default: nil, values: [nil, "success", "warning", "error"])
 
-  attr(:color, :string,
+  attr(:state, :string,
     default: nil,
-    values: [nil, "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    values: [nil, "success", "warning", "error"],
+    doc: "Validation state (canonical; aligns with svelte `state`)."
   )
+
+  attr(:validation, :string,
+    default: nil,
+    values: [nil, "success", "warning", "error"],
+    doc: "Deprecated alias for `state`."
+  )
+
+  attr(:theme_color, :any,
+    default: nil,
+    doc: "Theme color 1-9 (int or string). Canonical; aligns with svelte `themeColor`."
+  )
+
+  attr(:color, :any, default: nil, doc: "Deprecated alias for `theme_color`.")
 
   attr(:class, :string, default: nil)
   attr(:rest, :global, include: ~w(disabled required multiple form phx-change phx-blur phx-debounce))
@@ -285,32 +670,44 @@ defmodule PureAdmin.Components.Form do
       id: assigns.id || field.id,
       name: assigns.name || field.name,
       value: if(is_nil(assigns.value), do: field.value, else: assigns.value),
-      validation: assigns.validation || if(errors != [], do: "error")
+      state: assigns.state || assigns.validation || if(errors != [], do: "error")
     )
     |> select()
   end
 
   def select(assigns) do
-    assigns = assign_new(assigns, :errors, fn -> nil end)
+    assigns =
+      assigns
+      |> assign_new(:errors, fn -> nil end)
+      |> assign(:resolved_state, resolve_state(assigns))
 
     ~H"""
-    <select name={@name} id={@id} class={select_classes(assigns)} {@rest}>
+    <select
+      name={@name}
+      id={@id}
+      class={select_classes(assigns)}
+      aria-invalid={if @resolved_state == "error", do: "true"}
+      {@rest}
+    >
       <option :if={@prompt} value=""><%= @prompt %></option>
       <%= Phoenix.HTML.Form.options_for_select(@options, @value) %>
     </select>
-    <.form_help :if={@show_errors and has_errors?(@errors)} variant="error">
+    <.form_help :if={@show_errors and @touched and has_errors?(@errors)} variant="error">
       {error_messages(@errors)}
     </.form_help>
     """
   end
 
   defp select_classes(assigns) do
+    state = Map.get(assigns, :resolved_state) || resolve_state(assigns)
+    theme_color = resolve_theme_color(assigns)
+
     build_classes(
       "pa-select",
       [
         {"pa-select--#{assigns.size}", assigns.size != nil},
-        {"pa-select--#{assigns.validation}", assigns.validation != nil},
-        {"pa-select--color-#{assigns.color}", assigns.color != nil}
+        {"pa-select--#{state}", state != nil},
+        {"pa-select--color-#{theme_color}", theme_color != nil}
       ],
       assigns.class
     )
@@ -347,7 +744,13 @@ defmodule PureAdmin.Components.Form do
   )
 
   attr(:is_x_mark, :boolean, default: false, doc: "X mark instead of checkmark")
-  attr(:label, :string, default: nil, doc: "Plain text label")
+
+  attr(:label_text, :string,
+    default: nil,
+    doc: "Plain text label (canonical; aligns with svelte `labelText`)."
+  )
+
+  attr(:label, :string, default: nil, doc: "Deprecated alias for `label_text`.")
   attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"])
 
   attr(:label_position, :string,
@@ -392,7 +795,7 @@ defmodule PureAdmin.Components.Form do
     >
       <input type="checkbox" name={@name} id={@id} value={@value} checked={@checked} disabled={@disabled} {@rest} />
       <span class="pa-checkbox__box"></span>
-      <span :if={@label && @label_content == []} class="pa-checkbox__label"><%= @label %></span>
+      <span :if={(@label_text || @label) && @label_content == []} class="pa-checkbox__label"><%= @label_text || @label %></span>
       <span :if={@label_content != []} class="pa-checkbox__label"><%= render_slot(@label_content) %></span>
     </label>
     """
@@ -443,7 +846,13 @@ defmodule PureAdmin.Components.Form do
   attr(:id, :string, default: nil)
   attr(:value, :string, required: true)
   attr(:checked, :boolean, default: false)
-  attr(:label, :string, default: nil)
+
+  attr(:label_text, :string,
+    default: nil,
+    doc: "Plain text label (canonical; aligns with svelte `labelText`)."
+  )
+
+  attr(:label, :string, default: nil, doc: "Deprecated alias for `label_text`.")
   attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"], doc: "Scales the native radio (emits pa-radio--{size})")
 
   attr(:label_position, :string,
@@ -473,7 +882,7 @@ defmodule PureAdmin.Components.Form do
     ~H"""
     <label class={radio_classes(assigns)}>
       <input type="radio" name={@name} id={@id} value={@value} checked={@checked} {@rest} />
-      <span :if={@label && @label_content == []} class="pa-radio__label"><%= @label %></span>
+      <span :if={(@label_text || @label) && @label_content == []} class="pa-radio__label"><%= @label_text || @label %></span>
       <span :if={@label_content != []} class="pa-radio__label"><%= render_slot(@label_content) %></span>
     </label>
     """
@@ -516,7 +925,18 @@ defmodule PureAdmin.Components.Form do
   )
 
   attr(:label, :string, default: nil, doc: "Shorthand for a simple text label")
-  attr(:validation, :string, default: nil, values: [nil, "success", "warning", "error"])
+
+  attr(:state, :string,
+    default: nil,
+    values: [nil, "success", "warning", "error"],
+    doc: "Validation state (canonical; aligns with svelte `state`)."
+  )
+
+  attr(:validation, :string,
+    default: nil,
+    values: [nil, "success", "warning", "error"],
+    doc: "Deprecated alias for `state`."
+  )
 
   attr(:is_required, :boolean,
     default: false,
@@ -533,11 +953,11 @@ defmodule PureAdmin.Components.Form do
   attr(:rest, :global)
   slot(:inner_block, required: true)
 
-  def form_group(%{field: %Phoenix.HTML.FormField{} = field, validation: nil} = assigns) do
+  def form_group(%{field: %Phoenix.HTML.FormField{} = field, state: nil, validation: nil} = assigns) do
     assigns
     |> assign(
       field: nil,
-      validation: if(field_errors(field) != [], do: "error")
+      state: if(field_errors(field) != [], do: "error")
     )
     |> form_group()
   end
@@ -558,10 +978,12 @@ defmodule PureAdmin.Components.Form do
     # REQUIRED FIELDS §2); emit it when `is_required` is set. Native controls
     # should still prefer the native `required` attr so the auto-asterisk fires
     # without the class.
+    state = resolve_state(assigns)
+
     build_classes(
       "pa-form-group",
       [
-        {"pa-form-group--#{assigns.validation}", assigns.validation != nil},
+        {"pa-form-group--#{state}", state != nil},
         {"pa-form-group--required", assigns.is_required},
         {"pa-form-group--horizontal", assigns.is_horizontal}
       ],
@@ -607,22 +1029,25 @@ defmodule PureAdmin.Components.Form do
   """
   attr(:variant, :string, default: nil, values: [nil, "success", "warning", "error"])
 
-  attr(:color, :string,
+  attr(:theme_color, :any,
     default: nil,
-    values: [nil, "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    doc: "Theme color (1-9)"
+    doc: "Theme color 1-9 (int or string). Canonical; aligns with svelte `themeColor`."
   )
+
+  attr(:color, :any, default: nil, doc: "Deprecated alias for `theme_color`.")
 
   attr(:class, :string, default: nil)
   attr(:rest, :global)
   slot(:inner_block, required: true)
 
   def form_help(assigns) do
+    assigns = assign(assigns, :theme_color, resolve_theme_color(assigns))
+
     ~H"""
     <small
       class={build_classes("pa-form-help", [
         {"pa-form-help--#{@variant}", @variant != nil},
-        {"pa-form-help--color-#{@color}", @color != nil}
+        {"pa-form-help--color-#{@theme_color}", @theme_color != nil}
       ], @class)}
       {@rest}
     >
@@ -797,6 +1222,156 @@ defmodule PureAdmin.Components.Form do
         <span class="pa-icon pa-icon--x" aria-hidden="true"></span>
       </button>
     </div>
+    """
+  end
+
+  # ─── High-level orchestrators (mirror svelte FormField / FormErrorSummary) ───
+
+  @doc """
+  Renders a complete field — `form_group` + label + control + help/error/success
+  text — with automatic state derivation. Mirrors svelte's `<FormField>`.
+
+  The control is the inner block; it receives `%{errors, touched, state}` via
+  `:let` so you can forward the derived state into the input:
+
+      <.form_field label_text="Email" errors={@errors} touched={@touched} :let={f}>
+        <.input type="email" name="email" state={f.state} touched={f.touched} show_errors={false} />
+      </.form_field>
+
+  Pass a Phoenix `:field` instead to derive `errors`/`touched` automatically
+  (touched follows `used_input?/1`):
+
+      <.form_field field={@form[:email]} label_text="Email" :let={f}>
+        <.input field={@form[:email]} type="email" show_errors={false} />
+      </.form_field>
+
+  State precedence matches svelte: an explicit `state` always wins; otherwise the
+  error state only shows once `touched`, and the success message only shows when
+  touched, error-free, and `has_value`.
+  """
+  attr(:field, Phoenix.HTML.FormField,
+    default: nil,
+    doc: "Optional Phoenix field; derives `errors` + `touched` (via `used_input?/1`) and `has_value`."
+  )
+
+  attr(:label_text, :string, default: nil, doc: "Field label (aligns with svelte `labelText`).")
+  attr(:help_text, :string, default: nil, doc: "Default hint shown when there is no error/success.")
+
+  attr(:success_message, :string,
+    default: nil,
+    doc: "Shown when touched, error-free, and `has_value` (aligns with svelte `successMessage`)."
+  )
+
+  attr(:errors, :list, default: nil, doc: "Raw `{msg, opts}` tuples or strings.")
+
+  attr(:touched, :boolean,
+    default: false,
+    doc: "Whether the field has been interacted with. Gates the error/success display."
+  )
+
+  attr(:has_value, :boolean, default: false, doc: "Whether the field has a value (for success display).")
+
+  attr(:state, :string,
+    default: nil,
+    values: [nil, "success", "warning", "error"],
+    doc: "Manual state override — takes precedence over error derivation."
+  )
+
+  attr(:for, :string, default: nil, doc: "`for=` on the label / id of the control.")
+  attr(:is_horizontal, :boolean, default: false)
+  attr(:class, :string, default: nil)
+  slot(:inner_block, required: true)
+
+  def form_field(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
+    assigns
+    |> assign(
+      field: nil,
+      errors: assigns.errors || field_errors(field),
+      touched: assigns.touched || Phoenix.Component.used_input?(field),
+      has_value: assigns.has_value || present?(field.value)
+    )
+    |> form_field()
+  end
+
+  def form_field(assigns) do
+    errors = assigns.errors || []
+    has_errors = errors != []
+
+    show_error = is_nil(assigns.state) and assigns.touched and has_errors
+
+    show_success =
+      is_nil(assigns.state) and assigns.touched and not has_errors and
+        assigns.has_value and assigns.success_message != nil
+
+    # Which help text to render (one of error / success / hint), and its variant.
+    {help_content, help_variant} =
+      cond do
+        show_error -> {error_messages(errors), "error"}
+        show_success -> {assigns.success_message, "success"}
+        assigns.help_text != nil -> {assigns.help_text, assigns.state}
+        true -> {nil, nil}
+      end
+
+    # Resolved state handed to the control + used for the group border.
+    resolved_state = assigns.state || if(show_error, do: "error")
+
+    assigns =
+      assign(assigns,
+        errors: errors,
+        resolved_state: resolved_state,
+        help_content: help_content,
+        help_variant: help_variant
+      )
+
+    ~H"""
+    <.form_group state={@resolved_state} is_horizontal={@is_horizontal} class={@class}>
+      <.form_label :if={@label_text} for={@for}><%= @label_text %></.form_label>
+      <%= render_slot(@inner_block, %{errors: @errors, touched: @touched, state: @resolved_state}) %>
+      <.form_help :if={@help_content} variant={@help_variant}><%= @help_content %></.form_help>
+    </.form_group>
+    """
+  end
+
+  defp present?(nil), do: false
+  defp present?(""), do: false
+  defp present?([]), do: false
+  defp present?(_), do: true
+
+  @doc """
+  Renders a dismissible-free summary of form errors with anchor links to each
+  field. Mirrors svelte's `<FormErrorSummary>` — a danger alert with a count
+  heading and a linked list.
+
+  ## Example
+
+      <.form_error_summary
+        show={@submitted and @errors != []}
+        errors={[
+          %{field: "Email", id: "user_email", message: "can't be blank"},
+          %{field: "Name", id: "user_name", message: "is too short"}
+        ]}
+      />
+  """
+  attr(:errors, :list,
+    required: true,
+    doc: "List of `%{field:, id:, message:}` maps. `id` is the target control's id (anchor target)."
+  )
+
+  attr(:show, :boolean, default: true, doc: "Gate rendering (typically `submitted and errors != []`).")
+  attr(:class, :string, default: nil)
+
+  def form_error_summary(assigns) do
+    assigns = assign(assigns, :count, length(assigns.errors))
+
+    ~H"""
+    <.alert :if={@show and @count > 0} variant="danger" class={build_classes("mb-4", [], @class)}>
+      <strong><%= @count %> <%= if @count == 1, do: "error", else: "errors" %> found:</strong>
+      <:list>
+        <li :for={e <- @errors}>
+          <a href={"#" <> e.id}><%= e.field %></a> - <%= e.message %>
+        </li>
+      </:list>
+    </.alert>
     """
   end
 end

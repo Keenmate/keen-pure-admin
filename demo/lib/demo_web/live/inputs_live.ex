@@ -70,21 +70,21 @@ defmodule DemoWeb.Live.InputsLive do
 
         <%!-- Validation States --%>
         <.column size="100" md="1-3">
-          <.form_group validation="success">
+          <.form_group state="success">
             <.form_label>{gettext("Success")}</.form_label>
             <.input value={gettext("Valid input")} />
             <.form_help variant="success">{gettext("Looks good!")}</.form_help>
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
-          <.form_group validation="warning">
+          <.form_group state="warning">
             <.form_label>{gettext("Warning")}</.form_label>
             <.input value={gettext("Warning input")} />
             <.form_help variant="warning">{gettext("Please check this field")}</.form_help>
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
-          <.form_group validation="error">
+          <.form_group state="error">
             <.form_label>{gettext("Error")}</.form_label>
             <.input value={gettext("Invalid input")} />
             <.form_help variant="error">{gettext("This field is required")}</.form_help>
@@ -98,21 +98,21 @@ defmodule DemoWeb.Live.InputsLive do
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("Color 1")}</.form_label>
-            <.input color="1" value={gettext("Color 1 input")} />
-            <.form_help color="1">{gettext("Colored help text")}</.form_help>
+            <.input theme_color="1" value={gettext("Color 1 input")} />
+            <.form_help theme_color="1">{gettext("Colored help text")}</.form_help>
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("Color 2")}</.form_label>
-            <.input color="2" value={gettext("Color 2 input")} />
-            <.form_help color="2">{gettext("Colored help text")}</.form_help>
+            <.input theme_color="2" value={gettext("Color 2 input")} />
+            <.form_help theme_color="2">{gettext("Colored help text")}</.form_help>
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("Color 3")}</.form_label>
-            <.input color="3" value={gettext("Color 3 input")} />
+            <.input theme_color="3" value={gettext("Color 3 input")} />
             <.form_help>{gettext("Gray help text (no color class)")}</.form_help>
           </.form_group>
         </.column>
@@ -225,7 +225,7 @@ defmodule DemoWeb.Live.InputsLive do
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("Number")}</.form_label>
-            <.input type="number" placeholder="0" />
+            <.number_input placeholder="0" />
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
@@ -249,49 +249,49 @@ defmodule DemoWeb.Live.InputsLive do
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("Date")}</.form_label>
-            <.input type="date" />
+            <.date_input type="date" />
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("Time")}</.form_label>
-            <.input type="time" />
+            <.date_input type="time" />
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("DateTime")}</.form_label>
-            <.input type="datetime-local" />
+            <.date_input type="datetime-local" />
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("Month")}</.form_label>
-            <.input type="month" />
+            <.date_input type="month" />
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("Week")}</.form_label>
-            <.input type="week" />
+            <.date_input type="week" />
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("Color")}</.form_label>
-            <.input type="color" value="#ff0000" />
+            <.color_input value="#ff0000" />
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("File")}</.form_label>
-            <.input type="file" />
+            <.file_input />
           </.form_group>
         </.column>
         <.column size="100" md="1-3">
           <.form_group>
             <.form_label>{gettext("Range")}</.form_label>
-            <.input type="range" />
+            <.range_input />
           </.form_group>
         </.column>
       </.grid>
@@ -415,9 +415,9 @@ defmodule DemoWeb.Live.InputsLive do
           <.form_group>
             <.form_label>{gettext("Checkboxes")}</.form_label>
             <.checkbox_group>
-              <.checkbox id="input-check1" checked label={gettext("Option 1 (checked)")} />
-              <.checkbox id="input-check2" label={gettext("Option 2")} />
-              <.checkbox id="input-check3" disabled label={gettext("Option 3 (disabled)")} />
+              <.checkbox id="input-check1" checked label_text={gettext("Option 1 (checked)")} />
+              <.checkbox id="input-check2" label_text={gettext("Option 2")} />
+              <.checkbox id="input-check3" disabled label_text={gettext("Option 3 (disabled)")} />
             </.checkbox_group>
           </.form_group>
         </.column>
@@ -426,9 +426,9 @@ defmodule DemoWeb.Live.InputsLive do
           <.form_group>
             <.form_label>{gettext("Radio Buttons")}</.form_label>
             <.radio_group>
-              <.radio name="radio-demo" value="a" label={gettext("Option A (selected)")} />
-              <.radio name="radio-demo" value="b" label={gettext("Option B")} />
-              <.radio name="radio-demo" value="c" disabled label={gettext("Option C (disabled)")} />
+              <.radio name="radio-demo" value="a" label_text={gettext("Option A (selected)")} />
+              <.radio name="radio-demo" value="b" label_text={gettext("Option B")} />
+              <.radio name="radio-demo" value="c" disabled label_text={gettext("Option C (disabled)")} />
             </.radio_group>
           </.form_group>
         </.column>
@@ -437,11 +437,11 @@ defmodule DemoWeb.Live.InputsLive do
           <.form_group>
             <.form_label>{gettext("Checkbox Sizes")}</.form_label>
             <.checkbox_group>
-              <.checkbox id="size-check-xs" size="xs" checked label={gettext("Extra Small")} />
-              <.checkbox id="size-check-sm" size="sm" checked label={gettext("Small")} />
-              <.checkbox id="size-check-default" checked label={gettext("Default")} />
-              <.checkbox id="size-check-lg" size="lg" checked label={gettext("Large")} />
-              <.checkbox id="size-check-xl" size="xl" checked label={gettext("Extra Large")} />
+              <.checkbox id="size-check-xs" size="xs" checked label_text={gettext("Extra Small")} />
+              <.checkbox id="size-check-sm" size="sm" checked label_text={gettext("Small")} />
+              <.checkbox id="size-check-default" checked label_text={gettext("Default")} />
+              <.checkbox id="size-check-lg" size="lg" checked label_text={gettext("Large")} />
+              <.checkbox id="size-check-xl" size="xl" checked label_text={gettext("Extra Large")} />
             </.checkbox_group>
           </.form_group>
         </.column>
@@ -450,11 +450,11 @@ defmodule DemoWeb.Live.InputsLive do
           <.form_group>
             <.form_label>{gettext("Radio Sizes")}</.form_label>
             <.radio_group>
-              <.radio name="size-demo" value="xs" label={gettext("Extra Small")} />
-              <.radio name="size-demo" value="sm" label={gettext("Small")} />
-              <.radio name="size-demo" value="default" label={gettext("Default")} />
-              <.radio name="size-demo" value="lg" label={gettext("Large")} />
-              <.radio name="size-demo" value="xl" label={gettext("Extra Large")} />
+              <.radio name="size-demo" value="xs" label_text={gettext("Extra Small")} />
+              <.radio name="size-demo" value="sm" label_text={gettext("Small")} />
+              <.radio name="size-demo" value="default" label_text={gettext("Default")} />
+              <.radio name="size-demo" value="lg" label_text={gettext("Large")} />
+              <.radio name="size-demo" value="xl" label_text={gettext("Extra Large")} />
             </.radio_group>
           </.form_group>
         </.column>

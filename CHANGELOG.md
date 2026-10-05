@@ -31,6 +31,44 @@ accordingly (shell/foundation → `--pc-`, components → `--pa-`).
 - Swept the demo's remaining raw `pa-text--secondary` / dead `pa-text-secondary`
   usages to `text-secondary` (component props where the element is a paragraph/text).
 
+### Forms — alignment with svelte-pure-admin
+
+Aligned the form components' prop vocabulary with `svelte-pure-admin` (the more
+mature of the two wrappers) so the same concept has the same name across stacks.
+keen stays snake_case — the faithful translation of svelte's camelCase.
+
+- **Canonical validation-state prop is now `state`** (was `validation`) on `input/1`,
+  `select/1`, `textarea/1`, and `form_group/1` — matching svelte's `state`.
+- **Canonical theme-colour prop is now `theme_color`** (was `color`, now accepts an
+  integer or string) on `input/1`, `select/1`, `textarea/1`, and `form_help/1` —
+  matching svelte's `themeColor` and keen's own `alert/1`.
+- **Canonical label-text prop is now `label_text`** (was `label`) on `checkbox/1` and
+  `radio/1` — matching svelte's `labelText`.
+- The old `validation` / `color` / `label` props are kept as **deprecated aliases**
+  (coalesced old→new) so existing markup keeps rendering; new markup should use the
+  canonical names.
+- **Accessibility:** `input/1`, `select/1`, `textarea/1` now emit `aria-invalid="true"`
+  in the error state, and gained a `touched` attr (default `true`) that suppresses the
+  error state + inline help when `false` — mirroring svelte's `touched` gate. The
+  `:field` path derives `touched` from `used_input?/1`.
+- **New `form_field/1` orchestrator** — `form_group` + label + control + help/error/
+  success text with automatic state derivation and `:let`-forwarded `%{errors, touched,
+  state}`; accepts a Phoenix `:field`. Mirrors svelte's `<FormField>`.
+- **New `form_error_summary/1`** — a danger alert with an error count and anchor links
+  to each field (`%{field:, id:, message:}`). Mirrors svelte's `<FormErrorSummary>`.
+- **`input/1` split into typed components** mirroring svelte's six input components.
+  `input/1` is now **text-like only** (`text`/`email`/`password`/`tel`/`url`/`search`);
+  the other HTML input types moved to dedicated components — **`number_input/1`,
+  `date_input/1`, `color_input/1`, `file_input/1`, `range_input/1`** — each declaring
+  only the native attrs relevant to its type (`min`/`max`/`step`, `accept`/`multiple`/
+  `capture`, …) instead of `input/1` carrying the union of all of them through one
+  `:global` rest. A shared private `pa_input_classes/4` keeps the `.pa-input` modifier
+  logic in one place. (This is a **breaking** narrowing of `input/1` — `type="number"`
+  etc. is no longer accepted; use the typed component.)
+- Demo: swept form-control call-sites to the canonical names, migrated every
+  non-text `<.input type="…">` to its typed component, and rebuilt the validations
+  page's "Combined (Recommended)" section from `<.form_error_summary>` + `<.form_field>`.
+
 ### Demo — Spanish localization (i18n)
 
 - **The demo now ships English + Spanish, switchable at runtime.** Added Phoenix **Gettext**

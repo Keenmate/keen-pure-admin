@@ -100,29 +100,29 @@ defmodule DemoWeb.Live.CheckboxListsLive do
         <.column size="100" md="50">
           <.heading level={4}>{gettext("Three States")}</.heading>
           <div class="d-flex flex-column gap-12">
-            <.checkbox id="unchecked-demo" label={gettext("Unchecked")} checked={@cb_unchecked} phx-click="toggle" phx-value-id="cb_unchecked" />
-            <.checkbox id="checked-demo" label={gettext("Checked")} checked={@cb_checked} phx-click="toggle" phx-value-id="cb_checked" />
-            <.checkbox id="indeterminate-demo" label={gettext("Indeterminate")} is_indeterminate />
+            <.checkbox id="unchecked-demo" label_text={gettext("Unchecked")} checked={@cb_unchecked} phx-click="toggle" phx-value-id="cb_unchecked" />
+            <.checkbox id="checked-demo" label_text={gettext("Checked")} checked={@cb_checked} phx-click="toggle" phx-value-id="cb_checked" />
+            <.checkbox id="indeterminate-demo" label_text={gettext("Indeterminate")} is_indeterminate />
           </div>
         </.column>
         <.column size="100" md="50">
           <.heading level={4}>{gettext("X Mark Modifier")}</.heading>
           <div class="d-flex flex-column gap-12">
-            <.checkbox id="xmark-xs" label={gettext("Extra Small with X")} size="xs" is_x_mark checked={@xmark_xs} phx-click="toggle" phx-value-id="xmark_xs" />
-            <.checkbox id="xmark-sm" label={gettext("Small with X")} size="sm" is_x_mark checked={@xmark_sm} phx-click="toggle" phx-value-id="xmark_sm" />
-            <.checkbox id="xmark-default" label={gettext("Default with X")} is_x_mark checked={@xmark_default} phx-click="toggle" phx-value-id="xmark_default" />
-            <.checkbox id="xmark-lg" label={gettext("Large with X")} size="lg" is_x_mark checked={@xmark_lg} phx-click="toggle" phx-value-id="xmark_lg" />
-            <.checkbox id="xmark-xl" label={gettext("Extra Large with X")} size="xl" is_x_mark checked={@xmark_xl} phx-click="toggle" phx-value-id="xmark_xl" />
+            <.checkbox id="xmark-xs" label_text={gettext("Extra Small with X")} size="xs" is_x_mark checked={@xmark_xs} phx-click="toggle" phx-value-id="xmark_xs" />
+            <.checkbox id="xmark-sm" label_text={gettext("Small with X")} size="sm" is_x_mark checked={@xmark_sm} phx-click="toggle" phx-value-id="xmark_sm" />
+            <.checkbox id="xmark-default" label_text={gettext("Default with X")} is_x_mark checked={@xmark_default} phx-click="toggle" phx-value-id="xmark_default" />
+            <.checkbox id="xmark-lg" label_text={gettext("Large with X")} size="lg" is_x_mark checked={@xmark_lg} phx-click="toggle" phx-value-id="xmark_lg" />
+            <.checkbox id="xmark-xl" label_text={gettext("Extra Large with X")} size="xl" is_x_mark checked={@xmark_xl} phx-click="toggle" phx-value-id="xmark_xl" />
           </div>
         </.column>
         <.column size="100" md="50">
           <.heading level={4}>{gettext("Size Variants")}</.heading>
           <div class="d-flex flex-column gap-12">
-            <.checkbox id="size-xs" label={gettext("Extra Small (xs)")} size="xs" checked={@size_xs} phx-click="toggle" phx-value-id="size_xs" />
-            <.checkbox id="size-sm" label={gettext("Small (sm)")} size="sm" checked={@size_sm} phx-click="toggle" phx-value-id="size_sm" />
-            <.checkbox id="size-default" label={gettext("Default")} checked={@size_default} phx-click="toggle" phx-value-id="size_default" />
-            <.checkbox id="size-lg" label={gettext("Large (lg)")} size="lg" checked={@size_lg} phx-click="toggle" phx-value-id="size_lg" />
-            <.checkbox id="size-xl" label={gettext("Extra Large (xl)")} size="xl" checked={@size_xl} phx-click="toggle" phx-value-id="size_xl" />
+            <.checkbox id="size-xs" label_text={gettext("Extra Small (xs)")} size="xs" checked={@size_xs} phx-click="toggle" phx-value-id="size_xs" />
+            <.checkbox id="size-sm" label_text={gettext("Small (sm)")} size="sm" checked={@size_sm} phx-click="toggle" phx-value-id="size_sm" />
+            <.checkbox id="size-default" label_text={gettext("Default")} checked={@size_default} phx-click="toggle" phx-value-id="size_default" />
+            <.checkbox id="size-lg" label_text={gettext("Large (lg)")} size="lg" checked={@size_lg} phx-click="toggle" phx-value-id="size_lg" />
+            <.checkbox id="size-xl" label_text={gettext("Extra Large (xl)")} size="xl" checked={@size_xl} phx-click="toggle" phx-value-id="size_xl" />
           </div>
         </.column>
       </.grid>
@@ -135,7 +135,7 @@ defmodule DemoWeb.Live.CheckboxListsLive do
           <div class="d-flex flex-column gap-12">
             <.checkbox
               id="select-all-fruits"
-              label={gettext("Select All Fruits (%{count}/4)", count: @fruit_count)}
+              label_text={gettext("Select All Fruits (%{count}/4)", count: @fruit_count)}
               checked={@fruit_count == 4}
               is_indeterminate={@fruit_count > 0 && @fruit_count < 4}
               phx-click="select_all_fruits"
@@ -173,9 +173,9 @@ defmodule DemoWeb.Live.CheckboxListsLive do
     <%!-- Card 3: Disabled Checkboxes --%>
     <.card title_text={gettext("Disabled Checkboxes")} subtitle_text={gettext("Disabled state with reduced opacity")}>
       <div class="d-flex flex-wrap gap-2xl">
-        <.checkbox id="disabled-unchecked" label={gettext("Disabled unchecked")} disabled />
-        <.checkbox id="disabled-checked" label={gettext("Disabled checked")} disabled checked />
-        <.checkbox id="disabled-indeterminate" label={gettext("Disabled indeterminate")} disabled is_indeterminate />
+        <.checkbox id="disabled-unchecked" label_text={gettext("Disabled unchecked")} disabled />
+        <.checkbox id="disabled-checked" label_text={gettext("Disabled checked")} disabled checked />
+        <.checkbox id="disabled-indeterminate" label_text={gettext("Disabled indeterminate")} disabled is_indeterminate />
       </div>
     </.card>
 

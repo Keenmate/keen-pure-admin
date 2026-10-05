@@ -359,7 +359,7 @@ defmodule DemoWeb.Live.FormDemoLive do
           <.column size="100" md="50">
             <.form_group>
               <.form_label>{gettext("Start Date")}</.form_label>
-              <.input field={@form[:start_date]} type="date" />
+              <.date_input field={@form[:start_date]} type="date" />
             </.form_group>
           </.column>
 
@@ -372,7 +372,7 @@ defmodule DemoWeb.Live.FormDemoLive do
 
           <.column size="100">
             <.form_group>
-              <.checkbox field={@form[:force_errors]} label={gettext("Force validation errors on every field (for testing that values stick and errors render)")} />
+              <.checkbox field={@form[:force_errors]} label_text={gettext("Force validation errors on every field (for testing that values stick and errors render)")} />
             </.form_group>
           </.column>
         </.grid>

@@ -357,7 +357,7 @@ defmodule DemoWeb.Live.ModalsLive do
       <.form_group label={gettext("Password")}>
         <.input type="password" placeholder={gettext("Enter password")} />
       </.form_group>
-      <.checkbox label={gettext("Remember me")} />
+      <.checkbox label_text={gettext("Remember me")} />
       <:footer>
         <.button variant="secondary" phx-click={hide_modal("modal-login")}>{gettext("Cancel")}</.button>
         <.button variant="primary" phx-click={hide_modal("modal-login")}>{gettext("Sign In")}</.button>
@@ -372,16 +372,16 @@ defmodule DemoWeb.Live.ModalsLive do
             <.select options={["Default", "Dark", "Audi"]} />
           </.form_group>
           <.form_group>
-            <.checkbox label={gettext("Enable notifications")} checked />
+            <.checkbox label_text={gettext("Enable notifications")} checked />
           </.form_group>
         </.column>
         <.column size="100" md="1-2">
           <.heading level={5}>{gettext("Privacy Settings")}</.heading>
           <.form_group>
-            <.checkbox label={gettext("Share analytics data")} />
+            <.checkbox label_text={gettext("Share analytics data")} />
           </.form_group>
           <.form_group>
-            <.checkbox label={gettext("Email updates")} checked />
+            <.checkbox label_text={gettext("Email updates")} checked />
           </.form_group>
         </.column>
       </.grid>

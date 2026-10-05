@@ -71,7 +71,7 @@ defmodule DemoWeb.Live.FormsLive do
           <.column size="100" md="50">
             <.form_group>
               <.form_label for="number-input">{gettext("Number Input")}</.form_label>
-              <.input type="number" id="number-input" placeholder="0" />
+              <.number_input id="number-input" placeholder="0" />
             </.form_group>
           </.column>
           <.column size="100" md="50">
@@ -83,7 +83,7 @@ defmodule DemoWeb.Live.FormsLive do
           <.column size="100" md="50">
             <.form_group>
               <.form_label for="date-input">{gettext("Date Input")}</.form_label>
-              <.input type="date" id="date-input" />
+              <.date_input type="date" id="date-input" />
             </.form_group>
           </.column>
           <.column size="100">
@@ -271,7 +271,7 @@ defmodule DemoWeb.Live.FormsLive do
               <.form_label for="button-append-input">{gettext("Button + Input + Append")}</.form_label>
               <div class="pa-input-group">
                 <.button variant="secondary" class="pa-input-group__button">-</.button>
-                <.input type="number" id="button-append-input" value="1" />
+                <.number_input id="button-append-input" value="1" />
                 <span class="pa-input-group__append">{gettext("items")}</span>
               </div>
             </.form_group>
@@ -296,7 +296,7 @@ defmodule DemoWeb.Live.FormsLive do
               <.form_label for="quantity-input">{gettext("Button + Input + Button (Quantity)")}</.form_label>
               <div class="pa-input-group">
                 <.button variant="secondary" class="pa-input-group__button">-</.button>
-                <.input type="number" id="quantity-input" value="1" style="text-align: center;" />
+                <.number_input id="quantity-input" value="1" style="text-align: center;" />
                 <.button variant="secondary" class="pa-input-group__button">+</.button>
               </div>
             </.form_group>
@@ -332,7 +332,7 @@ defmodule DemoWeb.Live.FormsLive do
           </.column>
 
           <.column size="100" md="50">
-            <.form_group validation="error">
+            <.form_group state="error">
               <.form_label for="error-input">{gettext("Input with Error")}</.form_label>
               <.input type="text" id="error-input" is_error placeholder={gettext("Invalid input")} />
               <.form_help variant="error">{gettext("This field is required")}</.form_help>
@@ -340,7 +340,7 @@ defmodule DemoWeb.Live.FormsLive do
           </.column>
 
           <.column size="100" md="50">
-            <.form_group validation="success">
+            <.form_group state="success">
               <.form_label for="success-input">{gettext("Input with Success")}</.form_label>
               <.input type="text" id="success-input" is_success value={gettext("Valid input")} />
               <.form_help variant="success">{gettext("Looks good!")}</.form_help>
@@ -382,18 +382,18 @@ defmodule DemoWeb.Live.FormsLive do
         <.form_group>
           <.form_label>{gettext("Checkboxes (Custom Tri-State)")}</.form_label>
           <.checkbox_group>
-            <.checkbox checked label={gettext("Option 1 (checked)")} />
-            <.checkbox label={gettext("Option 2")} />
-            <.checkbox disabled label={gettext("Option 3 (disabled)")} />
+            <.checkbox checked label_text={gettext("Option 1 (checked)")} />
+            <.checkbox label_text={gettext("Option 2")} />
+            <.checkbox disabled label_text={gettext("Option 3 (disabled)")} />
           </.checkbox_group>
         </.form_group>
 
         <.form_group>
           <.form_label>{gettext("Radio Buttons")}</.form_label>
           <.radio_group>
-            <.radio name="radio-group" value="a" checked label={gettext("Choice A (selected)")} />
-            <.radio name="radio-group" value="b" label={gettext("Choice B")} />
-            <.radio name="radio-group" value="c" disabled label={gettext("Choice C (disabled)")} />
+            <.radio name="radio-group" value="a" checked label_text={gettext("Choice A (selected)")} />
+            <.radio name="radio-group" value="b" label_text={gettext("Choice B")} />
+            <.radio name="radio-group" value="c" disabled label_text={gettext("Choice C (disabled)")} />
           </.radio_group>
         </.form_group>
 
@@ -401,9 +401,9 @@ defmodule DemoWeb.Live.FormsLive do
           <.form_label>{gettext("Two-state & Three-state (indeterminate)")}</.form_label>
           <.checkbox_group>
             <%!-- Two-state: a normal checkbox --%>
-            <.checkbox checked label={gettext("Two-state (checked / unchecked)")} />
+            <.checkbox checked label_text={gettext("Two-state (checked / unchecked)")} />
             <%!-- Static indeterminate via the PureAdminCheckbox hook --%>
-            <.checkbox is_indeterminate label={gettext("Indeterminate (mixed) — static")} />
+            <.checkbox is_indeterminate label_text={gettext("Indeterminate (mixed) — static")} />
             <%!-- Three-state cycler: FormsTristate hook cycles unchecked → checked → indeterminate --%>
             <label class="pa-checkbox" id="tristate-cycler" phx-hook="FormsTristate">
               <input type="checkbox" />
@@ -424,16 +424,16 @@ defmodule DemoWeb.Live.FormsLive do
           <.grid>
             <.column size="100" md="1-2">
               <.checkbox_group>
-                <.checkbox label_position="end" checked label={gettext("End · Option 1")} />
-                <.checkbox label_position="end" label={gettext("End · Option 2")} />
-                <.checkbox label_position="end" checked label={gettext("End · Option 3")} />
+                <.checkbox label_position="end" checked label_text={gettext("End · Option 1")} />
+                <.checkbox label_position="end" label_text={gettext("End · Option 2")} />
+                <.checkbox label_position="end" checked label_text={gettext("End · Option 3")} />
               </.checkbox_group>
             </.column>
             <.column size="100" md="1-2">
               <.checkbox_group>
-                <.checkbox label_position="start" checked label={gettext("Start · Option 1")} />
-                <.checkbox label_position="start" label={gettext("Start · Option 2")} />
-                <.checkbox label_position="start" checked label={gettext("Start · Option 3")} />
+                <.checkbox label_position="start" checked label_text={gettext("Start · Option 1")} />
+                <.checkbox label_position="start" label_text={gettext("Start · Option 2")} />
+                <.checkbox label_position="start" checked label_text={gettext("Start · Option 3")} />
               </.checkbox_group>
             </.column>
           </.grid>
@@ -442,12 +442,12 @@ defmodule DemoWeb.Live.FormsLive do
         <.form_group class="mb-2xl">
           <.form_label>{gettext("Checkbox · label top (auto-flow grid, 6 options)")}</.form_label>
           <.checkbox_group layout="grid">
-            <.checkbox label_position="top" checked label={gettext("Top · Option 1")} />
-            <.checkbox label_position="top" label={gettext("Top · Option 2")} />
-            <.checkbox label_position="top" checked label={gettext("Top · Option 3")} />
-            <.checkbox label_position="top" label={gettext("Top · Option 4")} />
-            <.checkbox label_position="top" checked label={gettext("Top · Option 5")} />
-            <.checkbox label_position="top" label={gettext("Top · Option 6")} />
+            <.checkbox label_position="top" checked label_text={gettext("Top · Option 1")} />
+            <.checkbox label_position="top" label_text={gettext("Top · Option 2")} />
+            <.checkbox label_position="top" checked label_text={gettext("Top · Option 3")} />
+            <.checkbox label_position="top" label_text={gettext("Top · Option 4")} />
+            <.checkbox label_position="top" checked label_text={gettext("Top · Option 5")} />
+            <.checkbox label_position="top" label_text={gettext("Top · Option 6")} />
           </.checkbox_group>
         </.form_group>
 
@@ -456,16 +456,16 @@ defmodule DemoWeb.Live.FormsLive do
           <.grid>
             <.column size="100" md="1-2">
               <.radio_group>
-                <.radio name="rl-end" value="1" label_position="end" checked label={gettext("End · Option 1")} />
-                <.radio name="rl-end" value="2" label_position="end" label={gettext("End · Option 2")} />
-                <.radio name="rl-end" value="3" label_position="end" label={gettext("End · Option 3")} />
+                <.radio name="rl-end" value="1" label_position="end" checked label_text={gettext("End · Option 1")} />
+                <.radio name="rl-end" value="2" label_position="end" label_text={gettext("End · Option 2")} />
+                <.radio name="rl-end" value="3" label_position="end" label_text={gettext("End · Option 3")} />
               </.radio_group>
             </.column>
             <.column size="100" md="1-2">
               <.radio_group>
-                <.radio name="rl-start" value="1" label_position="start" checked label={gettext("Start · Option 1")} />
-                <.radio name="rl-start" value="2" label_position="start" label={gettext("Start · Option 2")} />
-                <.radio name="rl-start" value="3" label_position="start" label={gettext("Start · Option 3")} />
+                <.radio name="rl-start" value="1" label_position="start" checked label_text={gettext("Start · Option 1")} />
+                <.radio name="rl-start" value="2" label_position="start" label_text={gettext("Start · Option 2")} />
+                <.radio name="rl-start" value="3" label_position="start" label_text={gettext("Start · Option 3")} />
               </.radio_group>
             </.column>
           </.grid>
@@ -474,12 +474,12 @@ defmodule DemoWeb.Live.FormsLive do
         <.form_group>
           <.form_label>{gettext("Radio · label top (auto-flow grid, 6 options)")}</.form_label>
           <.radio_group layout="grid">
-            <.radio name="rl-top" value="1" label_position="top" checked label={gettext("Top · Option 1")} />
-            <.radio name="rl-top" value="2" label_position="top" label={gettext("Top · Option 2")} />
-            <.radio name="rl-top" value="3" label_position="top" label={gettext("Top · Option 3")} />
-            <.radio name="rl-top" value="4" label_position="top" label={gettext("Top · Option 4")} />
-            <.radio name="rl-top" value="5" label_position="top" label={gettext("Top · Option 5")} />
-            <.radio name="rl-top" value="6" label_position="top" label={gettext("Top · Option 6")} />
+            <.radio name="rl-top" value="1" label_position="top" checked label_text={gettext("Top · Option 1")} />
+            <.radio name="rl-top" value="2" label_position="top" label_text={gettext("Top · Option 2")} />
+            <.radio name="rl-top" value="3" label_position="top" label_text={gettext("Top · Option 3")} />
+            <.radio name="rl-top" value="4" label_position="top" label_text={gettext("Top · Option 4")} />
+            <.radio name="rl-top" value="5" label_position="top" label_text={gettext("Top · Option 5")} />
+            <.radio name="rl-top" value="6" label_position="top" label_text={gettext("Top · Option 6")} />
           </.radio_group>
         </.form_group>
       </form>
@@ -503,14 +503,14 @@ defmodule DemoWeb.Live.FormsLive do
         <.form_group>
           <.form_label>{gettext("Horizontal orientation")}</.form_label>
           <.checkbox_group layout="horizontal">
-            <.checkbox checked label={gettext("Red")} />
-            <.checkbox label={gettext("Green")} />
-            <.checkbox label={gettext("Blue")} />
+            <.checkbox checked label_text={gettext("Red")} />
+            <.checkbox label_text={gettext("Green")} />
+            <.checkbox label_text={gettext("Blue")} />
           </.checkbox_group>
           <.radio_group layout="horizontal">
-            <.radio name="radio-horiz" value="low" checked label={gettext("Low")} />
-            <.radio name="radio-horiz" value="medium" label={gettext("Medium")} />
-            <.radio name="radio-horiz" value="high" label={gettext("High")} />
+            <.radio name="radio-horiz" value="low" checked label_text={gettext("Low")} />
+            <.radio name="radio-horiz" value="medium" label_text={gettext("Medium")} />
+            <.radio name="radio-horiz" value="high" label_text={gettext("High")} />
           </.radio_group>
         </.form_group>
 
@@ -519,16 +519,16 @@ defmodule DemoWeb.Live.FormsLive do
         <.form_group>
           <.form_label>{gettext("Priority (required group)")}</.form_label>
           <.radio_group layout="horizontal">
-            <.radio name="req-priority" value="low" required label={gettext("Low")} />
-            <.radio name="req-priority" value="medium" required label={gettext("Medium")} />
-            <.radio name="req-priority" value="high" required label={gettext("High")} />
+            <.radio name="req-priority" value="low" required label_text={gettext("Low")} />
+            <.radio name="req-priority" value="medium" required label_text={gettext("Medium")} />
+            <.radio name="req-priority" value="high" required label_text={gettext("High")} />
           </.radio_group>
         </.form_group>
 
         <%!-- Standalone consent checkbox (no *-group wrapper): the requirement IS
              this one control, so the asterisk sits on its OWN option label. --%>
         <.form_group>
-          <.checkbox required label={gettext("I accept the terms")} />
+          <.checkbox required label_text={gettext("I accept the terms")} />
         </.form_group>
       </form>
     </.card>
@@ -541,11 +541,11 @@ defmodule DemoWeb.Live.FormsLive do
             <.form_group>
               <.form_label>{gettext("Checkbox Sizes")}</.form_label>
               <.checkbox_group>
-                <.checkbox size="xs" checked label={gettext("Extra Small (12px)")} />
-                <.checkbox size="sm" checked label={gettext("Small (14px)")} />
-                <.checkbox checked label={gettext("Default (16px)")} />
-                <.checkbox size="lg" checked label={gettext("Large (20px)")} />
-                <.checkbox size="xl" checked label={gettext("Extra Large (24px)")} />
+                <.checkbox size="xs" checked label_text={gettext("Extra Small (12px)")} />
+                <.checkbox size="sm" checked label_text={gettext("Small (14px)")} />
+                <.checkbox checked label_text={gettext("Default (16px)")} />
+                <.checkbox size="lg" checked label_text={gettext("Large (20px)")} />
+                <.checkbox size="xl" checked label_text={gettext("Extra Large (24px)")} />
               </.checkbox_group>
             </.form_group>
           </.column>
@@ -554,11 +554,11 @@ defmodule DemoWeb.Live.FormsLive do
             <.form_group>
               <.form_label>{gettext("Radio Button Sizes")}</.form_label>
               <.radio_group>
-                <.radio name="radio-sizes" value="xs" size="xs" checked label={gettext("Extra Small (12px)")} />
-                <.radio name="radio-sizes" value="sm" size="sm" label={gettext("Small (14px)")} />
-                <.radio name="radio-sizes" value="default" label={gettext("Default (16px)")} />
-                <.radio name="radio-sizes" value="lg" size="lg" label={gettext("Large (20px)")} />
-                <.radio name="radio-sizes" value="xl" size="xl" label={gettext("Extra Large (24px)")} />
+                <.radio name="radio-sizes" value="xs" size="xs" checked label_text={gettext("Extra Small (12px)")} />
+                <.radio name="radio-sizes" value="sm" size="sm" label_text={gettext("Small (14px)")} />
+                <.radio name="radio-sizes" value="default" label_text={gettext("Default (16px)")} />
+                <.radio name="radio-sizes" value="lg" size="lg" label_text={gettext("Large (20px)")} />
+                <.radio name="radio-sizes" value="xl" size="xl" label_text={gettext("Extra Large (24px)")} />
               </.radio_group>
             </.form_group>
           </.column>

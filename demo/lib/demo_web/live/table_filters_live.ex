@@ -126,12 +126,12 @@ defmodule DemoWeb.Live.TableFiltersLive do
               <.grid>
                 <.column size="100" md="50">
                   <.input_wrapper>
-                    <.input type="date" />
+                    <.date_input type="date" />
                   </.input_wrapper>
                 </.column>
                 <.column size="100" md="50">
                   <.input_wrapper>
-                    <.input type="date" />
+                    <.date_input type="date" />
                   </.input_wrapper>
                 </.column>
               </.grid>
@@ -200,7 +200,7 @@ defmodule DemoWeb.Live.TableFiltersLive do
           <.form_group>
             <.form_label>{gettext("Date")}</.form_label>
             <.input_wrapper>
-              <.input type="date" />
+              <.date_input type="date" />
             </.input_wrapper>
           </.form_group>
         </.column>
