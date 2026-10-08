@@ -28,36 +28,43 @@ defmodule PureAdmin.Config do
   | `:font_class` | `nil` | `root_html_attrs/0` |
   | `:default_variant` | `"primary"` | various components |
   | `:default_icon_size` | `"1.25rem"` | `heroicon/1`, `faicon/1`, `icon/1` |
-  | `:icon_callback` | `nil` | `icon/1` |
+  | `:icon_providers` | `[]` | `icon/1` |
   | `:toast_position` | `"top-right"` | `toast_container/1` |
 
-  ## Icon callback
+  ## Icon providers
 
-  When set, `<.icon>` calls this function for any name that isn't a
-  shipped heroicon (`"hero-X"`). The function is a Phoenix function
-  component — it receives the full assigns map (with `name`, `class`,
-  `color`, `size`, `size_value`, `variant`, `fill`, `stroke`, `title`,
-  `aria_label`) and returns rendered HEEx.
+  An ordered LIST of providers that `<.icon>` consults for any name that
+  isn't a framework affordance (`pa-icon--*`, resolved first and built-in).
+  Each provider is a Phoenix function component — it receives the full
+  assigns map (with `name`, `class`, `color`, `size`, `size_value`,
+  `variant`, `fill`, `stroke`, `title`, `aria_label`, `is_interactive`) and
+  returns rendered HEEx, or `nil` to pass the name to the next provider.
+  After the list, a built-in fallback handles `"hero-X"` (→ `<.heroicon>`)
+  and otherwise FA-style `<i class={name}>`. Mirrors svelte's provider list.
 
       # config/config.exs
-      config :keen_pure_admin, icon_callback: {MyAppWeb.Icons, :render}
+      config :keen_pure_admin, icon_providers: [{MyAppWeb.Icons, :render}]
 
       # lib/my_app_web/icons.ex
       defmodule MyAppWeb.Icons do
         use Phoenix.Component
 
+        # Handle this set; return nil for anything else so the next
+        # provider (or the built-in fallback) gets a turn.
         def render(%{name: "lucide-" <> name} = assigns) do
           assigns = assign(assigns, :file, name)
           ~H\"""
           <img src={"/assets/icons/lucide/\#{@file}.svg"} width={@size_value} height={@size_value} />
           \"""
         end
+
+        def render(_assigns), do: nil
       end
 
-  Either a `{module, function}` tuple or a function capture
-  (`&MyAppWeb.Icons.render/1`) is accepted. The tuple form is safer in
-  `config.exs` because it doesn't require the module to be compiled
-  before the config is evaluated.
+  Each entry is either a `{module, function}` tuple or a function capture
+  (`&MyAppWeb.Icons.render/1`). The tuple form is safer in `config.exs`
+  because it doesn't require the module to be compiled before the config
+  is evaluated.
   """
 
   @defaults %{
@@ -68,7 +75,7 @@ defmodule PureAdmin.Config do
     font_class: nil,
     default_variant: "primary",
     default_icon_size: "1.25rem",
-    icon_callback: nil,
+    icon_providers: [],
     toast_position: "top-right"
   }
 
@@ -118,22 +125,27 @@ defmodule PureAdmin.Config do
   def icon_size, do: get(:default_icon_size)
 
   @doc """
-  Get the configured icon callback as a 1-arity function, or `nil`.
+  Get the configured icon providers as a list of 1-arity function components.
 
-  Accepts either a function capture (`&Mod.fun/1`) or a `{module, function}`
-  tuple in config. The tuple form is preferred since it doesn't require
-  the target module to be loaded when `config.exs` is evaluated.
+  Each `:icon_providers` entry is either a function capture (`&Mod.fun/1`)
+  or a `{module, function}` tuple; the tuple form is preferred since it
+  doesn't require the target module to be loaded when `config.exs` is
+  evaluated. Each provider receives the full assigns map (name + render
+  context) and returns rendered HEEx, or `nil` to pass the name to the next
+  provider. Framework affordances (`pa-icon--*`) resolve before this list.
   """
-  @spec icon_callback() :: (map() -> Phoenix.LiveView.Rendered.t()) | nil
-  def icon_callback do
-    case get(:icon_callback) do
-      nil -> nil
-      fun when is_function(fun, 1) -> fun
-      {mod, fun} when is_atom(mod) and is_atom(fun) -> Function.capture(mod, fun, 1)
-      {mod, fun, _arity} when is_atom(mod) and is_atom(fun) -> Function.capture(mod, fun, 1)
-      _ -> nil
-    end
+  @spec icon_providers() :: [(map() -> Phoenix.LiveView.Rendered.t() | nil)]
+  def icon_providers do
+    get(:icon_providers, [])
+    |> List.wrap()
+    |> Enum.map(&normalize_provider/1)
+    |> Enum.reject(&is_nil/1)
   end
+
+  defp normalize_provider(fun) when is_function(fun, 1), do: fun
+  defp normalize_provider({mod, fun}) when is_atom(mod) and is_atom(fun), do: Function.capture(mod, fun, 1)
+  defp normalize_provider({mod, fun, _arity}) when is_atom(mod) and is_atom(fun), do: Function.capture(mod, fun, 1)
+  defp normalize_provider(_), do: nil
 
   @doc """
   Returns HTML attributes for the `<html>` element.

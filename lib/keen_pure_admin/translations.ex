@@ -126,6 +126,10 @@ defmodule PureAdmin.Translations do
     "pureAdmin.a11y.close" => "Close",
     "pureAdmin.a11y.settings" => "Settings",
 
+    # Forms — used by PureAdmin.Components.Form (form_error_summary/1)
+    "pureAdmin.form.errorFound" => "%{count} error found:",
+    "pureAdmin.form.errorsFound" => "%{count} errors found:",
+
     # Date & time — used by PureAdmin.DateTime
     "pureAdmin.datetime.at" => "at",
     "pureAdmin.datetime.now" => "now",

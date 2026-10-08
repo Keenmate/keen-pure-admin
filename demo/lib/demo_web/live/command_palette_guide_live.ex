@@ -102,7 +102,7 @@ defmodule DemoWeb.Live.CommandPaletteGuideLive do
         <:icon><i class="fa-solid fa-magnifying-glass"></i></:icon>
         {gettext("Open the palette (Ctrl+K)")}
       </.button>
-      <.button variant="secondary" href={~p"/components/command-palette"}>
+      <.button variant="secondary" href={~p"/interactive/command-palette"}>
         {gettext("See the interactive demo")}
       </.button>
     </div>

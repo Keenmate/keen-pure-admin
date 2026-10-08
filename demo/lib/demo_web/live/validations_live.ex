@@ -43,6 +43,17 @@ defmodule DemoWeb.Live.ValidationsLive do
     )}
   end
 
+  def handle_event("show_validation_toast", _params, socket) do
+    {:noreply,
+     PureAdmin.Components.Toast.push_toast(
+       socket,
+       "danger",
+       gettext("Validation Failed"),
+       gettext("Invalid credentials. Please check your email and password."),
+       duration: 4000
+     )}
+  end
+
   defp valid_email?(email) do
     String.length(email) > 0 and String.contains?(email, "@") and String.contains?(email, ".")
   end
@@ -127,7 +138,7 @@ defmodule DemoWeb.Live.ValidationsLive do
       </form>
 
       <.callout variant="info" class="mt-4">
-        <strong>Usage:</strong> Add <code>pa-form-group--error</code> to the form group and <code>pa-form-help--error</code> to the help text.
+        <strong>Usage:</strong> Add <.code>pa-form-group--error</.code> to the form group and <.code>pa-form-help--error</.code> to the help text.
       </.callout>
     </.card>
 
@@ -190,7 +201,7 @@ defmodule DemoWeb.Live.ValidationsLive do
          and <.form_field> orchestrators (keen equivalents of svelte's
          FormErrorSummary / FormField). --%>
     <.card title_text={gettext("3. Combined: Summary + Inline (Recommended)")}>
-      <.paragraph class="mb-3">The best of both worlds. Summary for overview, inline for specific guidance. This section is built with <code>&lt;.form_error_summary&gt;</code> and <code>&lt;.form_field&gt;</code> — the higher-level orchestrators that mirror svelte's <code>FormErrorSummary</code> / <code>FormField</code>.</.paragraph>
+      <.paragraph class="mb-3">The best of both worlds. Summary for overview, inline for specific guidance. This section is built with <.code>&lt;.form_error_summary&gt;</.code> and <.code>&lt;.form_field&gt;</.code> — the higher-level orchestrators that mirror svelte's <.code>FormErrorSummary</.code> / <.code>FormField</.code>.</.paragraph>
 
       <form class="pa-form">
         <.form_error_summary errors={[
@@ -218,7 +229,7 @@ defmodule DemoWeb.Live.ValidationsLive do
       </form>
 
       <.callout variant="success" class="mt-4">
-        <strong>Tip:</strong> <code>&lt;.form_error_summary&gt;</code> renders clickable links that jump to each field via its <code>id</code>; <code>&lt;.form_field&gt;</code> wires the label, control, and help/error text in one tag.
+        <strong>Tip:</strong> <.code>&lt;.form_error_summary&gt;</.code> renders clickable links that jump to each field via its <.code>id</.code>; <.code>&lt;.form_field&gt;</.code> wires the label, control, and help/error text in one tag.
       </.callout>
     </.card>
 
@@ -234,7 +245,7 @@ defmodule DemoWeb.Live.ValidationsLive do
               <.input_group>
                 <.input type="text" value="" state="error" />
                 <:append>
-                  <span class="text-danger" title={gettext("This field is required")}>!</span>
+                  <span class="text-danger" title={gettext("This field is required")}><span class="pa-icon pa-icon--danger" aria-hidden="true"></span></span>
                 </:append>
               </.input_group>
             </.form_group>
@@ -245,7 +256,7 @@ defmodule DemoWeb.Live.ValidationsLive do
               <.input_group>
                 <.input type="email" value="bad@" state="error" />
                 <:append>
-                  <span class="text-danger" title={gettext("Invalid email format")}>!</span>
+                  <span class="text-danger" title={gettext("Invalid email format")}><span class="pa-icon pa-icon--danger" aria-hidden="true"></span></span>
                 </:append>
               </.input_group>
             </.form_group>
@@ -256,7 +267,7 @@ defmodule DemoWeb.Live.ValidationsLive do
               <.input_group>
                 <.input type="password" value="securepass123" state="success" />
                 <:append>
-                  <span class="text-success">&#10003;</span>
+                  <span class="text-success"><span class="pa-icon pa-icon--success" aria-hidden="true"></span></span>
                 </:append>
               </.input_group>
             </.form_group>
@@ -298,7 +309,7 @@ defmodule DemoWeb.Live.ValidationsLive do
             <.select id="industry-select" state="success" options={["Technology"]} />
           </div>
           <div class="pc-col-md-35">
-            <.form_help variant="success" class="mt-0">&#10003; Valid selection</.form_help>
+            <.form_help variant="success" class="mt-0"><span class="pa-icon pa-icon--success" aria-hidden="true"></span> Valid selection</.form_help>
           </div>
         </.form_group>
       </form>
@@ -345,15 +356,16 @@ defmodule DemoWeb.Live.ValidationsLive do
               <.input type="password" value="password123" />
             </.form_group>
           </.column>
+          <.column size="100">
+            <.button variant="primary" type="button" phx-click="show_validation_toast">{gettext("Submit (Shows Toast)")}</.button>
+          </.column>
         </.grid>
       </form>
 
-      <%!-- Simulated toast preview --%>
+      <%!-- Static preview of the toast that pops in the corner on submit. --%>
       <.card class="mt-4" has_padding>
         <.paragraph color="secondary" class="mb-2"><em>Toast preview (normally appears in corner):</em></.paragraph>
-        <.alert variant="danger">
-          <strong>{gettext("Validation Failed")}</strong> — {gettext("Invalid credentials. Please check your email and password.")}
-        </.alert>
+        <.toast variant="danger" title_text={gettext("Validation Failed")} message_text={gettext("Invalid credentials. Please check your email and password.")} />
       </.card>
 
       <.callout variant="warning" class="mt-4">
@@ -565,40 +577,40 @@ defmodule DemoWeb.Live.ValidationsLive do
     <.card title_text={gettext("CSS Classes Reference")}>
       <.heading level={4}>{gettext("Form Group States")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-form-group--success</code> - Success state (green)</li>
-        <li><code>pa-form-group--warning</code> - Warning state (yellow/orange)</li>
-        <li><code>pa-form-group--error</code> - Error state (red)</li>
+        <li><.code>pa-form-group--success</.code> - Success state (green)</li>
+        <li><.code>pa-form-group--warning</.code> - Warning state (yellow/orange)</li>
+        <li><.code>pa-form-group--error</.code> - Error state (red)</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Input States")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-input--success</code> - Success border on input</li>
-        <li><code>pa-input--warning</code> - Warning border on input</li>
-        <li><code>pa-input--error</code> - Error border on input</li>
+        <li><.code>pa-input--success</.code> - Success border on input</li>
+        <li><.code>pa-input--warning</.code> - Warning border on input</li>
+        <li><.code>pa-input--error</.code> - Error border on input</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Help/Message Text")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-form-help</code> - Base help text styling</li>
-        <li><code>pa-form-help--success</code> - Green help text</li>
-        <li><code>pa-form-help--warning</code> - Yellow/orange help text</li>
-        <li><code>pa-form-help--error</code> - Red help text</li>
+        <li><.code>pa-form-help</.code> - Base help text styling</li>
+        <li><.code>pa-form-help--success</.code> - Green help text</li>
+        <li><.code>pa-form-help--warning</.code> - Yellow/orange help text</li>
+        <li><.code>pa-form-help--error</.code> - Red help text</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Alert Variants (for Summary Blocks)")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-alert pa-alert--danger</code> - Error summary block</li>
-        <li><code>pa-alert pa-alert--warning</code> - Warning summary block</li>
-        <li><code>pa-alert pa-alert--success</code> - Success message block</li>
-        <li><code>pa-alert pa-alert--info</code> - Info message block</li>
+        <li><.code>pa-alert pa-alert--danger</.code> - Error summary block</li>
+        <li><.code>pa-alert pa-alert--warning</.code> - Warning summary block</li>
+        <li><.code>pa-alert pa-alert--success</.code> - Success message block</li>
+        <li><.code>pa-alert pa-alert--info</.code> - Info message block</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Text Utility Classes")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>text-danger</code> - Red text color</li>
-        <li><code>text-warning</code> - Yellow/orange text color</li>
-        <li><code>text-success</code> - Green text color</li>
-        <li><code>text-secondary</code> - Muted/gray text color</li>
+        <li><.code>text-danger</.code> - Red text color</li>
+        <li><.code>text-warning</.code> - Yellow/orange text color</li>
+        <li><.code>text-success</.code> - Green text color</li>
+        <li><.code>text-secondary</.code> - Muted/gray text color</li>
       </.basic_list>
     </.card>
     """

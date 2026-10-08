@@ -81,7 +81,7 @@ defmodule DemoWeb.Live.ModalDialogsLive do
   """
 
   @liveview_code """
-  // Push dialog result to LiveView
+  // Push a dialog result to LiveView from plain JS (outside a hook).
   async function confirmAndPush(action) {
     const confirmed = await PureAdmin.confirm({
       title: 'Delete Item?',
@@ -90,27 +90,231 @@ defmodule DemoWeb.Live.ModalDialogsLive do
     });
 
     if (confirmed) {
-      // Push event to LiveView server
+      // Use the public execJS API with the same encoded command phx-click uses.
+      // `value` becomes the event params on the server.
       const el = document.querySelector('[data-phx-main]');
-      const hook = window.liveSocket.getViewByEl(el);
-      hook.pushEvent('dialog_result', { action, result: 'confirmed' });
+      window.liveSocket.execJS(el, JSON.stringify(
+        [["push", { event: "dialog_result", value: { action, result: "confirmed" } }]]
+      ));
     }
   }
+  """
+
+  @liveview_server_code """
+  # The LiveView receives the pushed event and sends a toast back — no reload,
+  # the PureAdminToast hook just renders it wherever the user is.
+  def handle_event("dialog_result", %{"action" => action, "result" => result}, socket) do
+    {:noreply,
+     socket
+     |> assign(last_result: "\#{action}: \#{result}")
+     |> push_toast("success", "Server received your action",
+          "You just performed \#{action} (\#{result}) in the dialog.")}
+  end
+  """
+
+  @server_dialog_code """
+  # 1. Setup once. on_mount seeds :pa_dialog + auto-close; the host renders it.
+  live_session :default, on_mount: [{PureAdmin.Dialog, :default}] do
+    # ...your live routes...
+  end
+  # app.html.heex, mounted once:
+  #   <PureAdmin.Dialog.host dialog={@pa_dialog} />
+
+  # 2. A real phx-click handler opens the dialog FROM THE SERVER. `on_dismiss`
+  #    makes the ✕/backdrop/Esc dismiss a first-class event too.
+  def handle_event("simulate_external_edit", _params, socket) do
+    {:noreply,
+     PureAdmin.Dialog.confirm(socket,
+       title: "Document changed",
+       message: "Someone else updated this document. Reload their version?",
+       variant: "warning", banded: true, position: :top,
+       confirm: [label: "Reload theirs", variant: "warning", event: "doc_reload"],
+       cancel: [label: "Keep mine", event: "doc_keep"],
+       on_dismiss: "doc_dismiss"
+     )}
+  end
+
+  # 3. Every outcome is an ORDINARY event; the dialog auto-closes. Push a toast
+  #    straight back from the server (PureAdmin.Components.Toast.push_toast/4).
+  def handle_event("doc_reload", _p, socket), do:
+    {:noreply, push_toast(socket, "warning", "Document reloaded", "Server version loaded.")}
+
+  def handle_event("doc_keep", _p, socket), do:
+    {:noreply, push_toast(socket, "success", "Kept your version", "Local changes preserved.")}
+
+  def handle_event("doc_dismiss", _p, socket), do:   # ✕ / backdrop / Escape
+    {:noreply, push_toast(socket, "info", "Dialog dismissed", "Nothing was changed.")}
+  """
+
+  @custom_dialog_code """
+  # Custom/form dialog (requirement B): open/3 stashes a keyed spec — YOU render
+  # your own <.modal> with a real LiveView form. close/1 dismisses it.
+  def handle_event("edit_profile", _p, socket) do
+    form = to_form(%{"name" => "Ada Lovelace", "email" => "ada@example.com"}, as: :profile)
+    {:noreply, socket |> assign(profile_form: form) |> PureAdmin.Dialog.open(:edit_profile)}
+  end
+
+  def handle_event("validate_profile", %{"profile" => params}, socket) do
+    {:noreply, assign(socket, profile_form: to_form(params, as: :profile, errors: errors(params)))}
+  end
+
+  def handle_event("save_profile", %{"profile" => params}, socket) do
+    case errors(params) do
+      []   -> {:noreply, socket |> PureAdmin.Dialog.close() |> assign(profile_result: "Saved.")}
+      errs -> {:noreply, assign(socket, profile_form: to_form(params, as: :profile, errors: errs))}
+    end
+  end
+
+  # render — your OWN modal + form, keyed on @pa_dialog:
+  <.modal :if={@pa_dialog && @pa_dialog.key == :edit_profile} id="edit-profile" show
+          title_text="Edit profile" on_cancel={JS.push("pa-dialog:close")}>
+    <.form for={@profile_form} class="pa-form"
+           phx-change="validate_profile" phx-submit="save_profile">
+      <div class="pa-form-group"><label>Name</label><.input field={@profile_form[:name]} /></div>
+      <div class="pa-form-group"><label>Email</label><.input field={@profile_form[:email]} type="email" /></div>
+      <div class="pa-modal__footer">
+        <button type="button" class="pa-btn pa-btn--secondary" phx-click="pa-dialog:close">Cancel</button>
+        <button type="submit" class="pa-btn pa-btn--primary">Save</button>
+      </div>
+    </.form>
+  </.modal>
   """
 
   def mount(_params, _session, socket) do
     {:ok, assign(socket,
       page_title: "Modal Dialogs",
       last_result: nil,
+      server_dialog_result: nil,
       basic_usage_code: @basic_usage_code,
       position_code: @position_code,
       sequential_code: @sequential_code,
-      liveview_code: @liveview_code
+      liveview_code: @liveview_code,
+      liveview_server_code: @liveview_server_code,
+      server_dialog_code: @server_dialog_code,
+      custom_dialog_code: @custom_dialog_code,
+      profile_form: nil,
+      profile_result: nil
     )}
   end
 
+  # The client dialog pushed its outcome here. Besides recording it for the
+  # inline alert, push a toast straight back from the server — the PureAdminToast
+  # hook renders it with no reload, so the user sees confirmation of what they
+  # just did in the dialog. The toast variant mirrors the button that triggered
+  # it (delete → danger, rename → primary, notify → success).
   def handle_event("dialog_result", %{"action" => action, "result" => result}, socket) do
-    {:noreply, assign(socket, last_result: "#{action}: #{result}")}
+    {:noreply,
+     socket
+     |> assign(last_result: "#{action}: #{result}")
+     |> PureAdmin.Components.Toast.push_toast(
+       toast_variant(action),
+       gettext("Server received your action"),
+       gettext("You just performed “%{action}” (%{result}) in the dialog.",
+         action: action,
+         result: result
+       )
+     )}
+  end
+
+  # Server-initiated dialog via PureAdmin.Dialog: a real phx-click opens the
+  # server-rendered dialog; every outcome — the two choices AND an ✕/backdrop/Esc
+  # dismiss (wired via `on_dismiss`) — returns as an ordinary event, and each one
+  # pushes a toast straight back from the server (no reload). The dialog
+  # auto-closes through the on_mount hook.
+  def handle_event("simulate_external_edit", _params, socket) do
+    {:noreply,
+     PureAdmin.Dialog.confirm(socket,
+       title: gettext("Document changed"),
+       message:
+         gettext(
+           "Someone else updated this document while you were editing. Reload their version? Your unsaved changes will be lost."
+         ),
+       variant: "warning",
+       banded: true,
+       position: :top,
+       confirm: [label: gettext("Reload theirs"), variant: "warning", event: "doc_reload"],
+       cancel: [label: gettext("Keep mine"), event: "doc_keep"],
+       on_dismiss: "doc_dismiss"
+     )}
+  end
+
+  def handle_event("doc_reload", _params, socket) do
+    {:noreply,
+     socket
+     |> assign(server_dialog_result: gettext("Reloaded the server's version."))
+     |> PureAdmin.Components.Toast.push_toast(
+       "warning",
+       gettext("Document reloaded"),
+       gettext("Loaded the latest version from the server; your edits were discarded.")
+     )}
+  end
+
+  def handle_event("doc_keep", _params, socket) do
+    {:noreply,
+     socket
+     |> assign(server_dialog_result: gettext("Kept your local changes."))
+     |> PureAdmin.Components.Toast.push_toast(
+       "success",
+       gettext("Kept your version"),
+       gettext("Your local changes were preserved.")
+     )}
+  end
+
+  # Fired by ✕ / backdrop / Escape (wired via `on_dismiss` above) — the dismiss is
+  # a first-class event too, so the server can react instead of silently closing.
+  def handle_event("doc_dismiss", _params, socket) do
+    {:noreply,
+     socket
+     |> assign(server_dialog_result: gettext("Dismissed — no change made."))
+     |> PureAdmin.Components.Toast.push_toast(
+       "info",
+       gettext("Dialog dismissed"),
+       gettext("You closed the dialog without choosing; nothing was changed.")
+     )}
+  end
+
+  # Custom/form dialog (requirement B): open/3 stashes a keyed spec; the LiveView
+  # renders its OWN <.modal> + form (below) keyed on @pa_dialog. Full phx-change
+  # validation + phx-submit; close/1 dismisses on success.
+  def handle_event("edit_profile", _params, socket) do
+    form = to_form(%{"name" => "Ada Lovelace", "email" => "ada@example.com"}, as: :profile)
+    {:noreply, socket |> assign(profile_form: form) |> PureAdmin.Dialog.open(:edit_profile)}
+  end
+
+  def handle_event("validate_profile", %{"profile" => params}, socket) do
+    {:noreply, assign(socket, profile_form: to_form(params, as: :profile, errors: profile_errors(params)))}
+  end
+
+  def handle_event("save_profile", %{"profile" => params}, socket) do
+    case profile_errors(params) do
+      [] ->
+        {:noreply,
+         socket
+         |> PureAdmin.Dialog.close()
+         |> assign(profile_result: gettext("Profile saved."))}
+
+      errors ->
+        {:noreply, assign(socket, profile_form: to_form(params, as: :profile, errors: errors))}
+    end
+  end
+
+  # Toast variant mirrors the dialog button that triggered the result.
+  defp toast_variant("delete"), do: "danger"
+  defp toast_variant("rename"), do: "primary"
+  defp toast_variant(_), do: "success"
+
+  defp profile_errors(params) do
+    []
+    |> then(fn acc ->
+      if String.trim(to_string(params["name"])) == "",
+        do: [{:name, {"can't be blank", []}} | acc],
+        else: acc
+    end)
+    |> then(fn acc ->
+      if String.contains?(to_string(params["email"]), "@"),
+        do: acc,
+        else: [{:email, {"must be a valid email", []}} | acc]
+    end)
   end
 
   def render(assigns) do
@@ -221,7 +425,8 @@ defmodule DemoWeb.Live.ModalDialogsLive do
     <%!-- LiveView Integration --%>
     <.card title_text={gettext("LiveView Integration")}>
       <.paragraph class="mb-3">
-        Use <code>onclick</code> with <code>liveSocket</code> to push results back to the server:
+        Use <code>onclick</code> with <code>liveSocket</code> to push results back to the server.
+        The server records the outcome <em>and</em> pushes a toast straight back — try the buttons:
       </.paragraph>
       <.grid>
         <.column size="100" md="1-3">
@@ -237,7 +442,74 @@ defmodule DemoWeb.Live.ModalDialogsLive do
       <.alert :if={@last_result} variant="info" class="mt-3">
         <strong>Server received:</strong> {@last_result}
       </.alert>
-      <.code_block language="javascript" class="mt-4">{@liveview_code}</.code_block>
+      <.paragraph class="mt-4 mb-2"><strong>{gettext("Client")}</strong> — push the result to the server:</.paragraph>
+      <.code_block language="javascript">{@liveview_code}</.code_block>
+      <.paragraph class="mt-4 mb-2"><strong>{gettext("Server")}</strong> — reply with a toast, no reload:</.paragraph>
+      <.code_block language="elixir">{@liveview_server_code}</.code_block>
+    </.card>
+
+    <%!-- Server-Initiated Dialog (PureAdmin.Dialog) --%>
+    <.card title_text={gettext("Server-Initiated Dialog")} variant="warning">
+      <.paragraph class="mb-3">
+        The opposite direction, and a <strong>first-class keen feature</strong>: the button below is a
+        <strong>real</strong> <code>phx-click</code> that hits the <strong>server first</strong>. The server opens a
+        server-rendered dialog with <code>PureAdmin.Dialog.confirm/2</code>; each button is an ordinary event, so the
+        user's choice arrives as a normal <code>handle_event</code> and the dialog auto-closes — no client bridge, no
+        promise plumbing. Every outcome <strong>pushes a toast back from the server</strong>, and the ✕/backdrop/Escape
+        dismiss is a first-class event too (<code>on_dismiss</code>), so nothing closes silently. Classic use:
+        <em>"this document was changed by someone else."</em>
+      </.paragraph>
+      <.button variant="warning" phx-click="simulate_external_edit">
+        {gettext("Someone edited this document…")}
+      </.button>
+      <.paragraph class="mt-2 text-sm text-secondary">
+        {gettext("Pick a button, or dismiss with ✕ / click-outside / Escape — each pushes a different toast.")}
+      </.paragraph>
+      <.alert :if={@server_dialog_result} variant="info" class="mt-3">
+        <strong>{gettext("Server outcome")}:</strong> {@server_dialog_result}
+      </.alert>
+      <.code_block language="elixir" class="mt-4">{@server_dialog_code}</.code_block>
+    </.card>
+
+    <%!-- Custom / Form Dialog (requirement B) --%>
+    <.card title_text={gettext("Custom / Form Dialog")}>
+      <.paragraph class="mb-3">
+        Standard dialogs can't express an arbitrary form, so <code>PureAdmin.Dialog.open/3</code> just stashes a keyed
+        spec and you render your <strong>own</strong> <code>&lt;.modal&gt;</code> with a real LiveView form — full
+        <code>phx-change</code> validation and <code>phx-submit</code>. <code>close/1</code> dismisses it. The server
+        opens it the same way (a <code>phx-click</code> handler), but owns the content.
+      </.paragraph>
+      <.button variant="primary" phx-click="edit_profile">{gettext("Edit profile…")}</.button>
+      <.alert :if={@profile_result} variant="success" class="mt-3">
+        <strong>{gettext("Server outcome")}:</strong> {@profile_result}
+      </.alert>
+
+      <.modal
+        :if={@pa_dialog && @pa_dialog.key == :edit_profile}
+        id="edit-profile"
+        show
+        title_text={gettext("Edit profile")}
+        on_cancel={JS.push("pa-dialog:close")}
+      >
+        <.form for={@profile_form} class="pa-form" phx-change="validate_profile" phx-submit="save_profile">
+          <div class="pa-form-group">
+            <label>{gettext("Name")}</label>
+            <.input field={@profile_form[:name]} />
+          </div>
+          <div class="pa-form-group">
+            <label>{gettext("Email")}</label>
+            <.input field={@profile_form[:email]} type="email" />
+          </div>
+          <div class="pa-modal__footer">
+            <button type="button" class="pa-btn pa-btn--secondary" phx-click="pa-dialog:close">
+              {gettext("Cancel")}
+            </button>
+            <button type="submit" class="pa-btn pa-btn--primary">{gettext("Save")}</button>
+          </div>
+        </.form>
+      </.modal>
+
+      <.code_block language="elixir" class="mt-4">{@custom_dialog_code}</.code_block>
     </.card>
 
     <%!-- API Reference --%>
@@ -586,10 +858,14 @@ defmodule DemoWeb.Live.ModalDialogsLive do
     function pushToLiveView(action, result) {
       const el = document.querySelector('[data-phx-main]');
       if (el && window.liveSocket) {
-        const view = window.liveSocket.getViewByEl(el);
-        if (view) {
-          view.pushEvent('dialog_result', { action: action, result: result });
-        }
+        // Push from plain JS (outside a hook) via the public execJS API with the
+        // same encoded command phx-click uses — `value` becomes the event params.
+        // (Don't call View.pushEvent directly: that's an internal method whose
+        // signature is (type, el, targetCtx, phxEvent, meta), not (event, payload).)
+        window.liveSocket.execJS(
+          el,
+          JSON.stringify([["push", { event: "dialog_result", value: { action: action, result: result } }]])
+        );
       }
     }
     </script>

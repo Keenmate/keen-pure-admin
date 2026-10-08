@@ -1,0 +1,10 @@
+{
+  "//": "Capability manifest for the SCROLLABLE TABS scaffold — keen renders it via Navigation.tabs/1 with overflow=\"scrollable\" (forced by the dump task's render clause, not a scenario prop). See tabs.map.json for the container model. scrollable-ness is intrinsic to this fixture, so it is not a mapped feature.",
+  "component": "tabs-scrollable",
+  "features": {
+    "style":      { "prop": "style", "kind": "enum", "values": ["pills", "boxed"] },
+    "size":       { "prop": "size",  "kind": "enum", "values": ["sm", "lg"] },
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class", "kind": "string" }
+  }
+}

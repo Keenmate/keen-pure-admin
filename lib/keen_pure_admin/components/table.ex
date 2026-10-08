@@ -416,7 +416,9 @@ defmodule PureAdmin.Components.Table do
         <%= if @header != [] do %>
           <%= render_slot(@header) %>
         <% else %>
-          <h3 :if={@title_text}><%= @title_text %></h3>
+          <div :if={@title_text} class="pa-table-card__title">
+            <h3 class="pa-table-card__title-text"><%= @title_text %></h3>
+          </div>
           <p :if={@subtitle != [] || @subtitle_text} class="pa-table-card__description">
             <%= if @subtitle != [], do: render_slot(@subtitle), else: @subtitle_text %>
           </p>

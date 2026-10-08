@@ -25,7 +25,7 @@ defmodule DemoWeb.Live.SearchLive do
       group: "pages",
       type: "Page",
       icon: "📄",
-      href: "/components/tables",
+      href: "/tables/standard",
       title: "Working with data tables",
       snippet: "Sort, filter, paginate, and make tables responsive on small screens.",
       meta: ["Docs / Components", "Updated 1 week ago"]

@@ -22,7 +22,8 @@ defmodule PureAdmin do
 
   - `PureAdmin.Components` - `use` macro that imports all function components
   - `PureAdmin.Components.*` - Individual component modules (Button, Badge, Alert, etc.)
-  - `PureAdmin.Live.*` - Stateful LiveComponents (CommandPalette, ToastLive, DialogService)
+  - `PureAdmin.CommandPalette` - Stateful command-palette LiveComponent
+  - `PureAdmin.Dialog` - Server-driven modal dialogs (confirm/alert/custom) for LiveView
   - `PureAdmin.Helpers` - BEM class builder utilities
   - `PureAdmin.Config` - NimbleOptions configuration
   - `PureAdmin.Types` - Shared type definitions

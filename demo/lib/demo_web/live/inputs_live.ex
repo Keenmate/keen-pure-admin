@@ -144,7 +144,7 @@ defmodule DemoWeb.Live.InputsLive do
 
         <.column size="100" md="50">
           <.form_group>
-            <.form_label>With Both (prepend uses <code>wr-3</code> for fixed width)</.form_label>
+            <.form_label>With Both (prepend uses <.code>wr-3</.code> for fixed width)</.form_label>
             <.input_group>
               <:prepend><span class="wr-3">$</span></:prepend>
               <.input placeholder="0.00" />
@@ -189,7 +189,7 @@ defmodule DemoWeb.Live.InputsLive do
                   title={if @is_search_mode, do: gettext("Search mode — click to switch to Filter"), else: gettext("Filter mode — click to switch to Search")}
                   phx-click="toggle_mode"
                 >
-                  <i class={if @is_search_mode, do: "fa-solid fa-magnifying-glass", else: "fa-solid fa-filter"}></i>
+                  <span class={if @is_search_mode, do: "pa-icon pa-icon--search", else: "pa-icon pa-icon--filter"} aria-hidden="true"></span>
                 </.button>
               </:button>
               <.input placeholder={if @is_search_mode, do: gettext("Search..."), else: gettext("Filter...")} />
@@ -202,7 +202,7 @@ defmodule DemoWeb.Live.InputsLive do
         </.column>
 
         <.column size="100" class="mt-3">
-          <small class="text-secondary"><strong>Tip:</strong> Use width utilities (<code>wr-*</code> for rem-based, <code>wp-*</code> for percentage-based) on prepend/append elements to control their width.</small>
+          <.text variant="secondary" class="text-sm"><strong>Tip:</strong> Use width utilities (<.code>wr-*</.code> for rem-based, <.code>w-*</.code> for percentage-based) on prepend/append elements to control their width.</.text>
         </.column>
       </.grid>
     </.card>
@@ -465,31 +465,23 @@ defmodule DemoWeb.Live.InputsLive do
     <.card title_text={gettext("Width Variations")}>
       <.form_group>
         <.form_label>{gettext("Auto Width (inline)")}</.form_label>
-        <div style="width: auto; display: inline-block;">
-          <.input placeholder={gettext("Auto width")} />
-        </div>
+        <.input class="w-auto d-inline-block" placeholder={gettext("Auto width")} />
       </.form_group>
       <.form_group>
         <.form_label>{gettext("25% Width")}</.form_label>
-        <div style="width: 25%;">
-          <.input placeholder="25%" />
-        </div>
+        <.input class="w-25" placeholder="25%" />
       </.form_group>
       <.form_group>
         <.form_label>{gettext("50% Width")}</.form_label>
-        <div style="width: 50%;">
-          <.input placeholder="50%" />
-        </div>
+        <.input class="w-50" placeholder="50%" />
       </.form_group>
       <.form_group>
         <.form_label>{gettext("75% Width")}</.form_label>
-        <div style="width: 75%;">
-          <.input placeholder="75%" />
-        </div>
+        <.input class="w-75" placeholder="75%" />
       </.form_group>
       <.form_group>
         <.form_label>{gettext("100% Width (full width)")}</.form_label>
-        <.input placeholder="100%" />
+        <.input class="w-100" placeholder="100%" />
       </.form_group>
     </.card>
 
@@ -497,93 +489,93 @@ defmodule DemoWeb.Live.InputsLive do
     <.card title_text={gettext("CSS Classes Reference")}>
       <.heading level={4}>{gettext("Text Inputs")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-input</code> - Base input styling</li>
-        <li><code>pa-input--xs</code> - Extra small input</li>
-        <li><code>pa-input--sm</code> - Small input</li>
-        <li><code>pa-input--lg</code> - Large input</li>
-        <li><code>pa-input--xl</code> - Extra large input</li>
+        <li><.code>pa-input</.code> - Base input styling</li>
+        <li><.code>pa-input--xs</.code> - Extra small input</li>
+        <li><.code>pa-input--sm</.code> - Small input</li>
+        <li><.code>pa-input--lg</.code> - Large input</li>
+        <li><.code>pa-input--xl</.code> - Extra large input</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Select Dropdowns")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-select</code> - Base select styling</li>
-        <li><code>pa-select--xs</code> - Extra small select</li>
-        <li><code>pa-select--sm</code> - Small select</li>
-        <li><code>pa-select--lg</code> - Large select</li>
-        <li><code>pa-select--xl</code> - Extra large select</li>
+        <li><.code>pa-select</.code> - Base select styling</li>
+        <li><.code>pa-select--xs</.code> - Extra small select</li>
+        <li><.code>pa-select--sm</.code> - Small select</li>
+        <li><.code>pa-select--lg</.code> - Large select</li>
+        <li><.code>pa-select--xl</.code> - Extra large select</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Textareas")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-textarea</code> - Base textarea styling</li>
-        <li><code>pa-textarea--xs</code> - Extra small textarea</li>
-        <li><code>pa-textarea--sm</code> - Small textarea</li>
-        <li><code>pa-textarea--lg</code> - Large textarea</li>
-        <li><code>pa-textarea--xl</code> - Extra large textarea</li>
+        <li><.code>pa-textarea</.code> - Base textarea styling</li>
+        <li><.code>pa-textarea--xs</.code> - Extra small textarea</li>
+        <li><.code>pa-textarea--sm</.code> - Small textarea</li>
+        <li><.code>pa-textarea--lg</.code> - Large textarea</li>
+        <li><.code>pa-textarea--xl</.code> - Extra large textarea</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Input Groups")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-input-group</code> - Container for input with addons</li>
-        <li><code>pa-input-group__prepend</code> - Addon before input</li>
-        <li><code>pa-input-group__append</code> - Addon after input</li>
-        <li><code>pa-input-group__button</code> - Button addon</li>
+        <li><.code>pa-input-group</.code> - Container for input with addons</li>
+        <li><.code>pa-input-group__prepend</.code> - Addon before input</li>
+        <li><.code>pa-input-group__append</.code> - Addon after input</li>
+        <li><.code>pa-input-group__button</.code> - Button addon</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Form Layout")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-form</code> - Form container with label styling</li>
-        <li><code>pa-form-group</code> - Form field container with spacing</li>
-        <li><code>pa-form-group--horizontal</code> - Horizontal label/input layout</li>
-        <li><code>pa-form-actions</code> - Container for form buttons</li>
+        <li><.code>pa-form</.code> - Form container with label styling</li>
+        <li><.code>pa-form-group</.code> - Form field container with spacing</li>
+        <li><.code>pa-form-group--horizontal</.code> - Horizontal label/input layout</li>
+        <li><.code>pa-form-actions</.code> - Container for form buttons</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Validation States (on form-group)")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-form-group--success</code> - Success state (green border)</li>
-        <li><code>pa-form-group--warning</code> - Warning state (yellow border)</li>
-        <li><code>pa-form-group--error</code> - Error state (red border)</li>
+        <li><.code>pa-form-group--success</.code> - Success state (green border)</li>
+        <li><.code>pa-form-group--warning</.code> - Warning state (yellow border)</li>
+        <li><.code>pa-form-group--error</.code> - Error state (red border)</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Validation States (on input)")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-input--success</code>, <code>pa-select--success</code>, <code>pa-textarea--success</code> - Success state</li>
-        <li><code>pa-input--warning</code>, <code>pa-select--warning</code>, <code>pa-textarea--warning</code> - Warning state</li>
-        <li><code>pa-input--error</code>, <code>pa-select--error</code>, <code>pa-textarea--error</code> - Error state</li>
+        <li><.code>pa-input--success</.code>, <.code>pa-select--success</.code>, <.code>pa-textarea--success</.code> - Success state</li>
+        <li><.code>pa-input--warning</.code>, <.code>pa-select--warning</.code>, <.code>pa-textarea--warning</.code> - Warning state</li>
+        <li><.code>pa-input--error</.code>, <.code>pa-select--error</.code>, <.code>pa-textarea--error</.code> - Error state</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Theme Color Variants (on input)")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-input--color-1</code> through <code>pa-input--color-9</code> - Theme color slots</li>
-        <li><code>pa-select--color-1</code> through <code>pa-select--color-9</code> - Theme color slots</li>
-        <li><code>pa-textarea--color-1</code> through <code>pa-textarea--color-9</code> - Theme color slots</li>
+        <li><.code>pa-input--color-1</.code> through <.code>pa-input--color-9</.code> - Theme color slots</li>
+        <li><.code>pa-select--color-1</.code> through <.code>pa-select--color-9</.code> - Theme color slots</li>
+        <li><.code>pa-textarea--color-1</.code> through <.code>pa-textarea--color-9</.code> - Theme color slots</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Help Text")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-form-help</code> - Help text below input</li>
-        <li><code>pa-form-help--success</code> - Success colored help text</li>
-        <li><code>pa-form-help--warning</code> - Warning colored help text</li>
-        <li><code>pa-form-help--error</code> - Error colored help text</li>
-        <li><code>pa-form-help--color-1</code> through <code>pa-form-help--color-9</code> - Theme color slots</li>
+        <li><.code>pa-form-help</.code> - Help text below input</li>
+        <li><.code>pa-form-help--success</.code> - Success colored help text</li>
+        <li><.code>pa-form-help--warning</.code> - Warning colored help text</li>
+        <li><.code>pa-form-help--error</.code> - Error colored help text</li>
+        <li><.code>pa-form-help--color-1</.code> through <.code>pa-form-help--color-9</.code> - Theme color slots</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Checkboxes")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-checkbox-group</code> - Container for multiple checkboxes</li>
-        <li><code>pa-checkbox</code> - Checkbox wrapper (label element)</li>
-        <li><code>pa-checkbox__box</code> - Custom checkbox visual</li>
-        <li><code>pa-checkbox__label</code> - Checkbox label text</li>
-        <li><code>pa-checkbox--xs</code> through <code>pa-checkbox--xl</code> - Size variants</li>
-        <li><code>pa-checkbox--disabled</code> - Disabled state</li>
+        <li><.code>pa-checkbox-group</.code> - Container for multiple checkboxes</li>
+        <li><.code>pa-checkbox</.code> - Checkbox wrapper (label element)</li>
+        <li><.code>pa-checkbox__box</.code> - Custom checkbox visual</li>
+        <li><.code>pa-checkbox__label</.code> - Checkbox label text</li>
+        <li><.code>pa-checkbox--xs</.code> through <.code>pa-checkbox--xl</.code> - Size variants</li>
+        <li><.code>pa-checkbox--disabled</.code> - Disabled state</li>
       </.basic_list>
 
       <.heading level={4} class="mt-4">{gettext("Radio Buttons")}</.heading>
       <.basic_list spacing="compact">
-        <li><code>pa-radio-group</code> - Container for multiple radios</li>
-        <li><code>pa-radio</code> - Radio button wrapper (label element)</li>
-        <li><code>pa-radio__label</code> - Radio label text</li>
-        <li><code>pa-radio--xs</code> through <code>pa-radio--xl</code> - Size variants</li>
+        <li><.code>pa-radio-group</.code> - Container for multiple radios</li>
+        <li><.code>pa-radio</.code> - Radio button wrapper (label element)</li>
+        <li><.code>pa-radio__label</.code> - Radio label text</li>
+        <li><.code>pa-radio--xs</.code> through <.code>pa-radio--xl</.code> - Size variants</li>
       </.basic_list>
     </.card>
     """

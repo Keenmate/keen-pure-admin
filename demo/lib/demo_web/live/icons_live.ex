@@ -21,6 +21,7 @@ defmodule DemoWeb.Live.IconsLive do
     # strings so the code block displays the literal HEEx instead of
     # evaluating it (which would dump rendered SVGs into the code box).
     code_examples = %{
+      dispatch_affordance: ~s|<.icon name="success" />|,
       dispatch_hero: ~s|<.icon name="hero-rocket-launch" />|,
       dispatch_fa: ~s|<.icon name="fa-solid fa-rocket" />|,
       dispatch_nil: ~s|<.icon name={@maybe_nil} />|,
@@ -37,7 +38,7 @@ defmodule DemoWeb.Live.IconsLive do
       callback_config: ~s"""
       # config/config.exs
       config :keen_pure_admin,
-        icon_callback: {MyAppWeb.Icons, :render}\
+        icon_providers: [{MyAppWeb.Icons, :render}]\
       """,
       callback_module: ~S"""
       defmodule MyAppWeb.Icons do
@@ -61,8 +62,9 @@ defmodule DemoWeb.Live.IconsLive do
           \"""
         end
 
-        # Fall through to FA-style for anything else
-        def render(assigns), do: ~H\"""<i class={[@name, @class]} />\"""
+        # Return nil for anything else — the next provider (or the
+        # library's built-in hero-/FA fallback) then handles it.
+        def render(_assigns), do: nil
       end\
       """,
       callback_usage: ~s|<.icon name="lucide-rocket" />|
@@ -93,15 +95,96 @@ defmodule DemoWeb.Live.IconsLive do
       <.code>aria_label</.code>.
     </.paragraph>
 
+    <%!-- ── How the icon system works ──────────────────────────────────── --%>
+    <.card title_text="How the icon system works">
+      <.paragraph class="mb-4">
+        Pure Admin has <strong>two</strong> icon layers — know which one you're touching:
+      </.paragraph>
+      <.grid>
+        <.column size="100" md="50">
+          <.heading level={4}>1. Masked <.code>.pa-icon</.code> primitive</.heading>
+          <.paragraph>
+            The framework's closed set of structural affordances (close, chevrons,
+            <.code>success</.code>, <.code>danger</.code>, …) — a raw
+            <.code>{"<span class=\"pa-icon pa-icon--NAME\">"}</.code> painted in
+            <.code>currentColor</.code> via CSS mask. No component, no provider; it's how
+            the library's own chrome (alerts, flash, filter cards) draws glyphs.
+            Catalogued on <.pa_link href="/design/icons">Design › Icons</.pa_link>.
+          </.paragraph>
+        </.column>
+        <.column size="100" md="50">
+          <.heading level={4}>2. The <.code>&lt;.icon&gt;</.code> component</.heading>
+          <.paragraph>
+            A thin dispatcher over that primitive plus a swappable <strong>provider</strong>
+            system, so you render decorative / brand icons (Font Awesome, Heroicons,
+            Lucide, …) from a single <.code>&lt;.icon name="…"&gt;</.code> call-site —
+            without hand-authoring elements each time. That's this page.
+          </.paragraph>
+        </.column>
+      </.grid>
+
+      <.heading level={4} class="mt-4">Resolution order</.heading>
+      <.paragraph class="mb-2">A name flows through three stages — the first hit wins:</.paragraph>
+      <.basic_list>
+        <li>
+          <strong>Framework affordance (reserved, built-in).</strong>
+          <.code>affordance?/1</.code> → <.code>{"<span class=\"pa-icon pa-icon--NAME\">"}</.code>,
+          then stop. No provider can shadow it; zero-config, always resolves.
+        </li>
+        <li>
+          <strong>Provider list</strong> — each entry in <.code>:icon_providers</.code>
+          (see <.code>PureAdmin.Config</.code>), in order; the first to return markup
+          (non-<.code>nil</.code>) wins.
+        </li>
+        <li>
+          <strong>Built-in fallback</strong> — <.code>"hero-X"</.code> →
+          <.code>&lt;.heroicon&gt;</.code>; anything else → FA-style
+          <.code>&lt;i class=&#123;name&#125;&gt;</.code>.
+        </li>
+      </.basic_list>
+
+      <.heading level={4} class="mt-4">What a provider is</.heading>
+      <.paragraph>
+        A 1-arity Phoenix function component receiving the full assigns — the
+        <.code>name</.code> plus render context (<.code>class</.code>, <.code>color</.code>,
+        <.code>size</.code>, <.code>size_value</.code>, <.code>variant</.code>,
+        <.code>fill</.code>, <.code>stroke</.code>, <.code>title</.code>,
+        <.code>aria_label</.code>, <.code>is_interactive</.code>) — and returning rendered
+        HEEx, or <.code>nil</.code> to pass the name to the next provider. The
+        <.code>name</.code> is opaque: a provider parses whatever convention you adopt
+        (<.code>"lucide-rocket"</.code>, <.code>"fa-solid fa-x"</.code>). List several to
+        support several sets at once; the full context flows to each so a set can embed its
+        own sizing / hover marker.
+      </.paragraph>
+
+      <.callout variant="info" class="mt-3">
+        <strong>Reserved names:</strong> qualify external names (prefix them) so they don't
+        collide with the bare affordance names — a bare <.code>"success"</.code> always
+        resolves to the framework glyph, never a provider.
+      </.callout>
+    </.card>
+
     <%!-- ── <.icon> dispatcher ─────────────────────────────────────────── --%>
     <.card title_text="<.icon> — smart dispatcher">
       <.paragraph class="mb-4">
-        Routes by name prefix: <.code>"hero-X"</.code> → inline SVG via
-        <.code>&lt;.heroicon&gt;</.code>; anything else → <.code>&lt;i class&gt;</.code>
-        (works for Font Awesome, Bootstrap Icons, Lucide-font, etc.).
+        Resolves in order: a framework affordance (<.code>"success"</.code>,
+        <.code>"chevron-down"</.code>, …) → masked <.code>pa-icon--*</.code> span,
+        built-in and reserved; then the configured <.code>:icon_providers</.code>
+        list; then the built-in fallback — <.code>"hero-X"</.code> → inline SVG via
+        <.code>&lt;.heroicon&gt;</.code>, anything else → <.code>&lt;i class&gt;</.code>
+        (Font Awesome, Bootstrap Icons, Lucide-font, etc.).
       </.paragraph>
 
       <.grid>
+        <.column size="100" md="1-3">
+          <.heading level={4}>Affordance branch</.heading>
+          <.code_block language="heex">{@code_examples.dispatch_affordance}</.code_block>
+          <div class="mt-2 flex-row gap-3 align-items-center">
+            <.icon name="success" />
+            <.icon name="danger" />
+            <.icon name="search" />
+          </div>
+        </.column>
         <.column size="100" md="1-3">
           <.heading level={4}>Heroicons branch</.heading>
           <.code_block language="heex">{@code_examples.dispatch_hero}</.code_block>
@@ -239,26 +322,30 @@ defmodule DemoWeb.Live.IconsLive do
       </.paragraph>
     </.card>
 
-    <%!-- ── Custom icon set via callback (Lucide demo) ────────────────── --%>
-    <.card title_text="Custom icon set via :icon_callback (Lucide demo)">
+    <%!-- ── Custom icon set via providers (Lucide demo) ────────────────── --%>
+    <.card title_text="Custom icon set via :icon_providers (Lucide demo)">
       <.paragraph class="mb-4">
-        Most projects standardize on one icon set — a custom SVG sprite folder,
-        a special font, a base64 sprite map, etc. Wire a single callback in
-        <.code>config.exs</.code> and <.code>&lt;.icon&gt;</.code> routes every
-        non-<.code>hero-</.code> name through it.
+        Most projects standardize on one or more icon sets — a custom SVG sprite
+        folder, a special font, a base64 sprite map, etc. Wire an ordered
+        <.code>:icon_providers</.code> list in <.code>config.exs</.code>;
+        <.code>&lt;.icon&gt;</.code> resolves framework affordances
+        (<.code>pa-icon--*</.code>) first, built-in, then hands every other name to
+        each provider in turn — the first to return markup wins.
       </.paragraph>
 
-      <.heading level={4}>1. Configure the callback</.heading>
+      <.heading level={4}>1. Configure the provider list</.heading>
       <.code_block language="elixir">{@code_examples.callback_config}</.code_block>
 
       <.heading level={4} class="mt-4">2. Define the function component</.heading>
       <.paragraph class="mb-2">
-        The callback receives the full assigns map: <.code>name</.code>,
+        Each provider receives the full assigns map: <.code>name</.code>,
         <.code>class</.code>, <.code>color</.code>, <.code>size</.code>,
         <.code>size_value</.code> (resolved from <.code>size</.code> or the
         configured default), <.code>variant</.code>, <.code>fill</.code>,
-        <.code>stroke</.code>, <.code>title</.code>, <.code>aria_label</.code>.
-        Pattern-match on <.code>name</.code> to handle multiple icon sets.
+        <.code>stroke</.code>, <.code>title</.code>, <.code>aria_label</.code>,
+        <.code>is_interactive</.code>. Pattern-match on <.code>name</.code> to
+        handle your set, and return <.code>nil</.code> for anything else so the
+        next provider (or the built-in <.code>hero-</.code>/FA fallback) gets a turn.
       </.paragraph>
       <.code_block language="elixir">{@code_examples.callback_module}</.code_block>
 
@@ -269,7 +356,7 @@ defmodule DemoWeb.Live.IconsLive do
         This demo ships 8 Lucide SVGs under
         <.code>demo/priv/static/assets/icons/lucide/</.code>. Each tile below
         is a real <.code>&lt;.icon name="lucide-X" /&gt;</.code> routed through
-        the configured callback:
+        the configured provider:
       </.paragraph>
 
       <.grid>

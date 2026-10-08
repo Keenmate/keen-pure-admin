@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for keen card_tab_content/1 (fragment of Card — the tab panel). Mirrors svelte CardTabContent. See card-tab.map.json for the model.",
+  "component": "card-tab-content",
+  "features": {
+    "active":     { "prop": "is_active",   "kind": "bool" },
+    "content":    { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

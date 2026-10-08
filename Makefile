@@ -16,7 +16,7 @@ ifeq ($(OS),Windows_NT)
 endif
 # -----------------------------------------------------------------------------
 
-.PHONY: help setup dev kill-port build publish publish-dry deps test format quality docs docs-serve clean themes-install themes-clear podman-build podman-run podman-stop podman-restart podman-logs podman-clean podman-deploy podman-push
+.PHONY: help setup dev kill-port build publish publish-dry deps test fidelity format quality docs docs-serve clean themes-install themes-clear podman-build podman-run podman-stop podman-restart podman-logs podman-clean podman-deploy podman-push
 
 # Demo server port (config/runtime.exs reads PORT, default 18700).
 # Override: make kill-port PORT=xxxx
@@ -71,6 +71,10 @@ publish-dry: ## Dry-run hex publish
 
 test: ## Run tests
 	mix test
+
+fidelity: ## Re-dump ALL fidelity scenarios fresh, then run the core markup + coverage gate (dumps are gitignored → re-dumping IS the freshness guarantee)
+	mix pa.fidelity.dump --all
+	node ../pure-admin/packages/core/fidelity/compare-all.mjs --wrapper keen
 
 format: ## Format code in library and demo
 	mix format

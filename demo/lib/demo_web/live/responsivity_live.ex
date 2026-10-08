@@ -300,11 +300,11 @@ defmodule DemoWeb.Live.ResponsivityLive do
       </ul>
 
       <.callout variant="info" class="mb-4">
-        See it live on the <.link navigate="/components/fit-to-size">Fit to Size</.link>
+        See it live on the <.link navigate="/layout/fit-to-size">Fit to Size</.link>
         page — Example 4 builds a Chart.js instance only once the card reaches
         <code>grid</code> mode and destroys it below, logging every flip. A standalone
         engine demo lives at
-        <.link navigate="/components/container-breakpoint">Container Breakpoint</.link>.
+        <.link navigate="/layout/container-breakpoint">Container Breakpoint</.link>.
       </.callout>
 
       <%!-- ── Which do I use ──────────────────────────────────────────────── --%>
@@ -322,7 +322,7 @@ defmodule DemoWeb.Live.ResponsivityLive do
 
       <.paragraph color="secondary">
         Ready to see Fit degrade real cards and toolbars across several strategies?
-        Head to <.link navigate="/components/fit-to-size">Fit to Size</.link> for the
+        Head to <.link navigate="/layout/fit-to-size">Fit to Size</.link> for the
         worked, slider-driven examples.
       </.paragraph>
     </div>

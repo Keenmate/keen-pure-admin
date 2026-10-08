@@ -1,0 +1,9 @@
+{
+  "//": "Capability manifest for keen tabs_overflow/1 — the card-header overflow dropdown. A fixed `id` is forced by the dump task's render clause (keen requires it to scope the menu toggle); the id is trimmed as wiring by the fixture's normalize block. See navigation tabs map for the family.",
+  "component": "tabs-overflow",
+  "features": {
+    "hasActive":  { "prop": "has_active",  "kind": "bool" },
+    "body":       { "prop": "inner_block", "kind": "slot" },
+    "extraClass": { "prop": "class",       "kind": "string" }
+  }
+}

@@ -49,7 +49,7 @@ config :keen_pure_admin,
   app_version: "1.0.0",
   copyright: "© 2026 Keenmate s.r.o.",
   font_class: "pa-font-responsive",
-  icon_callback: {DemoWeb.Icons, :render},
+  icon_providers: [{DemoWeb.Icons, :render}],
   # Bridge library chrome (PureAdmin.Translations.t/2) into the demo's Gettext.
   translate: &DemoWeb.PaTranslate.translate/2,
   page_context_providers: [

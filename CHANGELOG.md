@@ -14,6 +14,27 @@ palette, navbar/sidebar/footer shell) are `--pc-*`. **Component** tokens are `--
 chart, detail-panel, icons…). `--base-*` is unchanged. Apps migrate their own overrides
 accordingly (shell/foundation → `--pc-`, components → `--pa-`).
 
+### Added — server-driven dialogs (`PureAdmin.Dialog`)
+
+- **New `PureAdmin.Dialog` module** — open a modal dialog **from the server** in a
+  LiveView and receive the answer as an ordinary `handle_event`. Built on the
+  declarative `modal/1` (server-rendered — no JS bridge, no promise shuttled back),
+  complementing the client-only `window.PureAdmin.confirm/alert/prompt` JS API that a
+  server process can't call directly. Setup once: add `{PureAdmin.Dialog, :default}`
+  to your `live_session`'s `on_mount` and mount `<PureAdmin.Dialog.host dialog={@pa_dialog} />`
+  in your layout.
+  - **Standard dialogs** — `confirm/2` (cancel + confirm) and `info/success/warning/error`
+    alerts. Each button names the event (+ optional `phx-value` payload) the consumer
+    handles, and the dialog auto-closes. Options: `variant`, plain-vs-`banded`,
+    `position` (`:center`/`:top`), `size`, `dismissible` (`false` = forced choice —
+    no ✕, backdrop, or Escape dismiss), and `on_dismiss` (the ✕/backdrop/Escape
+    dismissal fires this event too, so a dismiss is never silent — e.g. to toast
+    or treat it as cancel).
+  - **Custom / form dialogs** — `open/3` stashes a keyed spec so you render your own
+    `<.modal>` with a full LiveView form (`phx-change`/`phx-submit`); `close/1` dismisses
+    either kind.
+  - Demo: Surfaces → Modal Dialogs → "Server-Initiated Dialog".
+
 ### Typography — flat `text-*` consolidation
 
 - **`paragraph/1` and `text/1` now emit the flat `text-*` utilities** instead of the

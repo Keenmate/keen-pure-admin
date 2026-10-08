@@ -22,7 +22,7 @@ defmodule DemoWeb.Live.TabsLive do
         </.card>
       </.column>
       <.column size="100" md="1-2">
-        <.tabs_container class="pa-tabs__container--card">
+        <.tabs_container is_card>
           <.tabs id="card-compare-tabs">
             <.tab_item tabs_id="card-compare-tabs" target="card-compare-1" is_active>{gettext("Overview")}</.tab_item>
             <.tab_item tabs_id="card-compare-tabs" target="card-compare-2">{gettext("Details")}</.tab_item>

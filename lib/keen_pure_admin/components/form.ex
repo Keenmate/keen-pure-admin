@@ -13,6 +13,8 @@ defmodule PureAdmin.Components.Form do
   # FormErrorSummary, which composes its <Alert>). Only alert/1 is imported to
   # avoid pulling in the module's other helpers.
   import PureAdmin.Components.Alert, only: [alert: 1]
+  # User-facing summary heading is localized via the Translations bridge.
+  import PureAdmin.Translations, only: [t: 2]
 
   # ─── Prop vocabulary (aligned with svelte-pure-admin) ───
   #
@@ -1364,8 +1366,12 @@ defmodule PureAdmin.Components.Form do
     assigns = assign(assigns, :count, length(assigns.errors))
 
     ~H"""
-    <.alert :if={@show and @count > 0} variant="danger" class={build_classes("mb-4", [], @class)}>
-      <strong><%= @count %> <%= if @count == 1, do: "error", else: "errors" %> found:</strong>
+    <.alert
+      :if={@show and @count > 0}
+      variant="danger"
+      class={build_classes("mb-4", [], @class)}
+      heading_text={t(if(@count == 1, do: "pureAdmin.form.errorFound", else: "pureAdmin.form.errorsFound"), %{count: @count})}
+    >
       <:list>
         <li :for={e <- @errors}>
           <a href={"#" <> e.id}><%= e.field %></a> - <%= e.message %>

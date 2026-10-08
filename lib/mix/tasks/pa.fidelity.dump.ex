@@ -252,12 +252,21 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp render(assigns, "table-container"), do: render_component(&Table.table_container/1, assigns)
   defp render(assigns, "popover"), do: render_component(&Tooltip.popover/1, assigns)
   defp render(assigns, "breakpoint-container"), do: render_component(&Responsive.breakpoint_container/1, assigns)
-  # Fragment fixtures — sub-components tested in isolation. (keen has no
-  # card_tab_content counterpart — that fragment is svelte-only.)
+  # Fragment fixtures — sub-components tested in isolation.
   defp render(assigns, "card-tab"), do: render_component(&Card.card_tab/1, assigns)
+  defp render(assigns, "card-tab-content"), do: render_component(&Card.card_tab_content/1, assigns)
   defp render(assigns, "list-item"), do: render_component(&PureAdmin.Components.List.list_item/1, assigns)
   defp render(assigns, "timeline-item"), do: render_component(&Timeline.timeline_item/1, assigns)
   defp render(assigns, "tab-item"), do: render_component(&Navigation.tab_item/1, assigns)
+  # Scrollable tabs: keen folds the capability into tabs/1 — overflow="scrollable"
+  # is forced here (it IS the scrollable variant, not a scenario prop).
+  defp render(assigns, "tabs-scrollable"),
+    do: render_component(&Navigation.tabs/1, Map.put(assigns, :overflow, "scrollable"))
+
+  # Overflow dropdown: tabs_overflow/1 requires an id to scope the menu — forced
+  # here (trimmed as wiring by the fixture's normalize block).
+  defp render(assigns, "tabs-overflow"),
+    do: render_component(&Navigation.tabs_overflow/1, Map.put(assigns, :id, "ovf"))
 
   # KPI fragment fixtures — the per-tile / per-row sub-components the KPI
   # showcase containers defer, plus the terminal container itself.
@@ -360,6 +369,8 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("sidebar"), do: PureAdmin.Components.Layout.__components__()[:sidebar]
   defp meta("footer"), do: PureAdmin.Components.Layout.__components__()[:footer]
   defp meta("tabs"), do: PureAdmin.Components.Navigation.__components__()[:tabs]
+  defp meta("tabs-scrollable"), do: PureAdmin.Components.Navigation.__components__()[:tabs]
+  defp meta("tabs-overflow"), do: PureAdmin.Components.Navigation.__components__()[:tabs_overflow]
   defp meta("kpi-gauge-list"), do: PureAdmin.Components.KpiGaugeList.__components__()[:kpi_gauge_list]
   defp meta("kpi-hero"), do: PureAdmin.Components.KpiHero.__components__()[:kpi_hero_list]
   defp meta("textarea"), do: PureAdmin.Components.Form.__components__()[:textarea]
@@ -404,6 +415,7 @@ defmodule Mix.Tasks.Pa.Fidelity.Dump do
   defp meta("popover"), do: PureAdmin.Components.Tooltip.__components__()[:popover]
   defp meta("breakpoint-container"), do: PureAdmin.Components.Responsive.__components__()[:breakpoint_container]
   defp meta("card-tab"), do: PureAdmin.Components.Card.__components__()[:card_tab]
+  defp meta("card-tab-content"), do: PureAdmin.Components.Card.__components__()[:card_tab_content]
   defp meta("list-item"), do: PureAdmin.Components.List.__components__()[:list_item]
   defp meta("timeline-item"), do: PureAdmin.Components.Timeline.__components__()[:timeline_item]
   defp meta("tab-item"), do: PureAdmin.Components.Navigation.__components__()[:tab_item]

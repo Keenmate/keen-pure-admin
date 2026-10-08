@@ -24,6 +24,25 @@ Phoenix LiveView component library wrapping the Pure Admin CSS framework (`@keen
 - Slots follow Phoenix conventions: `inner_block` for default, named slots for `:header`, `:footer`, etc.
 - Props: `variant`, `size` (strings), `is_*` (booleans), `class` (extra CSS), `:rest` (global attrs)
 
+## Demo philosophy — the demo exercises components, not raw markup
+
+The demo app (`demo/`) is how we **prove the component library is complete and
+correct**, not just a showroom. So:
+
+1. **Build every demo page out of library components** (`lib/keen_pure_admin/
+   components/`). Only drop to raw `pa-*` HEEx when there is genuinely no component —
+   and treat that as a signal that a component is probably **missing** and should be
+   added.
+2. **A demo page pure-admin/svelte have but keen lacks is a two-step job:** first add
+   the component(s) (standard naming + structure, mirroring the core snippet / the
+   svelte wrapper), *then* compose the page from them — never paste the core snippet's
+   HTML as a shortcut, which hides the gap instead of closing it.
+3. **`mix compile` is the guardrail that makes this work.** Components with typed
+   attrs reject invented classes / wrong attrs / nonexistent variants at compile time;
+   hand-authored `class="pa-…"` strings have no such safety net and drift from core.
+
+(Same reasoning drives svelte's demo + `svelte-check`; this is a shared ecosystem rule.)
+
 ## Reference Projects
 
 - `../pure-admin/packages/core/snippets/` - HTML snippets with BEM classes

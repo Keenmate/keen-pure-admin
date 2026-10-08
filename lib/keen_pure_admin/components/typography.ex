@@ -107,7 +107,7 @@ defmodule PureAdmin.Components.Typography do
   `.text-{variant}` colour utility (see `snippets/typography.html`). Core ships
   exactly five: `primary`, `success`, `danger`, `warning`, `info`. With no
   variant the span is class-less. (For sized/aligned paragraph text use
-  `paragraph/1`, the `.pa-text` component.)
+  `paragraph/1`, which composes the flat `text-*` utilities on a plain `<p>`.)
   """
   attr(:variant, :string,
     default: nil,

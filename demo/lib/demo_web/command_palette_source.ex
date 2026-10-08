@@ -183,17 +183,17 @@ defmodule DemoWeb.CommandPaletteSource do
     [
       %{id: "dashboard", label: gettext("Dashboard"), code: "01", icon: "📊", value: "/"},
       %{id: "forms", label: gettext("Forms"), code: "10", icon: "📝", value: "/forms"},
-      %{id: "buttons", label: gettext("Buttons"), code: "20", icon: "🔘", value: "/components/buttons"},
-      %{id: "inputs", label: gettext("Inputs"), code: "21", icon: "✏️", value: "/components/inputs"},
-      %{id: "cards", label: gettext("Cards"), code: "22", icon: "🃏", value: "/components/cards"},
+      %{id: "buttons", label: gettext("Buttons"), code: "20", icon: "🔘", value: "/buttons"},
+      %{id: "inputs", label: gettext("Inputs"), code: "21", icon: "✏️", value: "/forms/inputs"},
+      %{id: "cards", label: gettext("Cards"), code: "22", icon: "🃏", value: "/surfaces/cards"},
       %{id: "tables", label: gettext("Tables"), code: "23", icon: "📊", value: "/tables/standard"},
-      %{id: "alerts", label: gettext("Alerts"), code: "24", icon: "⚠️", value: "/components/alerts"},
-      %{id: "toasts", label: gettext("Toasts"), code: "25", icon: "🔔", value: "/components/toasts"},
-      %{id: "modals", label: gettext("Modals"), code: "26", icon: "🔳", value: "/components/modals"},
-      %{id: "tabs", label: gettext("Tabs"), code: "27", icon: "📑", value: "/components/tabs"},
-      %{id: "badges", label: gettext("Badges"), code: "28", icon: "🏷️", value: "/components/badges"},
-      %{id: "tooltips", label: gettext("Tooltips"), code: "29", icon: "💬", value: "/components/tooltips"},
-      %{id: "command-palette", label: gettext("Command Palette"), code: "30", icon: "🔍", value: "/components/command-palette"}
+      %{id: "alerts", label: gettext("Alerts"), code: "24", icon: "⚠️", value: "/feedback/alerts"},
+      %{id: "toasts", label: gettext("Toasts"), code: "25", icon: "🔔", value: "/feedback/toasts"},
+      %{id: "modals", label: gettext("Modals"), code: "26", icon: "🔳", value: "/surfaces/modals"},
+      %{id: "tabs", label: gettext("Tabs"), code: "27", icon: "📑", value: "/surfaces/tabs"},
+      %{id: "badges", label: gettext("Badges"), code: "28", icon: "🏷️", value: "/interactive/badges"},
+      %{id: "tooltips", label: gettext("Tooltips"), code: "29", icon: "💬", value: "/feedback/tooltips"},
+      %{id: "command-palette", label: gettext("Command Palette"), code: "30", icon: "🔍", value: "/interactive/command-palette"}
     ]
     |> filter_options(query)
   end

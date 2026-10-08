@@ -1,73 +1,77 @@
 defmodule PureAdmin.Components.Icon do
   @moduledoc """
-  Smart icon dispatcher — routes a string `name` to the right rendering
-  strategy by inspecting its prefix.
+  Smart icon dispatcher — resolves a string `name` to markup in two stages,
+  mirroring svelte-pure-admin's `<Icon>`.
 
-  This component exists for the legacy `attr :icon, :string` pattern used by
-  many of the library's chrome components (sidebar items, buttons, flash,
-  profile nav items). Callers pass a single string and the renderer figures
-  out whether it's a class-based icon font (Font Awesome, Bootstrap Icons,
-  Lucide-font, etc.) or a Heroicon name.
+  ## Dispatch order
 
-  For direct usage, prefer the specialized components — they give you fuller
-  control over per-set attributes (FA variant, heroicon size, etc.):
+    1. **Framework affordance first (built-in, reserved).** If `name` is one of the
+       framework's masked structural affordances (`x`, chevrons, `search`, `check`,
+       `success`, `danger`, …) it renders `<span class="pa-icon pa-icon--NAME">` and
+       stops. No provider can shadow an affordance — they always resolve, zero-config.
+       Qualify external names (`"hero-close"`, a Lucide key) so they don't collide
+       with the reserved bare affordance names.
+    2. **Provider list, then built-in fallback.** Otherwise `name` is handed to each
+       provider configured in `:icon_providers` (see `PureAdmin.Config`), in order;
+       the first to return markup (non-`nil`) wins. If none match, a built-in
+       fallback handles `"hero-X"` (→ `<.heroicon>`) and any other name as FA-style
+       `<i class={name}>`.
+
+  This component exists for the legacy `attr :icon, :string` pattern used by many
+  chrome components (sidebar items, buttons, flash, profile nav items): callers
+  pass a single string and the renderer figures out how to draw it.
+
+  For direct usage of a specific set, prefer the specialized components:
 
       <.faicon name="rocket" variant="solid" />
       <.heroicon name="rocket-launch" class="size-4" />
 
-  ## Dispatch rules
+  ## Providers
 
-  | Name pattern        | Rendered as                                  |
-  |---------------------|----------------------------------------------|
-  | `nil` / empty       | renders nothing                              |
-  | `"hero-X"`          | `<.heroicon name="X">`                       |
-  | any other string    | configured `:icon_callback` if set, else `<i class={@name}>` (FA-style) |
+  A provider lets a project render icons with the set(s) it already has (Font
+  Awesome, Lucide SVGs, an Iconify sprite, …) without hand-authoring
+  `<fa-icon>` / `<hero-icon>` / raw `<svg>` at each call-site. Configure an
+  ordered list once in `config.exs` and `<.icon>` routes every non-affordance
+  name through it. See `PureAdmin.Config` for the contract.
 
-  ## Custom icon sets via callback
-
-  Most projects standardize on one icon set (a custom SVG sprite folder,
-  a special font, Lucide files in `priv/static`, etc.). Configure
-  `:icon_callback` once in `config.exs` and `<.icon>` will route every
-  non-`hero-` name through it. See `PureAdmin.Config` for the contract.
-
-  ## Future improvement: compile-time inline icon set
-
-  The current callback pattern serves SVGs as `<img>` per icon — fine for
-  most use cases, but every unique name costs an HTTP round trip on cold
-  cache, and `stroke="currentColor"` recoloring is lost when the SVG lives
-  in a separate document.
-
-  A future enhancement would be a built-in compile-time inliner (same
-  approach as `<.heroicon>`): point it at a directory of SVG files and
-  generate one function clause per file at compile time.
-
-      Approach:       Compile-time inline (like our Heroicon)
-      HTTP requests:  0
-      Recolorable:    Yes
-      BEAM size:      Larger
-      Adding icons:   Recompile
+  A provider is a 1-arity Phoenix function component receiving the full assigns
+  (name + render context: `class`, `color`, `size`, `size_value`, `variant`,
+  `fill`, `stroke`, `title`, `aria_label`, `is_interactive`) and returning
+  rendered HEEx, or `nil` to pass the name to the next provider. The full
+  context flows to every provider so a set can embed its own sizing / hover
+  marker.
 
   ## Examples
 
-      <.icon name="fa-solid fa-rocket" />        # → <i class="fa-solid fa-rocket">
+      <.icon name="success" />                   # → <span class="pa-icon pa-icon--success">
       <.icon name="hero-rocket-launch" />        # → <.heroicon name="rocket-launch">
+      <.icon name="fa-solid fa-rocket" />        # → <i class="fa-solid fa-rocket">
       <.icon name={nil} />                       # → nothing
 
   ## Renderer-tuning attrs
 
-  Common per-icon options flow through to the underlying element via
-  `@rest`. See the allowlist on the `:rest` attr below — extend by adding
-  to the `:include` list if you need an attr that isn't there yet.
-
-      <.icon name="hero-rocket-launch" color="red" size="lg" />
+  Common per-icon options flow through to the underlying element / provider via
+  the assigns. See the allowlist on the `:rest` attr below.
   """
   use Phoenix.Component
   import PureAdmin.Components.Heroicon
 
+  # Framework masked structural affordances — kept in sync with core `_icons.scss`
+  # and svelte's `AFFORDANCE_ICON_NAMES`. Reserved: resolve before any provider.
+  @affordances ~w(x chevron chevron-right chevron-down chevron-left chevron-up
+    caret caret-down caret-up clear remove expand collapse add edit delete search
+    refresh filter check copy ellipsis ellipsis-vertical save settings bell user
+    lock help logout download link external-link favorites info success warning danger)
+
+  @doc "True if `name` is one of the framework's reserved masked affordances."
+  @spec affordance?(term()) :: boolean()
+  def affordance?(name) when is_binary(name), do: name in @affordances
+  def affordance?(_), do: false
+
   attr(:name, :string,
     required: true,
     doc:
-      "Icon name. `\"hero-X\"` → Heroicons; anything else → FA-style `<i class>`. May be `nil` or empty at runtime — both render nothing."
+      "Icon name. A framework affordance (`\"success\"`, `\"chevron-down\"`, …) → masked `pa-icon--*` span; `\"hero-X\"` → Heroicons; anything else → the configured provider list, else FA-style `<i class>`. May be `nil` or empty at runtime — both render nothing."
   )
 
   attr(:class, :string,
@@ -83,7 +87,7 @@ defmodule PureAdmin.Components.Icon do
   attr(:size, :string,
     default: nil,
     doc:
-      "CSS length (e.g. `\"1.5rem\"`). Sets SVG `width`/`height` for heroicons, inline `font-size` for FA-style. Defaults to `PureAdmin.Config.icon_size/0`."
+      "CSS length (e.g. `\"1.5rem\"`). Sets SVG `width`/`height` for heroicons, inline `font-size` for FA-style, `font-size` + `--pa-icon-size` for masked affordances. Defaults to `PureAdmin.Config.icon_size/0` for sized renderers."
   )
 
   attr(:variant, :string,
@@ -106,25 +110,55 @@ defmodule PureAdmin.Components.Icon do
       "Make a STANDALONE icon its own hover affordance by wrapping it in " <>
         "`<span class=\"pc-icon-hover\">` (the foundation hover context; see pure-css " <>
         "`_icon-hover.scss`). Not needed when the icon sits inside an interactive control " <>
-        "(button, nav link, tab): the control is already the hover context, and the marker " <>
-        "class this component stamps reacts to it. Mirrors svelte's `isInteractive`."
+        "(button, nav link, tab): the control is already the hover context. Mirrors " <>
+        "svelte's `isInteractive`."
   )
 
   def icon(%{name: nil} = assigns), do: ~H""
   def icon(%{name: ""} = assigns), do: ~H""
 
   # `is_interactive` adds the standalone hover CONTEXT (`.pc-icon-hover`). The CSS
-  # uses a descendant selector (`.pc-icon-hover:hover .pc-icon-hover-fill|…`), so
-  # the marker must live INSIDE this wrapper — hence the span. The per-set marker
-  # itself is stamped by the branch (a "provider") in render_icon/1.
+  # uses a descendant selector (`.pc-icon-hover:hover .pc-icon-hover-fill|…`), so the
+  # marker must live INSIDE this wrapper — hence the span.
   def icon(assigns) do
+    assigns = assign(assigns, :size_value, assigns[:size] || PureAdmin.Config.icon_size())
+
     ~H"""
     <%= if @is_interactive do %><span class="pc-icon-hover"><%= render_icon(assigns) %></span><% else %><%= render_icon(assigns) %><% end %>
     """
   end
 
-  # Heroicon (outline SVG) → recolour-on-hover marker (no solid form to fill).
-  defp render_icon(%{name: "hero-" <> rest} = assigns) do
+  # 1. Framework affordance — reserved, built-in, resolved first.
+  defp render_icon(%{name: name} = assigns) when is_binary(name) do
+    if affordance?(name) do
+      render_affordance(assigns)
+    else
+      render_from_providers(assigns)
+    end
+  end
+
+  defp render_affordance(assigns) do
+    ~H"""
+    <span
+      class={["pa-icon", "pa-icon--#{@name}", @class]}
+      style={@size && "font-size: #{@size}; --pa-icon-size: #{@size}"}
+      role={@aria_label && "img"}
+      aria-label={@aria_label}
+      aria-hidden={if @aria_label, do: nil, else: "true"}
+    ></span>
+    """
+  end
+
+  # 2. Configured provider list (first non-nil wins), then the built-in fallback.
+  defp render_from_providers(assigns) do
+    case Enum.find_value(PureAdmin.Config.icon_providers(), fn provider -> provider.(assigns) end) do
+      nil -> render_builtin(assigns)
+      rendered -> rendered
+    end
+  end
+
+  # Built-in heroicon provider (outline SVG) → recolour-on-hover marker.
+  defp render_builtin(%{name: "hero-" <> rest} = assigns) do
     assigns =
       assigns
       |> assign(:hero_name, rest)
@@ -145,20 +179,8 @@ defmodule PureAdmin.Components.Icon do
     """
   end
 
-  defp render_icon(%{name: name} = assigns) when is_binary(name) do
-    assigns = assign(assigns, :size_value, assigns[:size] || PureAdmin.Config.icon_size())
-
-    case PureAdmin.Config.icon_callback() do
-      callback when is_function(callback, 1) -> callback.(assigns)
-      _ -> fallback_icon(assigns)
-    end
-  end
-
-  # FA-style fallback → font-weight regular→solid flip marker (`pc-icon-hover-fill`).
-  # This branch IS keen's built-in Font Awesome "provider", so it stamps the FA
-  # marker like svelte's `fontAwesome()` does. (A configured `:icon_callback`
-  # owns its own markup + markers, exactly like a custom svelte provider.)
-  defp fallback_icon(assigns) do
+  # Built-in FA-style fallback → font-weight regular→solid flip marker (`pc-icon-hover-fill`).
+  defp render_builtin(assigns) do
     assigns = assign(assigns, :fa_class, join_class(join_class(assigns.name, assigns.class), "pc-icon-hover-fill"))
 
     ~H"""

@@ -131,7 +131,7 @@ defmodule DemoWeb.Live.CalloutsLive do
     <%!-- Callouts with Links --%>
     <.card title_text={gettext("Callouts with Links")}>
       <.callout variant="info" heading_text={gettext("Learn More")}>
-        <p>For detailed documentation on all available components, visit the <a href="/components/buttons">Buttons</a> and <a href="/components/cards">Cards</a> documentation.</p>
+        <p>For detailed documentation on all available components, visit the <a href="/buttons">Buttons</a> and <a href="/surfaces/cards">Cards</a> documentation.</p>
       </.callout>
       <.callout variant="primary">
         <p>Need help? Check out our <a href="/">Dashboard</a> or join the community for support.</p>

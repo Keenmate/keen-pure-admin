@@ -277,6 +277,34 @@ defmodule PureAdmin.Components.Card do
     """
   end
 
+  @doc """
+  Renders a card tab-content panel (`pa-card__tab-content`).
+
+  The body-area counterpart of `card_tab/1` — one per tab, rendered inside the
+  card body. Exactly one carries `is_active`.
+
+  ## Examples
+
+      <.card_tab_content id="overview" is_active>Overview content</.card_tab_content>
+  """
+  attr(:id, :string, default: nil)
+  attr(:is_active, :boolean, default: false)
+  attr(:class, :string, default: nil)
+  attr(:rest, :global)
+  slot(:inner_block, required: true)
+
+  def card_tab_content(assigns) do
+    ~H"""
+    <div
+      id={@id}
+      class={build_classes("pa-card__tab-content", [{"pa-card__tab-content--active", @is_active}], @class)}
+      {@rest}
+    >
+      <%= render_slot(@inner_block) %>
+    </div>
+    """
+  end
+
   defp card_classes(assigns) do
     build_classes(
       "pa-card",

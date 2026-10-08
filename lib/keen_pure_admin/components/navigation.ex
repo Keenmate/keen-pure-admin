@@ -198,9 +198,14 @@ defmodule PureAdmin.Components.Navigation do
   end
 
   @doc """
-  Renders a bordered tabs container wrapper.
+  Renders a horizontal tabs container wrapper.
+
+  `is_bordered` wraps the tabs system in a card-like border; `is_card` makes
+  the tab row act as the card header (same height as `pa-card__header`), which
+  is the layout the `tabs_overflow/1` dropdown lives in.
   """
   attr(:is_bordered, :boolean, default: false)
+  attr(:is_card, :boolean, default: false)
   attr(:class, :string, default: nil)
   attr(:rest, :global)
   slot(:inner_block, required: true)
@@ -208,10 +213,61 @@ defmodule PureAdmin.Components.Navigation do
   def tabs_container(assigns) do
     ~H"""
     <div
-      class={build_classes("pa-tabs__container", [{"pa-tabs__container--bordered", @is_bordered}], @class)}
+      class={build_classes("pa-tabs__container", [{"pa-tabs__container--bordered", @is_bordered}, {"pa-tabs__container--card", @is_card}], @class)}
       {@rest}
     >
       <%= render_slot(@inner_block) %>
+    </div>
+    """
+  end
+
+  @doc """
+  Renders the card-header tabs overflow dropdown (`pa-tabs__overflow`).
+
+  Lives inside a `tabs_container is_card` header for tabs that don't fit. The
+  `:toggle` slot is the trigger glyph (defaults to an ellipsis icon); the
+  default slot holds the overflow `tab_item`s. Clicking the toggle opens the
+  menu; a click anywhere outside the wrapper closes it.
+
+  ## Examples
+
+      <.tabs_overflow id="more-tabs" has_active>
+        <.tab_item target="panel-9" tabs_id="my-tabs">Archived</.tab_item>
+      </.tabs_overflow>
+  """
+  attr(:id, :string, required: true, doc: "wrapper id; the menu uses \"{id}-menu\"")
+  attr(:has_active, :boolean, default: false, doc: "an overflow tab is the active one")
+  attr(:class, :string, default: nil)
+  attr(:rest, :global)
+  slot(:toggle, doc: "trigger button content (defaults to an ellipsis icon)")
+  slot(:inner_block, required: true, doc: "overflow tab_item entries")
+
+  def tabs_overflow(assigns) do
+    menu_id = "#{assigns.id}-menu"
+    assigns = assign(assigns, :menu_id, menu_id)
+
+    ~H"""
+    <div
+      id={@id}
+      class={build_classes("pa-tabs__overflow", [], @class)}
+      phx-click-away={JS.remove_class("pa-tabs__overflow-menu--open", to: "##{@menu_id}")}
+      {@rest}
+    >
+      <button
+        type="button"
+        class={build_classes("pa-tabs__overflow-toggle", [{"pa-tabs__overflow-toggle--has-active", @has_active}], nil)}
+        aria-haspopup="menu"
+        phx-click={JS.toggle_class("pa-tabs__overflow-menu--open", to: "##{@menu_id}")}
+      >
+        <%= if @toggle != [] do %>
+          <%= render_slot(@toggle) %>
+        <% else %>
+          <span class="pa-icon pa-icon--ellipsis" aria-hidden="true"></span>
+        <% end %>
+      </button>
+      <div id={@menu_id} class="pa-tabs__overflow-menu">
+        <%= render_slot(@inner_block) %>
+      </div>
     </div>
     """
   end
