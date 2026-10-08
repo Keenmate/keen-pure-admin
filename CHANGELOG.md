@@ -34,6 +34,9 @@ accordingly (shell/foundation → `--pc-`, components → `--pa-`).
     `<.modal>` with a full LiveView form (`phx-change`/`phx-submit`); `close/1` dismisses
     either kind.
   - Demo: Surfaces → Modal Dialogs → "Server-Initiated Dialog".
+- **Client dialog service (`assets/js/modal_dialogs.js`, `window.PureAdmin.confirm/alert/prompt/custom`)
+  gains an `isBanded` option** — banded programmatic dialogs, matching core's
+  `modal-dialogs.js` and svelte's `dialogService` (all three share the key).
 
 ### Typography — flat `text-*` consolidation
 
