@@ -7,6 +7,6 @@
   "module": "./lib/assets/js/keen_pure_admin.js",
   "main": "./lib/assets/js/keen_pure_admin.js",
   "peerDependencies": {
-    "@keenmate/pure-admin-core": "^3.3.0-rc03"
+    "@keenmate/pure-admin-core": "^3.3.0-rc06"
   }
 }

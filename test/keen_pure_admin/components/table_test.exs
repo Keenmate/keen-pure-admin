@@ -271,14 +271,14 @@ defmodule PureAdmin.Components.TableTest do
       assert_class(html, "pa-table-card--plain")
     end
 
-    test "header uses a bare h3 (matches rc10 canonical, no radius classes)" do
+    test "header wraps the title in __title > h3.__title-text (rc05 canonical)" do
       html =
         render_component(&Table.table_card/1, %{
           title_text: "Recent",
           inner_block: [%{__slot__: :inner_block, inner_block: fn _, _ -> "t" end}]
         })
 
-      assert html =~ ~r{<div class="pa-table-card__header">\s*<h3>Recent</h3>}
+      assert html =~ ~r{<h3 class="pa-table-card__title-text">Recent</h3>}
     end
   end
 end

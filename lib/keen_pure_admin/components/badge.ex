@@ -157,12 +157,14 @@ defmodule PureAdmin.Components.Badge do
   attr(:label, :string, required: true, doc: "Label text")
   attr(:count, :string, default: nil, doc: "Count/button text (legacy alias for button_text)")
   attr(:button_text, :string, default: nil, doc: "Button section text")
+
   attr(:is_interactive, :boolean,
     default: false,
     doc:
       "Deprecated no-op. Core bakes hover/cursor into the base `__label`/`__button`; " <>
         "there is no `pa-composite-badge--interactive` rule. Wire `on_label_click`/`on_button_click` instead."
   )
+
   attr(:on_label_click, :string, default: nil, doc: "LiveView event fired when label is clicked")
   attr(:on_button_click, :string, default: nil, doc: "LiveView event fired when button is clicked")
   attr(:class, :string, default: nil)

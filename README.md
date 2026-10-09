@@ -12,6 +12,18 @@ Drop-in replacement for Phoenix `CoreComponents` -- provides `button/1`, `badge/
 
 **Live demo**: [elixir.demo.pureadmin.io](https://elixir.demo.pureadmin.io)
 
+## What's new in v2.0.0-rc.1
+
+**Major** sync to `@keenmate/pure-admin-core` `^3.3.0-rc06` (was `^2.9.0-rc18`), mirroring core's 2.x → 3.x cut. Themes must be rebuilt at 3.3.0-rc06 and reinstalled (`npx @keenmate/pureadmin themes install`). Highlights:
+
+- **BREAKING — token ownership split (`--pc-*` vs `--pa-*`).** Foundation + app-shell runtime tokens (surfaces, text, accent, links, radius, the `--pc-color-1..9` palette, navbar/sidebar/footer) are now `--pc-*`; **component** tokens (buttons, cards, modals, tables, badges, KPI, command palette, splitter, range, gauge, chart…) are `--pa-*`. Migrate your overrides accordingly. `--base-*` is unchanged.
+- **Server-driven dialogs (`PureAdmin.Dialog`)** — open a modal from the server in a LiveView and receive the answer as an ordinary `handle_event`. `confirm/2` + `info/success/warning/error` alerts and custom/form dialogs, built on the declarative `modal/1` (no JS bridge). The client `window.PureAdmin.confirm/alert/prompt` service gains an `isBanded` option.
+- **New printable components** — `<.document>` (Word-style hierarchical numbered sections via CSS counters) and `<.sheet>` (printable A4 shell for invoices/orders/quotes with masthead, parties, meta, and print modes).
+- **Forms aligned with svelte-pure-admin** — canonical `state` / `theme_color` / `label_text` props (old names kept as deprecated aliases), `input/1` split into typed `number_input`/`date_input`/`color_input`/`file_input`/`range_input`, new `form_field/1` + `form_error_summary/1`, and `aria-invalid` + `touched` gating. Typography consolidated onto the flat `text-*` utilities (core dropped `.pa-text`).
+- **Command palette** — leading-key `g <letter>` shortcuts (replacing macOS-hostile `Alt+<letter>`), a keyboard-navigable home screen (`↑ ↓`, `PgUp`/`PgDn`, `Home`/`End`), and palette icons rendered through the real icon path instead of unicode.
+
+See the full [CHANGELOG](CHANGELOG.md) for the complete 3.x sync.
+
 ## What's new in v1.3.0-rc.2
 
 Maintenance sync to `@keenmate/pure-admin-core` `^2.9.0-rc08`. Highlights:
@@ -21,18 +33,6 @@ Maintenance sync to `@keenmate/pure-admin-core` `^2.9.0-rc08`. Highlights:
 - **Docs** — corrected the downloaded theme-zip structure (`css/`, not `dist/`) and documented both theme-install paths (pureadmin CLI + manual download) in getting-started.
 
 See the full [CHANGELOG](CHANGELOG.md) for details.
-
-## What's new in v1.3.0-rc.1
-
-First release candidate for the **pure-admin 2.9.0** sync, pinned to `@keenmate/pure-admin-core` `^2.9.0-rc07`. Highlights:
-
-- **New components** — `<.overflow>` (progressive-collapse toolbar that folds buttons into a `[⋮]` "more" menu as space runs out), `<.splitter>` (resizable N-pane splitter with drag / minimize-to-rail / `localStorage` persistence and bubbling `pa-splitter:resize` / `:collapse` / `:expand` events), `<.range_group>` + `<.range>` (compact multi-range filter with a floating panel), and `<.stat is_fit>` fit-to-box stat tiles.
-- **Icons** — `<.icon>` / `<.faicon>` / `<.heroicon>` (25 inline-SVG heroicons, zero deps), plus a configurable `:icon_callback` for plugging in a custom icon set. The legacy `attr :icon` slots now route `"hero-X"` strings to inline SVG.
-- **Buttons — unified inline-flex model (behavior change).** Every button type now centers content by default; full-width / block icon+label buttons that used to left-align now center — pass `align="start"` for the old look. Canonical text truncation is `.text-truncate` on an inner `<span>`.
-- **Card header rework to the rc05 canonical structure** — one DOM tree for every card; new `actions_variant="overflow"` / `"responsive"` header-action collapse models and a `title_class` for the overflow title floor.
-- **Fixes** — overflow toolbars no longer crash under LiveView (`phx-update="ignore"` + trigger guard), and icon + `text-truncate` buttons ellipse correctly instead of spilling the icon.
-
-See the full [CHANGELOG](CHANGELOG.md) for everything in the 2.9.0 sync.
 
 ## Prerequisites
 

@@ -98,7 +98,13 @@ defmodule PureAdmin.Components.KpiSparklineListTest do
     end
 
     test "delta_variant emits the dasherized __delta--* tint (distinct scale)" do
-      html = render_row(%{label_text: "Error Rate", value_text: "0.25", delta_text: "-38.1%", delta_variant: "very_negative"})
+      html =
+        render_row(%{
+          label_text: "Error Rate",
+          value_text: "0.25",
+          delta_text: "-38.1%",
+          delta_variant: "very_negative"
+        })
 
       assert_class(html, "pa-kpi-spark-row__delta")
       assert_class(html, "pa-kpi-spark-row__delta--very-negative")

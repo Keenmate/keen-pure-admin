@@ -268,10 +268,8 @@ defmodule PureAdmin.Components.Form do
   attr(:state, :string, default: nil, values: [nil, "success", "warning", "error"], doc: "Validation state.")
   attr(:theme_color, :any, default: nil, doc: "Theme color 1-9 (int or string).")
   attr(:class, :string, default: nil)
-  attr(:rest, :global,
-    include: ~w(min max step placeholder disabled readonly required autofocus
-      form phx-change phx-blur phx-focus phx-debounce)
-  )
+  attr(:rest, :global, include: ~w(min max step placeholder disabled readonly required autofocus
+      form phx-change phx-blur phx-focus phx-debounce))
 
   def number_input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     errors = assigns.errors || field_errors(field)
@@ -338,10 +336,8 @@ defmodule PureAdmin.Components.Form do
   attr(:state, :string, default: nil, values: [nil, "success", "warning", "error"], doc: "Validation state.")
   attr(:theme_color, :any, default: nil, doc: "Theme color 1-9 (int or string).")
   attr(:class, :string, default: nil)
-  attr(:rest, :global,
-    include: ~w(min max step disabled readonly required autofocus
-      form phx-change phx-blur phx-focus phx-debounce)
-  )
+  attr(:rest, :global, include: ~w(min max step disabled readonly required autofocus
+      form phx-change phx-blur phx-focus phx-debounce))
 
   def date_input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     errors = assigns.errors || field_errors(field)
@@ -631,6 +627,7 @@ defmodule PureAdmin.Components.Form do
   attr(:value, :any, default: nil)
   attr(:errors, :list, default: nil)
   attr(:show_errors, :boolean, default: true)
+
   attr(:touched, :boolean,
     default: true,
     doc: "When false, suppresses error state + inline help (mirrors svelte's `touched` gate)."
@@ -855,7 +852,12 @@ defmodule PureAdmin.Components.Form do
   )
 
   attr(:label, :string, default: nil, doc: "Deprecated alias for `label_text`.")
-  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"], doc: "Scales the native radio (emits pa-radio--{size})")
+
+  attr(:size, :string,
+    default: nil,
+    values: [nil, "xs", "sm", "lg", "xl"],
+    doc: "Scales the native radio (emits pa-radio--{size})"
+  )
 
   attr(:label_position, :string,
     default: nil,
@@ -1077,12 +1079,21 @@ defmodule PureAdmin.Components.Form do
         </:button>
       </.input_group>
   """
-  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"], doc: "Matches prepend/append height (emits pa-input-group--{size})")
+  attr(:size, :string,
+    default: nil,
+    values: [nil, "xs", "sm", "lg", "xl"],
+    doc: "Matches prepend/append height (emits pa-input-group--{size})"
+  )
+
   attr(:class, :string, default: nil)
   attr(:rest, :global)
   slot(:prepend, doc: "Left addon text")
   slot(:append, doc: "Right addon text")
-  slot(:button, doc: "Button addon — pass class=\"pa-input-group__button\" on the button so it keeps the group's joined radius")
+
+  slot(:button,
+    doc: "Button addon — pass class=\"pa-input-group__button\" on the button so it keeps the group's joined radius"
+  )
+
   slot(:inner_block, required: true)
 
   def input_group(assigns) do

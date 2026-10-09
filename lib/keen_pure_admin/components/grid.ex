@@ -140,7 +140,8 @@ defmodule PureAdmin.Components.Grid do
 
   attr(:is_ruled, :boolean,
     default: false,
-    doc: "Hairlines between every cell + an outer frame (`pc-grid--ruled`); implies flush. Prints reliably (real borders)."
+    doc:
+      "Hairlines between every cell + an outer frame (`pc-grid--ruled`); implies flush. Prints reliably (real borders)."
   )
 
   attr(:class, :string, default: nil)

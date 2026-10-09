@@ -40,7 +40,11 @@ defmodule PureAdmin.Components.Typography do
   utility: `xs`→`text-xs` (12), `sm`→`text-sm` (14), `lg`→`text-lg` (18),
   `xl`→`text-xl` (20). Colour / alignment / semantic props tune it further.
   """
-  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"], doc: "Size → the same-named flat text-* utility; omit for the body default (16px).")
+  attr(:size, :string,
+    default: nil,
+    values: [nil, "xs", "sm", "lg", "xl"],
+    doc: "Size → the same-named flat text-* utility; omit for the body default (16px)."
+  )
 
   attr(:color, :string,
     default: nil,

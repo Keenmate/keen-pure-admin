@@ -164,14 +164,32 @@ defmodule PureAdmin.CommandPalette do
   end
 
   def handle_event("cp:navigate", %{"direction" => direction}, socket) do
-    count = length(socket.assigns.cp_results)
+    # On the idle home screen the navigable list is commands ++ contexts (not
+    # cp_results, which is empty there); every other mode walks cp_results.
+    count =
+      if socket.assigns.cp_mode == "idle" do
+        length(socket.assigns.cp_commands) + length(socket.assigns.cp_contexts)
+      else
+        length(socket.assigns.cp_results)
+      end
+
     active = socket.assigns.cp_active_index
+    page = 8
 
     new_index =
-      case direction do
-        "up" -> if active <= 0, do: count - 1, else: active - 1
-        "down" -> if active >= count - 1, do: 0, else: active + 1
-        _ -> active
+      if count == 0 do
+        -1
+      else
+        case direction do
+          # single-step arrows wrap; page/home/end clamp (conventional list UX)
+          "up" -> if active <= 0, do: count - 1, else: active - 1
+          "down" -> if active >= count - 1, do: 0, else: active + 1
+          "page_up" -> max(0, active - page)
+          "page_down" -> min(count - 1, active + page)
+          "home" -> 0
+          "end" -> count - 1
+          _ -> active
+        end
       end
 
     {:noreply, assign(socket, cp_active_index: new_index)}
@@ -257,7 +275,9 @@ defmodule PureAdmin.CommandPalette do
 
   defp open_palette(socket) do
     socket
-    |> assign(cp_open: true, cp_mode: "idle", cp_query: "", cp_results: [], cp_active_index: -1)
+    # cp_active_index 0 so the idle home screen is keyboard-navigable from the
+    # first item (↑↓ traverse commands then contexts; Enter enters the active one).
+    |> assign(cp_open: true, cp_mode: "idle", cp_query: "", cp_results: [], cp_active_index: 0)
     |> push_event("cp:focus", %{})
   end
 
@@ -298,7 +318,7 @@ defmodule PureAdmin.CommandPalette do
         handle_context_input(socket, query)
 
       query == "" ->
-        assign(socket, cp_mode: "idle", cp_query: "", cp_results: [], cp_active_index: -1)
+        assign(socket, cp_mode: "idle", cp_query: "", cp_results: [], cp_active_index: 0)
 
       true ->
         run_search(socket, :global, query)
@@ -637,7 +657,36 @@ defmodule PureAdmin.CommandPalette do
 
   # -- Selection handling --
 
-  defp handle_select(socket, index) do
+  # Idle home screen: the active index points into commands ++ contexts; enter
+  # whichever the cursor is on (mirrors a click on a home item).
+  defp handle_select(socket, index) when is_integer(index) and index >= 0 do
+    if socket.assigns.cp_mode == "idle" do
+      home_select(socket, index)
+    else
+      select_result(socket, index)
+    end
+  end
+
+  defp handle_select(socket, index), do: select_result(socket, index)
+
+  defp home_select(socket, index) do
+    commands = socket.assigns.cp_commands
+    contexts = socket.assigns.cp_contexts
+    cmd_count = length(commands)
+
+    cond do
+      index < cmd_count ->
+        {:noreply, enter_command(socket, Enum.at(commands, index))}
+
+      index - cmd_count < length(contexts) ->
+        {:noreply, enter_context_search(socket, Enum.at(contexts, index - cmd_count), "")}
+
+      true ->
+        {:noreply, socket}
+    end
+  end
+
+  defp select_result(socket, index) do
     results = socket.assigns.cp_results
     mode = socket.assigns.cp_mode
 

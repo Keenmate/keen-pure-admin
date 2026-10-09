@@ -62,12 +62,14 @@ defmodule PureAdmin.Components.Card do
   )
 
   attr(:is_ghost, :boolean, default: false, doc: "Ghost mode with no bg, border, shadow")
+
   attr(:is_bordered, :boolean,
     default: false,
     doc:
       "Deprecated no-op — core has no `pa-card--bordered` rule. For a coloured left " <>
         "border use a `variant` (primary/success/warning/danger) or `color-{1..9}`."
   )
+
   attr(:has_padding, :boolean, default: true, doc: "Body padding toggle")
   attr(:title_text, :string, default: nil, doc: "Simple title text (shorthand for :title slot)")
   attr(:description_text, :string, default: nil, doc: "Inline description text, truncates with ellipsis")
@@ -324,7 +326,8 @@ defmodule PureAdmin.Components.Card do
         {"pa-card__header--wrap", assigns.header_wrap},
         {"pa-card__header--underlined", assigns.is_header_underlined},
         {"pa-card__header--underline-#{assigns.header_underline_color}", assigns.header_underline_color != nil},
-        {"pa-card__header--underline-color-#{assigns.header_underline_theme_color}", assigns.header_underline_theme_color != nil}
+        {"pa-card__header--underline-color-#{assigns.header_underline_theme_color}",
+         assigns.header_underline_theme_color != nil}
       ],
       assigns.header_class
     )

@@ -80,7 +80,7 @@ defmodule DemoWeb.CommandPaletteSource do
         id: "deploy",
         shortcut: "/deploy",
         aliases: ["/d"],
-        hotkey: "Alt+D",
+        hotkey: "g d",
         name: gettext("Deploy to Environment"),
         description: gettext("Deploy a branch to an environment"),
         icon: "🚀",
@@ -93,7 +93,7 @@ defmodule DemoWeb.CommandPaletteSource do
         id: "assign",
         shortcut: "/assign",
         aliases: ["/a"],
-        hotkey: "Alt+A",
+        hotkey: "g a",
         name: gettext("Assign to User"),
         description: gettext("Assign an item to a team member"),
         icon: "👤",
@@ -106,7 +106,7 @@ defmodule DemoWeb.CommandPaletteSource do
         id: "go",
         shortcut: "/go",
         aliases: ["/g", "/nav"],
-        hotkey: "Alt+G",
+        hotkey: "g g",
         name: gettext("Go to Page"),
         description: gettext("Navigate to a page"),
         icon: "🧭",
@@ -118,7 +118,7 @@ defmodule DemoWeb.CommandPaletteSource do
         id: "theme",
         shortcut: "/theme",
         aliases: ["/t"],
-        hotkey: "Alt+T",
+        hotkey: "g t",
         name: gettext("Switch Theme"),
         description: gettext("Change the visual theme"),
         icon: "🎨",
@@ -180,21 +180,7 @@ defmodule DemoWeb.CommandPaletteSource do
   end
 
   def step_options("go", "page", query, _selections) do
-    [
-      %{id: "dashboard", label: gettext("Dashboard"), code: "01", icon: "📊", value: "/"},
-      %{id: "forms", label: gettext("Forms"), code: "10", icon: "📝", value: "/forms"},
-      %{id: "buttons", label: gettext("Buttons"), code: "20", icon: "🔘", value: "/buttons"},
-      %{id: "inputs", label: gettext("Inputs"), code: "21", icon: "✏️", value: "/forms/inputs"},
-      %{id: "cards", label: gettext("Cards"), code: "22", icon: "🃏", value: "/surfaces/cards"},
-      %{id: "tables", label: gettext("Tables"), code: "23", icon: "📊", value: "/tables/standard"},
-      %{id: "alerts", label: gettext("Alerts"), code: "24", icon: "⚠️", value: "/feedback/alerts"},
-      %{id: "toasts", label: gettext("Toasts"), code: "25", icon: "🔔", value: "/feedback/toasts"},
-      %{id: "modals", label: gettext("Modals"), code: "26", icon: "🔳", value: "/surfaces/modals"},
-      %{id: "tabs", label: gettext("Tabs"), code: "27", icon: "📑", value: "/surfaces/tabs"},
-      %{id: "badges", label: gettext("Badges"), code: "28", icon: "🏷️", value: "/interactive/badges"},
-      %{id: "tooltips", label: gettext("Tooltips"), code: "29", icon: "💬", value: "/feedback/tooltips"},
-      %{id: "command-palette", label: gettext("Command Palette"), code: "30", icon: "🔍", value: "/interactive/command-palette"}
-    ]
+    go_pages()
     |> filter_options(query)
   end
 
@@ -230,6 +216,45 @@ defmodule DemoWeb.CommandPaletteSource do
   end
 
   # -- Helpers --
+
+  # Go-to-page list mirrors the demo navbar grouping (app.html.heex): each page
+  # carries its section name as the subtitle — like pure-admin's palette, which
+  # scrapes the sidebar group — and the SAME icon the sidebar uses, resolved
+  # through `DemoWeb.SidebarIcons.sidebar_icon/1` (inline Lucide SVG) rather than a
+  # unicode glyph. The palette renders it via `PureAdmin.Components.CommandPalette`'s
+  # icon dispatcher (raw SVG here). Top-level entries have no section → no subtitle.
+  defp go_pages do
+    components = gettext("Components")
+    more = gettext("More")
+
+    [
+      {"dashboard", gettext("Dashboard"), "/", nil},
+      {"buttons", gettext("Buttons"), "/buttons", components},
+      {"cards", gettext("Cards"), "/surfaces/cards", components},
+      {"tabs", gettext("Tabs"), "/surfaces/tabs", components},
+      {"badges", gettext("Badges"), "/interactive/badges", more},
+      {"modals", gettext("Modals"), "/surfaces/modals", more},
+      {"modal_dialogs", gettext("Modal Dialogs"), "/surfaces/modal-dialogs", more},
+      {"popconfirm", gettext("Popconfirm"), "/buttons/popconfirm", more},
+      {"command_palette", gettext("Command Palette"), "/interactive/command-palette", more},
+      {"data_display", gettext("Data Display"), "/data-display", more},
+      {"data_display_2", gettext("Data Display 2"), "/data-display/data-display-2", more},
+      {"data_visualization", gettext("Data Visualization"), "/data-viz", more},
+      {"detail_panel", gettext("Detail Panel"), "/surfaces/detail-panel", more},
+      {"loaders", gettext("Loaders"), "/feedback/loaders", more},
+      {"lists", gettext("Lists"), "/data-display/lists", more},
+      {"code", gettext("Code"), "/data-display/code", more},
+      {"callouts", gettext("Callouts"), "/feedback/callouts", more},
+      {"typography", gettext("Typography"), "/design/typography", more},
+      {"stats", gettext("Stats"), "/data-display/stats", more},
+      {"forms", gettext("Forms"), "/forms", nil},
+      {"alerts", gettext("Alerts"), "/feedback/alerts", nil},
+      {"table", gettext("Tables"), "/tables/standard", nil}
+    ]
+    |> Enum.map(fn {key, label, href, section} ->
+      %{id: key, label: label, value: href, icon: DemoWeb.SidebarIcons.sidebar_icon(key), description: section}
+    end)
+  end
 
   defp context_data("products"), do: @products
   defp context_data("orders"), do: @orders

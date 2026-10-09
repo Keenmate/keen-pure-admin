@@ -30,6 +30,7 @@ defmodule PureAdmin.Components.CommandPalette do
   alias Phoenix.LiveView.JS
   import PureAdmin.Helpers
   import PureAdmin.Translations, only: [t: 1, t: 2]
+  import PureAdmin.Components.Icon, only: [icon: 1]
 
   @doc """
   JS command that opens the command palette by id — wire it to any trigger
@@ -272,16 +273,24 @@ defmodule PureAdmin.Components.CommandPalette do
             <div class="pa-command-palette__home">
               <div :if={@commands != []} class="pa-command-palette__home-section">
                 <div class="pa-command-palette__home-heading"><%= t("pureAdmin.commandPalette.commands") %></div>
-                <%= for cmd <- @commands do %>
-                  <div class="pa-command-palette__item" phx-click="cp:home_select" phx-target={@target} phx-value-type="command" phx-value-shortcut={cmd.shortcut}>
-                    <div :if={cmd[:icon]} class="pa-command-palette__item-icon"><%= cmd[:icon] %></div>
+                <%= for {cmd, index} <- Enum.with_index(@commands) do %>
+                  <div
+                    class={build_classes("pa-command-palette__item", [
+                      {"pa-command-palette__item--active", index == @active_index}
+                    ])}
+                    phx-click="cp:home_select"
+                    phx-target={@target}
+                    phx-value-type="command"
+                    phx-value-shortcut={cmd.shortcut}
+                  >
+                    <div :if={cmd[:icon]} class="pa-command-palette__item-icon"><.cp_icon icon={cmd[:icon]} /></div>
                     <div class="pa-command-palette__item-content">
                       <div class="pa-command-palette__item-title"><%= cmd[:name] %></div>
                       <div class="pa-command-palette__item-meta"><%= cmd[:description] %></div>
                     </div>
                     <%= if cmd[:hotkey] do %>
                       <div class="pa-command-palette__shortcut">
-                        <%= for key <- String.split(cmd[:hotkey], "+") do %>
+                        <%= for key <- String.split(cmd[:hotkey], ~r/[+\s]+/, trim: true) do %>
                           <span class="pa-command-palette__key"><%= key %></span>
                         <% end %>
                       </div>
@@ -293,9 +302,17 @@ defmodule PureAdmin.Components.CommandPalette do
               </div>
               <div :if={@contexts != []} class="pa-command-palette__home-section">
                 <div class="pa-command-palette__home-heading"><%= t("pureAdmin.commandPalette.search") %></div>
-                <%= for ctx <- @contexts do %>
-                  <div class="pa-command-palette__item" phx-click="cp:home_select" phx-target={@target} phx-value-type="context" phx-value-shortcut={ctx.shortcut}>
-                    <div :if={ctx[:icon]} class="pa-command-palette__item-icon"><%= ctx[:icon] %></div>
+                <%= for {ctx, index} <- Enum.with_index(@contexts) do %>
+                  <div
+                    class={build_classes("pa-command-palette__item", [
+                      {"pa-command-palette__item--active", length(@commands) + index == @active_index}
+                    ])}
+                    phx-click="cp:home_select"
+                    phx-target={@target}
+                    phx-value-type="context"
+                    phx-value-shortcut={ctx.shortcut}
+                  >
+                    <div :if={ctx[:icon]} class="pa-command-palette__item-icon"><.cp_icon icon={ctx[:icon]} /></div>
                     <div class="pa-command-palette__item-content">
                       <div class="pa-command-palette__item-title"><%= ctx[:name] %></div>
                       <div :if={ctx[:description]} class="pa-command-palette__item-meta"><%= ctx[:description] %></div>
@@ -316,7 +333,7 @@ defmodule PureAdmin.Components.CommandPalette do
                   phx-target={@target}
                   phx-value-index={index}
                 >
-                  <div :if={item[:icon]} class="pa-command-palette__item-icon"><%= item[:icon] %></div>
+                  <div :if={item[:icon]} class="pa-command-palette__item-icon"><.cp_icon icon={item[:icon]} /></div>
                   <div class="pa-command-palette__item-content">
                     <div class="pa-command-palette__item-title"><%= item[:title] || item[:name] || item[:label] %></div>
                     <div :if={item[:subtitle] || item[:description] || item[:meta]} class="pa-command-palette__item-meta">
@@ -419,4 +436,30 @@ defmodule PureAdmin.Components.CommandPalette do
         assigns[:placeholder]
     end
   end
+
+  # Render an item's `:icon`, which may be any of three shapes — mirroring the
+  # sidebar's `sidebar_icon_span`, so a source can hand the palette the SAME
+  # icons the sidebar uses instead of unicode:
+  #   * raw inline SVG markup (Lucide/Heroicon) → rendered raw
+  #   * an icon-provider / Font Awesome / affordance NAME → the `<.icon>` dispatcher
+  #   * a plain glyph (emoji) → rendered as text
+  attr(:icon, :any, default: nil)
+
+  defp cp_icon(assigns) do
+    ~H"""
+    <%= cond do %>
+      <% svg_icon?(@icon) -> %>{Phoenix.HTML.raw(@icon)}
+      <% icon_name?(@icon) -> %><.icon name={@icon} />
+      <% true -> %>{@icon}
+    <% end %>
+    """
+  end
+
+  defp svg_icon?(icon) when is_binary(icon), do: String.starts_with?(String.trim_leading(icon), "<")
+  defp svg_icon?(_), do: false
+
+  # An ASCII-leading string is an icon NAME (fa-*/hero-*/affordance/provider key);
+  # a leading non-ASCII byte means it's an emoji glyph, rendered as text.
+  defp icon_name?(icon) when is_binary(icon), do: String.match?(icon, ~r/^[A-Za-z]/)
+  defp icon_name?(_), do: false
 end

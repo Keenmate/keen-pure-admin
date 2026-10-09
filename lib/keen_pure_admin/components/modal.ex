@@ -63,6 +63,7 @@ defmodule PureAdmin.Components.Modal do
     doc:
       "Optional leading severity glyph on the title (used with :title_text): a `.pa-icon--*` name, e.g. \"success\" / \"warning\" / \"danger\" / \"info\". Matches core's static severity modals."
   )
+
   attr(:should_show_close, :boolean, default: true, doc: "Show close button in header")
   attr(:on_cancel, JS, default: %JS{}, doc: "JS command to run when modal is cancelled")
   attr(:class, :string, default: nil)

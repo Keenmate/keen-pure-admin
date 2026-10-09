@@ -63,26 +63,25 @@ defmodule PureAdmin.Components.TypographyTest do
       )
     end
 
-    test "renders the base pa-text component with no modifier by default" do
+    test "renders a bare <p> with no modifier class by default" do
       html = render_paragraph(%{})
-      assert_class(html, "pa-text")
+      refute html =~ "text-"
       assert html =~ "body"
     end
 
-    test "size/color/align/semantic emit real pa-text--* modifiers" do
-      assert_class(render_paragraph(%{size: "lg"}), "pa-text--lg")
-      assert_class(render_paragraph(%{color: "secondary"}), "pa-text--secondary")
-      assert_class(render_paragraph(%{color: "primary"}), "pa-text--primary")
-      assert_class(render_paragraph(%{align: "center"}), "pa-text--center")
-      assert_class(render_paragraph(%{semantic: "lead"}), "pa-text--lead")
+    test "size/color/align/semantic emit flat text-* utilities" do
+      assert_class(render_paragraph(%{size: "lg"}), "text-lg")
+      assert_class(render_paragraph(%{color: "secondary"}), "text-secondary")
+      assert_class(render_paragraph(%{color: "primary"}), "text-body")
+      assert_class(render_paragraph(%{align: "center"}), "text-center")
+      assert_class(render_paragraph(%{semantic: "lead"}), "text-lead")
     end
 
-    test "stacks modifiers on the single pa-text base" do
+    test "stacks flat text-* utilities on a plain <p>" do
       html = render_paragraph(%{size: "sm", color: "secondary", align: "center"})
-      assert_class(html, "pa-text")
-      assert_class(html, "pa-text--sm")
-      assert_class(html, "pa-text--secondary")
-      assert_class(html, "pa-text--center")
+      assert_class(html, "text-sm")
+      assert_class(html, "text-secondary")
+      assert_class(html, "text-center")
     end
   end
 

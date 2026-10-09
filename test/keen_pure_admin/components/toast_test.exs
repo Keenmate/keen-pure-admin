@@ -27,7 +27,13 @@ defmodule PureAdmin.Components.ToastTest do
     end
 
     test "auto-derives the severity icon chip from variant (no :icon slot)" do
-      for {variant, glyph} <- [{"success", "success"}, {"danger", "danger"}, {"warning", "warning"}, {"info", "info"}, {"primary", "info"}] do
+      for {variant, glyph} <- [
+            {"success", "success"},
+            {"danger", "danger"},
+            {"warning", "warning"},
+            {"info", "info"},
+            {"primary", "info"}
+          ] do
         html =
           render_component(&Toast.toast/1, %{
             id: "t",

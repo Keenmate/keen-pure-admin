@@ -915,7 +915,10 @@ defmodule PureAdmin.Components.Layout do
   # form) — it traces to `--base-icon-search`, so it matches the navbar search and
   # command palette and re-skins with the theme. This attr is retained for
   # backward compatibility but is no longer rendered.
-  attr(:icon, :string, default: "fa-solid fa-magnifying-glass", doc: "Deprecated / unused — the search glyph is the masked `.pa-icon--search`.")
+  attr(:icon, :string,
+    default: "fa-solid fa-magnifying-glass",
+    doc: "Deprecated / unused — the search glyph is the masked `.pa-icon--search`."
+  )
 
   attr(:action, :string,
     default: nil,

@@ -1,9 +1,17 @@
 # Changelog
 
-## [2.0.0-rc.1] - 2026-09-26
+## [Unreleased]
 
-Full sync to `@keenmate/pure-admin-core@^3.3.0-rc03` (was `^2.9.0-rc18`) — a **major**
-bump mirroring core's 2.x → 3.x cut. Themes must be rebuilt at 3.3.0-rc03 and reinstalled
+### Added
+
+### Changed
+
+### Fixed
+
+## [2.0.0-rc.1] - 2026-10-09 [PUBLISHED]
+
+Full sync to `@keenmate/pure-admin-core@^3.3.0-rc06` (was `^2.9.0-rc18`) — a **major**
+bump mirroring core's 2.x → 3.x cut. Themes must be rebuilt at 3.3.0-rc06 and reinstalled
 via `npx @keenmate/pureadmin themes install`.
 
 **BREAKING — foundation/component token ownership split (`--pc-*` vs `--pa-*`).**
@@ -37,6 +45,29 @@ accordingly (shell/foundation → `--pc-`, components → `--pa-`).
 - **Client dialog service (`assets/js/modal_dialogs.js`, `window.PureAdmin.confirm/alert/prompt/custom`)
   gains an `isBanded` option** — banded programmatic dialogs, matching core's
   `modal-dialogs.js` and svelte's `dialogService` (all three share the key).
+
+### Fixed — command palette
+
+- **Leading-key command shortcuts (`g <letter>`)** now open a command, e.g. `g g` → Go
+  to Page — matching the pure-admin demo and svelte. This replaces the old `Alt+<letter>`
+  hotkeys, which were unusable on macOS (Option+letter is a text-composition modifier:
+  Option+G types `©`). The `PureAdminCommandPalette` hook arms on a modifier-free `g`
+  (only when not typing and the palette is closed) and pushes the resolved key as
+  `cp:hotkey`; the demo source's hotkeys move to `g d` / `g a` / `g g` / `g t`. Home
+  keycap hints split on whitespace **or** `+`.
+- **The idle "home" screen is now keyboard-navigable.** `↑ ↓` traverse the commands +
+  contexts (first pre-selected via `cp_active_index: 0`) and `Enter`/`cp:select` enters
+  the highlighted one — previously `cp:navigate` only walked `cp_results`, which is empty
+  on the home screen, so arrows did nothing there.
+- **`PgUp`/`PgDn` (jump a page of 8) and `Home`/`End` (first/last item)** added to the
+  list navigation (`cp:navigate` gains `page_up`/`page_down`/`home`/`end` directions).
+- **Palette item icons render through the real icon path, not unicode.**
+  `PureAdmin.Components.CommandPalette` now routes an item's `:icon` through a dispatcher
+  (mirroring the sidebar's `sidebar_icon_span`): raw inline SVG is rendered raw, an
+  icon-provider / Font Awesome / affordance NAME goes through `<.icon>`, and a plain
+  emoji still renders as text. The demo's Go-to-Page list now uses the SAME
+  `DemoWeb.SidebarIcons.sidebar_icon/1` glyphs the sidebar uses (+ a section-name
+  subtitle), instead of hardcoded emoji.
 
 ### Typography — flat `text-*` consolidation
 
@@ -116,7 +147,11 @@ keen stays snake_case — the faithful translation of svelte's camelCase.
   to functions so their strings translate per request — a module attribute would freeze the
   locale at compile time.
 
-### Sync to pure-admin-core 3.0.0 → 3.3.0-rc03
+### Sync to pure-admin-core 3.0.0 → 3.3.0-rc06
+
+**Peer-dep floor raised to `^3.3.0-rc06`** (from `^3.3.0-rc03`) in `package.json`; the
+wrapper markup is unchanged across rc04–rc06. Rebuild and reinstall themes at 3.3.0-rc06
+(`npx @keenmate/pureadmin themes install`).
 
 **Corrected the component-token prefix (core rc20 ownership split).** An earlier pass
 over-migrated component tokens to `--pc-*`; core rc20 renamed them back to `--pa-*`
@@ -556,7 +591,7 @@ Full sync to `@keenmate/pure-admin-core` `^2.9.0-rc15` (peer-dep bumped `^2.9.0-
 - **Full re-validation vs pure-admin's post-audit snippets (`d423d05`) — invented / dead modifier classes removed.** pure-admin re-reviewed all 39 snippets adversarially; re-ran the same lens over every keen component (grep-verified each flagged class against the built `dist/css/main.css`). Removed classes that render as no-ops: `form.ex` `pa-form-label` / `--required` (core auto-styles a bare `<label>` in `.pa-form-group`) and `pa-textarea--{success,warning,error}` (textarea has no validation border — errors surface via `pa-form-help--error`); `loader.ex` `pa-loader-{type}--{color}` (loaders paint from `currentColor` → inline `style="color: var(--pc-…)"`); `typography.ex` invented `pa-text--{muted,small,success,danger,warning,info}` + all `pa-link--*` (mapped friendly `text/1` names to real `pa-text--*` / `.text-*`; `pa-link` has no modifiers); `command_palette.ex` results-item `pa-command-palette__item-shortcut` + `<code>` → blessed `__shortcut` + `__key`; `data_display.ex` accent-grid `--color-{1..9}` / `--primary` (only the four semantic variants exist); `badge.ex` dead `pa-composite-badge--interactive`; `card.ex` `variant="info"` + `is_bordered` (`pa-card--info` / `--bordered` have no rule); `stat.ex` `icon_variant="secondary"` dropped and the colour variant gated on `variant="square"` (core only defines `.pa-stat--square.pa-stat--{color}`). Structural: `field_group` title `<div>` → `<h3>`; `callout.ex` no-icon branch no longer wraps in `__content`. Added `checkbox_list` `state="selected"` (a real state keen had no path to).
 - **Demo — the invented `text-muted` utility (0 rules in core CSS) swept to the real `pa-text--secondary`** (`color: var(--pc-text-color-2)`) across 15 LiveViews, including two pages that were *teaching* it as a real utility; dropped hardcoded dead `pa-card--bordered` + `variant="info"` from the validations/cards demos.
 
-## [1.3.0-rc.2] - 2026-08-05 [PUBLISHED]
+## [1.3.0-rc.2] - 2026-08-05
 
 ### Changed
 

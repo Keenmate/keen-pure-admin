@@ -36,6 +36,7 @@ defmodule PureAdmin.Components.Table do
         "a bare `<table class=\"pa-table\">` whose `<thead>`/`<tbody>` you hand-author in " <>
         "`inner_block`, exactly as core's `snippets/tables.html` blesses."
   )
+
   attr(:row_id, :any, default: nil, doc: "Function to generate row id from row data")
   attr(:row_click, :any, default: nil, doc: "JS command for row click")
   attr(:is_striped, :boolean, default: false, doc: "Alternating row colors")

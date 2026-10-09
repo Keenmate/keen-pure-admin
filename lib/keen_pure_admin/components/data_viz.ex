@@ -284,7 +284,13 @@ defmodule PureAdmin.Components.DataViz do
   """
   attr(:columns, :integer, required: true, doc: "Number of columns in grid")
   attr(:levels, :list, required: true, doc: "List of level values (0-4)")
-  attr(:variant, :string, default: nil, values: [nil, "success", "danger"], doc: "Core only styles success/danger cell ramps")
+
+  attr(:variant, :string,
+    default: nil,
+    values: [nil, "success", "danger"],
+    doc: "Core only styles success/danger cell ramps"
+  )
+
   attr(:is_compact, :boolean, default: false, doc: "Denser cells (pa-heatmap--compact)")
   attr(:class, :string, default: nil)
   attr(:rest, :global)

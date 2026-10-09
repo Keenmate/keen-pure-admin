@@ -105,9 +105,20 @@ defmodule PureAdmin.Components.CheckboxList do
   attr(:state, :string, default: nil, values: [nil, "selected", "disabled", "locked"])
   attr(:checked, :boolean, default: false)
   attr(:disabled, :boolean, default: false)
-  attr(:size, :string, default: nil, values: [nil, "xs", "sm", "lg", "xl"], doc: "Forwarded to the item's checkbox_box.")
+
+  attr(:size, :string,
+    default: nil,
+    values: [nil, "xs", "sm", "lg", "xl"],
+    doc: "Forwarded to the item's checkbox_box."
+  )
+
   attr(:is_x_mark, :boolean, default: false, doc: "X mark instead of checkmark (forwarded to checkbox_box).")
-  attr(:is_indeterminate, :boolean, default: false, doc: "Indeterminate/partial state (forwarded to checkbox_box; needs its hook).")
+
+  attr(:is_indeterminate, :boolean,
+    default: false,
+    doc: "Indeterminate/partial state (forwarded to checkbox_box; needs its hook)."
+  )
+
   attr(:class, :string, default: nil)
   attr(:rest, :global, include: ~w(phx-click phx-change phx-value-id))
   slot(:actions, doc: "Action buttons for the item")

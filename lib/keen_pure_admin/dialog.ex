@@ -178,7 +178,7 @@ defmodule PureAdmin.Dialog do
   Renders standard dialogs; custom (`type: :custom`) dialogs are rendered by the
   consumer, so the host no-ops for them.
   """
-  attr :dialog, :map, default: nil
+  attr(:dialog, :map, default: nil)
 
   def host(assigns) do
     ~H"""
