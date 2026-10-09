@@ -42,8 +42,9 @@ defmodule PureAdmin.CommandPalette.Source do
 
   A **command** is a map with `:id` and `:shortcut` (`"/deploy"`) and optionally
   `:aliases`, `:hotkey`, `:name`, `:description`, `:icon`, and `:steps`. Each
-  **step** is `%{id, prompt, placeholder, free_text}` (`:free_text` lets the
-  user submit typed text when nothing matches).
+  **step** is `%{id, prompt, placeholder, free_text, search}` (`:free_text` lets
+  the user submit typed text when nothing matches; `:search` marks the step as a
+  **live server search** — see Filtering below).
 
   A **context** is a map with `:id` and `:shortcut` (`":products"`) and
   optionally `:aliases`, `:name`, `:description`, `:icon`.
@@ -71,6 +72,25 @@ defmodule PureAdmin.CommandPalette.Source do
   current query and return the already-filtered list. The component paginates
   search results (`page_size`, default 8) and, in **global** search, prepends the
   commands and contexts whose name/shortcut/alias match the query.
+
+  ### Where filtering happens (server vs client)
+
+  The palette only round-trips to the server for work the client can't do — a
+  **live search** against your data. Everything else filters in the browser:
+
+    * **Command list** (`/`) and **context list** (`:`) — the component renders
+      the full registration set once; the hook substring-filters it client-side
+      as you type. No round-trip per keystroke.
+    * **Static command step** — a step with a *finite* candidate set. The server
+      renders every option once (the `c:step_options/4` call for the empty query
+      on step entry); the hook filters them client-side. This is the default.
+    * **Live search** — `:context query`, global free-text, and any **step
+      flagged `search: true`** — these hit `c:search/2` / `c:step_options/4` per
+      (debounced) keystroke, because only the server can resolve them.
+
+  So mark a step `search: true` **only** when its options can't be enumerated up
+  front (they depend on a backend query). A step whose `c:step_options/4` just
+  filters a fixed list should stay static — it will feel instant and cost nothing.
   """
 
   @type command :: %{
@@ -88,7 +108,8 @@ defmodule PureAdmin.CommandPalette.Source do
           required(:id) => String.t(),
           optional(:prompt) => String.t(),
           optional(:placeholder) => String.t(),
-          optional(:free_text) => boolean()
+          optional(:free_text) => boolean(),
+          optional(:search) => boolean()
         }
 
   @type context :: %{

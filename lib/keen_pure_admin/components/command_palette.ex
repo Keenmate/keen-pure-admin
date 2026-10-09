@@ -134,6 +134,8 @@ defmodule PureAdmin.Components.CommandPalette do
       data-mode={@mode}
       data-display={@display}
       data-locked-length={@locked_length}
+      data-cp-input={cp_input_mode(@mode, @current_step)}
+      data-cp-filter-offset={cp_filter_offset(@mode, @locked_length)}
       {@rest}
     >
       <.command_palette_body
@@ -278,6 +280,7 @@ defmodule PureAdmin.Components.CommandPalette do
                     class={build_classes("pa-command-palette__item", [
                       {"pa-command-palette__item--active", index == @active_index}
                     ])}
+                    data-cp-index={index}
                     phx-click="cp:home_select"
                     phx-target={@target}
                     phx-value-type="command"
@@ -307,6 +310,7 @@ defmodule PureAdmin.Components.CommandPalette do
                     class={build_classes("pa-command-palette__item", [
                       {"pa-command-palette__item--active", length(@commands) + index == @active_index}
                     ])}
+                    data-cp-index={length(@commands) + index}
                     phx-click="cp:home_select"
                     phx-target={@target}
                     phx-value-type="context"
@@ -329,6 +333,8 @@ defmodule PureAdmin.Components.CommandPalette do
                   class={build_classes("pa-command-palette__item", [
                     {"pa-command-palette__item--active", index == @active_index}
                   ])}
+                  data-cp-index={index}
+                  data-cp-match={cp_match(item)}
                   phx-click="cp:select"
                   phx-target={@target}
                   phx-value-index={index}
@@ -421,6 +427,50 @@ defmodule PureAdmin.Components.CommandPalette do
       end
 
     {display_value, locked_length}
+  end
+
+  @doc """
+  Where the hook routes input for a given `mode` + `current_step`:
+
+    * `"client"` — filter the already-rendered list in the browser, no round-trip
+      (command list, context list, and **static** command steps).
+    * `"search"` — debounced round-trip to the server (`:context`/global search and
+      steps flagged `search: true`).
+    * `"server"` — immediate round-trip (idle → first char, mode transitions).
+  """
+  def cp_input_mode(mode, current_step) do
+    cond do
+      mode in ["command_list", "context_list"] -> "client"
+      mode == "command_step" and not search_step?(current_step) -> "client"
+      mode in ["context_search", "global_search"] -> "search"
+      mode == "command_step" -> "search"
+      true -> "server"
+    end
+  end
+
+  @doc """
+  How many leading characters the hook strips from the input to get the filter
+  query: the `/`/`:` prefix for list modes, or the locked inline prefix in a step.
+  """
+  def cp_filter_offset(mode, locked_length) do
+    cond do
+      mode in ["command_list", "context_list"] -> 1
+      mode == "command_step" -> locked_length
+      true -> 0
+    end
+  end
+
+  defp search_step?(step), do: is_map(step) and step[:search] == true
+
+  # Lowercased haystack the client-side filter matches a query against — a
+  # superset of the fields the server's own filtering uses (title/name/label +
+  # shortcut + value + description + aliases), so client filtering tracks it.
+  defp cp_match(item) do
+    ([item[:title], item[:name], item[:label], item[:shortcut], item[:value], item[:description]] ++
+       (item[:aliases] || []))
+    |> Enum.reject(&is_nil/1)
+    |> Enum.map_join(" ", &to_string/1)
+    |> String.downcase()
   end
 
   defp step_placeholder(assigns) do

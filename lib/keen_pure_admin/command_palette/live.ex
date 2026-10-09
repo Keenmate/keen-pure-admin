@@ -40,7 +40,8 @@ defmodule PureAdmin.CommandPalette do
   use Phoenix.LiveComponent
 
   import PureAdmin.Helpers, only: [build_classes: 3]
-  import PureAdmin.Components.CommandPalette, only: [command_palette_body: 1, input_state: 1]
+  import PureAdmin.Components.CommandPalette,
+    only: [command_palette_body: 1, input_state: 1, cp_input_mode: 2, cp_filter_offset: 2]
 
   alias PureAdmin.Components.Toast
 
@@ -108,7 +109,13 @@ defmodule PureAdmin.CommandPalette do
         query: assigns.cp_query
       })
 
-    assigns = assign(assigns, display_value: display_value, locked_length: locked_length)
+    assigns =
+      assign(assigns,
+        display_value: display_value,
+        locked_length: locked_length,
+        cp_input_mode: cp_input_mode(assigns.cp_mode, assigns.cp_current_step),
+        cp_filter_offset: cp_filter_offset(assigns.cp_mode, locked_length)
+      )
 
     ~H"""
     <div
@@ -118,6 +125,8 @@ defmodule PureAdmin.CommandPalette do
       data-mode={@cp_mode}
       data-display={@cp_display}
       data-locked-length={@locked_length}
+      data-cp-input={@cp_input_mode}
+      data-cp-filter-offset={@cp_filter_offset}
     >
       <.command_palette_body
         id={@id}
@@ -213,14 +222,23 @@ defmodule PureAdmin.CommandPalette do
     end
   end
 
-  def handle_event("cp:select", %{"index" => index_str}, socket) do
+  def handle_event("cp:select", %{"index" => index_str} = params, socket) do
     index =
       case index_str do
         i when is_integer(i) -> i
         s when is_binary(s) -> String.to_integer(s)
       end
 
-    index = if index == -1, do: socket.assigns.cp_active_index, else: index
+    # The hook owns the active index and sends it explicitly (a real server index
+    # via data-cp-index, or -1 when nothing is active). On an empty selection it
+    # also passes the current editable text, so a free-text step submits what the
+    # user actually typed — client-side filtering means the server never saw it.
+    socket =
+      case params["query"] do
+        q when is_binary(q) -> assign(socket, :cp_query, q)
+        _ -> socket
+      end
+
     handle_select(socket, index)
   end
 

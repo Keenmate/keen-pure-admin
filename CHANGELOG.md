@@ -6,7 +6,22 @@
 
 ### Changed
 
+- **Command palette filtering is now client-side for static lists.** Command (`/`) and
+  context (`:`) list filtering and finite command steps filter in-browser by hiding the
+  already-rendered items (no `cp:input` round-trip per keystroke). The server is hit only
+  for a live search (`:context`, global, or a step flagged `search: true`), mode
+  transitions, and selection. Adds an optional `:search` field to the
+  `PureAdmin.CommandPalette.Source` step contract (mark a step `search: true` only when its
+  options can't be enumerated up front).
+
 ### Fixed
+
+- **Command palette navigation no longer round-trips to the server.** ↑↓ / PgUp / PgDn /
+  Home / End move the highlight purely client-side (it was a websocket round-trip per
+  keypress — ~230ms on some networks for work the server handled in 2ms).
+- **Command palette width presets now stick.** The settings-panel width preset
+  (`--sm` / `--lg` / `--xl`) survives LiveComponent re-renders; morphdom was stripping the
+  client-applied class, so the "command palette width" setting had no visible effect.
 
 ## [2.0.0-rc.1] - 2026-10-09 [PUBLISHED]
 
